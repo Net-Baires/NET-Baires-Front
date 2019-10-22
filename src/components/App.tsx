@@ -35,6 +35,8 @@ import { EventsInLive } from "./Events/EventsInLive";
 import { ReportAssistance } from "./ReportAssistance/Index";
 import { JoinSlack } from "./JoinSlack/Index";
 import { UserProfile } from "./Profile/UserProfile";
+import { CheckAssistanceGeneral } from "./Admin/Events/CheckAssistanceGeneral";
+import { EventsInLiveToDo } from "./Admin/Events/EventsInLiveToDo";
 
 interface AppProps {
   isLoading: boolean;
@@ -61,23 +63,30 @@ export const App: React.SFC<AppProps> = props => {
                 <div className="container">
                   <div className="row">
                     <div className="col-xs-12">
-                      <Route path="/organizers" component={Organizers} />
-                      <Route path="/JoinSlack" component={JoinSlack} />
+                      <Route exact path="/organizers" component={Organizers} />
+                      <Route exact path="/JoinSlack" component={JoinSlack} />
                       <Route
+                        exact
                         path="/organizers/:id(\d+)?"
                         component={OrganizerDetail}
                       />
 
                       <Route
+                        exact
                         path="/speaker/:id(\d+)?"
                         component={SpeakerDetail}
                       />
 
                       <Route
+                        exact
                         path="/members/:id(\d+)/profile"
                         component={PublicProfile}
                       />
-                      <Route path="/sponsor/:id(\d+)?" component={Sponsor} />
+                      <Route
+                        exact
+                        path="/sponsor/:id(\d+)?"
+                        component={Sponsor}
+                      />
                       <Route
                         exact
                         path="/login/meetup"
@@ -88,7 +97,11 @@ export const App: React.SFC<AppProps> = props => {
                         path="/login/eventBrite"
                         component={EventBriteCallBack}
                       />
-                      <Route path="/events/live" component={EventsInLive} />
+                      <Route
+                        exact
+                        path="/events/live"
+                        component={EventsInLive}
+                      />
                       <PrivateRoute
                         exact
                         path="/member/reportAssistance/:id(\d+)?"
@@ -127,14 +140,26 @@ export const App: React.SFC<AppProps> = props => {
                       />
                       <PrivateRoute
                         exact
+                        path="/admin/events/:id/assistance/general"
+                        component={CheckAssistanceGeneral}
+                      />
+
+                      <PrivateRoute
+                        exact
                         path="/admin/sponsors"
                         component={SponsorsList}
+                      />
+                      <PrivateRoute
+                        exact
+                        path="/admin/events/live"
+                        component={EventsInLiveToDo}
                       />
                       <PrivateRoute
                         exact
                         path="/admin/EventLive"
                         component={EventLive}
                       />
+
                       <PrivateRoute
                         exact
                         path="/admin/users"
@@ -159,6 +184,7 @@ export const App: React.SFC<AppProps> = props => {
 
                       <Route exact path="/login" component={Login} />
                       <PrivateRoute
+                        exact
                         path="/admin/panel"
                         component={ControlPanel}
                       />

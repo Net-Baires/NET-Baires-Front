@@ -38,6 +38,7 @@ export const Header: React.SFC<HeaderProps> = props => {
       <SecureElement rol="Admin">
         <Menu isOpen={open}>
           <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/events"
@@ -46,6 +47,7 @@ export const Header: React.SFC<HeaderProps> = props => {
             Mis Eventos
           </NavLink>
           <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/eventsToSync"
@@ -54,23 +56,36 @@ export const Header: React.SFC<HeaderProps> = props => {
             Eventos para Syncronizar
           </NavLink>
           <NavLink
+            exact
+            className="nav-link-slide-bar"
+            activeClassName="active"
+            to="/admin/events/live"
+          >
+            <i className="fa fa-fw fa-tasks"></i>
+            Eventos en vivo
+          </NavLink>
+
+          <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/users"
           >
-            <i className="fa fa-fw fa-mis-sync-o"></i>
+            <i className="fa fa-fw fa-users"></i>
             Lista de Usuarios
           </NavLink>
           <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/users/new"
           >
-            <i className="fa fa-fw fa-mis-sync-o"></i>
+            <i className="fa fa-fw fa-user-plus"></i>
             Nuevo Usuario
           </NavLink>
 
           <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/sponsors"
@@ -79,11 +94,12 @@ export const Header: React.SFC<HeaderProps> = props => {
             Sponsors
           </NavLink>
           <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/sponsors/new"
           >
-            <i className="fa fa-fw fa-mis-eventos-o"></i>
+            <i className="fa fa-fw fa-hubspot"></i>
             Nuevo Sponsor
           </NavLink>
           <a className="nav-link-slide-bar" onClick={handleSyncEvents}>
@@ -91,10 +107,11 @@ export const Header: React.SFC<HeaderProps> = props => {
             Sync Eventos
           </a>
           <a className="nav-link-slide-bar" onClick={handleSyncBadge}>
-            <i className="fa fa-fw fa-mis-eventos-o"></i>
+            <i className="fa fa-fw fa-ribbon"></i>
             Sync Badges
           </a>
           <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/EventLive"
@@ -103,6 +120,7 @@ export const Header: React.SFC<HeaderProps> = props => {
             Evento en Vivo
           </NavLink>
           <NavLink
+            exact
             className="nav-link-slide-bar"
             activeClassName="active"
             to="/admin/panel"
@@ -114,7 +132,12 @@ export const Header: React.SFC<HeaderProps> = props => {
       </SecureElement>
       <div className="lgx-header-position lgx-header-position-white lgx-header-position-fixed  menu-onscroll">
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark header-menu-dark ">
-          <NavLink className="navbar-brand" activeClassName="active" to="/">
+          <NavLink
+            exact
+            className="navbar-brand"
+            activeClassName="active"
+            to="/"
+          >
             <img
               className="logo-header"
               src="/assets/images/logo-header.png"
@@ -167,6 +190,7 @@ export const Header: React.SFC<HeaderProps> = props => {
               {!isLoggued ? (
                 <li className="nav-item">
                   <NavLink
+                    exact
                     isActive={handleIsActive}
                     className="nav-link"
                     activeClassName="active"
@@ -179,6 +203,7 @@ export const Header: React.SFC<HeaderProps> = props => {
                 <>
                   <li className="nav-item">
                     <NavLink
+                      exact
                       isActive={handleIsActive}
                       className="nav-link"
                       activeClassName="active"

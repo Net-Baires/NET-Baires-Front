@@ -14,23 +14,17 @@ type SpeakerPropsAndRouter = SpeakerParams & SpeakerProps;
 const SpeakerDetail: React.SFC<
   RouteComponentProps<SpeakerPropsAndRouter>
 > = () => {
-  const defaultSpeaker = {
-    id: 0,
-    name: "",
-    lastName: "",
-    picture: ""
-  };
   const { id } = useParams();
-  const [Speaker, setSpeaker] = useState<Speaker>(defaultSpeaker);
+  const [speakerDetail, setSpeaker] = useState<Speaker>({} as Speaker);
   useEffect(() => {
     getSpeaker(Number(id)).then(s => setSpeaker(s));
   }, []);
   return (
     <>
-      <h1>Id - {Speaker.id}</h1>
-      <h3>Nombre - {Speaker.name}</h3>
-      <h3>LastName - {Speaker.lastName}</h3>
-      <img src={Speaker.picture}></img>
+      <h1>Id - {speakerDetail.id}</h1>
+      <h3>Nombre - {speakerDetail.name}</h3>
+      <h3>LastName - {speakerDetail.lastName}</h3>
+      <img src={speakerDetail.picture}></img>
     </>
   );
 };

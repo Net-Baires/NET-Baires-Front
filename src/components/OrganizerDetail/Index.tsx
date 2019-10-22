@@ -14,14 +14,8 @@ type OrganizerPropsAndRouter = OrganizerParams & OrganizerProps;
 const OrganizerDetail: React.SFC<
   RouteComponentProps<OrganizerPropsAndRouter>
 > = props => {
-  const defaultOrganizer = {
-    id: 0,
-    name: "",
-    lastName: "",
-    picture: ""
-  };
   const { id } = useParams();
-  const [Organizer, setOrganizer] = useState<Speaker>(defaultOrganizer);
+  const [Organizer, setOrganizer] = useState<Speaker>({} as Speaker);
   useEffect(() => {
     getOrganizer(Number(id)).then(s => setOrganizer(s));
   }, []);

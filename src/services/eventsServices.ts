@@ -45,6 +45,10 @@ export const getEvent = (id: number): Promise<EventDetail> =>
 export const getEventToReportAssitance = (
   id: number
 ): Promise<EventToReportAssistance> => getRequest(`/events/${id}/assistance`);
+export const getCheckAssistanceGeneral = (
+  id: number
+): Promise<EventToReportAssistance> =>
+  getRequest(`/events/${id}/assistance/general`);
 
 export const reportAssitance = (token: string): Promise<EventToSync> => {
   return fetch(`${Config.api.baseRemote}/events/Assistance/${token}`, {
