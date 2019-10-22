@@ -1,0 +1,20 @@
+{
+  "api": {
+    "base": "${NET-Baires.api.base}$",
+    "baseRemote": "${NET-Baires.api.baseRemote}$"
+  },
+  "integrations": {
+    "meetup": {
+      "clientId": "${NET-Baires.meetup.clientId}$",
+      "clientSecret": "${NET-Baires.clientSecret.clientSecret}$",
+      "accessTokenUri": "${NET-Baires.clientSecret.accessTokenUri}$",
+      "authorizationUri": "${NET-Baires.clientSecret.authorizationUri}$",
+      "redirectUri": "${NET-Baires.clientSecret.redirectUri}$",
+      "scopes": ["basic"]
+    },
+    "eventBrite": {
+      "clientId": "${NET-Baires.eventBrite.clientId}$",
+      "redirectUri": "${NET-Baires.eventBrite.redirectUri}$"
+    }
+  }
+}
