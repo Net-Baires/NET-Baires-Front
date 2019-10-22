@@ -37,6 +37,7 @@ import { JoinSlack } from "./JoinSlack/Index";
 import { UserProfile } from "./Profile/UserProfile";
 import { CheckAssistanceGeneral } from "./Admin/Events/CheckAssistanceGeneral";
 import { EventsInLiveToDo } from "./Admin/Events/EventsInLiveToDo";
+import { ReadOrganizedCode } from "./MemberLogged/ReadOrganizedCode";
 
 interface AppProps {
   isLoading: boolean;
@@ -160,6 +161,11 @@ export const App: React.SFC<AppProps> = props => {
                         component={EventLive}
                       />
 
+                      <PrivateRoute
+                        exact
+                        path="/member/organizedcode/read"
+                        component={ReadOrganizedCode}
+                      />
                       <PrivateRoute
                         exact
                         path="/admin/users"

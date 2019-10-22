@@ -11,3 +11,15 @@ export const getRequest = (url: string) => {
     }
   }).then((x: any) => x.json());
 };
+
+export const putRequest = (url: string, body: string = ""): Promise<any> => {
+  return fetch(`${Config.api.baseRemote}url`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`
+    },
+    body: body
+  }).then((x: any) => x.json());
+};

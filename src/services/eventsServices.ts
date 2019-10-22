@@ -7,7 +7,7 @@ import {
 } from "./models/Events/EventDetailToSync";
 import { Config } from "./config";
 import { getToken } from "./authService";
-import { getRequest } from "./requestServices";
+import { getRequest, putRequest } from "./requestServices";
 
 export const getNextEvent = (): Promise<EventDetail> => {
   return fetch("http://localhost:3000/events/1").then(x => x.json());
@@ -61,6 +61,10 @@ export const reportAssitance = (token: string): Promise<EventToSync> => {
     body: ""
   }).then((x: any) => x.json());
 };
+export const reportAssitanceGeneral = (token: string): Promise<EventToSync> => {
+  return putRequest(`${Config.api.baseRemote}/assistance/general/${token}`);
+};
+
 export const getEventToSync = (
   id: string,
   platform: string
