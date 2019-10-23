@@ -1,17 +1,17 @@
 import { Config } from "./config";
 import { getToken, getCurrentUser } from "./authService";
 import { getRequest } from "./requestServices";
-import { User } from "./models/User";
+import { Member } from "./models/Member";
 
-export const getUserProfile = (id: number = 10): Promise<User> => {
+export const getUserProfile = (id: number = 10): Promise<Member> => {
   return getRequest(`/members/${getCurrentUser().id}`);
 };
 
-export const getAllUsersToEdit = (): Promise<User[]> => {
+export const getAllUsersToEdit = (): Promise<Member[]> => {
   return fetch(`${Config.api.baseRemote}/members`).then(x => x.json());
 };
 
-export const getUsersToEdit = (id: number): Promise<User> => {
+export const getUsersToEdit = (id: number): Promise<Member> => {
   return fetch(`${Config.api.baseRemote}/members/${id}`).then(x => x.json());
 };
 
@@ -27,7 +27,7 @@ export const deleteEditUser = (id: number): Promise<boolean> => {
   }).then((x: any) => x.json());
 };
 
-export const newUser = (user: User): Promise<User> => {
+export const newUser = (user: Member): Promise<Member> => {
   return fetch(`${Config.api.baseRemote}/members`, {
     method: "POST",
     headers: {
@@ -38,7 +38,7 @@ export const newUser = (user: User): Promise<User> => {
     body: JSON.stringify(user)
   }).then((x: any) => x.json());
 };
-export const updateUser = (id: number, user: User): Promise<User> => {
+export const updateUser = (id: number, user: Member): Promise<Member> => {
   return fetch(`${Config.api.baseRemote}/members/${id}`, {
     method: "PUT",
     headers: {

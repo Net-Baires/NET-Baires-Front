@@ -472,3 +472,9 @@ hr {
 .btn-full-width {
   width: 100%;
 }
+.lgx-single-news-images {
+  text-align: center;
+}
+.lgx-single-news-images img {
+  width: 150px;
+}

@@ -4,8 +4,11 @@ import { getCurrentUser } from "../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { getBadges } from "../../services/badgesServices";
-import { BadgeList } from "../../services/models/User";
 import { PageCenterWrapper } from "../Common/PageCenterWrapper";
+import { BadgeDetail } from "../../services/models/Member";
+import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
+import { formatStringDate } from "../../helpers/DateHelpers";
+import { NavLink } from "react-router-dom";
 
 type BadgeListProps = {
   loading: () => void;
@@ -16,41 +19,58 @@ export const BadgesListComponent: React.SFC<BadgeListProps> = ({
   loading,
   ready
 }) => {
-  const [badge, setBadge] = useState({} as BadgeList);
+  const [badges, setBadges] = useState(new Array<BadgeDetail>());
   useEffect(() => {
     loading();
     getBadges().then(x => {
-      setBadge(x);
+      setBadges(x);
       ready();
     });
   }, []);
   const user = getCurrentUser();
   return (
-    <PageCenterWrapper>
-      <article>
-        <header>
-          <h1>Detalle Badge</h1>
-          <h2> {badge.Name}</h2>
-        </header>
-        <header>
-          <figure>
-            <img
-              className="img-report-assitance"
-              src={badge.BadgeImageUrl}
-              alt="New"
-            ></img>
-          </figure>
-          <div className="text-area">
-            <div className="speaker-info">
-              <h1 className="title">
-                {user.firstName} {user.lastName}
-              </h1>
-              <h4 className="subtitle">{user.email}</h4>
+    <main>
+      <div className="lgx-page-wrapper">
+        <section>
+          <div className="container">
+            <div className="row">
+              {badges &&
+                badges.map(badge => (
+                  <div className="col-xs-12 col-sm-6 col-md-4">
+                    <div className="lgx-single-news lgx-single-news-images">
+                      <figure>
+                        <a href={badge.badgeUrl} target="_blank">
+                          <img src={badge.badgeImageUrl} alt=""></img>
+                        </a>
+                      </figure>
+                      <div className="single-news-info">
+                        <div className="meta-wrapper">
+                          <span>{formatStringDate(badge.created)}</span>
+                          <span>
+                            by{" "}
+                            <a href={badge.issuerUrl} target="_blank">
+                              NET-Baires
+                            </a>
+                          </span>
+                        </div>
+                        <h3 className="title">
+                          <a href={badge.badgeUrl}>{badge.name}</a>
+                        </h3>
+                        <NavLink
+                          className="lgx-btn lgx-btn-white lgx-btn-sm"
+                          to={`badges/${badge.id}`}
+                        >
+                          Detalle
+                        </NavLink>
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
-        </header>
-      </article>
-    </PageCenterWrapper>
+        </section>
+      </div>
+    </main>
   );
 };
 

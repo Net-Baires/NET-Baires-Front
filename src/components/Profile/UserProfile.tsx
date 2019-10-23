@@ -3,11 +3,11 @@ import { FormikProps, Field, Form, withFormik } from "formik";
 import * as yup from "yup";
 import { getUserProfile, updateUser } from "../../services/userServices";
 import { ShareProfile } from "./ShareProfile";
-import { User } from "../../services/models/User";
+import { Member } from "../../services/models/Member";
 import { loading, ready } from "../../store/loading/actions";
 import { connect } from "react-redux";
 import { getCurrentUser } from "../../services/authService";
-interface FormValues extends User {}
+interface FormValues extends Member {}
 
 const UserProfileForm = (props: FormikProps<FormValues>) => {
   const { touched, errors, isSubmitting } = props;
@@ -109,8 +109,8 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
   );
 };
 
-interface MyFormProps extends User {
-  saveUser: (user: User) => void;
+interface MyFormProps extends Member {
+  saveUser: (user: Member) => void;
 }
 const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: props => {
@@ -136,7 +136,7 @@ type EditAllSponsorProps = {
   ready: () => void;
 };
 const UserProfileComponent: React.SFC<EditAllSponsorProps> = props => {
-  const [userDetail, setUserDetail] = useState({} as User);
+  const [userDetail, setUserDetail] = useState({} as Member);
 
   useEffect(() => {
     getUserProfile(getCurrentUser().id).then(u => {
@@ -151,7 +151,7 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = props => {
       setUserDetail(u);
     });
   }, []);
-  const saveUser = (user: User) => {
+  const saveUser = (user: Member) => {
     loading();
     updateUser(user.id, user).then(x => {
       ready();

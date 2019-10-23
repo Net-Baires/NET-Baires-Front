@@ -17,7 +17,7 @@ import {
 } from "mdbreact";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { User } from "../../../services/models/User";
+import { Member } from "../../../services/models/Member";
 import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
 type EditUserParams = {
   id: string;
@@ -28,7 +28,7 @@ type EditUserParams = {
 const EditUserInternalComponent: React.SFC<
   RouteComponentProps<EditUserParams> & EditUserParams
 > = ({ loading, ready, ...props }) => {
-  const [userToEdit, setUserToEdit] = useState({} as User);
+  const [userToEdit, setUserToEdit] = useState({} as Member);
   const [sureToDelete, setSureToDelete] = useState(false);
   const history = useHistory();
   useEffect(() => {
@@ -36,7 +36,7 @@ const EditUserInternalComponent: React.SFC<
       setUserToEdit(u);
     });
   }, []);
-  const saveUser = (user: User) => {
+  const saveUser = (user: Member) => {
     loading();
     updateUser(user.id, user).then(x => {
       ready();

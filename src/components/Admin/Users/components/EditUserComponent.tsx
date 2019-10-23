@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FormikProps, Field, Form, withFormik } from "formik";
 import * as yup from "yup";
-import { User } from "../../../../services/models/User";
-interface FormValues extends User {}
+import { Member } from "../../../../services/models/Member";
+interface FormValues extends Member {}
 
 const EditUserComponentForm = (props: FormikProps<FormValues>) => {
   const { touched, errors, isSubmitting } = props;
@@ -60,8 +60,8 @@ const EditUserComponentForm = (props: FormikProps<FormValues>) => {
   );
 };
 
-interface MyFormProps extends User {
-  saveUser: (user: User) => void;
+interface MyFormProps extends Member {
+  saveUser: (user: Member) => void;
 }
 const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: props => {
@@ -83,8 +83,8 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
 })(EditUserComponentForm);
 
 type EditUserComponentProps = {
-  user: User;
-  saveUser: (user: User) => void;
+  user: Member;
+  saveUser: (user: Member) => void;
 };
 export const EditUserComponent: React.SFC<EditUserComponentProps> = ({
   user,

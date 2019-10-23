@@ -1,5 +1,5 @@
 import React, { Context, useState } from "react";
-import { User } from "../services/models/User";
+import { Member } from "../services/models/Member";
 import {
   isAuthenticated,
   getCurrentUser,
@@ -7,7 +7,7 @@ import {
   login
 } from "../services/authService";
 type UserContext = {
-  user: User;
+  user: Member;
   isLoggued: boolean;
   login: (token: string) => void;
   logout: () => void;

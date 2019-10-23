@@ -1,4 +1,4 @@
-export interface User {
+export interface Member {
   id: number;
   email: string;
   firstName: string;
@@ -18,12 +18,13 @@ export interface User {
 }
 
 export interface BadgeDetail {
-  Id: number;
-  BadgeId: string;
-  BadgeUrl: string;
-  BadgeImageUrl: string;
-  IssuerUrl: string;
-  Image: string;
-  Name: string;
-  Description: string;
+  id: number;
+  badgeId: string;
+  badgeUrl: string;
+  badgeImageUrl: string;
+  created: string;
+  issuerUrl: string;
+  image: string;
+  name: string;
+  description: string;
 }

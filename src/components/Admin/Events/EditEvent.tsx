@@ -4,7 +4,7 @@ import { getEvent, updateEvent } from "../../../services/eventsServices";
 import Checkbox from "react-simple-checkbox";
 import { getSponsors } from "../../../services/sponsorsServices";
 import { Sponsor } from "services/models/sponsor";
-import { User } from "../../../services/models/User";
+import { Member } from "../../../services/models/Member";
 import { EventDetail } from "../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
@@ -24,7 +24,7 @@ const EditEventComponent: React.SFC<
 > = ({ loading, ready, ...props }) => {
   const [event, setEvent] = useState({} as EventDetail);
   const [sponsors, setSponsors] = useState(new Array<SponsorToEvent>());
-  const [users, setUsers] = useState(new Array<User>());
+  const [users, setUsers] = useState(new Array<Member>());
   const history = useHistory();
   const loadEvent = () => {
     loading();
@@ -59,19 +59,19 @@ const EditEventComponent: React.SFC<
     eventInput.preventDefault();
     setEvent({ ...event, description: eventInput.target.value });
   };
-  const handleUserAttended = (isChecked: boolean, user: User) => {
+  const handleUserAttended = (isChecked: boolean, user: Member) => {
     const updateIndex = users.indexOf(user);
     const usersToUpdate = users.slice();
     usersToUpdate[updateIndex].attended = isChecked;
     setUsers(usersToUpdate);
   };
-  const handleUserSpeaker = (isChecked: boolean, user: User) => {
+  const handleUserSpeaker = (isChecked: boolean, user: Member) => {
     const updateIndex = users.indexOf(user);
     const usersToUpdate = users.slice();
     usersToUpdate[updateIndex].speaker = isChecked;
     setUsers(usersToUpdate);
   };
-  const handleUserOrganizer = (isChecked: boolean, user: User) => {
+  const handleUserOrganizer = (isChecked: boolean, user: Member) => {
     const updateIndex = users.indexOf(user);
     const usersToUpdate = users.slice();
     usersToUpdate[updateIndex].organizer = isChecked;

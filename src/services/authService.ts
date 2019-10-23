@@ -1,10 +1,10 @@
-import { User } from "./models/User";
+import { Member } from "./models/Member";
 import JwtDecode from "jwt-decode";
 
-let currentUser: User = {} as User;
+let currentUser: Member = {} as Member;
 let isLoggued = false;
 var currentToken = "";
-export const getCurrentUser = (): User => {
+export const getCurrentUser = (): Member => {
   var value = localStorage.getItem("CurrentUserToken");
   if (value != null) {
     login(value);
@@ -38,7 +38,7 @@ export const logout = () => {
   localStorage.removeItem("IsLoggued");
   isLoggued = false;
   currentToken = "";
-  currentUser = {} as User;
+  currentUser = {} as Member;
 };
 export const hasPermission = (rol: string): boolean => {
   return isLoggued && currentUser.role == rol;

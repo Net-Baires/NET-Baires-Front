@@ -1,4 +1,4 @@
-import { User } from "../User";
+import { Member } from "../Member";
 
 export interface EventDetailToSync {
   id: string;
@@ -7,7 +7,7 @@ export interface EventDetailToSync {
   platform: string;
   status: string;
   date: Date;
-  attendees: User[];
+  attendees: Member[];
 }
 
 export interface EventToReportAssistance {
