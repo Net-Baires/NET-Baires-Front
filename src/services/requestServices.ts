@@ -13,7 +13,7 @@ export const getRequest = (url: string) => {
 };
 
 export const putRequest = (url: string, body: string = ""): Promise<any> => {
-  return fetch(`${Config.api.baseRemote}url`, {
+  return fetch(`${Config.api.baseRemote}${url}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -21,5 +21,12 @@ export const putRequest = (url: string, body: string = ""): Promise<any> => {
       Authorization: `Bearer ${getToken()}`
     },
     body: body
-  }).then((x: any) => x.json());
+  }).then((x: any) => {
+    var contentType = x.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+      return x.json();
+    } else {
+      console.log("Oops, we haven't got JSON!");
+    }
+  });
 };

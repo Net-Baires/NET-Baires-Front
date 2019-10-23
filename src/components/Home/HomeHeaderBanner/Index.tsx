@@ -34,7 +34,7 @@ const HomeHeaderBanner: React.SFC<HomeHeaderBannerProps> = () => {
                             activeClassName="active"
                             to="/JoinSlack"
                           >
-                            Unierme a Slack
+                            Unirme a Slack
                           </NavLink>
                         </div>
                       </div>

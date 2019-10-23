@@ -2,13 +2,14 @@ import React, { useState, useEffect, MouseEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import {
   getEventsToSync,
-  cancelEventsToSync,
-  syncEventsToSync,
-  updateEvent
+  updateEvent,
+  syncEvent
 } from "../../../services/eventsServices";
 import { EventToSync } from "../../../services/models/Events/EventToSync";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
+import { UpdateEvent } from "../../../services/models/Events/Event";
+import { EventToSyncActions } from "./EventToSyncActions";
 
 type EventsToSyncProps = {
   name: string;
@@ -23,8 +24,7 @@ type EventsToSyncPropsAndRouter = EventsToSyncParams & EventsToSyncProps;
 const EventsToSyncComponent: React.SFC<
   RouteComponentProps<EventsToSyncPropsAndRouter> & EventsToSyncProps
 > = ({ loading, ready }) => {
-  let history = useHistory();
-
+  const history = useHistory();
   const defaultEventsToSync = new Array<EventToSync>();
   const [eventsToSync, setEventoToSync] = useState(defaultEventsToSync);
   useEffect(() => {
@@ -35,36 +35,18 @@ const EventsToSyncComponent: React.SFC<
     });
   }, []);
 
-  const handleCloseEvent = (
-    event: MouseEvent<HTMLButtonElement>,
-    eventToSync: EventToSync
-  ) => {
-    event.preventDefault();
-    eventToSync.live = false;
-    eventToSync.done = true;
-    loading();
-    updateEvent(eventToSync.id, eventToSync).then(x => {
-      getEventsToSync().then(s => {
-        setEventoToSync(s);
-        ready();
-      });
+  const handlerReadyAction = () => {
+    getEventsToSync().then(s => {
+      setEventoToSync(s);
+      ready();
     });
   };
-  const handleLiveEvent = (
+  const handleEditEvent = (
     event: MouseEvent<HTMLButtonElement>,
-    eventToSync: EventToSync,
-    isLive: boolean
+    meEvent: EventToSync
   ) => {
     event.preventDefault();
-    eventToSync.live = isLive;
-
-    loading();
-    updateEvent(eventToSync.id, eventToSync).then(x => {
-      getEventsToSync().then(s => {
-        setEventoToSync(s);
-        ready();
-      });
-    });
+    history.push(`/admin/events/${meEvent.id}/edit`);
   };
   return (
     <>
@@ -75,6 +57,10 @@ const EventsToSyncComponent: React.SFC<
               <th scope="col">#</th>
               <th scope="col">Titulo</th>
               <th scope="col">Fecha</th>
+              <th scope="col">Asistieron</th>
+              <th scope="col">No Asistieron</th>
+              <th scope="col">Plataforma</th>
+              <th scope="col">Imagen</th>
               <th scope="col">Acción</th>
             </tr>
           </thead>
@@ -84,30 +70,41 @@ const EventsToSyncComponent: React.SFC<
                 <th scope="row">{event.id}</th>
                 <td>{event.title}</td>
                 <td>{event.date}</td>
+                <td>{event.attendedCount}</td>
+                <td>{event.didNotAttendCount}</td>
                 <td>
-                  {!event.live ? (
-                    <button
-                      type="button"
-                      onClick={e => handleLiveEvent(e, event, true)}
-                      className="btn btn-success"
-                    >
-                      Comenzar
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={e => handleLiveEvent(e, event, false)}
-                      className="btn btn-warning"
-                    >
-                      Detener
-                    </button>
+                  <img
+                    className="img-preview-list-events"
+                    src={event.imageUrl}
+                  ></img>
+                </td>
+                <td>
+                  {event.platform == "Meetup" && (
+                    <img
+                      className="platform-icon"
+                      src="https://net-baires.azureedge.net/images/meetup-mini-logo.png"
+                    ></img>
                   )}
+                  {event.platform == "EventBrite" && (
+                    <img
+                      className="platform-icon"
+                      src="https://net-baires.azureedge.net/images/eventbrite-mini-logo.png"
+                    ></img>
+                  )}
+                </td>
+
+                <td>
+                  <EventToSyncActions
+                    eventAction={event}
+                    loading={loading}
+                    ready={handlerReadyAction}
+                  ></EventToSyncActions>
                   <button
                     type="button"
-                    onClick={e => handleCloseEvent(e, event)}
+                    onClick={e => handleEditEvent(e, event)}
                     className="btn btn-primary"
                   >
-                    Cerrar
+                    Editar
                   </button>
                 </td>
               </tr>

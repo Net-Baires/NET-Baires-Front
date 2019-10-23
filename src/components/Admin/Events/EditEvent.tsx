@@ -8,6 +8,7 @@ import { User } from "../../../services/models/User";
 import { EventDetail } from "../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
+import { EventToSyncActions } from "./EventToSyncActions";
 type EditEventProps = {
   name: string;
   loading: () => void;
@@ -25,14 +26,15 @@ const EditEventComponent: React.SFC<
   const [sponsors, setSponsors] = useState(new Array<SponsorToEvent>());
   const [users, setUsers] = useState(new Array<User>());
   const history = useHistory();
-  useEffect(() => {
+  const loadEvent = () => {
     loading();
     getEvent(props.match.params.id).then(event => {
       setEvent(event);
       // setUsers(event.attendees);
       ready();
     });
-  }, []);
+  };
+  useEffect(() => loadEvent(), []);
   useEffect(() => {
     getSponsors().then(sponsors => {
       let sponsorToColaborte: SponsorToEvent[] = sponsors.map(
@@ -75,13 +77,14 @@ const EditEventComponent: React.SFC<
     usersToUpdate[updateIndex].organizer = isChecked;
     setUsers(usersToUpdate);
   };
-  const handleSave = (evt: MouseEvent<HTMLInputElement>) => {
+  const handleSave = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     updateEvent(event.id, event).then(x => {
       ready();
       history.push("/admin/events");
     });
   };
+  const handlerReadyAction = () => loadEvent();
   return (
     <>
       <div className="row">
@@ -210,6 +213,11 @@ const EditEventComponent: React.SFC<
         <button onClick={handleSave} type="button" className="btn btn-success">
           Guardar
         </button>
+        <EventToSyncActions
+          eventAction={event}
+          loading={loading}
+          ready={handlerReadyAction}
+        ></EventToSyncActions>
       </>
     </>
   );

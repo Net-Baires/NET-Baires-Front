@@ -1,4 +1,4 @@
-import { EventDetail } from "./models/Events/Event";
+import { EventDetail, UpdateEvent } from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
 import {
@@ -14,7 +14,10 @@ export const getNextEvent = (): Promise<EventDetail> => {
 };
 
 export const syncEvents = (): Promise<MeEvent[]> => {
-  return getRequest("/events/sync");
+  return putRequest("/events/sync");
+};
+export const syncEvent = (idEvent: number): Promise<MeEvent[]> => {
+  return putRequest(`/events/${idEvent}/sync`);
 };
 export const getEventsToSync = (): Promise<EventToSync[]> =>
   getRequest("/events/ToSync");
@@ -26,8 +29,8 @@ export const getEventsLive = (): Promise<EventToSync[]> => {
 
 export const updateEvent = (
   id: number,
-  event: EventDetail
-): Promise<EventToSync> => {
+  event: UpdateEvent
+): Promise<UpdateEvent> => {
   return fetch(`${Config.api.baseRemote}/events/${id}`, {
     method: "PUT",
     headers: {
