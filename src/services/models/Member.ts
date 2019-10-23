@@ -28,3 +28,10 @@ export interface BadgeDetail {
   name: string;
   description: string;
 }
+export interface BadgeAssign {
+  id: number;
+  badgeUrl: string;
+  badgeImageUrl: string;
+  assigned: boolean;
+  created: string;
+}

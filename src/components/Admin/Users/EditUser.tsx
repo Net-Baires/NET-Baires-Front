@@ -18,7 +18,8 @@ import {
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { Member } from "../../../services/models/Member";
-import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
+import { BadgesAssign } from "../../Badges/BadgesAssign";
+import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 type EditUserParams = {
   id: string;
   loading: () => void;
@@ -29,11 +30,13 @@ const EditUserInternalComponent: React.SFC<
   RouteComponentProps<EditUserParams> & EditUserParams
 > = ({ loading, ready, ...props }) => {
   const [userToEdit, setUserToEdit] = useState({} as Member);
+  const [loaded, setLoaded] = useState(false);
   const [sureToDelete, setSureToDelete] = useState(false);
   const history = useHistory();
   useEffect(() => {
     getUsersToEdit(+props.match.params.id).then(u => {
       setUserToEdit(u);
+      setLoaded(true);
     });
   }, []);
   const saveUser = (user: Member) => {
@@ -56,8 +59,9 @@ const EditUserInternalComponent: React.SFC<
     event.preventDefault();
     setSureToDelete(false);
   };
+
   return (
-    <PageCenterWrapper classWrapper="lgx-page-wrapper">
+    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
       <MDBContainer className="pepepe">
         <MDBModal isOpen={sureToDelete}>
           <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
@@ -90,7 +94,16 @@ const EditUserInternalComponent: React.SFC<
           Eliminar
         </button>
       </div>
-    </PageCenterWrapper>
+      {loaded && (
+        <div className="row">
+          <BadgesAssign
+            memberId={userToEdit.id}
+            loading={loading}
+            loaded={ready}
+          ></BadgesAssign>
+        </div>
+      )}
+    </PageFullWidthWrapper>
   );
 };
 
