@@ -1,15 +1,11 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
-import {
-  getEventsToSync,
-  updateEvent,
-  syncEvent
-} from "../../../services/eventsServices";
+import { getEventsToSync } from "../../../services/eventsServices";
 import { EventToSync } from "../../../services/models/Events/EventToSync";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { UpdateEvent } from "../../../services/models/Events/Event";
 import { EventToSyncActions } from "./EventToSyncActions";
+import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 
 type EventsToSyncProps = {
   name: string;
@@ -17,7 +13,7 @@ type EventsToSyncProps = {
   ready: () => void;
 };
 type EventsToSyncParams = {
-  id: number;
+  id: string;
 };
 
 type EventsToSyncPropsAndRouter = EventsToSyncParams & EventsToSyncProps;
@@ -49,7 +45,7 @@ const EventsToSyncComponent: React.SFC<
     history.push(`/admin/events/${meEvent.id}/edit`);
   };
   return (
-    <>
+    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
       {eventsToSync && (
         <table className="table">
           <thead className="thead-light">
@@ -112,7 +108,7 @@ const EventsToSyncComponent: React.SFC<
           </tbody>
         </table>
       )}
-    </>
+    </PageFullWidthWrapper>
   );
 };
 const mapStateToProps = () => ({});

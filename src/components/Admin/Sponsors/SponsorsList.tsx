@@ -1,12 +1,17 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
-import { Sponsor } from "services/models/sponsor";
 import { getSponsors } from "../../../services/sponsorsServices";
-
+import { PageFullWidthWrapper } from "../../../components/Common/PageFullWidthWrapper";
+import { Sponsor } from "../../../services/models/sponsor";
+import BootstrapTable from "react-bootstrap-table-next";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import paginationFactory from "react-bootstrap-table2-paginator";
+import { SearchWrapper } from "../../Common/SearchWrapper";
 export const SponsorsList: React.SFC<RouteComponentProps> = () => {
   let history = useHistory();
 
   const [sponsors, setSponsor] = useState(new Array<Sponsor>());
+  const { SearchBar } = Search;
   useEffect(() => {
     getSponsors().then(s => setSponsor(s));
   }, []);
@@ -22,49 +27,75 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
     event.preventDefault();
     history.push(`/admin/sponsors/new`);
   };
+  const columns = [
+    {
+      dataField: "id",
+      text: "Id"
+    },
+    {
+      dataField: "name",
+      text: "Nombre"
+    },
+    {
+      dataField: "description",
+      text: "Descripción"
+    },
+    {
+      dataField: "siteUrl",
+      text: "Sitio"
+    },
+    {
+      dataField: "Logo",
+      text: "Logo",
+      formatter: (_cellContent: any, sponsor: Sponsor) => (
+        <img className="sponsors-list-img" src={sponsor.logoUrl}></img>
+      )
+    },
 
+    {
+      text: "Acción",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, sponsor: Sponsor) => (
+        <button
+          type="button"
+          onClick={e => handleEdit(e, sponsor)}
+          className="btn btn-primary"
+        >
+          Edit
+        </button>
+      )
+    }
+  ];
   return (
-    <>
+    <PageFullWidthWrapper>
       {sponsors && (
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Titulo</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">Logo</th>
-              <th scope="col">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sponsors.map(sponsor => (
-              <tr key={sponsor.id}>
-                <th scope="row">{sponsor.id}</th>
-                <td>{sponsor.name}</td>
-                <td>{sponsor.description}</td>
-                <td>
-                  <img
-                    className="sponsors-list-img"
-                    src={sponsor.logoUrl}
-                  ></img>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={e => handleEdit(e, sponsor)}
-                    className="btn btn-primary"
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <SearchWrapper title="Sponsors">
+          <ToolkitProvider
+            keyField="id"
+            data={sponsors}
+            columns={columns}
+            search
+          >
+            {(props: any) => (
+              <div>
+                <SearchBar {...props.searchProps} />
+                <hr />
+                <BootstrapTable
+                  keyField="id"
+                  {...props.baseProps}
+                  pagination={paginationFactory()}
+                />
+              </div>
+            )}
+          </ToolkitProvider>
+        </SearchWrapper>
       )}
       <button type="button" onClick={handleNew} className="btn btn-primary">
         Nuevo Sponsor
       </button>
-    </>
+    </PageFullWidthWrapper>
   );
 };

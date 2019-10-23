@@ -18,6 +18,7 @@ import {
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { User } from "../../../services/models/User";
+import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
 type EditUserParams = {
   id: string;
   loading: () => void;
@@ -56,8 +57,8 @@ const EditUserInternalComponent: React.SFC<
     setSureToDelete(false);
   };
   return (
-    <>
-      <MDBContainer>
+    <PageCenterWrapper classWrapper="lgx-page-wrapper">
+      <MDBContainer className="pepepe">
         <MDBModal isOpen={sureToDelete}>
           <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
           <MDBModalBody>
@@ -80,10 +81,16 @@ const EditUserInternalComponent: React.SFC<
           user={userToEdit}
         ></EditUserComponent>
       )}
-      <button type="button" onClick={deleteUser} className="btn btn-danger">
-        Eliminar
-      </button>
-    </>
+      <div className="row">
+        <button
+          type="button"
+          onClick={deleteUser}
+          className="btn btn-danger btn-full-width"
+        >
+          Eliminar
+        </button>
+      </div>
+    </PageCenterWrapper>
   );
 };
 

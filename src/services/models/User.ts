@@ -16,3 +16,14 @@ export interface User {
   speaker: boolean;
   organizer: boolean;
 }
+
+export interface BadgeDetail {
+  Id: number;
+  BadgeId: string;
+  BadgeUrl: string;
+  BadgeImageUrl: string;
+  IssuerUrl: string;
+  Image: string;
+  Name: string;
+  Description: string;
+}

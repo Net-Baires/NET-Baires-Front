@@ -38,6 +38,8 @@ import { UserProfile } from "./Profile/UserProfile";
 import { CheckAssistanceGeneral } from "./Admin/Events/CheckAssistanceGeneral";
 import { EventsInLiveToDo } from "./Admin/Events/EventsInLiveToDo";
 import { ReadOrganizedCode } from "./MemberLogged/ReadOrganizedCode";
+import { BadgeShowDetail } from "./Badges/BadgeShowDetail";
+import { BadgesList } from "./Badges/BadgesList";
 
 interface AppProps {
   isLoading: boolean;
@@ -50,156 +52,103 @@ export const App: React.SFC<AppProps> = props => {
     <>
       <Router history={historyRouter}>
         <Header></Header>
-
         <Switch>
           <Route exact path="/" component={Home} />
-          <main>
-            <LoadingOverlay
-              className="lgx-post-wrapper"
-              active={props.isLoading}
-              spinner
-              text="Procesando..."
-            >
-              <section>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-xs-12">
-                      <Route exact path="/organizers" component={Organizers} />
-                      <Route exact path="/JoinSlack" component={JoinSlack} />
-                      <Route
-                        exact
-                        path="/organizers/:id(\d+)?"
-                        component={OrganizerDetail}
-                      />
+          <LoadingOverlay active={props.isLoading} spinner text="Procesando...">
+            <Route exact path="/organizers" component={Organizers} />
+            <Route exact path="/JoinSlack" component={JoinSlack} />
+            <Route
+              exact
+              path="/organizers/:id(\d+)?"
+              component={OrganizerDetail}
+            />
 
-                      <Route
-                        exact
-                        path="/speaker/:id(\d+)?"
-                        component={SpeakerDetail}
-                      />
+            <Route exact path="/speaker/:id(\d+)?" component={SpeakerDetail} />
 
-                      <Route
-                        exact
-                        path="/members/:id(\d+)/profile"
-                        component={PublicProfile}
-                      />
-                      <Route
-                        exact
-                        path="/sponsor/:id(\d+)?"
-                        component={Sponsor}
-                      />
-                      <Route
-                        exact
-                        path="/login/meetup"
-                        component={MeetupCallBack}
-                      />
-                      <Route
-                        exact
-                        path="/login/eventBrite"
-                        component={EventBriteCallBack}
-                      />
-                      <Route
-                        exact
-                        path="/events/live"
-                        component={EventsInLive}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/member/reportAssistance/:id(\d+)?"
-                        component={ReportAssistance}
-                      />
+            <Route
+              exact
+              path="/members/:id(\d+)/profile"
+              component={PublicProfile}
+            />
+            <Route exact path="/sponsor/:id(\d+)?" component={Sponsor} />
+            <Route exact path="/login/meetup" component={MeetupCallBack} />
+            <Route
+              exact
+              path="/login/eventBrite"
+              component={EventBriteCallBack}
+            />
+            <Route exact path="/badges/:id(\d+)" component={BadgeShowDetail} />
+            <Route exact path="/badges" component={BadgesList} />
 
-                      <PrivateRoute
-                        exact
-                        path="/admin/eventsToSync"
-                        component={EventsToSync}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/events"
-                        component={EventsList}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/events/:id(\d+)?/edit"
-                        component={EditEvent}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/eventsToSync/:id/:platform/sync"
-                        component={SyncEvent}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/sponsors/new"
-                        component={NewSponsor}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/sponsors/:id/edit"
-                        component={EditSponsor}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/events/:id/assistance/general"
-                        component={CheckAssistanceGeneral}
-                      />
+            <Route exact path="/events/live" component={EventsInLive} />
+            <PrivateRoute
+              exact
+              path="/member/reportAssistance/:id(\d+)?"
+              component={ReportAssistance}
+            />
 
-                      <PrivateRoute
-                        exact
-                        path="/admin/sponsors"
-                        component={SponsorsList}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/events/live"
-                        component={EventsInLiveToDo}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/EventLive"
-                        component={EventLive}
-                      />
+            <PrivateRoute
+              exact
+              path="/admin/eventsToSync"
+              component={EventsToSync}
+            />
+            <PrivateRoute exact path="/admin/events" component={EventsList} />
+            <PrivateRoute
+              exact
+              path="/admin/events/:id(\d+)?/edit"
+              component={EditEvent}
+            />
+            <PrivateRoute
+              exact
+              path="/admin/eventsToSync/:id/:platform/sync"
+              component={SyncEvent}
+            />
+            <PrivateRoute
+              exact
+              path="/admin/sponsors/new"
+              component={NewSponsor}
+            />
+            <PrivateRoute
+              exact
+              path="/admin/sponsors/:id/edit"
+              component={EditSponsor}
+            />
+            <PrivateRoute
+              exact
+              path="/admin/events/:id/assistance/general"
+              component={CheckAssistanceGeneral}
+            />
 
-                      <PrivateRoute
-                        exact
-                        path="/member/organizedcode/read"
-                        component={ReadOrganizedCode}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/users"
-                        component={UsersList}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/users/:id(\d+)/Edit"
-                        component={EditUser}
-                      />
-                      <PrivateRoute
-                        exact
-                        path="/admin/users/new"
-                        component={NewUser}
-                      />
+            <PrivateRoute
+              exact
+              path="/admin/sponsors"
+              component={SponsorsList}
+            />
+            <PrivateRoute
+              exact
+              path="/admin/events/live"
+              component={EventsInLiveToDo}
+            />
+            <PrivateRoute exact path="/admin/EventLive" component={EventLive} />
 
-                      <PrivateRoute
-                        exact
-                        path="/profile"
-                        component={UserProfile}
-                      />
+            <PrivateRoute
+              exact
+              path="/member/organizedcode/read"
+              component={ReadOrganizedCode}
+            />
+            <PrivateRoute exact path="/admin/users" component={UsersList} />
+            <PrivateRoute
+              exact
+              path="/admin/users/:id(\d+)/Edit"
+              component={EditUser}
+            />
+            <PrivateRoute exact path="/admin/users/new" component={NewUser} />
 
-                      <Route exact path="/login" component={Login} />
-                      <PrivateRoute
-                        exact
-                        path="/admin/panel"
-                        component={ControlPanel}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </LoadingOverlay>
-          </main>
+            <PrivateRoute exact path="/profile" component={UserProfile} />
+
+            <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/admin/panel" component={ControlPanel} />
+          </LoadingOverlay>
           <Route exact path="*" component={NotFound} />
         </Switch>
         <Footer></Footer>

@@ -5,6 +5,7 @@ import { EditUserComponent } from "./components/EditUserComponent";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { User } from "../../../services/models/User";
+import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
 type NewUserProps = {
   loading: () => void;
   ready: () => void;
@@ -22,12 +23,12 @@ const NewUserComponent: React.SFC<NewUserProps> = ({ loading, ready }) => {
   };
 
   return (
-    <>
+    <PageCenterWrapper classWrapper="lgx-page-wrapper">
       <EditUserComponent
         saveUser={saveUser}
         user={userToEdit}
       ></EditUserComponent>
-    </>
+    </PageCenterWrapper>
   );
 };
 

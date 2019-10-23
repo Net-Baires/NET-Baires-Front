@@ -14,6 +14,8 @@ import { NavLink } from "react-router-dom";
 import Checkbox from "react-simple-checkbox";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
+import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { SearchWrapper } from "../../Common/SearchWrapper";
 
 type UsersListProps = {
   loading: () => void;
@@ -164,31 +166,23 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
   };
 
   return (
-    <>
+    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
       {users && (
-        <div className="card border-primary mb-3">
-          <div className="card-header">Usuarios</div>
-          <div className="card-body">
-            <ToolkitProvider
-              keyField="id"
-              data={users}
-              columns={columns}
-              search
-            >
-              {(props: any) => (
-                <div>
-                  <SearchBar {...props.searchProps} />
-                  <hr />
-                  <BootstrapTable
-                    keyField="id"
-                    {...props.baseProps}
-                    pagination={paginationFactory()}
-                  />
-                </div>
-              )}
-            </ToolkitProvider>
-          </div>
-        </div>
+        <SearchWrapper title="Usuarios">
+          <ToolkitProvider keyField="id" data={users} columns={columns} search>
+            {(props: any) => (
+              <div>
+                <SearchBar {...props.searchProps} />
+                <hr />
+                <BootstrapTable
+                  keyField="id"
+                  {...props.baseProps}
+                  pagination={paginationFactory()}
+                />
+              </div>
+            )}
+          </ToolkitProvider>
+        </SearchWrapper>
       )}
       <NavLink
         className="btn btn-success"
@@ -197,7 +191,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
       >
         Nuevo Usuario
       </NavLink>
-    </>
+    </PageFullWidthWrapper>
   );
 };
 const mapStateToProps = () => ({});

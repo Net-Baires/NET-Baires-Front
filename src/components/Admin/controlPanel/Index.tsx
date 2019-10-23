@@ -1,9 +1,10 @@
 import React from "react";
+import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 
 type ControlPanelProps = {};
 const ControlPanel: React.SFC<ControlPanelProps> = () => {
   return (
-    <>
+    <PageCenterWrapper>
       <article>
         <header>
           <h1 className="title">Panel de Control</h1>
@@ -24,7 +25,7 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
           <p> </p>
         </section> */}
       </article>
-    </>
+    </PageCenterWrapper>
   );
 };
 export default ControlPanel;

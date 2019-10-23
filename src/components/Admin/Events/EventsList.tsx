@@ -6,6 +6,7 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 type EventsProps = {
   name: string;
 };
@@ -15,7 +16,7 @@ type EventsParams = {
 type EventsPropsAndRouter = EventsParams & EventsProps;
 export const EventsList: React.SFC<
   RouteComponentProps<EventsPropsAndRouter>
-> = props => {
+> = () => {
   const [events, setEvents] = useState(new Array<EventDetail>());
   useEffect(() => {
     getEvents().then(s => {
@@ -75,30 +76,32 @@ export const EventsList: React.SFC<
   ];
   return (
     <>
-      <article>
-        <div>
-          {events && (
-            <ToolkitProvider
-              keyField="id"
-              data={events}
-              columns={columns}
-              search
-            >
-              {(props: any) => (
-                <div>
-                  <SearchBar {...props.searchProps} />
-                  <hr />
-                  <BootstrapTable
-                    keyField="id"
-                    {...props.baseProps}
-                    pagination={paginationFactory()}
-                  />
-                </div>
-              )}
-            </ToolkitProvider>
-          )}
-        </div>
-      </article>
+      <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
+        <article>
+          <div>
+            {events && (
+              <ToolkitProvider
+                keyField="id"
+                data={events}
+                columns={columns}
+                search
+              >
+                {(props: any) => (
+                  <div>
+                    <SearchBar {...props.searchProps} />
+                    <hr />
+                    <BootstrapTable
+                      keyField="id"
+                      {...props.baseProps}
+                      pagination={paginationFactory()}
+                    />
+                  </div>
+                )}
+              </ToolkitProvider>
+            )}
+          </div>
+        </article>
+      </PageFullWidthWrapper>
     </>
   );
 };

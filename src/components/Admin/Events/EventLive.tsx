@@ -3,6 +3,8 @@ import { RouteComponentProps } from "react-router-dom";
 import QrReader from "react-qr-scanner";
 import { hasAny } from "../../../services/objectsservices";
 import { reportAssitance } from "../../../services/eventsServices";
+import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 
 type EventLiveProps = {
   name: string;
@@ -54,7 +56,7 @@ export const EventLive: React.SFC<
     width: 400
   };
   return (
-    <>
+    <PageCenterWrapper>
       <div className="card border-primary mb-3 qr-panel">
         <div className="card-header">Lector</div>
         <div className="card-body">
@@ -68,42 +70,6 @@ export const EventLive: React.SFC<
           )}
         </div>
       </div>
-
-      {hasAny(attended) && (
-        <>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Email</th>
-                <th scope="col">Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {attended.map(x => (
-                <tr key={x}>
-                  <td>{x}</td>
-                  <td>
-                    <button
-                      onClick={e => handleDelete(e, x)}
-                      type="button"
-                      className="btn btn-danger"
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button
-            onClick={e => handleSync(e)}
-            type="button"
-            className="btn btn-success"
-          >
-            Sincronizar
-          </button>
-        </>
-      )}
-    </>
+    </PageCenterWrapper>
   );
 };

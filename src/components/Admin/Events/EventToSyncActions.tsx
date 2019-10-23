@@ -12,9 +12,7 @@ type EventToSyncActionsProps = {
   loading: () => void;
   ready: () => void;
 };
-type EventToSyncActionsParams = {
-  id: number;
-};
+type EventToSyncActionsParams = {};
 
 type EventToSyncActionsPropsAndRouter = EventToSyncActionsParams &
   EventToSyncActionsProps;

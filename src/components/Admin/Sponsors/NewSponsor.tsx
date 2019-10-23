@@ -5,6 +5,7 @@ import { newSponsor } from "../../../services/sponsorsServices";
 import EditAllSponsor from "./EditAllSponsor";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
+import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
 type NewSponsorProps = {
   loading: () => void;
   ready: () => void;
@@ -27,9 +28,9 @@ export const NewSponsorComponent: React.SFC<NewSponsorProps> = ({
       });
   };
   return (
-    <>
+    <PageCenterWrapper>
       <EditAllSponsor saveSponsor={handleSaveSponsor}></EditAllSponsor>
-    </>
+    </PageCenterWrapper>
   );
 };
 

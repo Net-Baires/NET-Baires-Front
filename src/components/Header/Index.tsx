@@ -167,6 +167,17 @@ export const Header: React.SFC<HeaderProps> = props => {
                   Sumate a SLACK
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  className="nav-link"
+                  activeClassName="active"
+                  to="/badges"
+                >
+                  Badges
+                </NavLink>
+              </li>
+
               {/* <li className="nav-item">
                 <NavLink
                   exact

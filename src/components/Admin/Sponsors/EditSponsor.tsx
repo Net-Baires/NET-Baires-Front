@@ -6,6 +6,7 @@ import { saveSponsor, getSponsor } from "../../../services/sponsorsServices";
 import { isEmpty } from "../../../services/objectsservices";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
+import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 
 type EditSponsorProps = {
   name: string;
@@ -41,14 +42,14 @@ export const EditSponsorComponent: React.SFC<
       });
   };
   return (
-    <>
+    <PageCenterWrapper>
       {!isEmpty(sponsor) && (
         <EditAllSponsor
           {...sponsor}
           saveSponsor={handleSaveSponsor}
         ></EditAllSponsor>
       )}
-    </>
+    </PageCenterWrapper>
   );
 };
 const mapStateToProps = () => ({});
