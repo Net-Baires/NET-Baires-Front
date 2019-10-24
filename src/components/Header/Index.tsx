@@ -106,18 +106,34 @@ export const Header: React.SFC<HeaderProps> = props => {
             <i className="fa fa-fw fa-mis-eventos-o"></i>
             Sync Eventos
           </a>
-          <a className="nav-link-slide-bar" onClick={handleSyncBadge}>
-            <i className="fa fa-fw fa-ribbon"></i>
-            Sync Badges
-          </a>
+
           <NavLink
             exact
             className="nav-link-slide-bar"
             activeClassName="active"
-            to="/admin/EventLive"
+            to="/admin/badges"
+          >
+            <i className="fa fa-fw fa-ribbon"></i>
+            Lista de Badges
+          </NavLink>
+          <NavLink
+            exact
+            className="nav-link-slide-bar"
+            activeClassName="active"
+            to="/admin/badges/new"
+          >
+            <i className="fa fa-fw fa-hubspot"></i>
+            Nuevo Badge
+          </NavLink>
+
+          <NavLink
+            exact
+            className="nav-link-slide-bar"
+            activeClassName="active"
+            to="/admin/EventLive/Assistance"
           >
             <i className="fa fa-fw fa-mis-eventos-o"></i>
-            Evento en Vivo
+            Recibir Miembros
           </NavLink>
           <NavLink
             exact

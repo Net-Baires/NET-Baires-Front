@@ -16,22 +16,3 @@ export interface Member {
   speaker: boolean;
   organizer: boolean;
 }
-
-export interface BadgeDetail {
-  id: number;
-  badgeId: string;
-  badgeUrl: string;
-  badgeImageUrl: string;
-  created: string;
-  issuerUrl: string;
-  image: string;
-  name: string;
-  description: string;
-}
-export interface BadgeAssign {
-  id: number;
-  badgeUrl: string;
-  badgeImageUrl: string;
-  assigned: boolean;
-  created: string;
-}

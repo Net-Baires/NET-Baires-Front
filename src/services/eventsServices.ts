@@ -22,6 +22,8 @@ export const syncEvent = (idEvent: number): Promise<MeEvent[]> => {
 export const getEventsToSync = (): Promise<EventToSync[]> =>
   getRequest("/events/ToSync");
 export const getEvents = (): Promise<EventDetail[]> => getRequest("/events");
+export const getEventLive = (id: number): Promise<EventDetail> =>
+  getRequest(`/events/${id}/live`);
 
 export const getEventsLive = (): Promise<EventToSync[]> => {
   return getRequest("/events/live");
@@ -31,15 +33,10 @@ export const updateEvent = (
   id: number,
   event: UpdateEvent
 ): Promise<UpdateEvent> => {
-  return fetch(`${Config.api.baseRemote}/events/${id}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: JSON.stringify(event)
-  }).then((x: any) => x.json());
+  return putRequest(
+    `${Config.api.baseRemote}/events/${id}`,
+    JSON.stringify(event)
+  );
 };
 
 export const getEvent = (id: number): Promise<EventDetail> =>
@@ -54,15 +51,7 @@ export const getCheckAssistanceGeneral = (
   getRequest(`/events/${id}/assistance/general`);
 
 export const reportAssitance = (token: string): Promise<EventToSync> => {
-  return fetch(`${Config.api.baseRemote}/events/Assistance/${token}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: ""
-  }).then((x: any) => x.json());
+  return putRequest(`${Config.api.baseRemote}/events/Assistance/${token}`);
 };
 export const reportAssitanceGeneral = (token: string): Promise<EventToSync> => {
   return putRequest(`${Config.api.baseRemote}/assistance/general/${token}`);

@@ -3,10 +3,12 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { BadgeDetail, BadgeAssign } from "../../services/models/Member";
+import { BadgeAssign } from "../../services/models/BadgeAssign";
+import { BadgeDetail } from "../../services/models/BadgeDetail";
 import {
   getBadgesToAssign,
-  assignBadgeToMember
+  assignBadgeToMember,
+  removeBadgeFromMember
 } from "../../services/badgesServices";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { NavLink } from "react-router-dom";
@@ -108,6 +110,13 @@ export const BadgesAssign: React.SFC<BadgesAssignProps> = ({
     badge: BadgeAssign
   ) => {
     event.preventDefault();
+    removeBadgeFromMember(badge.id, memberId).then(s => {
+      setBadges(s);
+      getBadgesToAssign(memberId).then(s => {
+        setBadges(s);
+        loaded();
+      });
+    });
   };
   const handleAddEvent = (
     event: MouseEvent<HTMLButtonElement>,

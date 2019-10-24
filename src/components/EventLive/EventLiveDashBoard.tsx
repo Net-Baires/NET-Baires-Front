@@ -1,65 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, RouteComponentProps } from "react-router";
-import { getCurrentUser } from "../../services/authService";
+import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
-import { getBadge } from "../../services/badgesServices";
-import { Member } from "../../services/models/Member";
-import { BadgeDetail } from "../../services/models/BadgeDetail";
-import { PageCenterWrapper } from "../Common/PageCenterWrapper";
-import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../helpers/DateHelpers";
 import { getMembersInBadge } from "../../services/membersServices";
-import { UsersListToShow } from "../Users/UsersListToShow";
+import { getEventLive } from "../../services/eventsServices";
+import { EventDetail } from "../../services/models/Events/Event";
+import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 
-type BadgeDetailProps = {
+type EventLiveDashBoardProps = {
   loading: () => void;
   ready: () => void;
 };
-type BadgeDetailParams = {
+type EventLiveDashBoardParams = {
   id: string;
 };
 
-type BadgeDetailPropsAndRouter = BadgeDetailParams & BadgeDetailProps;
-export const BadgeShowDetailComponent: React.SFC<
-  RouteComponentProps<BadgeDetailPropsAndRouter> & BadgeDetailProps
+type EventLiveDashBoardPropsAndRouter = EventLiveDashBoardParams &
+  EventLiveDashBoardProps;
+export const EventLiveDashBoardComponent: React.SFC<
+  RouteComponentProps<EventLiveDashBoardPropsAndRouter> &
+    EventLiveDashBoardProps
 > = ({ match, loading, ready }) => {
-  const [badge, setBadge] = useState({} as BadgeDetail);
-  const [members, setMembers] = useState(new Array<Member>());
+  const [event, setEvent] = useState({} as EventDetail);
   useEffect(() => {
     loading();
-    getBadge(+match.params.id).then(x => {
-      setBadge(x);
-      ready();
-    });
-  }, []);
-  useEffect(() => {
-    loading();
-    getMembersInBadge(+match.params.id).then(x => {
-      setMembers(x);
+    getEventLive(+match.params.id).then(x => {
+      setEvent(x);
       ready();
     });
   }, []);
 
-  const user = getCurrentUser();
   return (
     <PageFullWidthWrapper classWrapper="lgx-post-wrapper">
       <article>
         <header>
           <figure>
-            <a href={badge.badgeUrl}>
-              <img src={badge.badgeImageUrl} alt="New" />
-            </a>
+            <img src={event.imageUrl} alt="New" />
           </figure>
           <div className="text-area">
             <div className="hits-area">
               <div className="date">
-                <a href={badge.issuerUrl} target="blank">
+                <a href="#" target="blank">
                   <i className="fa fa-user"></i> NET-Baires
                 </a>
                 <a href="#">
                   <i className="fa fa-calendar"></i>{" "}
-                  {formatStringDate(badge.created)}
+                  {/* {formatStringDate(event.created)} */}
                 </a>
                 <a href="#">
                   <i className="fa fa-folder"></i> News
@@ -72,19 +59,17 @@ export const BadgeShowDetailComponent: React.SFC<
                 </a>
               </div>
             </div>
-            <h1 className="title">{badge.name}</h1>
+            <h1 className="title">{event.title}</h1>
           </div>
         </header>
         <section>
-          <p>{badge.description}</p>
+          <p>{event.description}</p>
         </section>
         <footer>
           <div className="row">
             <div className="col-xs-12">
               <h4 className="title">Miembros</h4>
-              <div className="lgx-share">
-                <UsersListToShow members={members}></UsersListToShow>
-              </div>
+              <div className="lgx-share"></div>
             </div>
           </div>
         </footer>
@@ -103,7 +88,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const BadgeShowDetail = connect(
+export const EventLiveDashBoard = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BadgeShowDetailComponent);
+)(EventLiveDashBoardComponent);

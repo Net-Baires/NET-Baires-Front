@@ -5,17 +5,17 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { getBadges } from "../../services/badgesServices";
 import { PageCenterWrapper } from "../Common/PageCenterWrapper";
-import { BadgeDetail } from "../../services/models/Member";
+import { BadgeDetail } from "../../services/models/BadgeDetail";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../helpers/DateHelpers";
 import { NavLink } from "react-router-dom";
 
-type BadgeListProps = {
+type BadgesListPublicProps = {
   loading: () => void;
   ready: () => void;
 };
 
-export const BadgesListComponent: React.SFC<BadgeListProps> = ({
+export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
   loading,
   ready
 }) => {
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const BadgesList = connect(
+export const BadgesListPublic = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BadgesListComponent);
+)(BadgesListPublicComponent);

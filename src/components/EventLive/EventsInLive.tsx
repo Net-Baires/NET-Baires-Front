@@ -2,6 +2,7 @@ import React, { useState, useEffect, MouseEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { EventToSync } from "../../services/models/Events/EventToSync";
 import { getEventsLive } from "../../services/eventsServices";
+import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 type EventsInLiveToSyncProps = {
   name: string;
 };
@@ -24,8 +25,12 @@ export const EventsInLive: React.SFC<
     getEventsLive().then(s => setEventoToSync(s));
   }, []);
 
-  const handleCancelEvent = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleLiveEvent = (
+    event: MouseEvent<HTMLButtonElement>,
+    eventToSync: EventToSync
+  ) => {
     event.preventDefault();
+    history.push(`events/${eventToSync.id}/live`);
   };
   const handleInfoEvent = (
     event: MouseEvent<HTMLButtonElement>,
@@ -35,7 +40,7 @@ export const EventsInLive: React.SFC<
     history.push(`/member/reportAssistance/${eventToSync.id}`);
   };
   return (
-    <>
+    <PageFullWidthWrapper>
       {EventsInLiveToSync && (
         <table className="table">
           <thead className="thead-light">
@@ -64,8 +69,8 @@ export const EventsInLive: React.SFC<
                   </button>
                   <button
                     type="button"
-                    onClick={e => handleCancelEvent(e, event)}
-                    className="btn btn-secondary"
+                    onClick={e => handleLiveEvent(e, event)}
+                    className="btn btn-success"
                   >
                     Detalle
                   </button>
@@ -75,6 +80,6 @@ export const EventsInLive: React.SFC<
           </tbody>
         </table>
       )}
-    </>
+    </PageFullWidthWrapper>
   );
 };

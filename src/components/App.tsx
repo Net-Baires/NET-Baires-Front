@@ -25,13 +25,13 @@ import { EditEvent } from "./Admin/Events/EditEvent";
 import { EventsToSync } from "./Admin/Events/EventsToSync";
 import { SponsorsList } from "./Admin/Sponsors/SponsorsList";
 import MeetupCallBack from "./Login/MeetupCallBack";
-import { EventLive } from "./Admin/Events/EventLive";
+import { EventLiveAssistance } from "./Admin/Events/EventLiveAssistance";
 import { UsersList } from "./Admin/Users/UsersList";
 import { EditUser } from "./Admin/Users/EditUser";
 import { NewUser } from "./Admin/Users/NewUser";
 import EventBriteCallBack from "./Login/EventBriteCallBack";
 import { PublicProfile } from "./Profile/PublicProfile";
-import { EventsInLive } from "./Events/EventsInLive";
+import { EventsInLive } from "./EventLive/EventsInLive";
 import { ReportAssistance } from "./ReportAssistance/Index";
 import { JoinSlack } from "./JoinSlack/Index";
 import { UserProfile } from "./Profile/UserProfile";
@@ -39,7 +39,10 @@ import { CheckAssistanceGeneral } from "./Admin/Events/CheckAssistanceGeneral";
 import { EventsInLiveToDo } from "./Admin/Events/EventsInLiveToDo";
 import { ReadOrganizedCode } from "./MemberLogged/ReadOrganizedCode";
 import { BadgeShowDetail } from "./Badges/BadgeShowDetail";
-import { BadgesList } from "./Badges/BadgesList";
+import { BadgesListPublic } from "./Badges/BadgesListPublic";
+import { NewBadge } from "./Admin/Badges/NewBadge";
+import { EditBadge } from "./Admin/Badges/EditBadge";
+import { BadgesList } from "./Admin/Badges/BadgesList";
 
 interface AppProps {
   isLoading: boolean;
@@ -78,7 +81,7 @@ export const App: React.SFC<AppProps> = props => {
               component={EventBriteCallBack}
             />
             <Route exact path="/badges/:id(\d+)" component={BadgeShowDetail} />
-            <Route exact path="/badges" component={BadgesList} />
+            <Route exact path="/badges" component={BadgesListPublic} />
 
             <Route exact path="/events/live" component={EventsInLive} />
             <PrivateRoute
@@ -129,7 +132,16 @@ export const App: React.SFC<AppProps> = props => {
               path="/admin/events/live"
               component={EventsInLiveToDo}
             />
-            <PrivateRoute exact path="/admin/EventLive" component={EventLive} />
+            <PrivateRoute
+              exact
+              path="/admin/EventLive/Assistance"
+              component={EventLiveAssistance}
+            />
+            <PrivateRoute
+              exact
+              path="/EventLive/:id(\d+)"
+              component={EventLiveAssistance}
+            />
 
             <PrivateRoute
               exact
@@ -143,6 +155,14 @@ export const App: React.SFC<AppProps> = props => {
               component={EditUser}
             />
             <PrivateRoute exact path="/admin/users/new" component={NewUser} />
+
+            <PrivateRoute exact path="/admin/badges" component={BadgesList} />
+            <PrivateRoute
+              exact
+              path="/admin/badges/:id(\d+)/Edit"
+              component={EditBadge}
+            />
+            <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
 
             <PrivateRoute exact path="/profile" component={UserProfile} />
 

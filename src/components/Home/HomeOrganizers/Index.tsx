@@ -3,113 +3,74 @@ import { getOrganizers } from "../../../services/organizersServices";
 import { NavLink } from "react-router-dom";
 import { Speaker } from "../../../services/models/speaker";
 import { SecureElement } from "../../../components/Auth/SecureElement";
+import { Member } from "../../../services/models/Member";
 
 type HomeOrganizersProps = {};
 const HomeOrganizers: React.SFC<HomeOrganizersProps> = () => {
-  let organizerDefault: Speaker[] = [];
-  const [organizer, setOrganizers] = useState(organizerDefault);
+  let organizerDefault: Member[] = [];
+  const [organizers, setOrganizers] = useState(organizerDefault);
   useEffect(() => {
     getOrganizers().then(x => setOrganizers(x));
   }, []);
   return (
     <>
-      <section>
-        <div id="lgx-testimonial" className="lgx-testimonial">
-          <div className="lgx-inner">
-            <div className="container">
-              <div className="row">
-                <div className="col-xs-12">
-                  <div className="lgx-heading">
-                    <h2 className="heading">Organizadores de la Comunidad</h2>
-                    <h3 className="subheading">
-                      Estos son los miembros que trabajan por la comunidad
-                    </h3>
+      {organizers && (
+        <section>
+          <div id="lgx-testimonial" className="lgx-testimonial">
+            <div className="lgx-inner">
+              <div className="container">
+                <div className="row">
+                  <div className="col-xs-12">
+                    <div className="lgx-heading">
+                      <h2 className="heading">Organizadores de la Comunidad</h2>
+                      <h3 className="subheading">
+                        Estos son los miembros que trabajan por la comunidad
+                      </h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-                <div
-                  id="lgx-owltestimonial"
-                  className="lgx-owltestimonial lgx-owlnews"
-                >
-                  <div className="item">
-                    <blockquote className="lgx-testi-single">
-                      <p>
-                        <span>This is the best Restaurant in the world</span>{" "}
-                        Proin sodales dapibus magna, et porta leo convallis sed.
-                        Duis tincidunt libero ut neque mollis dignissim. Nullam
-                        ultricies sit amet quam non iaculis. Curabitur convallis
-                        nulla non nibh aliquet rhoncus. Donec at tempus felis.
-                      </p>
-                      <div className="author">
-                        <img src="http://placehold.it/83x83" alt="author"></img>
-                        <h4 className="title">
-                          <a href="#"></a>Jonathon Doe
-                        </h4>
-                        <div className="rate">
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star"></i>
-                        </div>
+                <div className="row">
+                  <div
+                    id="lgx-owltestimonial"
+                    className="lgx-owltestimonial lgx-owlnews"
+                  >
+                    {organizers.map(organizer => (
+                      <div className="item">
+                        <blockquote className="lgx-testi-single">
+                          <p>
+                            <span>
+                              This is the best Restaurant in the world
+                            </span>{" "}
+                            Proin sodales dapibus magna, et porta leo convallis
+                            sed. Duis tincidunt libero ut neque mollis
+                            dignissim. Nullam ultricies sit amet quam non
+                            iaculis. Curabitur convallis nulla non nibh aliquet
+                            rhoncus. Donec at tempus felis.
+                          </p>
+                          <div className="author">
+                            <img src={organizer.picture} alt="author"></img>
+                            <h4 className="title">
+                              <a href="#"></a>
+                              {organizer.firstName} {organizer.firstName}
+                            </h4>
+                            <div className="rate">
+                              <i className="fa fa-star active"></i>
+                              <i className="fa fa-star active"></i>
+                              <i className="fa fa-star active"></i>
+                              <i className="fa fa-star active"></i>
+                              <i className="fa fa-star"></i>
+                            </div>
+                          </div>
+                        </blockquote>
                       </div>
-                    </blockquote>
-                  </div>
-                  <div className="item">
-                    <blockquote className="lgx-testi-single">
-                      <p>
-                        <span>This is the best Restaurant in the world</span>{" "}
-                        Proin sodales dapibus magna, et porta leo convallis sed.
-                        Duis tincidunt libero ut neque mollis dignissim. Nullam
-                        ultricies sit amet quam non iaculis. Curabitur convallis
-                        nulla non nibh aliquet rhoncus. Donec at tempus felis.
-                      </p>
-                      <div className="author">
-                        <img src="http://placehold.it/83x83" alt="author"></img>
-                        <h4 className="title">
-                          <a href="#"></a>Jonathon Doe
-                        </h4>
-                        <div className="rate">
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star"></i>
-                        </div>
-                      </div>
-                    </blockquote>
-                  </div>
-                  <div className="item">
-                    <blockquote className="lgx-testi-single">
-                      <p>
-                        <span>This is the best Restaurant in the world</span>{" "}
-                        Proin sodales dapibus magna, et porta leo convallis sed.
-                        Duis tincidunt libero ut neque mollis dignissim. Nullam
-                        ultricies sit amet quam non iaculis. Curabitur convallis
-                        nulla non nibh aliquet rhoncus. Donec at tempus felis.
-                      </p>
-                      <div className="author">
-                        <img src="http://placehold.it/83x83" alt="author"></img>
-                        <h4 className="title">
-                          <a href="#"></a>Jonathon Doe
-                        </h4>
-                        <div className="rate">
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star active"></i>
-                          <i className="fa fa-star"></i>
-                        </div>
-                      </div>
-                    </blockquote>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
       {/* <h1 className="my-4">Organizadores</h1>
       <div className="row">
         {organizer.map(organizer => (

@@ -1,27 +1,26 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, MouseEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import QrReader from "react-qr-scanner";
-import { hasAny } from "../../../services/objectsservices";
 import { reportAssitance } from "../../../services/eventsServices";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 
-type EventLiveProps = {
+type EventLiveAssistanceProps = {
   name: string;
 };
-type EventLiveParams = {
+type EventLiveAssistanceParams = {
   id: number;
 };
-type EventLivePropsAndRouter = EventLiveParams & EventLiveProps;
-export const EventLive: React.SFC<
-  RouteComponentProps<EventLivePropsAndRouter>
+type EventLiveAssistancePropsAndRouter = EventLiveAssistanceParams &
+  EventLiveAssistanceProps;
+export const EventLiveAssistance: React.SFC<
+  RouteComponentProps<EventLiveAssistancePropsAndRouter>
 > = () => {
   const [attended, setAttended] = useState(new Array<string>());
   const [showReader, setShowReader] = useState(true);
   const handleScan = (data: string) => {
     if (data) {
       setShowReader(false);
-      reportAssitance(data).then(x => {
+      reportAssitance(data).then(() => {
         setShowReader(true);
         const emailOfUser = data.split("|");
         var newArry = [...attended, emailOfUser[0]];
@@ -29,23 +28,6 @@ export const EventLive: React.SFC<
         localStorage.setItem("attendedList", JSON.stringify(newArry));
       });
     }
-  };
-  const handleDelete = (
-    event: MouseEvent<HTMLButtonElement>,
-    email: string
-  ) => {
-    event.preventDefault();
-    const positionToDelete = attended.indexOf(email);
-    const newArry = [
-      ...attended.slice(0, positionToDelete),
-      ...attended.slice(positionToDelete + 1, attended.length)
-    ];
-    setAttended(newArry);
-    localStorage.setItem("attendedList", JSON.stringify(newArry));
-  };
-
-  const handleSync = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
   };
 
   const handleError = (err: any) => {

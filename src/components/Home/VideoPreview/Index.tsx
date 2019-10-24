@@ -1,9 +1,40 @@
-import React from "react";
+import React, { SyntheticEvent, useState } from "react";
+import {
+  MDBModalBody,
+  MDBModal,
+  MDBContainer,
+  MDBModalFooter,
+  MDBBtn,
+  MDBModalHeader
+} from "mdbreact";
 
 type VideoPreviewProps = {};
 const VideoPreview: React.SFC<VideoPreviewProps> = () => {
+  const [openVideoPopup, setOpenVideoPopup] = useState(false);
+
+  const confirmDelete = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const cancel = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const open = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setOpenVideoPopup(true);
+  };
   return (
     <>
+      <MDBContainer>
+        <MDBModal centered={true} size="sm" isOpen={openVideoPopup}>
+          <MDBModalBody className="video-container-popup">
+            <iframe
+              width="1280"
+              height="720"
+              src="https://www.youtube.com/embed/38818Yb9DVQ"
+            ></iframe>
+          </MDBModalBody>
+        </MDBModal>
+      </MDBContainer>
       <section>
         <div id="lgx-video" className="lgx-video">
           <div className="lgx-inner">
@@ -19,7 +50,7 @@ const VideoPreview: React.SFC<VideoPreviewProps> = () => {
                             <a
                               id="myModalLabel"
                               className="icon"
-                              href="#"
+                              onClick={open}
                               data-toggle="modal"
                               data-target="#lgx-modal"
                             >

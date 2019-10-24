@@ -1,11 +1,6 @@
 import React, { MouseEvent, useState, useEffect, SyntheticEvent } from "react";
-import {
-  getUsersToEdit,
-  deleteEditUser,
-  updateUser
-} from "../../../services/userServices";
 import { RouteComponentProps, useHistory } from "react-router";
-import { EditUserComponent } from "./components/EditUserComponent";
+import { EditBadgeComponent } from "./components/EditBadgeComponent";
 import { isEmpty } from "../../../services/objectsservices";
 import {
   MDBContainer,
@@ -17,43 +12,48 @@ import {
 } from "mdbreact";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { Member } from "../../../services/models/Member";
 import { BadgesAssign } from "../../Badges/BadgesAssign";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
-type EditUserParams = {
+import { BadgeDetail } from "../../../services/models/BadgeDetail";
+import {
+  getBadgeToEdit,
+  updateBadge,
+  deleteBadge
+} from "../../../services/badgesServices";
+type EditBadgeParams = {
   id: string;
   loading: () => void;
   ready: () => void;
 };
 
-const EditUserInternalComponent: React.SFC<
-  RouteComponentProps<EditUserParams> & EditUserParams
+const EditBadgeInternalComponent: React.SFC<
+  RouteComponentProps<EditBadgeParams> & EditBadgeParams
 > = ({ loading, ready, ...props }) => {
-  const [userToEdit, setUserToEdit] = useState({} as Member);
+  const [badgeToEdit, setBadgeToEdit] = useState({} as BadgeDetail);
   const [loaded, setLoaded] = useState(false);
   const [sureToDelete, setSureToDelete] = useState(false);
   const history = useHistory();
   useEffect(() => {
-    getUsersToEdit(+props.match.params.id).then(u => {
-      setUserToEdit(u);
+    getBadgeToEdit(+props.match.params.id).then(u => {
+      setBadgeToEdit(u);
       setLoaded(true);
     });
   }, []);
-  const saveUser = (user: Member) => {
+  const savebadge = (badge: BadgeDetail) => {
     loading();
-    updateUser(user.id, user).then(x => {
+    updateBadge(badge.id, badge).then(x => {
       ready();
-      history.push("/admin/users");
+      history.push("/admin/badges");
     });
   };
-  const deleteUser = (event: MouseEvent<HTMLButtonElement>) => {
+  const deletebadge = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSureToDelete(true);
   };
   const confirmDelete = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    deleteEditUser(userToEdit.id).then(c => history.goBack());
+    deleteBadge(badgeToEdit.id).then(c => history.goBack());
   };
   const cancel = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -62,12 +62,12 @@ const EditUserInternalComponent: React.SFC<
 
   return (
     <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
-      <MDBContainer>
+      <MDBContainer className="pepepe">
         <MDBModal isOpen={sureToDelete}>
           <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
           <MDBModalBody>
-            ¿Esta seguro que quiere eliminar al usuario{" "}
-            <b>{userToEdit.email}</b>?
+            ¿Esta seguro que quiere eliminar el badger <b>{badgeToEdit.name}</b>
+            ?
           </MDBModalBody>
           <MDBModalFooter>
             <MDBBtn onClick={cancel} color="secondary">
@@ -79,30 +79,21 @@ const EditUserInternalComponent: React.SFC<
           </MDBModalFooter>
         </MDBModal>
       </MDBContainer>
-      {!isEmpty(userToEdit) && (
-        <EditUserComponent
-          saveUser={saveUser}
-          user={userToEdit}
-        ></EditUserComponent>
+      {!isEmpty(badgeToEdit) && (
+        <EditBadgeComponent
+          saveBadge={savebadge}
+          badge={badgeToEdit}
+        ></EditBadgeComponent>
       )}
       <div className="row">
         <button
           type="button"
-          onClick={deleteUser}
+          onClick={deletebadge}
           className="btn btn-danger btn-full-width"
         >
           Eliminar
         </button>
       </div>
-      {loaded && (
-        <div className="row">
-          <BadgesAssign
-            memberId={userToEdit.id}
-            loading={loading}
-            loaded={ready}
-          ></BadgesAssign>
-        </div>
-      )}
     </PageFullWidthWrapper>
   );
 };
@@ -117,7 +108,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const EditUser = connect(
+export const EditBadge = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditUserInternalComponent);
+)(EditBadgeInternalComponent);

@@ -18,8 +18,8 @@ export const Home: React.SFC<LoginProps> = () => {
       <HomeSponsors></HomeSponsors>
       {/* <LastEvents></LastEvents> */}
       {/* <PhotosSummary></PhotosSummary> */}
-      {/* <HomeOrganizers></HomeOrganizers> */}
-      {/* <VideoPreview></VideoPreview> */}
+      <HomeOrganizers></HomeOrganizers>
+      <VideoPreview></VideoPreview>
     </>
   );
 };
