@@ -2,10 +2,10 @@ import React, { useState, MouseEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { Sponsor } from "../../../services/models/sponsor";
 import { newSponsor } from "../../../services/sponsorsServices";
-import EditAllSponsor from "./EditAllSponsor";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
+import { EditSponsorComponent } from "./components/EditSponsorComponent";
 type NewSponsorProps = {
   loading: () => void;
   ready: () => void;
@@ -16,9 +16,9 @@ export const NewSponsorComponent: React.SFC<NewSponsorProps> = ({
 }) => {
   const history = useHistory();
 
-  const handleSaveSponsor = (sponsor: Sponsor) => {
+  const handleSaveSponsor = (sponsor: Sponsor, logo: File) => {
     loading();
-    newSponsor(sponsor)
+    newSponsor(sponsor, logo)
       .then(() => {
         ready();
         history.push("/admin/sponsors");
@@ -29,7 +29,9 @@ export const NewSponsorComponent: React.SFC<NewSponsorProps> = ({
   };
   return (
     <PageCenterWrapper>
-      <EditAllSponsor saveSponsor={handleSaveSponsor}></EditAllSponsor>
+      <EditSponsorComponent
+        saveSponsor={handleSaveSponsor}
+      ></EditSponsorComponent>
     </PageCenterWrapper>
   );
 };

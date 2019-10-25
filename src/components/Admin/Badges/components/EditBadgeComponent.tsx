@@ -1,30 +1,35 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useEffect } from "react";
 import { FormikProps, Field, Form, withFormik } from "formik";
 import * as yup from "yup";
-import { BadgeDetail } from "../../../../services/models/BadgeDetail";
-interface FormValues extends BadgeDetail {
-  imageData?: FormData;
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { GetBadgeResponse } from "../../../../services/models/BadgeDetail";
+import Draft from "react-wysiwyg-typescript";
+import { EditorState, ContentState } from "draft-js";
+
+interface FormValues extends GetBadgeResponse {
+  imageData?: File;
   imagePreview?: string;
+  descriptionHtml?: EditorState;
 }
 
-var formDataGlobal: FormData;
-export const keepFile = (formData: FormData) => {
-  formDataGlobal = formData;
-};
-export const getFile = (): FormData => {
-  return formDataGlobal;
-};
 const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
   const { touched, errors, isSubmitting, setFieldValue } = props;
+  useEffect(() => {
+    if (props.values.badgeImageUrl != null)
+      setFieldValue("imagePreview", props.values.badgeImageUrl);
+    if (props.values.description != null)
+      setFieldValue(
+        "descriptionHtml",
+        EditorState.createWithContent(
+          ContentState.createFromText(props.values.description)
+        )
+      );
+  }, []);
   const changeFile = (event: MouseEvent<HTMLInputElement>, file: any) => {
     event.preventDefault();
-    // var formData = new FormData();
     setFieldValue("imageData", file);
     const url = URL.createObjectURL(file);
     setFieldValue("imagePreview", url);
-
-    // formData.append("ImageFile", file);
-    // keepFile(formData);
   };
   return (
     <Form
@@ -70,15 +75,17 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
       </div>
       <div className="form-group">
         <label>Descripción</label>
-        <Field
-          component="textarea"
-          type="name"
-          name="description"
-          className="form-control"
+        <Draft
+          wrapperClassName="badge-description-wrapper"
+          editorClassName="badge-description-editor"
+          editorState={props.values.descriptionHtml}
+          onEditorStateChange={state => {
+            setFieldValue("descriptionHtml", state);
+          }}
         />
-        {touched.description && errors.description && (
+        {touched.descriptionHtml && errors.descriptionHtml && (
           <div className="form-error alert alert-danger">
-            {errors.description}
+            {errors.descriptionHtml}
           </div>
         )}
       </div>
@@ -96,9 +103,9 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
   );
 };
 
-interface MyFormProps extends BadgeDetail {
-  saveBadge: (badge: BadgeDetail, image: FormData) => void;
-  imageData?: FormData;
+interface MyFormProps extends GetBadgeResponse {
+  saveBadge: (badge: GetBadgeResponse, image: File) => void;
+  imageData?: File;
 }
 const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: props => {
@@ -108,16 +115,19 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   },
   validationSchema: yup.object<MyFormProps>().shape({
     name: yup.string().required("Campo Requerido"),
-    description: yup.string().required("Campo Requerido")
+    descriptionHtml: yup.string().required("Campo Requerido")
   }),
   handleSubmit: (values: FormValues, { props }) => {
+    values.description = values
+      .descriptionHtml!.getCurrentContent()
+      .getPlainText();
     props.saveBadge(values, values.imageData!);
   }
 })(EditBadgeComponentForm);
 
 type EditBadgeComponentProps = {
-  badge: BadgeDetail;
-  saveBadge: (badge: BadgeDetail, image: FormData) => void;
+  badge: GetBadgeResponse;
+  saveBadge: (badge: GetBadgeResponse, image: File) => void;
 };
 export const EditBadgeComponent: React.SFC<EditBadgeComponentProps> = ({
   badge,

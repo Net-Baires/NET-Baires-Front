@@ -71,28 +71,21 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
   ];
   return (
     <PageFullWidthWrapper>
-      {sponsors && (
-        <SearchWrapper title="Sponsors">
-          <ToolkitProvider
-            keyField="id"
-            data={sponsors}
-            columns={columns}
-            search
-          >
-            {(props: any) => (
-              <div>
-                <SearchBar {...props.searchProps} />
-                <hr />
-                <BootstrapTable
-                  keyField="id"
-                  {...props.baseProps}
-                  pagination={paginationFactory()}
-                />
-              </div>
-            )}
-          </ToolkitProvider>
-        </SearchWrapper>
-      )}
+      <SearchWrapper title="Sponsors">
+        <ToolkitProvider keyField="id" data={sponsors} columns={columns} search>
+          {(props: any) => (
+            <div>
+              <SearchBar {...props.searchProps} />
+              <hr />
+              <BootstrapTable
+                keyField="id"
+                {...props.baseProps}
+                pagination={paginationFactory()}
+              />
+            </div>
+          )}
+        </ToolkitProvider>
+      </SearchWrapper>
       <button type="button" onClick={handleNew} className="btn btn-primary">
         Nuevo Sponsor
       </button>

@@ -12,9 +12,8 @@ import {
 } from "mdbreact";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { BadgesAssign } from "../../Badges/BadgesAssign";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
-import { BadgeDetail } from "../../../services/models/BadgeDetail";
+import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
 import {
   getBadgeToEdit,
   updateBadge,
@@ -29,7 +28,7 @@ type EditBadgeParams = {
 const EditBadgeInternalComponent: React.SFC<
   RouteComponentProps<EditBadgeParams> & EditBadgeParams
 > = ({ loading, ready, ...props }) => {
-  const [badgeToEdit, setBadgeToEdit] = useState({} as BadgeDetail);
+  const [badgeToEdit, setBadgeToEdit] = useState({} as GetBadgeResponse);
   const [loaded, setLoaded] = useState(false);
   const [sureToDelete, setSureToDelete] = useState(false);
   const history = useHistory();
@@ -39,23 +38,23 @@ const EditBadgeInternalComponent: React.SFC<
       setLoaded(true);
     });
   }, []);
-  const savebadge = (badge: BadgeDetail) => {
+  const savebadge = (badge: GetBadgeResponse, file: File) => {
     loading();
-    updateBadge(badge.id, badge).then(x => {
+    updateBadge(badge.id, badge, file).then(x => {
       ready();
       history.push("/admin/badges");
     });
   };
-  const deletebadge = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteBadge = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSureToDelete(true);
   };
-  const confirmDelete = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleConfirmDelete = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     deleteBadge(badgeToEdit.id).then(c => history.goBack());
   };
-  const cancel = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleCancel = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSureToDelete(false);
   };
@@ -70,10 +69,10 @@ const EditBadgeInternalComponent: React.SFC<
             ?
           </MDBModalBody>
           <MDBModalFooter>
-            <MDBBtn onClick={cancel} color="secondary">
+            <MDBBtn onClick={handleCancel} color="secondary">
               Cancelar
             </MDBBtn>
-            <MDBBtn onClick={confirmDelete} color="danger">
+            <MDBBtn onClick={handleConfirmDelete} color="danger">
               Eliminar
             </MDBBtn>
           </MDBModalFooter>
@@ -88,7 +87,7 @@ const EditBadgeInternalComponent: React.SFC<
       <div className="row">
         <button
           type="button"
-          onClick={deletebadge}
+          onClick={handleDeleteBadge}
           className="btn btn-danger btn-full-width"
         >
           Eliminar

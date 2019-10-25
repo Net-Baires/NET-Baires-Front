@@ -11,7 +11,7 @@ import { loading, ready } from "../../../store/loading/actions";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { SearchWrapper } from "../../Common/SearchWrapper";
 import { getBadges } from "../../../services/badgesServices";
-import { BadgeDetail } from "../../../services/models/BadgeDetail";
+import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
 
 type BadgesListProps = {
   loading: () => void;
@@ -21,7 +21,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
   loading,
   ready
 }) => {
-  const [badge, setbadge] = useState(new Array<BadgeDetail>());
+  const [badge, setbadge] = useState(new Array<GetBadgeResponse>());
   const history = useHistory();
   useEffect(() => {
     loading();
@@ -31,25 +31,11 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
     });
   }, []);
   const { SearchBar } = Search;
-  const handleUserEnable = (isChecked: boolean, user: BadgeDetail) => {
-    const updateIndex = badge.indexOf(user);
-    const badgeToUpdate = badge.slice();
-    badgeToUpdate[updateIndex].blocked = isChecked;
-    updateBadge(badgeToUpdate[updateIndex], badge);
-  };
-  const handleUserOrganized = (isChecked: boolean, user: BadgeDetail) => {
-    const updateIndex = badge.indexOf(user);
-    const badgeToUpdate = badge.slice();
-    badgeToUpdate[updateIndex].organized = isChecked;
-    updateBadge(badgeToUpdate[updateIndex], badge);
-  };
-  const handleUserColaborator = (isChecked: boolean, user: BadgeDetail) => {
-    const updateIndex = badge.indexOf(user);
-    const badgeToUpdate = badge.slice();
-    badgeToUpdate[updateIndex].colaborator = isChecked;
-    updateBadge(badgeToUpdate[updateIndex], badge);
-  };
-  const updateBadge = (user: BadgeDetail, badge: Array<BadgeDetail>) => {
+
+  const updateBadge = (
+    user: GetBadgeResponse,
+    badge: Array<GetBadgeResponse>
+  ) => {
     // loading();
     // updateBadge(user.id, user).then(() => {
     //   setbadge(badge);
@@ -72,7 +58,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
         textAlign: "center",
         height: "2px"
       },
-      formatter: (_cellContent: any, badge: BadgeDetail) => (
+      formatter: (_cellContent: any, badge: GetBadgeResponse) => (
         <img
           className="img-preview-badge-assign"
           src={badge.badgeImageUrl}
@@ -85,7 +71,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
         textAlign: "center",
         height: "2px"
       },
-      formatter: (_cellContent: any, badge: BadgeDetail) => (
+      formatter: (_cellContent: any, badge: GetBadgeResponse) => (
         <NavLink
           className="btn btn-primary"
           activeClassName="active"
@@ -98,13 +84,13 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
   ];
   const handleDelete = (
     event: MouseEvent<HTMLButtonElement>,
-    user: BadgeDetail
+    user: GetBadgeResponse
   ) => {
     event.preventDefault();
   };
   const handleEdit = (
     event: MouseEvent<HTMLButtonElement>,
-    user: BadgeDetail
+    user: GetBadgeResponse
   ) => {
     event.preventDefault();
     history.push(`/admin/badge/${user.id}/Edit`);

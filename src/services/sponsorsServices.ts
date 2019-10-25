@@ -1,33 +1,25 @@
 import { Sponsor } from "./models/sponsor";
-import { Config } from "./config";
-import { getToken } from "./authService";
+import {
+  getRequest,
+  PostWithFileRequest,
+  PutWithFileRequest,
+  deleteRequest
+} from "./requestServices";
 
-export const getSponsors = (): Promise<Sponsor[]> => {
-  return fetch(`${Config.api.baseRemote}/sponsors`).then(x => x.json());
-};
-export const getSponsor = (id: number): Promise<Sponsor> => {
-  return fetch(`${Config.api.baseRemote}/sponsors/${id}`).then(x => x.json());
-};
+export const getSponsors = (): Promise<Sponsor[]> =>
+  getRequest(`/sponsors`, new Array<Sponsor>());
 
-export const newSponsor = (newSponsor: Sponsor): Promise<Sponsor> => {
-  return fetch(`${Config.api.baseRemote}/sponsors/`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: JSON.stringify(newSponsor)
-  }).then((x: any) => x.json());
-};
-export const saveSponsor = (id: number, sponsor: Sponsor): Promise<Sponsor> => {
-  return fetch(`${Config.api.baseRemote}/sponsors/${id}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: JSON.stringify(sponsor)
-  }).then((x: any) => x.json());
+export const getSponsor = (id: number): Promise<Sponsor> =>
+  getRequest(`/sponsors/${id}`);
+
+export const newSponsor = (newSponsor: Sponsor, logo: File): Promise<Sponsor> =>
+  PostWithFileRequest(`/sponsors/`, logo, newSponsor);
+
+export const updateSponsor = (
+  id: number,
+  sponsor: Sponsor,
+  logo: File
+): Promise<Sponsor> => PutWithFileRequest(`/sponsors/${id}`, logo, sponsor);
+export const deleteSponsor = (id: number): Promise<boolean> => {
+  return deleteRequest(`/sponsors/${id}`);
 };

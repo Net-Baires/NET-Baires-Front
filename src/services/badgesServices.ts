@@ -3,35 +3,36 @@ import {
   postRequest,
   deleteRequest,
   putRequest,
-  PostWithFileRequest
+  PostWithFileRequest,
+  PutWithFileRequest
 } from "./requestServices";
 import { BadgeAssign } from "./models/BadgeAssign";
-import { BadgeDetail } from "./models/BadgeDetail";
+import { GetBadgeResponse } from "./models/BadgeDetail";
 
 export const syncBadges = (): Promise<boolean> => {
   return getRequest("/badges/sync");
 };
 
-export const getBadge = (id: number): Promise<BadgeDetail> => {
+export const getBadge = (id: number): Promise<GetBadgeResponse> => {
   return getRequest(`/badges/${id}`);
 };
 
-export const getBadgeToEdit = (id: number): Promise<BadgeDetail> => {
+export const getBadgeToEdit = (id: number): Promise<GetBadgeResponse> => {
   return getRequest(`/badges/${id}`);
 };
-export const deleteBadge = (id: number): Promise<BadgeDetail> => {
+export const deleteBadge = (id: number): Promise<GetBadgeResponse> => {
   return deleteRequest(`/badges/${id}`);
 };
 
 export const newBadge = (
-  badge: BadgeDetail,
+  badge: GetBadgeResponse,
   formData: File
-): Promise<BadgeDetail> => {
+): Promise<GetBadgeResponse> => {
   return PostWithFileRequest(`/badges/`, formData, badge);
 };
 
-export const getBadges = (): Promise<BadgeDetail[]> => {
-  return getRequest(`/badges`);
+export const getBadges = (): Promise<GetBadgeResponse[]> => {
+  return getRequest(`/badges`, new Array<GetBadgeResponse>());
 };
 
 export const getBadgesToAssign = (memberId: number): Promise<BadgeAssign[]> => {
@@ -45,9 +46,10 @@ export const assignBadgeToMember = (
 };
 export const updateBadge = (
   badgeId: number,
-  badge: BadgeDetail
+  badge: GetBadgeResponse,
+  formData: File
 ): Promise<BadgeAssign[]> => {
-  return putRequest(`/badges/${badgeId}`, JSON.stringify(badge));
+  return PutWithFileRequest(`/badges/${badgeId}`, formData, badge);
 };
 export const removeBadgeFromMember = (
   badgeId: number,

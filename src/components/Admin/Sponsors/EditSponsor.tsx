@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, MouseEvent, SyntheticEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { Sponsor } from "../../../services/models/sponsor";
-import EditAllSponsor from "./EditAllSponsor";
-import { saveSponsor, getSponsor } from "../../../services/sponsorsServices";
+import {
+  updateSponsor,
+  getSponsor,
+  deleteSponsor
+} from "../../../services/sponsorsServices";
 import { isEmpty } from "../../../services/objectsservices";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
+import {
+  MDBContainer,
+  MDBModal,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBBtn
+} from "mdbreact";
 
 type EditSponsorProps = {
   name: string;
@@ -16,13 +27,15 @@ type EditSponsorParams = {
   ready: () => void;
   id: number;
 };
+import { EditSponsorComponent } from "./components/EditSponsorComponent";
 
 type EditSponsorPropsAndRouter = EditSponsorParams & EditSponsorProps;
-export const EditSponsorComponent: React.SFC<
+export const EditSponsorToExport: React.SFC<
   RouteComponentProps<EditSponsorPropsAndRouter> & EditSponsorParams
 > = ({ loading, ready, ...props }) => {
   const history = useHistory();
   const [sponsor, setSponsor] = useState({} as Sponsor);
+  const [sureToDelete, setSureToDelete] = useState(false);
   useEffect(() => {
     loading();
     getSponsor(props.match.params.id).then(s => {
@@ -30,9 +43,9 @@ export const EditSponsorComponent: React.SFC<
       ready();
     });
   }, []);
-  const handleSaveSponsor = (sponsor: Sponsor) => {
+  const handleSaveSponsor = (sponsor: Sponsor, logo: File) => {
     loading();
-    saveSponsor(props.match.params.id, sponsor)
+    updateSponsor(props.match.params.id, sponsor, logo)
       .then(() => {
         ready();
         history.push("/admin/sponsors");
@@ -41,14 +54,52 @@ export const EditSponsorComponent: React.SFC<
         //mostrar error
       });
   };
+  const handleDeleteSponsor = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSureToDelete(true);
+  };
+  const handleConfirmDelete = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    deleteSponsor(sponsor.id).then(c => history.goBack());
+  };
+  const handleCancel = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSureToDelete(false);
+  };
   return (
     <PageCenterWrapper>
+      <MDBContainer className="pepepe">
+        <MDBModal isOpen={sureToDelete}>
+          <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
+          <MDBModalBody>
+            ¿Esta seguro que quiere eliminar el Sponsor <b>{sponsor.name}</b>?
+          </MDBModalBody>
+          <MDBModalFooter>
+            <MDBBtn onClick={handleCancel} color="secondary">
+              Cancelar
+            </MDBBtn>
+            <MDBBtn onClick={handleConfirmDelete} color="danger">
+              Eliminar
+            </MDBBtn>
+          </MDBModalFooter>
+        </MDBModal>
+      </MDBContainer>
       {!isEmpty(sponsor) && (
-        <EditAllSponsor
+        <EditSponsorComponent
           {...sponsor}
           saveSponsor={handleSaveSponsor}
-        ></EditAllSponsor>
+        ></EditSponsorComponent>
       )}
+      <div className="row">
+        <button
+          type="button"
+          onClick={handleDeleteSponsor}
+          className="btn btn-danger btn-full-width"
+        >
+          Eliminar
+        </button>
+      </div>
     </PageCenterWrapper>
   );
 };
@@ -65,4 +116,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export const EditSponsor = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditSponsorComponent);
+)(EditSponsorToExport);

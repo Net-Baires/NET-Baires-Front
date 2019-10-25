@@ -1,8 +1,10 @@
 import { Config } from "./config";
 import { getToken } from "./authService";
-import { Form } from "formik";
 
-export const getRequest = (url: string) => {
+export const getRequest = <TResponse>(
+  url: string,
+  defaultValue: TResponse | null = null
+) => {
   return fetch(`${Config.api.baseRemote}${url}`, {
     method: "GET",
     headers: {
@@ -10,10 +12,26 @@ export const getRequest = (url: string) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getToken()}`
     }
-  }).then((x: any) => x.json());
+  }).then(response => {
+    if (response.status === 204) return defaultValue;
+    return response.json();
+  });
 };
 
 export const PostWithFileRequest = <TBody>(
+  url: string,
+  file: File,
+  body: TBody
+) => WithFileequest("POST", url, file, body);
+
+export const PutWithFileRequest = <TBody>(
+  url: string,
+  file: File,
+  body: TBody
+) => WithFileequest("PUT", url, file, body);
+
+const WithFileequest = <TBody>(
+  action: string,
   url: string,
   file: File,
   body: TBody
@@ -24,7 +42,7 @@ export const PostWithFileRequest = <TBody>(
     formData.append(key, (body as any)[key])
   );
   const options: RequestInit = {
-    method: "POST",
+    method: action,
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${getToken()}`

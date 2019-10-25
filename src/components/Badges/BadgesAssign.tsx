@@ -4,7 +4,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { BadgeAssign } from "../../services/models/BadgeAssign";
-import { BadgeDetail } from "../../services/models/BadgeDetail";
+import { GetBadgeResponse } from "../../services/models/BadgeDetail";
 import {
   getBadgesToAssign,
   assignBadgeToMember,

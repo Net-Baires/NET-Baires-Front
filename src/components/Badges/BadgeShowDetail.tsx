@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { getBadge } from "../../services/badgesServices";
 import { Member } from "../../services/models/Member";
-import { BadgeDetail } from "../../services/models/BadgeDetail";
+import { GetBadgeResponse } from "../../services/models/BadgeDetail";
 import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../helpers/DateHelpers";
@@ -24,7 +24,7 @@ type BadgeDetailPropsAndRouter = BadgeDetailParams & BadgeDetailProps;
 export const BadgeShowDetailComponent: React.SFC<
   RouteComponentProps<BadgeDetailPropsAndRouter> & BadgeDetailProps
 > = ({ match, loading, ready }) => {
-  const [badge, setBadge] = useState({} as BadgeDetail);
+  const [badge, setBadge] = useState({} as GetBadgeResponse);
   const [members, setMembers] = useState(new Array<Member>());
   useEffect(() => {
     loading();

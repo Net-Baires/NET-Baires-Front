@@ -491,3 +491,14 @@ hr {
   min-height: 128px;
   text-align: center;
 }
+.badge-description-toolbar {
+  min-width: 400px;
+}
+.badge-description-wrapper {
+  min-width: 400px;
+}
+.badge-description-editor {
+  min-width: 400px;
+  min-height: 400px;
+  background-color: #ffffff;
+}

@@ -1,11 +1,8 @@
-export interface BadgeDetail {
+export interface GetBadgeResponse {
   id: number;
-  badgeId: string;
-  badgeUrl: string;
+  created: Date | string;
   badgeImageUrl: string;
-  created: string;
-  issuerUrl: string;
-  image: string;
   name: string;
   description: string;
+  badgeUrl: string;
 }

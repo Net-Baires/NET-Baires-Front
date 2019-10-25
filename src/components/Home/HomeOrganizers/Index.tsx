@@ -35,7 +35,7 @@ const HomeOrganizers: React.SFC<HomeOrganizersProps> = () => {
                     className="lgx-owltestimonial lgx-owlnews"
                   >
                     {organizers.map(organizer => (
-                      <div className="item">
+                      <div key={organizer.id} className="item">
                         <blockquote className="lgx-testi-single">
                           <p>
                             <span>

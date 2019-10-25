@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { getBadges } from "../../services/badgesServices";
 import { PageCenterWrapper } from "../Common/PageCenterWrapper";
-import { BadgeDetail } from "../../services/models/BadgeDetail";
+import { GetBadgeResponse } from "../../services/models/BadgeDetail";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../helpers/DateHelpers";
 import { NavLink } from "react-router-dom";
@@ -19,7 +19,7 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
   loading,
   ready
 }) => {
-  const [badges, setBadges] = useState(new Array<BadgeDetail>());
+  const [badges, setBadges] = useState(new Array<GetBadgeResponse>());
   useEffect(() => {
     loading();
     getBadges().then(x => {
