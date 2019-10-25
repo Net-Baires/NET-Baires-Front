@@ -4,18 +4,58 @@ import { getToken } from "./authService";
 export const getRequest = <TResponse>(
   url: string,
   defaultValue: TResponse | null = null
-) => {
-  return fetch(`${Config.api.baseRemote}${url}`, {
-    method: "GET",
+): Promise<any> => doRequest("GET", url, {}, defaultValue);
+
+export const putRequest = <TBody, TResponse>(
+  url: string,
+  body: TBody = {} as TBody,
+  defaultValue: TResponse | null = null
+): Promise<any> => doRequest("PUT", url, body, defaultValue);
+
+export const postRequest = <TBody, TResponse>(
+  url: string,
+  body: TBody = {} as TBody,
+  defaultValue: TResponse | null = null
+): Promise<any> => doRequest("POST", url, body, defaultValue);
+
+export const deleteRequest = <TBody, TResponse>(
+  url: string,
+  body: TBody = {} as TBody,
+  defaultValue: TResponse | null = null
+): Promise<any> => doRequest("DELETE", url, body, defaultValue);
+
+const doRequest = <TBody, TResponse>(
+  method: string,
+  url: string,
+  body: TBody = {} as TBody,
+  defaultValue: TResponse | null = null
+): Promise<TResponse> => {
+  return fetch(
+    `${Config.api.baseRemote}${url}`,
+    generateOptions<TBody>(method, body)
+  ).then(response => {
+    if (response.status === 204) return defaultValue;
+    if (response.status.toString().indexOf("40") >= 0)
+      return Promise.reject(response.status);
+    return response.json();
+  });
+};
+export const generateOptions = <TBody>(
+  method: string,
+  body: TBody
+): RequestInit => {
+  let options: RequestInit = {
+    method: method,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: `Bearer ${getToken()}`
     }
-  }).then(response => {
-    if (response.status === 204) return defaultValue;
-    return response.json();
-  });
+  };
+  if (method != "GET") {
+    options.body = JSON.stringify(body);
+  }
+  return options;
 };
 
 export const postWithFileRequest = <TBody>(
@@ -50,60 +90,6 @@ const WithFileequest = <TBody>(
     body: formData
   };
   return fetch(`${Config.api.baseRemote}${url}`, options).then((x: any) => {
-    var contentType = x.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
-      return x.json();
-    } else {
-      console.log("Oops, we haven't got JSON!");
-    }
-  });
-};
-
-export const putRequest = (url: string, body: string = ""): Promise<any> => {
-  return fetch(`${Config.api.baseRemote}${url}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: body
-  }).then((x: any) => {
-    var contentType = x.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
-      return x.json();
-    } else {
-      console.log("Oops, we haven't got JSON!");
-    }
-  });
-};
-export const postRequest = (url: string, body: string = ""): Promise<any> => {
-  return fetch(`${Config.api.baseRemote}${url}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: body
-  }).then((x: any) => {
-    var contentType = x.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
-      return x.json();
-    } else {
-      console.log("Oops, we haven't got JSON!");
-    }
-  });
-};
-export const deleteRequest = (url: string): Promise<any> => {
-  return fetch(`${Config.api.baseRemote}${url}`, {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    }
-  }).then((x: any) => {
     var contentType = x.headers.get("content-type");
     if (contentType && contentType.indexOf("application/json") !== -1) {
       return x.json();

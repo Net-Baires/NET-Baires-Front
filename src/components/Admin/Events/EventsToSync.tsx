@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { EventToSyncActions } from "./EventToSyncActions";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { formatStringDate } from "../../../helpers/DateHelpers";
 
 type EventsToSyncProps = {
   name: string;
@@ -65,7 +66,7 @@ const EventsToSyncComponent: React.SFC<
               <tr key={event.id}>
                 <th scope="row">{event.id}</th>
                 <td>{event.title}</td>
-                <td>{event.date}</td>
+                <td>{formatStringDate(event.date)}</td>
                 <td>{event.attendedCount}</td>
                 <td>{event.didNotAttendCount}</td>
                 <td>
@@ -98,9 +99,9 @@ const EventsToSyncComponent: React.SFC<
                   <button
                     type="button"
                     onClick={e => handleEditEvent(e, event)}
-                    className="btn btn-primary"
+                    className="btn btn-primary events-actions-button"
                   >
-                    Editar
+                    <i className="far fa-edit"></i>
                   </button>
                 </td>
               </tr>

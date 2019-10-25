@@ -3,6 +3,8 @@ import { RouteComponentProps, useHistory } from "react-router-dom";
 import { EventToSync } from "../../services/models/Events/EventToSync";
 import { getEventsLive } from "../../services/eventsServices";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
+import { NotFound } from "../Common/NotFoun";
+import { isEmpty } from "../../services/objectsservices";
 type EventsInLiveToSyncProps = {
   name: string;
 };
@@ -30,7 +32,7 @@ export const EventsInLive: React.SFC<
     eventToSync: EventToSync
   ) => {
     event.preventDefault();
-    history.push(`events/${eventToSync.id}/live`);
+    history.push(`/events/${eventToSync.id}/live`);
   };
   const handleInfoEvent = (
     event: MouseEvent<HTMLButtonElement>,
@@ -41,7 +43,7 @@ export const EventsInLive: React.SFC<
   };
   return (
     <PageFullWidthWrapper>
-      {EventsInLiveToSync && (
+      {!isEmpty(EventsInLiveToSync) ? (
         <table className="table">
           <thead className="thead-light">
             <tr>
@@ -79,6 +81,11 @@ export const EventsInLive: React.SFC<
             ))}
           </tbody>
         </table>
+      ) : (
+        <NotFound
+          title="No hay eventos en LIVE"
+          message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
+        ></NotFound>
       )}
     </PageFullWidthWrapper>
   );

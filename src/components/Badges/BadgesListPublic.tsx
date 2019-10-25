@@ -9,6 +9,7 @@ import { GetBadgeResponse } from "../../services/models/BadgeDetail";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../helpers/DateHelpers";
 import { NavLink } from "react-router-dom";
+import { NotFound } from "../Common/NotFoun";
 
 type BadgesListPublicProps = {
   loading: () => void;
@@ -20,12 +21,18 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
   ready
 }) => {
   const [badges, setBadges] = useState(new Array<GetBadgeResponse>());
+  const [error, setError] = useState(false);
   useEffect(() => {
     loading();
-    getBadges().then(x => {
-      setBadges(x);
-      ready();
-    });
+    getBadges()
+      .then(x => {
+        setBadges(x);
+        ready();
+      })
+      .catch(e => {
+        ready();
+        setError(true);
+      });
   }, []);
   const user = getCurrentUser();
   return (
@@ -34,7 +41,7 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
         <section>
           <div className="container">
             <div className="row">
-              {badges &&
+              {!error ? (
                 badges.map(badge => (
                   <div className="col-xs-12 col-sm-6 col-md-4">
                     <div className="lgx-single-news lgx-single-news-images">
@@ -48,7 +55,7 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
                           <span>{formatStringDate(badge.created)}</span>
                           <span>
                             by{" "}
-                            <a href={badge.issuerUrl} target="_blank">
+                            <a href="https://net-baires.com.ar" target="_blank">
                               NET-Baires
                             </a>
                           </span>
@@ -65,7 +72,13 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
                       </div>
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <NotFound
+                  title="No hay eventos en LIVE"
+                  message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
+                ></NotFound>
+              )}
             </div>
           </div>
         </section>

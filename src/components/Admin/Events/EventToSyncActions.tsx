@@ -59,32 +59,32 @@ export const EventToSyncActions: React.SFC<
         <button
           type="button"
           onClick={e => handleLiveEvent(e, true)}
-          className="btn btn-success"
+          className="btn btn-success events-actions-button"
         >
-          Comenzar
+          <i className="fas fa-play"></i>
         </button>
       ) : (
         <button
           type="button"
           onClick={e => handleLiveEvent(e, false)}
-          className="btn btn-warning"
+          className="btn btn-warning events-actions-button"
         >
-          Detener
+          <i className="fas fa-stop"></i>
         </button>
       )}
       <button
         type="button"
         onClick={e => handleCloseEvent(e)}
-        className="btn btn-primary"
+        className="btn btn-danger events-actions-button"
       >
-        Cerrar
+        <i className="fas fa-window-close"></i>
       </button>
       <button
         type="button"
         onClick={e => handleSyncEvent(e)}
-        className="btn btn-primary"
+        className="btn btn-info events-actions-button"
       >
-        Syncronizar
+        <i className="fas fa-sync"></i>
       </button>
     </>
   );

@@ -3,7 +3,6 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { UserToEdit } from "../../../services/models/UserToEdit";
 import {
   getAllUsersToEdit,
   enableUser,
@@ -16,13 +15,14 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { SearchWrapper } from "../../Common/SearchWrapper";
+import { Member } from "../../../services/models/Member";
 
 type UsersListProps = {
   loading: () => void;
   ready: () => void;
 };
 const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
-  const [users, setUsers] = useState(new Array<UserToEdit>());
+  const [users, setUsers] = useState(new Array<Member>());
   const history = useHistory();
   useEffect(() => {
     loading();
@@ -32,25 +32,25 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
     });
   }, []);
   const { SearchBar } = Search;
-  const handleUserEnable = (isChecked: boolean, user: UserToEdit) => {
+  const handleUserEnable = (isChecked: boolean, user: Member) => {
     const updateIndex = users.indexOf(user);
     const usersToUpdate = users.slice();
     usersToUpdate[updateIndex].blocked = isChecked;
     updateMember(usersToUpdate[updateIndex], users);
   };
-  const handleUserOrganized = (isChecked: boolean, user: UserToEdit) => {
+  const handleUserOrganized = (isChecked: boolean, user: Member) => {
     const updateIndex = users.indexOf(user);
     const usersToUpdate = users.slice();
     usersToUpdate[updateIndex].organized = isChecked;
     updateMember(usersToUpdate[updateIndex], users);
   };
-  const handleUserColaborator = (isChecked: boolean, user: UserToEdit) => {
+  const handleUserColaborator = (isChecked: boolean, user: Member) => {
     const updateIndex = users.indexOf(user);
     const usersToUpdate = users.slice();
     usersToUpdate[updateIndex].colaborator = isChecked;
     updateMember(usersToUpdate[updateIndex], users);
   };
-  const updateMember = (user: UserToEdit, users: Array<UserToEdit>) => {
+  const updateMember = (user: Member, users: Array<Member>) => {
     loading();
     updateUser(user.id, user).then(() => {
       setUsers(users);
@@ -81,7 +81,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         textAlign: "center",
         height: "2px"
       },
-      formatter: (_cellContent: any, user: UserToEdit) => (
+      formatter: (_cellContent: any, user: Member) => (
         <Checkbox
           checked={user.blocked}
           onChange={(i: boolean) => handleUserEnable(i, user)}
@@ -95,7 +95,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         textAlign: "center",
         height: "2px"
       },
-      formatter: (_cellContent: any, user: UserToEdit) => (
+      formatter: (_cellContent: any, user: Member) => (
         <Checkbox
           checked={user.organized}
           onChange={(i: boolean) => handleUserOrganized(i, user)}
@@ -109,7 +109,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         textAlign: "center",
         height: "2px"
       },
-      formatter: (_cellContent: any, user: UserToEdit) => (
+      formatter: (_cellContent: any, user: Member) => (
         <Checkbox
           checked={user.colaborator}
           onChange={(i: boolean) => handleUserColaborator(i, user)}
@@ -122,7 +122,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         textAlign: "center",
         height: "2px"
       },
-      formatter: (_cellContent: any, user: UserToEdit) => (
+      formatter: (_cellContent: any, user: Member) => (
         <button
           key={user.id}
           onClick={e => handleDelete(e, user)}
@@ -139,7 +139,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         textAlign: "center",
         height: "2px"
       },
-      formatter: (_cellContent: any, user: UserToEdit) => (
+      formatter: (_cellContent: any, user: Member) => (
         <button
           key={user.id}
           onClick={e => handleEdit(e, user)}
@@ -151,16 +151,10 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
       )
     }
   ];
-  const handleDelete = (
-    event: MouseEvent<HTMLButtonElement>,
-    user: UserToEdit
-  ) => {
+  const handleDelete = (event: MouseEvent<HTMLButtonElement>, user: Member) => {
     event.preventDefault();
   };
-  const handleEdit = (
-    event: MouseEvent<HTMLButtonElement>,
-    user: UserToEdit
-  ) => {
+  const handleEdit = (event: MouseEvent<HTMLButtonElement>, user: Member) => {
     event.preventDefault();
     history.push(`/admin/users/${user.id}/Edit`);
   };

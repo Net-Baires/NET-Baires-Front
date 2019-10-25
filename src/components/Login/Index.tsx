@@ -3,6 +3,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { login as loginService } from "../../services/loginServices";
 import { useHistory } from "react-router-dom";
 import { Config } from "../../services/config";
+import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 
 var ClientOAuth2 = require("client-oauth2");
 type LoginProps = {};
@@ -47,26 +48,28 @@ const Login: React.SFC<LoginProps> = props => {
   };
   return (
     <>
-      {!isLoggued && (
-        <article>
-          <header>
-            <h1>Autenticate</h1>
-          </header>
-          <section>
-            <p>
-              <input
-                onClick={handleLoginMeetup}
-                type="submit"
-                className="fadeIn fourth"
-                value="Meetup"
-              />
-            </p>
-          </section>
-          {/* <section>
+      <PageCenterWrapper>
+        {!isLoggued && (
+          <article>
+            <header>
+              <h1>Autenticarse</h1>
+            </header>
+            <section>
+              <p>
+                <input
+                  onClick={handleLoginMeetup}
+                  type="submit"
+                  className="fadeIn fourth"
+                  value="Meetup"
+                />
+              </p>
+            </section>
+            {/* <section>
           <p> </p>
         </section> */}
-        </article>
-      )}
+          </article>
+        )}
+      </PageCenterWrapper>
     </>
   );
 };

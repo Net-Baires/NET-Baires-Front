@@ -509,3 +509,26 @@ hr {
 a {
   cursor: pointer !important;
 }
+.events-actions-button {
+  width: 50px;
+}
+
+.not-found-component {
+  text-align: center;
+}
+.not-found-component img {
+  margin: 20px;
+}
+.not-found-component h1 {
+  font-weight: bold;
+  font-size: 35px;
+}
+.not-found-component p {
+  font-size: 20px;
+  margin: 45px;
+}
+
+.not-found-component h2 {
+  font-size: 100px;
+  margin: 0px 0px 20px 20px;
+}

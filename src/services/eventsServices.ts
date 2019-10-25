@@ -6,7 +6,6 @@ import {
   EventToReportAssistance
 } from "./models/Events/EventDetailToSync";
 import { Config } from "./config";
-import { getToken } from "./authService";
 import { getRequest, putRequest } from "./requestServices";
 
 export const getNextEvent = (): Promise<EventDetail> => {
@@ -33,10 +32,7 @@ export const updateEvent = (
   id: number,
   event: UpdateEvent
 ): Promise<UpdateEvent> => {
-  return putRequest(
-    `${Config.api.baseRemote}/events/${id}`,
-    JSON.stringify(event)
-  );
+  return putRequest(`/events/${id}`, event);
 };
 
 export const getEvent = (id: number): Promise<EventDetail> =>
@@ -51,10 +47,10 @@ export const getCheckAssistanceGeneral = (
   getRequest(`/events/${id}/assistance/general`);
 
 export const reportAssitance = (token: string): Promise<EventToSync> => {
-  return putRequest(`${Config.api.baseRemote}/events/Assistance/${token}`);
+  return putRequest(`/events/Assistance/${token}`);
 };
 export const reportAssitanceGeneral = (token: string): Promise<EventToSync> => {
-  return putRequest(`${Config.api.baseRemote}/assistance/general/${token}`);
+  return putRequest(`/assistance/general/${token}`);
 };
 
 export const getEventToSync = (

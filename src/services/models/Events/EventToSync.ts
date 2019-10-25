@@ -8,6 +8,6 @@ export interface EventToSync {
   platform: string;
   eventId: string;
   done: boolean;
-  date: Date;
+  date: string;
   live: boolean;
 }

@@ -11,6 +11,7 @@ import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../helpers/DateHelpers";
 import { getMembersInBadge } from "../../services/membersServices";
 import { UsersListToShow } from "../Users/UsersListToShow";
+import { NotFound } from "../Common/NotFoun";
 
 type BadgeDetailProps = {
   loading: () => void;
@@ -24,14 +25,22 @@ type BadgeDetailPropsAndRouter = BadgeDetailParams & BadgeDetailProps;
 export const BadgeShowDetailComponent: React.SFC<
   RouteComponentProps<BadgeDetailPropsAndRouter> & BadgeDetailProps
 > = ({ match, loading, ready }) => {
+  const history = useHistory();
+
   const [badge, setBadge] = useState({} as GetBadgeResponse);
   const [members, setMembers] = useState(new Array<Member>());
+  const [found, setFound] = useState(false);
   useEffect(() => {
     loading();
-    getBadge(+match.params.id).then(x => {
-      setBadge(x);
-      ready();
-    });
+    getBadge(+match.params.id)
+      .then(x => {
+        setBadge(x);
+        setFound(true);
+        ready();
+      })
+      .catch(e => {
+        history.push("/notfound");
+      });
   }, []);
   useEffect(() => {
     loading();
@@ -54,7 +63,7 @@ export const BadgeShowDetailComponent: React.SFC<
           <div className="text-area">
             <div className="hits-area">
               <div className="date">
-                <a href={badge.issuerUrl} target="blank">
+                <a href="https://net-baires.com.ar" target="blank">
                   <i className="fa fa-user"></i> NET-Baires
                 </a>
                 <a href="#">

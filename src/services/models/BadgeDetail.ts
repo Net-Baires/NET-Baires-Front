@@ -1,6 +1,6 @@
 export interface GetBadgeResponse {
   id: number;
-  created: Date | string;
+  created: string;
   badgeImageUrl: string;
   name: string;
   description: string;

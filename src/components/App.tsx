@@ -1,11 +1,10 @@
-import React, { MouseEvent } from "react";
+import React from "react";
 import "../styles/index.css";
 import Login from "./Login";
 import { Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home/Index";
 import historyRouter from "./router/HistoryRouter";
 import Organizers from "./organizers";
-import NotFound from "./notFound";
 import Header from "./Header";
 import Footer from "./Footer";
 import Sponsor from "./Sponsor";
@@ -43,6 +42,8 @@ import { BadgesListPublic } from "./Badges/BadgesListPublic";
 import { NewBadge } from "./Admin/Badges/NewBadge";
 import { EditBadge } from "./Admin/Badges/EditBadge";
 import { BadgesList } from "./Admin/Badges/BadgesList";
+import NotFoundPage from "./NotFoundPage/Index";
+import { EventLiveDashBoard } from "./EventLive/EventLiveDashBoard";
 
 interface AppProps {
   isLoading: boolean;
@@ -84,6 +85,12 @@ export const App: React.SFC<AppProps> = props => {
             <Route exact path="/badges" component={BadgesListPublic} />
 
             <Route exact path="/events/live" component={EventsInLive} />
+            <Route
+              exact
+              path="/events/:id(\d+)/live"
+              component={EventLiveDashBoard}
+            />
+
             <PrivateRoute
               exact
               path="/member/reportAssistance/:id(\d+)?"
@@ -132,6 +139,7 @@ export const App: React.SFC<AppProps> = props => {
               path="/admin/events/live"
               component={EventsInLiveToDo}
             />
+
             <PrivateRoute
               exact
               path="/admin/EventLive/Assistance"
@@ -168,8 +176,10 @@ export const App: React.SFC<AppProps> = props => {
 
             <Route exact path="/login" component={Login} />
             <PrivateRoute exact path="/admin/panel" component={ControlPanel} />
+            <Route exact path="/notfound" component={NotFoundPage} />
           </LoadingOverlay>
-          <Route exact path="*" component={NotFound} />
+
+          <Route exact path="*" component={NotFoundPage} />
         </Switch>
         <Footer></Footer>
       </Router>
