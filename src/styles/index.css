@@ -484,3 +484,10 @@ hr {
 .video-container-popup {
   width: 2000px;
 }
+.image-badge-prview {
+  max-width: 250px;
+  max-height: 250px;
+  min-width: 128px;
+  min-height: 128px;
+  text-align: center;
+}

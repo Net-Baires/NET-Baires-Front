@@ -34,6 +34,34 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
       }}
     >
       <div className="form-group">
+        <img
+          className="image-badge-prview"
+          src={props.values.imagePreview}
+        ></img>
+      </div>
+      <div className="input-group">
+        <div className="custom-file">
+          <label>Badge</label>
+
+          <input
+            type="file"
+            onChange={(event: any) => {
+              changeFile(event, event.currentTarget.files[0]);
+            }}
+            name="file"
+            className="custom-file-input"
+            id="inputGroupFile01"
+            aria-describedby="inputGroupFileAddon01"
+          ></input>
+          <label className="custom-file-label">Choose file</label>
+          {touched.imageData && errors.imageData && (
+            <div className="form-error alert alert-danger">
+              {errors.imageData}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="form-group">
         <label>Nombre</label>
         <Field type="name" name="name" className="form-control" />
         {touched.name && errors.name && (
@@ -42,33 +70,19 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
       </div>
       <div className="form-group">
         <label>Descripción</label>
-        <Field type="name" name="description" className="form-control" />
+        <Field
+          component="textarea"
+          type="name"
+          name="description"
+          className="form-control"
+        />
         {touched.description && errors.description && (
           <div className="form-error alert alert-danger">
             {errors.description}
           </div>
         )}
       </div>
-      <div className="form-group">
-        <label>Badge</label>
-        <input
-          id="file"
-          name="file"
-          type="file"
-          onChange={(event: any) => {
-            changeFile(event, event.currentTarget.files[0]);
-          }}
-        />
-        {touched.imageData && errors.imageData && (
-          <div className="form-error alert alert-danger">
-            {errors.imageData}
-          </div>
-        )}
-      </div>
-      <div className="form-group">
-        <label>Preview</label>
-        <img src={props.values.imagePreview}></img>
-      </div>
+
       <div className="form-group">
         <button
           type="submit"
