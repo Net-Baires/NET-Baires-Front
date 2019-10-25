@@ -3,6 +3,7 @@ export interface Member {
   email: string;
   firstName: string;
   lastName: string;
+  workPosition: string;
   blocked: boolean;
   organized: boolean;
   colaborator: boolean;

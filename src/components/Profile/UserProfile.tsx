@@ -1,116 +1,181 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 import { FormikProps, Field, Form, withFormik } from "formik";
 import * as yup from "yup";
-import { getUserProfile, updateUser } from "../../services/userServices";
-import { ShareProfile } from "./ShareProfile";
 import { Member } from "../../services/models/Member";
 import { loading, ready } from "../../store/loading/actions";
 import { connect } from "react-redux";
-import { getCurrentUser } from "../../services/authService";
-interface FormValues extends Member {}
+import { getMe, updateMe } from "../../services/profileServices";
+import { isEmpty } from "../../services/objectsservices";
+import Draft from "react-wysiwyg-typescript";
+import { EditorState, ContentState } from "draft-js";
+import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
+import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
+interface FormValues extends Member {
+  imageData?: File;
+  biographyHtml?: EditorState;
+  imagePreview?: string;
+}
 
 const UserProfileForm = (props: FormikProps<FormValues>) => {
-  const { touched, errors, isSubmitting } = props;
+  const { touched, errors, isSubmitting, setFieldValue, initialValues } = props;
+  fillAllFieldWithDefaultValue(initialValues, "");
+  useEffect(() => {
+    if (props.values.picture != null)
+      setFieldValue("imagePreview", props.values.picture);
+
+    if (props.values.biography != null)
+      setFieldValue(
+        "biographyHtml",
+        EditorState.createWithContent(
+          ContentState.createFromText(props.values.biography)
+        )
+      );
+  }, []);
+
+  const changeFile = (event: MouseEvent<HTMLInputElement>, file: any) => {
+    event.preventDefault();
+    setFieldValue("imageData", file);
+    const url = URL.createObjectURL(file);
+    setFieldValue("imagePreview", url);
+  };
   return (
     <>
-      <ShareProfile urlToShare={"www.google.com.ar"}></ShareProfile>
-      <div className="row">
-        <div className="col-sm-12 col-md-6 col-md-offset-3">
-          <Form className="lgx-contactform">
-            <div className="form-group">
-              <label>Nombre</label>
-              <Field
-                type="text"
-                name="firstName"
-                className="form-control lgxname"
-              />
-              {touched.firstName && errors.firstName && (
-                <div className="form-error alert alert-danger">
-                  {errors.firstName}
-                </div>
-              )}
+      <div className="form-group">
+        <img
+          className="image-badge-prview"
+          src={props.values.imagePreview}
+        ></img>
+      </div>
+      <div className="input-group">
+        <div className="custom-file">
+          <label>Logo</label>
+
+          <input
+            type="file"
+            onChange={(event: any) => {
+              changeFile(event, event.currentTarget.files[0]);
+            }}
+            name="file"
+            className="custom-file-input"
+            id="inputGroupFile01"
+            aria-describedby="inputGroupFileAddon01"
+          ></input>
+          <label className="custom-file-label">Choose file</label>
+          {touched.imageData && errors.imageData && (
+            <div className="form-error alert alert-danger">
+              {errors.imageData}
             </div>
-            <div className="form-group">
-              <label>Apellido</label>
-              <Field type="lastName" name="lastName" className="form-control" />
-              {touched.lastName && errors.lastName && (
-                <div className="form-error alert alert-danger">
-                  {errors.lastName}
-                </div>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Email</label>
-              <Field
-                disabled
-                type="email"
-                name="email"
-                className="form-control"
-              />
-              {touched.email && errors.email && (
-                <div className="form-error alert alert-danger">
-                  {errors.email}
-                </div>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Linkedin</label>
-              <Field type="linkedin" name="linkedin" className="form-control" />
-              {touched.linkedin && errors.linkedin && (
-                <div className="form-error alert alert-danger">
-                  {errors.linkedin}
-                </div>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Twitter</label>
-              <Field type="twitter" name="twitter" className="form-control" />
-              {touched.twitter && errors.twitter && (
-                <div className="form-error alert alert-danger">
-                  {errors.twitter}
-                </div>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Github</label>
-              <Field type="github" name="github" className="form-control" />
-              {touched.github && errors.github && (
-                <div className="form-error alert alert-danger">
-                  {errors.github}
-                </div>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Biografía</label>
-              <Field
-                component="textarea"
-                rows="4"
-                type="biography"
-                name="biography"
-                className="form-control"
-              />
-              {touched.biography && errors.biography && (
-                <div className="form-error alert alert-danger">
-                  {errors.biography}
-                </div>
-              )}
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn btn-primary"
-            >
-              Submit
-            </button>
-          </Form>
+          )}
         </div>
       </div>
+      <Form className="lgx-contactform">
+        <div className="form-group">
+          <label>Nombre</label>
+          <Field
+            type="text"
+            name="firstName"
+            className="form-control lgxname"
+          />
+          {touched.firstName && errors.firstName && (
+            <div className="form-error alert alert-danger">
+              {errors.firstName}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Apellido</label>
+          <Field type="lastName" name="lastName" className="form-control" />
+          {touched.lastName && errors.lastName && (
+            <div className="form-error alert alert-danger">
+              {errors.lastName}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Posición laboral</label>
+          <Field
+            type="workPosition"
+            name="workPosition"
+            className="form-control"
+          />
+          {touched.workPosition && errors.workPosition && (
+            <div className="form-error alert alert-danger">
+              {errors.workPosition}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Email</label>
+          <Field disabled type="email" name="email" className="form-control" />
+          {touched.email && errors.email && (
+            <div className="form-error alert alert-danger">{errors.email}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Linkedin User</label>
+          <Field type="linkedin" name="linkedin" className="form-control" />
+          {touched.linkedin && errors.linkedin && (
+            <div className="form-error alert alert-danger">
+              {errors.linkedin}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Twitter User</label>
+          <Field type="twitter" name="twitter" className="form-control" />
+          {touched.twitter && errors.twitter && (
+            <div className="form-error alert alert-danger">
+              {errors.twitter}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Github User</label>
+          <Field type="github" name="github" className="form-control" />
+          {touched.github && errors.github && (
+            <div className="form-error alert alert-danger">{errors.github}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Instagram User</label>
+          <Field type="instagram" name="instagram" className="form-control" />
+          {touched.instagram && errors.instagram && (
+            <div className="form-error alert alert-danger">
+              {errors.instagram}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Biografía</label>
+          <Draft
+            wrapperClassName="badge-description-wrapper"
+            editorClassName="badge-description-editor"
+            editorState={props.values.biographyHtml}
+            onEditorStateChange={state => {
+              setFieldValue("biographyHtml", state);
+            }}
+          />
+          {touched.biographyHtml && errors.biographyHtml && (
+            <div className="form-error alert alert-danger">
+              {errors.biographyHtml}
+            </div>
+          )}
+        </div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn btn-primary"
+        >
+          Submit
+        </button>
+      </Form>
     </>
   );
 };
 
 interface MyFormProps extends Member {
-  saveUser: (user: Member) => void;
+  saveUser: (me: Member, picture: File) => void;
+  imageData?: File;
 }
 const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: props => {
@@ -124,10 +189,12 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
     linkedin: yup.string(),
     twitter: yup.string(),
     github: yup.string(),
+    biography: yup.string(),
     instagram: yup.string()
   }),
   handleSubmit: (values: any, { props }) => {
-    props.saveUser(values);
+    values.biography = values.biographyHtml!.getCurrentContent().getPlainText();
+    props.saveUser(values, values.imageData!);
   }
 })(UserProfileForm);
 
@@ -135,34 +202,34 @@ type EditAllSponsorProps = {
   loading: () => void;
   ready: () => void;
 };
-const UserProfileComponent: React.SFC<EditAllSponsorProps> = props => {
+const UserProfileComponent: React.SFC<EditAllSponsorProps> = () => {
   const [userDetail, setUserDetail] = useState({} as Member);
-
   useEffect(() => {
-    getUserProfile(getCurrentUser().id).then(u => {
-      if (u.firstName == null) u.firstName = "";
-      if (u.lastName == null) u.lastName = "";
-      if (u.biography == null) u.biography = "";
-      if (u.github == null) u.github = "";
-      if (u.instagram == null) u.instagram = "";
-      if (u.linkedin == null) u.linkedin = "";
-      if (u.picture == null) u.picture = "";
-      if (u.twitter == null) u.twitter = "";
-      setUserDetail(u);
+    loading();
+    getMe().then(x => {
+      setUserDetail(x);
+      ready();
     });
   }, []);
-  const saveUser = (user: Member) => {
+
+  const saveUser = (me: Member, picture: File) => {
     loading();
-    updateUser(user.id, user).then(x => {
+    updateMe(me, picture).then(() => {
       ready();
     });
   };
   return (
     <>
-      <EditAllUserFormik
-        {...userDetail}
-        saveUser={saveUser}
-      ></EditAllUserFormik>
+      {/* <ShareProfile urlToShare={"www.google.com.ar"}></ShareProfile> */}
+
+      {!isEmpty(userDetail) && (
+        <PageFullWidthWrapper>
+          <EditAllUserFormik
+            {...userDetail}
+            saveUser={saveUser}
+          ></EditAllUserFormik>
+        </PageFullWidthWrapper>
+      )}
     </>
   );
 };

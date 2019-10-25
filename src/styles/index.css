@@ -502,3 +502,10 @@ hr {
   min-height: 400px;
   background-color: #ffffff;
 }
+.profile-img {
+  width: 360px;
+  height: 387px;
+}
+a {
+  cursor: pointer !important;
+}

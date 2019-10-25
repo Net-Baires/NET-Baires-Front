@@ -1,11 +1,11 @@
 import { Config } from "./config";
 import { getToken, getCurrentUser } from "./authService";
-import { getRequest } from "./requestServices";
+import { getRequest, putRequest } from "./requestServices";
 import { Member } from "./models/Member";
 
-export const getUserProfile = (id: number = 10): Promise<Member> => {
-  return getRequest(`/members/${getCurrentUser().id}`);
-};
+// export const getUserProfile = (id: number = 10): Promise<Member> => {
+//   return getRequest(`/members/${getCurrentUser().id}`);
+// };
 
 export const getAllUsersToEdit = (): Promise<Member[]> => {
   return fetch(`${Config.api.baseRemote}/members`).then(x => x.json());
@@ -39,15 +39,7 @@ export const newUser = (user: Member): Promise<Member> => {
   }).then((x: any) => x.json());
 };
 export const updateUser = (id: number, user: Member): Promise<Member> => {
-  return fetch(`${Config.api.baseRemote}/members/${id}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: JSON.stringify(user)
-  }).then((x: any) => x.json());
+  return putRequest(`${Config.api.baseRemote}/members/${id}`);
 };
 
 export const enableUser = (

@@ -24,7 +24,8 @@ const HomeOrganizers: React.SFC<HomeOrganizersProps> = () => {
                     <div className="lgx-heading">
                       <h2 className="heading">Organizadores de la Comunidad</h2>
                       <h3 className="subheading">
-                        Estos son los miembros que trabajan por la comunidad
+                        Estos son los miembros que trabajan por nuestra
+                        comunidad
                       </h3>
                     </div>
                   </div>
@@ -35,33 +36,65 @@ const HomeOrganizers: React.SFC<HomeOrganizersProps> = () => {
                     className="lgx-owltestimonial lgx-owlnews"
                   >
                     {organizers.map(organizer => (
-                      <div key={organizer.id} className="item">
-                        <blockquote className="lgx-testi-single">
-                          <p>
-                            <span>
-                              This is the best Restaurant in the world
-                            </span>{" "}
-                            Proin sodales dapibus magna, et porta leo convallis
-                            sed. Duis tincidunt libero ut neque mollis
-                            dignissim. Nullam ultricies sit amet quam non
-                            iaculis. Curabitur convallis nulla non nibh aliquet
-                            rhoncus. Donec at tempus felis.
-                          </p>
-                          <div className="author">
-                            <img src={organizer.picture} alt="author"></img>
-                            <h4 className="title">
-                              <a href="#"></a>
-                              {organizer.firstName} {organizer.firstName}
-                            </h4>
-                            <div className="rate">
-                              <i className="fa fa-star active"></i>
-                              <i className="fa fa-star active"></i>
-                              <i className="fa fa-star active"></i>
-                              <i className="fa fa-star active"></i>
-                              <i className="fa fa-star"></i>
+                      <div className="lgx-single-speaker2 lgx-single-speaker3">
+                        <figure>
+                          <a className="profile-img" href="speakers.html">
+                            <img src={organizer.picture} alt="Speaker" />
+                          </a>
+                          <figcaption>
+                            <div className="social-group">
+                              {organizer.twitter && (
+                                <a
+                                  className="sp-tw"
+                                  href={
+                                    "https://twitter.com/" + organizer.twitter
+                                  }
+                                >
+                                  <i className="fab fa-twitter"></i>
+                                </a>
+                              )}
+                              {organizer.github && (
+                                <a
+                                  className="sp-insta"
+                                  href={
+                                    "https://github.com/" + organizer.github
+                                  }
+                                >
+                                  <i className="fab fa-github"></i>
+                                </a>
+                              )}
+                              {organizer.instagram && (
+                                <a
+                                  className="sp-insta"
+                                  href={
+                                    "https://www.instagram.com/" +
+                                    organizer.instagram
+                                  }
+                                >
+                                  <i className="fab fa-instagram"></i>
+                                </a>
+                              )}
+                              {organizer.linkedin && (
+                                <a
+                                  className="sp-in"
+                                  href={"linkedin.com/in/" + organizer.linkedin}
+                                >
+                                  <i className="fab fa-linkedin-in"></i>
+                                </a>
+                              )}
                             </div>
-                          </div>
-                        </blockquote>
+                            <div className="speaker-info">
+                              <h3 className="title">
+                                <a href="speaker.html">
+                                  {organizer.firstName} {organizer.lastName}
+                                </a>
+                              </h3>
+                              <h4 className="subtitle">
+                                {organizer.workPosition}
+                              </h4>
+                            </div>
+                          </figcaption>
+                        </figure>
                       </div>
                     ))}
                   </div>

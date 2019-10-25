@@ -18,13 +18,13 @@ export const getRequest = <TResponse>(
   });
 };
 
-export const PostWithFileRequest = <TBody>(
+export const postWithFileRequest = <TBody>(
   url: string,
   file: File,
   body: TBody
 ) => WithFileequest("POST", url, file, body);
 
-export const PutWithFileRequest = <TBody>(
+export const putWithFileRequest = <TBody>(
   url: string,
   file: File,
   body: TBody
