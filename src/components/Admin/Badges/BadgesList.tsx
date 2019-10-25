@@ -132,9 +132,9 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
       <NavLink
         className="btn btn-success"
         activeClassName="active"
-        to="/admin/badge/new"
+        to="/admin/badges/new"
       >
-        Nuevo Usuario
+        Nuevo Badge
       </NavLink>
     </PageFullWidthWrapper>
   );

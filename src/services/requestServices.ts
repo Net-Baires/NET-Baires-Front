@@ -1,5 +1,6 @@
 import { Config } from "./config";
 import { getToken } from "./authService";
+import { Form } from "formik";
 
 export const getRequest = (url: string) => {
   return fetch(`${Config.api.baseRemote}${url}`, {
@@ -12,20 +13,25 @@ export const getRequest = (url: string) => {
   }).then((x: any) => x.json());
 };
 
-export const PostWithFileRequest = (
+export const PostWithFileRequest = <TBody>(
   url: string,
-  formData: FormData,
-  body: string = ""
-): Promise<any> => {
-  return fetch(`${Config.api.baseRemote}${url}`, {
+  file: File,
+  body: TBody
+) => {
+  var formData = new FormData();
+  formData.append("ImageFile", file);
+  Object.keys(body).forEach((key: string) =>
+    formData.append(key, (body as any)[key])
+  );
+  const options: RequestInit = {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "Content-Type",
       Authorization: `Bearer ${getToken()}`
     },
     body: formData
-  }).then((x: any) => {
+  };
+  return fetch(`${Config.api.baseRemote}${url}`, options).then((x: any) => {
     var contentType = x.headers.get("content-type");
     if (contentType && contentType.indexOf("application/json") !== -1) {
       return x.json();

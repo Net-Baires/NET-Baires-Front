@@ -25,9 +25,9 @@ export const deleteBadge = (id: number): Promise<BadgeDetail> => {
 
 export const newBadge = (
   badge: BadgeDetail,
-  formData: FormData
+  formData: File
 ): Promise<BadgeDetail> => {
-  return PostWithFileRequest(`/badges/`, formData);
+  return PostWithFileRequest(`/badges/`, formData, badge);
 };
 
 export const getBadges = (): Promise<BadgeDetail[]> => {

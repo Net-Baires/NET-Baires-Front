@@ -14,11 +14,14 @@ const NewBadgeComponent: React.SFC<NewBadgeProps> = ({ loading, ready }) => {
   const [badgeToEdit] = useState({} as BadgeDetail);
   const history = useHistory();
 
-  const saveBadge = (badge: BadgeDetail, image: FormData) => {
+  const saveBadge = (
+    badge: BadgeDetail & { imageData?: FormData },
+    image: FormData
+  ) => {
     loading();
     newBadge(badge, image).then(x => {
       ready();
-      history.push("admin/badges");
+      history.push("/admin/badges");
     });
   };
 
