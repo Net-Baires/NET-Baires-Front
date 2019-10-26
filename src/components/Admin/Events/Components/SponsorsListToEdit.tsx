@@ -1,24 +1,89 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 import { getSponsors } from "../../../../services/sponsorsServices";
-import { EventDetail } from "../../../../services/models/Events/Event";
+import {
+  EventDetail,
+  SponsorEvent
+} from "../../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../../store/loading/actions";
-import { EventsAttendees } from "../../../../services/models/sponsor";
+import { EventsAttendees, Sponsor } from "../../../../services/models/sponsor";
 type SponsorsListToEditProps = {
   eventInEdition: EventDetail;
+  updateSponsors: (spopnsors: SponsorEvent[]) => void;
   loading: () => void;
   ready: () => void;
 };
 
-const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = () => {
+const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
+  eventInEdition,
+  updateSponsors
+}) => {
   const [] = useState({} as EventDetail);
   const [sponsors, setSponsors] = useState(new Array<SponsorToEvent>());
   const [] = useState(new Array<EventsAttendees>());
 
   useEffect(() => {
-    getSponsors().then(sponsors => {});
+    getSponsors().then(sponsors => {
+      setSponsors(
+        sponsors.map(x => {
+          var colaboration = eventInEdition.sponsors.find(
+            s => s.sponsorId == x.id
+          );
+          return new SponsorToEvent(
+            x,
+            colaboration != null,
+            colaboration ? colaboration.detail : ""
+          );
+        })
+      );
+    });
   }, []);
 
+  const handleSponsorColaborate = (
+    eventInput: MouseEvent<HTMLButtonElement>,
+    sponsor: SponsorToEvent,
+    collaborated: boolean
+  ) => {
+    eventInput.preventDefault();
+    const updateIndex = sponsors.indexOf(sponsor);
+    const usersToUpdate = sponsors.slice();
+    usersToUpdate[updateIndex].collaborated = collaborated;
+
+    updateSponsors(
+      usersToUpdate.reduce((acc, item) => {
+        if (item.collaborated) {
+          acc.push({
+            sponsorId: item.sponsor.id,
+            detail: item.collaboratedDetail
+          });
+        }
+        return acc;
+      }, new Array<SponsorEvent>())
+    );
+    setSponsors(usersToUpdate);
+  };
+  const handleOnChangeDescription = (
+    eventInput: ChangeEvent<HTMLTextAreaElement>,
+    sponsor: SponsorToEvent
+  ) => {
+    eventInput.preventDefault();
+    const updateIndex = sponsors.indexOf(sponsor);
+    const usersToUpdate = sponsors.slice();
+    usersToUpdate[updateIndex].collaboratedDetail = eventInput.target.value;
+
+    updateSponsors(
+      usersToUpdate.reduce((acc, item) => {
+        if (item.collaborated) {
+          acc.push({
+            sponsorId: item.sponsor.id,
+            detail: item.collaboratedDetail
+          });
+        }
+        return acc;
+      }, new Array<SponsorEvent>())
+    );
+    setSponsors(usersToUpdate);
+  };
   return (
     <>
       <h2>Sponsors</h2>
@@ -35,24 +100,50 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = () => {
           </thead>
           <tbody>
             {sponsors.map(sponsor => (
-              <tr key={sponsor.id}>
-                <th scope="row">{sponsor.id}</th>
-                <td>{sponsor.title}</td>
+              <tr key={sponsor.sponsor.id}>
+                <th scope="row">{sponsor.sponsor.id}</th>
+                <td>{sponsor.sponsor.name}</td>
                 <td>
                   <img
                     className="sponsors-list-img"
-                    src={sponsor.picture}
+                    src={sponsor.sponsor.logoUrl}
                   ></img>
                 </td>
                 <td>
                   <textarea
                     className="form-control"
-                    value={sponsor.description}
+                    disabled={!sponsor.collaborated}
+                    value={sponsor.collaboratedDetail}
+                    onChange={e => handleOnChangeDescription(e, sponsor)}
                     rows={4}
                   ></textarea>
                 </td>
+                <td className="button-action">
+                  {sponsor.collaborated ? (
+                    <button
+                      onClick={e => handleSponsorColaborate(e, sponsor, false)}
+                      type="button"
+                      className="btn btn-success"
+                    >
+                      <i className="fas fa-check"></i>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={e => handleSponsorColaborate(e, sponsor, true)}
+                      type="button"
+                      className="btn btn-danger"
+                    >
+                      <i className="fas fa-times"></i>
+                    </button>
+                  )}
+                </td>
 
-                <td></td>
+                <td>
+                  <img
+                    className="img-preview-member"
+                    src={sponsor.sponsor.logoUrl}
+                  ></img>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -62,13 +153,11 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = () => {
   );
 };
 class SponsorToEvent {
-  id: number = 0;
-  title: string = "";
-  picture: string = "";
-  description: string = "";
-  colaboratedWith: string = "";
-  colaborated: boolean = false;
-  constructor() {}
+  constructor(
+    public sponsor: Sponsor,
+    public collaborated: boolean,
+    public collaboratedDetail: string = ""
+  ) {}
 }
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: any) => ({

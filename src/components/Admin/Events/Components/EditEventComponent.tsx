@@ -5,6 +5,7 @@ import { EventDetail } from "../../../../services/models/Events/Event";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Draft from "react-wysiwyg-typescript";
 import { EditorState, ContentState } from "draft-js";
+
 interface FormValues extends EventDetail {
   imageData?: File;
   imagePreview?: string;

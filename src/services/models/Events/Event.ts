@@ -9,6 +9,11 @@ export interface EventDetail {
   done: boolean;
   live: boolean;
   platform: string;
+  sponsors: SponsorEvent[];
+}
+export interface SponsorEvent {
+  sponsorId: number;
+  detail: string;
 }
 
 export interface UpdateEvent {

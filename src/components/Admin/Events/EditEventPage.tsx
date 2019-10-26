@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { getEvent, updateEvent } from "../../../services/eventsServices";
-import { EventDetail } from "../../../services/models/Events/Event";
+import {
+  EventDetail,
+  SponsorEvent
+} from "../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { EventToSyncActions } from "./EventToSyncActions";
@@ -42,6 +45,10 @@ const EditEventPageComponent: React.SFC<
     });
   };
   const handlerReadyAction = () => loadEvent();
+  const updateSponsors = (sponsors: SponsorEvent[]) => {
+    event.sponsors = sponsors;
+    console.log(event);
+  };
   return (
     <PageFullWidthWrapper>
       {!isEmpty(event) && (
@@ -50,8 +57,14 @@ const EditEventPageComponent: React.SFC<
             saveEvent={handleSave}
             event={event}
           ></EditEventComponent>
+          {event.sponsors.map(x => {
+            <label>{x.detail}</label>;
+          })}
           <AttendeesListToEdit eventInEdition={event}></AttendeesListToEdit>
-          <SponsorsListToEdit eventInEdition={event}></SponsorsListToEdit>
+          <SponsorsListToEdit
+            updateSponsors={updateSponsors}
+            eventInEdition={event}
+          ></SponsorsListToEdit>
         </>
       )}
 
