@@ -8,6 +8,7 @@ export interface EventDetail {
   url: string;
   done: boolean;
   live: boolean;
+  platform: string;
 }
 
 export interface UpdateEvent {

@@ -54,6 +54,7 @@ const EventsToSyncComponent: React.SFC<
               <th scope="col">#</th>
               <th scope="col">Titulo</th>
               <th scope="col">Fecha</th>
+              <th scope="col">Registrados</th>
               <th scope="col">Asistieron</th>
               <th scope="col">No Asistieron</th>
               <th scope="col">Plataforma</th>
@@ -67,8 +68,9 @@ const EventsToSyncComponent: React.SFC<
                 <th scope="row">{event.id}</th>
                 <td>{event.title}</td>
                 <td>{formatStringDate(event.date)}</td>
-                <td>{event.attendedCount}</td>
-                <td>{event.didNotAttendCount}</td>
+                <td>{event.registered}</td>
+                <td>{event.attended}</td>
+                <td>{event.didNotAttend}</td>
                 <td>
                   <img
                     className="img-preview-list-events"

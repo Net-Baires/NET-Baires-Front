@@ -28,9 +28,6 @@ export const getEventLive = (id: number): Promise<EventDetail> =>
 export const getEventsLive = (): Promise<EventToSync[]> => {
   return getRequest("/events/live");
 };
-export const GetAttendees = (idEvent: number): Promise<EventsAttendees[]> => {
-  return getRequest(`/events/${idEvent}/attendees`);
-};
 
 export const updateEvent = (
   id: number,

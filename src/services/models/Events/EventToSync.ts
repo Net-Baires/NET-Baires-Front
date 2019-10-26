@@ -1,7 +1,8 @@
 export interface EventToSync {
   id: number;
-  attendedCount: number;
-  didNotAttendCount: number;
+  attended: number;
+  registered: number;
+  didNotAttend: number;
   title: string;
   description: string;
   imageUrl: string;

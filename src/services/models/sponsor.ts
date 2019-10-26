@@ -8,10 +8,15 @@ export interface Sponsor {
 }
 
 export interface EventsAttendees {
-  Id: number;
-  Email: string;
-  FirstName: string;
-  LastName: string;
-  Picture: string;
-  Status: string;
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  picture: string;
+  organizer: boolean;
+  speaker: boolean;
+  didNotAttend: boolean;
+  attended: boolean;
+  notifiedAbsence: boolean;
+  doNotKnow: boolean;
 }

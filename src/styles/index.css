@@ -1,7 +1,9 @@
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
+  font-size: 1.3rem !important;
   background: #f1f1f1 !important;
+  font-weight: normal !important;
 }
 
 a {
@@ -531,4 +533,10 @@ a {
 .not-found-component h2 {
   font-size: 100px;
   margin: 0px 0px 20px 20px;
+}
+.img-preview-member {
+  width: 40px;
+}
+.button-action {
+  text-align: center;
 }

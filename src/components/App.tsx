@@ -20,7 +20,6 @@ import { SyncEvent } from "./Admin/Events/SyncEvent";
 import { EventsList } from "./Admin/Events/EventsList";
 import { EditSponsor } from "./Admin/Sponsors/EditSponsor";
 import { NewSponsor } from "./Admin/Sponsors/NewSponsor";
-import { EditEvent } from "./Admin/Events/EditEvent";
 import { EventsToSync } from "./Admin/Events/EventsToSync";
 import { SponsorsList } from "./Admin/Sponsors/SponsorsList";
 import MeetupCallBack from "./Login/MeetupCallBack";
@@ -44,6 +43,7 @@ import { EditBadge } from "./Admin/Badges/EditBadge";
 import { BadgesList } from "./Admin/Badges/BadgesList";
 import NotFoundPage from "./NotFoundPage/Index";
 import { EventLiveDashBoard } from "./EventLive/EventLiveDashBoard";
+import { EditEventPage } from "./Admin/Events/EditEventPage";
 
 interface AppProps {
   isLoading: boolean;
@@ -106,7 +106,7 @@ export const App: React.SFC<AppProps> = props => {
             <PrivateRoute
               exact
               path="/admin/events/:id(\d+)?/edit"
-              component={EditEvent}
+              component={EditEventPage}
             />
             <PrivateRoute
               exact
