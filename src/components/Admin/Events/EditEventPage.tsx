@@ -13,6 +13,7 @@ import { isEmpty } from "../../../services/objectsservices";
 import { EditEventComponent } from "./Components/EditEventComponent";
 import { AttendeesListToEdit } from "./Components/AttendeesListToEdit";
 import { SponsorsListToEdit } from "./Components/SponsorsListToEdit";
+import { Accordion, Card, Button } from "react-bootstrap";
 type EditEventPageProps = {
   name: string;
   loading: () => void;
@@ -39,40 +40,79 @@ const EditEventPageComponent: React.SFC<
   useEffect(() => loadEvent(), []);
 
   const handleSave = (evt: EventDetail) => {
+    loading();
+    evt.sponsors = event.sponsors;
     updateEvent(event.id, evt).then(() => {
       ready();
-      history.push("/admin/events");
     });
   };
   const handlerReadyAction = () => loadEvent();
   const updateSponsors = (sponsors: SponsorEvent[]) => {
     event.sponsors = sponsors;
+    setEvent(event);
     console.log(event);
   };
   return (
     <PageFullWidthWrapper>
       {!isEmpty(event) && (
         <>
-          <EditEventComponent
-            saveEvent={handleSave}
-            event={event}
-          ></EditEventComponent>
-          {event.sponsors.map(x => {
-            <label>{x.detail}</label>;
-          })}
-          <AttendeesListToEdit eventInEdition={event}></AttendeesListToEdit>
-          <SponsorsListToEdit
-            updateSponsors={updateSponsors}
-            eventInEdition={event}
-          ></SponsorsListToEdit>
+          <Accordion defaultActiveKey="0">
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  Editar Evento
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <EditEventComponent
+                    saveEvent={handleSave}
+                    event={event}
+                  ></EditEventComponent>
+                  {event.sponsors.map(x => {
+                    <label>{x.detail}</label>;
+                  })}
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                  Editar asistentes al evento
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="1">
+                <Card.Body>
+                  <AttendeesListToEdit
+                    eventInEdition={event}
+                  ></AttendeesListToEdit>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                  Evitar Sponsors
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="2">
+                <Card.Body>
+                  {" "}
+                  <SponsorsListToEdit
+                    updateSponsors={updateSponsors}
+                    eventInEdition={event}
+                  ></SponsorsListToEdit>
+                  <EventToSyncActions
+                    eventAction={event}
+                    loading={loading}
+                    ready={handlerReadyAction}
+                  ></EventToSyncActions>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
         </>
       )}
-
-      <EventToSyncActions
-        eventAction={event}
-        loading={loading}
-        ready={handlerReadyAction}
-      ></EventToSyncActions>
     </PageFullWidthWrapper>
   );
 };

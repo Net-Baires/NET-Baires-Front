@@ -109,12 +109,8 @@ const EditAlleventFormik = withFormik<MyFormProps, FormValues>({
     };
   },
   validationSchema: yup.object<MyFormProps>().shape({
-    email: yup
-      .string()
-      .email()
-      .required("Email Requerido"),
-    firstName: yup.string().required("Nombre Requerido"),
-    lastName: yup.string().required("Nombre Requerido")
+    title: yup.string().required("Campo Requerido"),
+    description: yup.string().required("Campo Requerido")
   }),
   handleSubmit: (values: any, { props }) => {
     props.saveEvent(values);

@@ -137,13 +137,6 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
                     </button>
                   )}
                 </td>
-
-                <td>
-                  <img
-                    className="img-preview-member"
-                    src={sponsor.sponsor.logoUrl}
-                  ></img>
-                </td>
               </tr>
             ))}
           </tbody>
