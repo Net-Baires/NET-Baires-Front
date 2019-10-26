@@ -7,6 +7,12 @@ import {
 import { connect } from "react-redux";
 import { loading, ready } from "../../../../store/loading/actions";
 import { EventsAttendees, Sponsor } from "../../../../services/models/sponsor";
+import { SearchWrapper } from "../../../Common/SearchWrapper";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import BootstrapTable from "react-bootstrap-table-next";
+
+import paginationFactory from "react-bootstrap-table2-paginator";
+
 type SponsorsListToEditProps = {
   eventInEdition: EventDetail;
   updateSponsors: (spopnsors: SponsorEvent[]) => void;
@@ -21,21 +27,21 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
   const [] = useState({} as EventDetail);
   const [sponsors, setSponsors] = useState(new Array<SponsorToEvent>());
   const [] = useState(new Array<EventsAttendees>());
+  const { SearchBar } = Search;
 
   useEffect(() => {
     getSponsors().then(sponsors => {
-      setSponsors(
-        sponsors.map(x => {
-          var colaboration = eventInEdition.sponsors.find(
-            s => s.sponsorId == x.id
-          );
-          return new SponsorToEvent(
-            x,
-            colaboration != null,
-            colaboration ? colaboration.detail : ""
-          );
-        })
-      );
+      var spon = sponsors.map(x => {
+        var colaboration = eventInEdition.sponsors.find(
+          s => s.sponsorId == x.id
+        );
+        return new SponsorToEvent(
+          x,
+          colaboration != null,
+          colaboration ? colaboration.detail : ""
+        );
+      });
+      setSponsors(spon);
     });
   }, []);
 
@@ -62,6 +68,72 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
     );
     setSponsors(usersToUpdate);
   };
+  const columns = [
+    {
+      dataField: "sponsor.id",
+      text: "Id"
+    },
+    {
+      dataField: "sponsor.name",
+      text: "Empresa"
+    },
+    {
+      dataField: "logoUrl",
+      text: "Logo",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
+        <img className="sponsors-list-img" src={sponsor.sponsor.logoUrl}></img>
+      )
+    },
+    {
+      text: "Colaboró con",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
+        <textarea
+          className="form-control"
+          disabled={!sponsor.collaborated}
+          value={sponsor.collaboratedDetail}
+          onChange={e => handleOnChangeDescription(e, sponsor)}
+          rows={4}
+        ></textarea>
+      )
+    },
+    {
+      text: "Colaboró con",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
+        <div className="button-action">
+          {sponsor.collaborated ? (
+            <button
+              onClick={e => handleSponsorColaborate(e, sponsor, false)}
+              type="button"
+              className="btn btn-success"
+            >
+              <i className="fas fa-check"></i>
+            </button>
+          ) : (
+            <button
+              onClick={e => handleSponsorColaborate(e, sponsor, true)}
+              type="button"
+              className="btn btn-danger"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          )}
+        </div>
+      )
+    }
+  ];
+
   const handleOnChangeDescription = (
     eventInput: ChangeEvent<HTMLTextAreaElement>,
     sponsor: SponsorToEvent
@@ -86,61 +158,30 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
   };
   return (
     <>
-      <h2>Sponsors</h2>
       {sponsors && (
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Titulo</th>
-              <th scope="col">Logo</th>
-              <th scope="col">Colaboró con</th>
-              <th scope="col">Colaboró</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sponsors.map(sponsor => (
-              <tr key={sponsor.sponsor.id}>
-                <th scope="row">{sponsor.sponsor.id}</th>
-                <td>{sponsor.sponsor.name}</td>
-                <td>
-                  <img
-                    className="sponsors-list-img"
-                    src={sponsor.sponsor.logoUrl}
-                  ></img>
-                </td>
-                <td>
-                  <textarea
-                    className="form-control"
-                    disabled={!sponsor.collaborated}
-                    value={sponsor.collaboratedDetail}
-                    onChange={e => handleOnChangeDescription(e, sponsor)}
-                    rows={4}
-                  ></textarea>
-                </td>
-                <td className="button-action">
-                  {sponsor.collaborated ? (
-                    <button
-                      onClick={e => handleSponsorColaborate(e, sponsor, false)}
-                      type="button"
-                      className="btn btn-success"
-                    >
-                      <i className="fas fa-check"></i>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={e => handleSponsorColaborate(e, sponsor, true)}
-                      type="button"
-                      className="btn btn-danger"
-                    >
-                      <i className="fas fa-times"></i>
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <>
+          <h2>Sponsors</h2>
+          <SearchWrapper title="Usuarios">
+            <ToolkitProvider
+              keyField="id"
+              data={sponsors}
+              columns={columns}
+              search
+            >
+              {(props: any) => (
+                <div>
+                  <SearchBar {...props.searchProps} />
+                  <hr />
+                  <BootstrapTable
+                    keyField="id"
+                    {...props.baseProps}
+                    pagination={paginationFactory()}
+                  />
+                </div>
+              )}
+            </ToolkitProvider>
+          </SearchWrapper>
+        </>
       )}
     </>
   );

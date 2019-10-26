@@ -83,9 +83,11 @@ const EditEventPageComponent: React.SFC<
               </Card.Header>
               <Accordion.Collapse eventKey="1">
                 <Card.Body>
-                  <AttendeesListToEdit
-                    eventInEdition={event}
-                  ></AttendeesListToEdit>
+                  {!isEmpty(event.sponsors) && (
+                    <AttendeesListToEdit
+                      eventInEdition={event}
+                    ></AttendeesListToEdit>
+                  )}
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
