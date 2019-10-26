@@ -1,7 +1,7 @@
 {
   "api": {
     "base": "http://localhost:8080/",
-    "baseRemote": "https://localhost:5001/api"
+    "baseRemote": "https://localhost:5001"
   },
   "integrations": {
     "meetup": {

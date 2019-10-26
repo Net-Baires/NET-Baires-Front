@@ -5,6 +5,7 @@ import { getEventsLive } from "../../services/eventsServices";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { NotFound } from "../Common/NotFoun";
 import { isEmpty } from "../../services/objectsservices";
+import { formatStringDate } from "../../helpers/DateHelpers";
 type EventsInLiveToSyncProps = {
   name: string;
 };
@@ -60,7 +61,7 @@ export const EventsInLive: React.SFC<
                 <th scope="row">{event.id}</th>
                 <td>{event.title}</td>
                 <td>{event.platform}</td>
-                <td>{event.date}</td>
+                <td>{formatStringDate(event.date)}</td>
                 <td>
                   <button
                     type="button"

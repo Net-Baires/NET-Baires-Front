@@ -7,6 +7,7 @@ import {
 } from "./models/Events/EventDetailToSync";
 import { Config } from "./config";
 import { getRequest, putRequest } from "./requestServices";
+import { EventsAttendees } from "./models/sponsor";
 
 export const getNextEvent = (): Promise<EventDetail> => {
   return fetch("http://localhost:3000/events/1").then(x => x.json());
@@ -26,6 +27,9 @@ export const getEventLive = (id: number): Promise<EventDetail> =>
 
 export const getEventsLive = (): Promise<EventToSync[]> => {
   return getRequest("/events/live");
+};
+export const GetAttendees = (idEvent: number): Promise<EventsAttendees[]> => {
+  return getRequest(`/events/${idEvent}/attendees`);
 };
 
 export const updateEvent = (

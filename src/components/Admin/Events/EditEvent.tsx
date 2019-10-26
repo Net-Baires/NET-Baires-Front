@@ -1,6 +1,10 @@
 import React, { useState, useEffect, ChangeEvent, MouseEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
-import { getEvent, updateEvent } from "../../../services/eventsServices";
+import {
+  getEvent,
+  updateEvent,
+  GetAttendees
+} from "../../../services/eventsServices";
 import Checkbox from "react-simple-checkbox";
 import { getSponsors } from "../../../services/sponsorsServices";
 import { Sponsor } from "services/models/sponsor";
@@ -9,6 +13,8 @@ import { EventDetail } from "../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { EventToSyncActions } from "./EventToSyncActions";
+import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { EventsAttendees } from "../../../services/models/sponsor";
 type EditEventProps = {
   name: string;
   loading: () => void;
@@ -25,6 +31,10 @@ const EditEventComponent: React.SFC<
   const [event, setEvent] = useState({} as EventDetail);
   const [sponsors, setSponsors] = useState(new Array<SponsorToEvent>());
   const [users, setUsers] = useState(new Array<Member>());
+  const [eventsAttendees, setEventsAttendees] = useState(
+    new Array<EventsAttendees>()
+  );
+
   const history = useHistory();
   const loadEvent = () => {
     loading();
@@ -40,8 +50,12 @@ const EditEventComponent: React.SFC<
       let sponsorToColaborte: SponsorToEvent[] = sponsors.map(
         x => new SponsorToEvent(x)
       );
-
       setSponsors(sponsorToColaborte);
+    });
+  }, []);
+  useEffect(() => {
+    GetAttendees(props.match.params.id).then(eventsAttendees => {
+      setEventsAttendees(eventsAttendees);
     });
   }, []);
 
@@ -86,7 +100,7 @@ const EditEventComponent: React.SFC<
   };
   const handlerReadyAction = () => loadEvent();
   return (
-    <>
+    <PageFullWidthWrapper>
       <div className="row">
         <div className="col-sm-12 col-md-6 col-md-offset-3">
           <form className="lgx-contactform">
@@ -219,7 +233,7 @@ const EditEventComponent: React.SFC<
           ready={handlerReadyAction}
         ></EventToSyncActions>
       </>
-    </>
+    </PageFullWidthWrapper>
   );
 };
 

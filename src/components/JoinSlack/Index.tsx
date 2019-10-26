@@ -2,6 +2,7 @@ import React, { useEffect, useState, MouseEvent } from "react";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { inviteMeSlack } from "../../services/slackServices";
+import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 
 export const JoinSlackComponent: React.SFC = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ export const JoinSlackComponent: React.SFC = () => {
     }
   };
   return (
-    <>
+    <PageCenterWrapper>
       <article>
         <header>
           <img
@@ -87,7 +88,7 @@ export const JoinSlackComponent: React.SFC = () => {
           <p> </p>
         </section> */}
       </article>
-    </>
+    </PageCenterWrapper>
   );
 };
 
