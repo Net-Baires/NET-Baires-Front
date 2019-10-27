@@ -125,7 +125,7 @@ export const App: React.SFC<AppProps> = props => {
             />
             <PrivateRoute
               exact
-              path="/admin/events/:id/assistance/general"
+              path="/admin/events/:id/attendances/general"
               component={CheckAttendancesGeneral}
             />
 

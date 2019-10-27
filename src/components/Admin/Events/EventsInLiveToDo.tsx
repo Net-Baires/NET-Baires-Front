@@ -31,7 +31,7 @@ export const EventsInLiveToDo: React.SFC<
     eventToSync: EventToSync
   ) => {
     event.preventDefault();
-    history.push(`/admin/events/${eventToSync.id}/assistance/general`);
+    history.push(`/admin/events/${eventToSync.id}/attendances/general`);
   };
   return (
     <>

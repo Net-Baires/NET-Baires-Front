@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { EventToReportAttendance } from "../../../services/models/Events/EventDetailToSync";
 import { getCheckAttendanceGeneral } from "../../../services/eventsServices";
+import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 
 type CheckAttendancesGeneralProps = {
   loading: () => void;
@@ -34,7 +35,7 @@ export const CheckAttendancesGeneralComponent: React.SFC<
     });
   }, []);
   return (
-    <>
+    <PageCenterWrapper>
       <article>
         <header>
           <h1>Contanos si viniste!!!</h1>
@@ -67,7 +68,7 @@ export const CheckAttendancesGeneralComponent: React.SFC<
           <p> </p>
         </section> */}
       </article>
-    </>
+    </PageCenterWrapper>
   );
 };
 

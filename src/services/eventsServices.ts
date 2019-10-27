@@ -41,18 +41,19 @@ export const getEvent = (id: number): Promise<EventDetail> =>
 
 export const getEventToReportAttendance = (
   id: number
-): Promise<EventToReportAttendance> => getRequest(`/events/${id}/Attendances`);
+): Promise<EventToReportAttendance> => getRequest(`/events/${id}/attendances`);
 export const getCheckAttendanceGeneral = (
   id: number
-): Promise<EventToReportAttendance> => getRequest(`/events/${id}/v/general`);
+): Promise<EventToReportAttendance> =>
+  getRequest(`/events/${id}/attendances/general`);
 
 export const reportAttendance = (token: string): Promise<EventToSync> => {
-  return putRequest(`/events/Attendances/${token}`);
+  return putRequest(`/events/attendances/${token}`);
 };
 export const reportAttendanceGeneral = (
   token: string
 ): Promise<EventToSync> => {
-  return putRequest(`/Attendances/general/${token}`);
+  return putRequest(`/events/attendances/general/${token}`);
 };
 
 export const getEventToSync = (
