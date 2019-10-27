@@ -10,7 +10,7 @@ export interface EventDetailToSync {
   attendees: Member[];
 }
 
-export interface EventToReportAssistance {
+export interface EventToReportAttendance {
   id: string;
   title: string;
   description: string;

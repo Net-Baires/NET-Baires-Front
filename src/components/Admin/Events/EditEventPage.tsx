@@ -83,7 +83,7 @@ const EditEventPageComponent: React.SFC<
               </Card.Header>
               <Accordion.Collapse eventKey="1">
                 <Card.Body>
-                  {!isEmpty(event.sponsors) && (
+                  {!isEmpty(event) && (
                     <AttendeesListToEdit
                       eventInEdition={event}
                     ></AttendeesListToEdit>
@@ -99,16 +99,10 @@ const EditEventPageComponent: React.SFC<
               </Card.Header>
               <Accordion.Collapse eventKey="2">
                 <Card.Body>
-                  {" "}
                   <SponsorsListToEdit
                     updateSponsors={updateSponsors}
                     eventInEdition={event}
                   ></SponsorsListToEdit>
-                  <EventToSyncActions
-                    eventAction={event}
-                    loading={loading}
-                    ready={handlerReadyAction}
-                  ></EventToSyncActions>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>

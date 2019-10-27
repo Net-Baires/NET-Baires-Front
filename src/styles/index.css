@@ -540,3 +540,22 @@ a {
 .button-action {
   text-align: center;
 }
+
+.dropdown-menu li {
+  display: inline-block;
+  position: relative;
+  float: left;
+  width: 200px;
+  line-height: 35px;
+  text-decoration: none;
+}
+.navbar {
+  opacity: 0.9;
+}
+
+.authenticate-conteiner {
+  text-align: center !important;
+}
+.home-sponsor-container {
+  height: 100px !important;
+}

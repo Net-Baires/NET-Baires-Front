@@ -11,12 +11,15 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "./store";
 import { ThroughProvider } from "react-through";
+import { ToastProvider } from "react-toast-notifications";
 let storeGlobal = createStore(rootReducer);
 ReactDOM.render(
   <UserProvider>
     <Provider store={storeGlobal}>
       <ThroughProvider>
-        <AppConnected />
+        <ToastProvider>
+          <AppConnected />
+        </ToastProvider>
       </ThroughProvider>
     </Provider>
   </UserProvider>,

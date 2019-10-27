@@ -7,7 +7,10 @@ import {
 } from "../../../../services/attendeesServices";
 import { loading, ready } from "../../../../store/loading/actions";
 import { connect } from "react-redux";
-
+import { SearchWrapper } from "../../../Common/SearchWrapper";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import paginationFactory from "react-bootstrap-table2-paginator";
+import BootstrapTable from "react-bootstrap-table-next";
 type AttendeesListToEditProps = {
   eventInEdition: EventDetail;
   loading: () => void;
@@ -30,6 +33,122 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     });
     ready();
   }, []);
+  const { SearchBar } = Search;
+  const columns = [
+    {
+      dataField: "id",
+      text: "Id"
+    },
+    {
+      dataField: "firstName",
+      text: "Nombre"
+    },
+    {
+      dataField: "lastName",
+      text: "Apellido"
+    },
+    {
+      dataField: "email",
+      text: "Email"
+    },
+    {
+      dataField: "attended",
+      text: "Asistió",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, attende: EventsAttendees) => (
+        <div className="button-action">
+          {attende.attended ? (
+            <button
+              onClick={e => handleUserAttended(e, false, attende)}
+              type="button"
+              className="btn btn-success"
+            >
+              <i className="fas fa-check"></i>
+            </button>
+          ) : (
+            <button
+              onClick={e => handleUserAttended(e, true, attende)}
+              type="button"
+              className="btn btn-danger"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          )}
+        </div>
+      )
+    },
+    {
+      dataField: "speaker",
+      text: "Speaker",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, attende: EventsAttendees) => (
+        <div className="button-action">
+          {attende.speaker ? (
+            <button
+              onClick={e => handleUserSpeaker(e, false, attende)}
+              type="button"
+              className="btn btn-success"
+            >
+              <i className="fas fa-check"></i>
+            </button>
+          ) : (
+            <button
+              onClick={e => handleUserSpeaker(e, true, attende)}
+              type="button"
+              className="btn btn-danger"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          )}
+        </div>
+      )
+    },
+    {
+      dataField: "organizer",
+      text: "Organizador",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, attende: EventsAttendees) => (
+        <div className="button-action">
+          {attende.organizer ? (
+            <button
+              onClick={e => handleUserOrganizer(e, false, attende)}
+              type="button"
+              className="btn btn-success"
+            >
+              <i className="fas fa-check"></i>
+            </button>
+          ) : (
+            <button
+              onClick={e => handleUserOrganizer(e, true, attende)}
+              type="button"
+              className="btn btn-danger"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          )}
+        </div>
+      )
+    },
+    {
+      text: "Imagen",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, attende: EventsAttendees) => (
+        <img className="img-preview-member" src={attende.picture}></img>
+      )
+    }
+  ];
 
   const handleUserAttended = (
     eventInput: MouseEvent<HTMLButtonElement>,
@@ -88,94 +207,26 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     <>
       <h2>Asistentes</h2>
       {eventsAttendees && (
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Apellido</th>
-              <th scope="col">Email</th>
-              <th scope="col">Asistió</th>
-              <th scope="col">Speaker</th>
-              <th scope="col">Organizador</th>
-              <th scope="col">Imagen</th>
-            </tr>
-          </thead>
-          <tbody>
-            {eventsAttendees.map(attende => (
-              <tr key={attende.id}>
-                <th scope="row">{attende.id}</th>
-                <td>{attende.firstName}</td>
-                <td>{attende.lastName}</td>
-                <td>{attende.email}</td>
-                <td className="button-action">
-                  {attende.attended ? (
-                    <button
-                      onClick={e => handleUserAttended(e, false, attende)}
-                      type="button"
-                      className="btn btn-success"
-                    >
-                      <i className="fas fa-check"></i>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={e => handleUserAttended(e, true, attende)}
-                      type="button"
-                      className="btn btn-danger"
-                    >
-                      <i className="fas fa-times"></i>
-                    </button>
-                  )}
-                </td>
-                <td className="button-action">
-                  {attende.speaker ? (
-                    <button
-                      onClick={e => handleUserSpeaker(e, false, attende)}
-                      type="button"
-                      className="btn btn-success"
-                    >
-                      <i className="fas fa-check"></i>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={e => handleUserSpeaker(e, true, attende)}
-                      type="button"
-                      className="btn btn-danger"
-                    >
-                      <i className="fas fa-times"></i>
-                    </button>
-                  )}
-                </td>
-                <td className="button-action">
-                  {attende.organizer ? (
-                    <button
-                      onClick={e => handleUserOrganizer(e, false, attende)}
-                      type="button"
-                      className="btn btn-success"
-                    >
-                      <i className="fas fa-check"></i>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={e => handleUserOrganizer(e, true, attende)}
-                      type="button"
-                      className="btn btn-danger"
-                    >
-                      <i className="fas fa-times"></i>
-                    </button>
-                  )}
-                </td>
-
-                <td>
-                  <img
-                    className="img-preview-member"
-                    src={attende.picture}
-                  ></img>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <SearchWrapper title="Usuarios">
+          <ToolkitProvider
+            keyField="id"
+            data={eventsAttendees}
+            columns={columns}
+            search
+          >
+            {(props: any) => (
+              <div>
+                <SearchBar {...props.searchProps} />
+                <hr />
+                <BootstrapTable
+                  keyField="id"
+                  {...props.baseProps}
+                  pagination={paginationFactory()}
+                />
+              </div>
+            )}
+          </ToolkitProvider>
+        </SearchWrapper>
       )}
     </>
   );

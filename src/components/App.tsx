@@ -23,17 +23,17 @@ import { NewSponsor } from "./Admin/Sponsors/NewSponsor";
 import { EventsToSync } from "./Admin/Events/EventsToSync";
 import { SponsorsList } from "./Admin/Sponsors/SponsorsList";
 import MeetupCallBack from "./Login/MeetupCallBack";
-import { EventLiveAssistance } from "./Admin/Events/EventLiveAssistance";
+import { EventLiveAttendances } from "./Admin/Events/EventLiveAttendances";
 import { UsersList } from "./Admin/Users/UsersList";
 import { EditUser } from "./Admin/Users/EditUser";
 import { NewUser } from "./Admin/Users/NewUser";
 import EventBriteCallBack from "./Login/EventBriteCallBack";
 import { PublicProfile } from "./Profile/PublicProfile";
 import { EventsInLive } from "./EventLive/EventsInLive";
-import { ReportAssistance } from "./ReportAssistance/Index";
+import { ReportAttendance } from "./ReportAttendance/Index";
 import { JoinSlack } from "./JoinSlack/Index";
 import { UserProfile } from "./Profile/UserProfile";
-import { CheckAssistanceGeneral } from "./Admin/Events/CheckAssistanceGeneral";
+import { CheckAttendancesGeneral } from "./Admin/Events/CheckAttendancesGeneral";
 import { EventsInLiveToDo } from "./Admin/Events/EventsInLiveToDo";
 import { ReadOrganizedCode } from "./MemberLogged/ReadOrganizedCode";
 import { BadgeShowDetail } from "./Badges/BadgeShowDetail";
@@ -93,8 +93,8 @@ export const App: React.SFC<AppProps> = props => {
 
             <PrivateRoute
               exact
-              path="/member/reportAssistance/:id(\d+)?"
-              component={ReportAssistance}
+              path="/member/events/:id(\d+)/attendance"
+              component={ReportAttendance}
             />
 
             <PrivateRoute
@@ -126,7 +126,7 @@ export const App: React.SFC<AppProps> = props => {
             <PrivateRoute
               exact
               path="/admin/events/:id/assistance/general"
-              component={CheckAssistanceGeneral}
+              component={CheckAttendancesGeneral}
             />
 
             <PrivateRoute
@@ -142,13 +142,13 @@ export const App: React.SFC<AppProps> = props => {
 
             <PrivateRoute
               exact
-              path="/admin/EventLive/Assistance"
-              component={EventLiveAssistance}
+              path="/admin/EventLive/Attendances"
+              component={EventLiveAttendances}
             />
             <PrivateRoute
               exact
               path="/EventLive/:id(\d+)"
-              component={EventLiveAssistance}
+              component={EventLiveAttendances}
             />
 
             <PrivateRoute

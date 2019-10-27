@@ -40,7 +40,7 @@ export const EventsInLive: React.SFC<
     eventToSync: EventToSync
   ) => {
     event.preventDefault();
-    history.push(`/member/reportAssistance/${eventToSync.id}`);
+    history.push(`/member/events/${eventToSync.id}/attendance`);
   };
   return (
     <PageFullWidthWrapper>
@@ -50,8 +50,9 @@ export const EventsInLive: React.SFC<
             <tr>
               <th scope="col">#</th>
               <th scope="col">Titulo</th>
-              <th scope="col">Fuente</th>
+              {/* <th scope="col">Fuente</th> */}
               <th scope="col">Fecha</th>
+              <th scope="col">Imagen</th>
               <th scope="col">Acción</th>
             </tr>
           </thead>
@@ -60,8 +61,14 @@ export const EventsInLive: React.SFC<
               <tr key={event.id}>
                 <th scope="row">{event.id}</th>
                 <td>{event.title}</td>
-                <td>{event.platform}</td>
+                {/* <td>{event.platform}</td> */}
                 <td>{formatStringDate(event.date)}</td>
+                <td>
+                  <img
+                    className="img-preview-list-events "
+                    src={event.imageUrl}
+                  ></img>
+                </td>
                 <td>
                   <button
                     type="button"

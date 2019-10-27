@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getOrganizers } from "../../../services/organizersServices";
-import { NavLink } from "react-router-dom";
-import { Speaker } from "../../../services/models/speaker";
-import { SecureElement } from "../../../components/Auth/SecureElement";
 import { Member } from "../../../services/models/Member";
-
+import { isEmpty } from "../../../services/objectsservices";
 type HomeOrganizersProps = {};
 const HomeOrganizers: React.SFC<HomeOrganizersProps> = () => {
   let organizerDefault: Member[] = [];
@@ -14,7 +11,7 @@ const HomeOrganizers: React.SFC<HomeOrganizersProps> = () => {
   }, []);
   return (
     <>
-      {organizers && (
+      {!isEmpty(organizers) && (
         <section>
           <div id="lgx-testimonial" className="lgx-testimonial">
             <div className="lgx-inner">

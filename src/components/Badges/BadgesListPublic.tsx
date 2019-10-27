@@ -10,6 +10,7 @@ import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../helpers/DateHelpers";
 import { NavLink } from "react-router-dom";
 import { NotFound } from "../Common/NotFoun";
+import { isEmpty } from "../../services/objectsservices";
 
 type BadgesListPublicProps = {
   loading: () => void;
@@ -41,7 +42,7 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
         <section>
           <div className="container">
             <div className="row">
-              {!error ? (
+              {!isEmpty(badges) ? (
                 badges.map(badge => (
                   <div className="col-xs-12 col-sm-6 col-md-4">
                     <div className="lgx-single-news lgx-single-news-images">
@@ -74,10 +75,7 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
                   </div>
                 ))
               ) : (
-                <NotFound
-                  title="No hay eventos en LIVE"
-                  message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
-                ></NotFound>
+                <NotFound title="No hay Badges disponibles actualmente"></NotFound>
               )}
             </div>
           </div>

@@ -1,8 +1,9 @@
 import { Speaker } from "./models/speaker";
+import { getRequest } from "./requestServices";
 
 export const getSpeakers = (count: number = 10): Promise<Speaker[]> => {
-  return fetch("http://localhost:3000/speakers").then(x => x.json());
+  return getRequest("/speakers");
 };
 export const getSpeaker = (id: number): Promise<Speaker> => {
-  return fetch(`http://localhost:3000/speakers/${id}`).then(x => x.json());
+  return getRequest(`/speakers/${id}`);
 };

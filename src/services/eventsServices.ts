@@ -3,7 +3,7 @@ import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
 import {
   EventDetailToSync,
-  EventToReportAssistance
+  EventToReportAttendance
 } from "./models/Events/EventDetailToSync";
 import { Config } from "./config";
 import { getRequest, putRequest } from "./requestServices";
@@ -39,19 +39,20 @@ export const updateEvent = (
 export const getEvent = (id: number): Promise<EventDetail> =>
   getRequest(`/events/${id}`);
 
-export const getEventToReportAssitance = (
+export const getEventToReportAttendance = (
   id: number
-): Promise<EventToReportAssistance> => getRequest(`/events/${id}/assistance`);
-export const getCheckAssistanceGeneral = (
+): Promise<EventToReportAttendance> => getRequest(`/events/${id}/Attendances`);
+export const getCheckAttendanceGeneral = (
   id: number
-): Promise<EventToReportAssistance> =>
-  getRequest(`/events/${id}/assistance/general`);
+): Promise<EventToReportAttendance> => getRequest(`/events/${id}/v/general`);
 
-export const reportAssitance = (token: string): Promise<EventToSync> => {
-  return putRequest(`/events/Assistance/${token}`);
+export const reportAttendance = (token: string): Promise<EventToSync> => {
+  return putRequest(`/events/Attendances/${token}`);
 };
-export const reportAssitanceGeneral = (token: string): Promise<EventToSync> => {
-  return putRequest(`/assistance/general/${token}`);
+export const reportAttendanceGeneral = (
+  token: string
+): Promise<EventToSync> => {
+  return putRequest(`/Attendances/general/${token}`);
 };
 
 export const getEventToSync = (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import QrReader from "react-qr-scanner";
-import { reportAssitanceGeneral } from "../../services/eventsServices";
+import { reportAttendanceGeneral } from "../../services/eventsServices";
 
 type ReadOrganizedCodeProps = {
   name: string;
@@ -18,7 +18,7 @@ export const ReadOrganizedCode: React.SFC<
   const handleScan = (data: string) => {
     if (data) {
       setShowReader(false);
-      reportAssitanceGeneral(data).then(() => {});
+      reportAttendanceGeneral(data).then(() => {});
     }
   };
 

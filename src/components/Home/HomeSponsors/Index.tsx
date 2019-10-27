@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getSponsors } from "../../../services/sponsorsServices";
-import { NavLink } from "react-router-dom";
 import { Sponsor } from "../../../services/models/sponsor";
-
+import { isEmpty } from "../../../services/objectsservices";
 type HomeSponsorsProps = {};
 const HomeSponsors: React.SFC<HomeSponsorsProps> = () => {
   let sponsorsDefault: Sponsor[] = [];
@@ -12,7 +11,7 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = () => {
   }, []);
   return (
     <>
-      {sponsors && (
+      {!isEmpty(sponsors) && (
         <section>
           <div id="lgx-sponsors" className="lgx-sponsors lgx-sponsors-black">
             <div className="lgx-inner-bg">
@@ -33,7 +32,7 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = () => {
                     <div className="col-xs-12">
                       <div className="sponsors-area sponsors-area-colorfull-border">
                         {sponsors.map(sponsor => (
-                          <div className="single">
+                          <div className="single home-sponsor-container">
                             {/* <NavLink
                             exact
                             className="btn btn-primary"

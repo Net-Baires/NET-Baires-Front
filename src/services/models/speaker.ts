@@ -1,6 +1,11 @@
 export interface Speaker {
-  id: number;
-  name: string;
+  memberId: number;
+  firstName: string;
   lastName: string;
+  twitter: string;
+  instagram: string;
+  linkedin: string;
+  github: string;
   picture: string;
+  counEventsAsSpeaker: number;
 }

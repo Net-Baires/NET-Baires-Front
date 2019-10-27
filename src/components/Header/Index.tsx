@@ -1,153 +1,148 @@
-import React, { useContext, useState, MouseEvent } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { NavLink, useHistory, Link } from "react-router-dom";
-import { Location } from "history";
-import { match, Route } from "react-router";
+import { NavLink, useHistory } from "react-router-dom";
+import { match } from "react-router";
 import { syncEvents } from "../../services/eventsServices";
 import { slide as Menu } from "react-burger-menu";
 import { SecureElement } from "../Auth/SecureElement";
 import { BreadcrumbsComponent } from "./BreadcrumbsComponent";
-import { syncBadges } from "../../services/badgesServices";
+import { Navbar, Nav } from "react-bootstrap";
 type HeaderProps = {};
 
-export const Header: React.SFC<HeaderProps> = props => {
-  const { user, isLoggued, logout } = useContext(UserContext);
-  const [open, setOpen] = useState(false);
+export const Header: React.SFC<HeaderProps> = () => {
+  const { isLoggued, logout } = useContext(UserContext);
+  const [open] = useState(false);
   let history = useHistory();
 
-  const handleLogout = (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleLogout = () => {
     logout();
     history.push("/");
     history.listen;
   };
-  const handleClickMenuAdmin = (event: MouseEvent<HTMLAnchorElement>) => {
-    setOpen(false);
-  };
-  const handleSyncEvents = (event: MouseEvent<HTMLAnchorElement>) => {
-    syncEvents().then(x => {});
-  };
-  const handleSyncBadge = (event: MouseEvent<HTMLAnchorElement>) => {
-    syncBadges().then(x => {});
+  const handleSyncEvents = () => {
+    syncEvents().then(() => {});
   };
 
-  const handleIsActive = (match: match<any>, location: Location): boolean => {
+  const handleIsActive = (match: match<any>): boolean => {
     return (match as unknown) as boolean;
   };
   return (
     <>
-      <SecureElement rol="Admin">
+      <SecureElement rols={["Admin", "Organizer"]}>
         <Menu isOpen={open}>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/events"
-          >
-            <i className="fa fa-fw fa-mis-eventos-o"></i>
-            Mis Eventos
-          </NavLink>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/eventsToSync"
-          >
-            <i className="fa fa-fw fa-mis-sync-o"></i>
-            Eventos para Syncronizar
-          </NavLink>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/events/live"
-          >
-            <i className="fa fa-fw fa-tasks"></i>
-            Eventos en vivo
-          </NavLink>
+          <SecureElement rol="Admin">
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/events"
+            >
+              <i className="fa fa-fw fa-mis-eventos-o"></i>
+              Mis Eventos
+            </NavLink>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/eventsToSync"
+            >
+              <i className="fa fa-fw fa-mis-sync-o"></i>
+              Eventos para Syncronizar
+            </NavLink>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/events/live"
+            >
+              <i className="fa fa-fw fa-tasks"></i>
+              Eventos en vivo
+            </NavLink>
 
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/users"
-          >
-            <i className="fa fa-fw fa-users"></i>
-            Lista de Usuarios
-          </NavLink>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/users/new"
-          >
-            <i className="fa fa-fw fa-user-plus"></i>
-            Nuevo Usuario
-          </NavLink>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/users"
+            >
+              <i className="fa fa-fw fa-users"></i>
+              Lista de Usuarios
+            </NavLink>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/users/new"
+            >
+              <i className="fa fa-fw fa-user-plus"></i>
+              Nuevo Usuario
+            </NavLink>
 
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/sponsors"
-          >
-            <i className="fa fa-fw fa-panel-o"></i>
-            Sponsors
-          </NavLink>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/sponsors/new"
-          >
-            <i className="fa fa-fw fa-hubspot"></i>
-            Nuevo Sponsor
-          </NavLink>
-          <a className="nav-link-slide-bar" onClick={handleSyncEvents}>
-            <i className="fa fa-fw fa-mis-eventos-o"></i>
-            Sync Eventos
-          </a>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/sponsors"
+            >
+              <i className="fa fa-fw fa-panel-o"></i>
+              Sponsors
+            </NavLink>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/sponsors/new"
+            >
+              <i className="fa fa-fw fa-hubspot"></i>
+              Nuevo Sponsor
+            </NavLink>
+            <a className="nav-link-slide-bar" onClick={handleSyncEvents}>
+              <i className="fa fa-fw fa-mis-eventos-o"></i>
+              Sync Eventos
+            </a>
 
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/badges"
+            >
+              <i className="fa fa-fw fa-ribbon"></i>
+              Lista de Badges
+            </NavLink>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/badges/new"
+            >
+              <i className="fa fa-fw fa-hubspot"></i>
+              Nuevo Badge
+            </NavLink>
+            <NavLink
+              exact
+              className="nav-link-slide-bar"
+              activeClassName="active"
+              to="/admin/panel"
+            >
+              <i className="fa fa-fw fa-panel-o"></i>
+              Panel de Control
+            </NavLink>
+          </SecureElement>
           <NavLink
             exact
             className="nav-link-slide-bar"
             activeClassName="active"
-            to="/admin/badges"
-          >
-            <i className="fa fa-fw fa-ribbon"></i>
-            Lista de Badges
-          </NavLink>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/badges/new"
-          >
-            <i className="fa fa-fw fa-hubspot"></i>
-            Nuevo Badge
-          </NavLink>
-
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/EventLive/Assistance"
+            to="/admin/EventLive/Attendances"
           >
             <i className="fa fa-fw fa-mis-eventos-o"></i>
             Recibir Miembros
           </NavLink>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/panel"
-          >
-            <i className="fa fa-fw fa-panel-o"></i>
-            Panel de Control
-          </NavLink>
         </Menu>
       </SecureElement>
-      <div className="lgx-header-position lgx-header-position-white lgx-header-position-fixed  menu-onscroll">
-        <nav className="navbar fixed-top navbar-expand-lg navbar-dark header-menu-dark ">
+      <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Brand href="#">
+          {" "}
           <NavLink
             exact
             className="navbar-brand"
@@ -160,109 +155,100 @@ export const Header: React.SFC<HeaderProps> = props => {
               alt="Logo"
             ></img>
           </NavLink>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto"></Nav>
+          <Nav>
+            <Nav.Item>
+              <NavLink
+                exact
+                className="nav-link"
+                activeClassName="active"
+                to="/joinSlack"
+              >
+                Sumate a SLACK
+              </NavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <NavLink
+                exact
+                className="nav-link"
+                activeClassName="active"
+                to="/badges"
+              >
+                Badges
+              </NavLink>
+            </Nav.Item>
+            {/* <Nav.Item>
+              <NavLink
+                exact
+                className="nav-link"
+                activeClassName="active"
+                to="/organizers/1111"
+              >
+                Organizadores
+              </NavLink>
+            </Nav.Item> */}
+            <Nav.Item>
+              <NavLink
+                exact
+                className="nav-link"
+                activeClassName="active"
+                to="/events/live"
+              >
+                Eventos en Vivo
+              </NavLink>
+            </Nav.Item>
+            {!isLoggued ? (
+              <Nav.Item>
                 <NavLink
                   exact
+                  isActive={handleIsActive}
                   className="nav-link"
                   activeClassName="active"
-                  to="/joinSlack"
+                  to="/login"
                 >
-                  Sumate a SLACK
+                  Login
                 </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  exact
-                  className="nav-link"
-                  activeClassName="active"
-                  to="/badges"
-                >
-                  Badges
-                </NavLink>
-              </li>
-
-              {/* <li className="nav-item">
-                <NavLink
-                  exact
-                  className="nav-link"
-                  activeClassName="active"
-                  to="/organizers/1111"
-                >
-                  Organizadores
-                </NavLink>
-              </li> */}
-              <li className="nav-item">
-                <NavLink
-                  exact
-                  className="nav-link"
-                  activeClassName="active"
-                  to="/events/live"
-                >
-                  Eventos en Vivo
-                </NavLink>
-              </li>
-              {!isLoggued ? (
-                <li className="nav-item">
+              </Nav.Item>
+            ) : (
+              <>
+                <Nav.Item>
                   <NavLink
                     exact
                     isActive={handleIsActive}
                     className="nav-link"
                     activeClassName="active"
-                    to="/login"
+                    to="/profile"
                   >
-                    Login
+                    Perfil
                   </NavLink>
-                </li>
-              ) : (
-                <>
-                  <li className="nav-item">
+                </Nav.Item>
+                <SecureElement rol="Member">
+                  <Nav.Item>
                     <NavLink
                       exact
                       isActive={handleIsActive}
                       className="nav-link"
                       activeClassName="active"
-                      to="/profile"
+                      to="/member/organizedcode/read"
                     >
-                      Perfil
+                      Leer Código
                     </NavLink>
-                  </li>
-                  <SecureElement rol="Member">
-                    <li className="nav-item">
-                      <NavLink
-                        exact
-                        isActive={handleIsActive}
-                        className="nav-link"
-                        activeClassName="active"
-                        to="/member/organizedcode/read"
-                      >
-                        Leer Código
-                      </NavLink>
-                    </li>
-                  </SecureElement>
-                  <li className="nav-item">
-                    <a onClick={handleLogout} className="nav-link" href="#">
-                      Desconectarse
-                    </a>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-        </nav>
-      </div>
+                  </Nav.Item>
+                </SecureElement>
+                <Nav.Item>
+                  <a onClick={handleLogout} className="nav-link" href="#">
+                    Desconectarse
+                  </a>
+                </Nav.Item>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+
       <BreadcrumbsComponent></BreadcrumbsComponent>
     </>
   );

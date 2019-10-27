@@ -50,7 +50,7 @@ const Login: React.SFC<LoginProps> = props => {
     <>
       <PageCenterWrapper>
         {!isLoggued && (
-          <article>
+          <article className="authenticate-conteiner">
             <header>
               <h1>Autenticarse</h1>
             </header>

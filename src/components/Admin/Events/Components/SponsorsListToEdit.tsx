@@ -89,6 +89,7 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
       )
     },
     {
+      dataField: "collaboratedDetail",
       text: "Colaboró con",
       style: {
         textAlign: "center",
@@ -105,6 +106,7 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
       )
     },
     {
+      dataField: "collaborated",
       text: "Colaboró con",
       style: {
         textAlign: "center",

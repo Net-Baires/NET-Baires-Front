@@ -7,14 +7,13 @@ import LastEvents from "./LastEvents/Index";
 import PhotosSummary from "./PhotosSummary/Index";
 import VideoPreview from "./VideoPreview/Index";
 import HomeHeaderBanner from "./HomeHeaderBanner/Index";
-
 type LoginProps = {};
 export const Home: React.SFC<LoginProps> = () => {
   return (
     <>
       <HomeHeaderBanner></HomeHeaderBanner>
       {/* <NextEvent></NextEvent> */}
-      {/* <HomeSpeakers></HomeSpeakers> */}
+      <HomeSpeakers></HomeSpeakers>
       <HomeSponsors></HomeSponsors>
       {/* <LastEvents></LastEvents> */}
       {/* <PhotosSummary></PhotosSummary> */}

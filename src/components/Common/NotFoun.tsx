@@ -3,7 +3,7 @@ import { PageFullWidthWrapper } from "./PageFullWidthWrapper";
 
 type NotFoundProps = {
   title: string;
-  message: string;
+  message?: string;
 };
 
 export const NotFound: React.SFC<NotFoundProps> = ({ title, message }) => {
@@ -18,9 +18,11 @@ export const NotFound: React.SFC<NotFoundProps> = ({ title, message }) => {
             <div className="col-sm-12">
               <h2>204 Not Content</h2>
             </div>
-            <div className="col-sm-12">
-              <p>{message}</p>
-            </div>
+            {message && (
+              <div className="col-sm-12">
+                <p>{message}</p>
+              </div>
+            )}
             <div className="col-sm-12">
               <a href="https://www.meetup.com/es-ES/Net-Baires" target="blank">
                 <button className="button-style">Nuestros Eventos</button>

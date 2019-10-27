@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, RouteComponentProps, Route } from "react-router";
-import { Link } from "react-router-dom";
 import QRCode from "qrcode.react";
-import { getEventToReportAssitance } from "../../services/eventsServices";
+import { getEventToReportAttendance } from "../../services/eventsServices";
 import { getCurrentUser } from "../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
-import { EventToReportAssistance } from "../../services/models/Events/EventDetailToSync";
+import { EventToReportAttendance } from "../../services/models/Events/EventDetailToSync";
+import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 
-type ReportAssistanceProps = {
+type ReportAttendanceProps = {
   loading: () => void;
   ready: () => void;
 };
-type ReportAssistanceParams = {
+type ReportAttendanceParams = {
   id: number;
 };
 
-type ReportAssistancePropsAndRouter = ReportAssistanceParams &
-  ReportAssistanceProps;
-export const ReportAssistanceComponent: React.SFC<
-  RouteComponentProps<ReportAssistancePropsAndRouter> & ReportAssistanceProps
+type ReportAttendancePropsAndRouter = ReportAttendanceParams &
+  ReportAttendanceProps;
+export const ReportAttendanceComponent: React.SFC<
+  RouteComponentProps<ReportAttendancePropsAndRouter> & ReportAttendanceProps
 > = ({ match, ...props }) => {
   const history = useHistory();
   const [qr, setQr] = useState("a");
-  const [event, setEvent] = useState({} as EventToReportAssistance);
+  const [event, setEvent] = useState({} as EventToReportAttendance);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     props.loading();
-    getEventToReportAssitance(match.params.id).then(x => {
+    getEventToReportAttendance(match.params.id).then(x => {
       setQr(x.token);
       setEvent(x);
       setLoaded(true);
@@ -36,7 +36,7 @@ export const ReportAssistanceComponent: React.SFC<
   }, []);
   const user = getCurrentUser();
   return (
-    <>
+    <PageFullWidthWrapper classWrapper="lgx-post-wrapper">
       <article>
         <header>
           <h1>Reportar Asistencia</h1>
@@ -55,10 +55,13 @@ export const ReportAssistanceComponent: React.SFC<
               <h1 className="title">
                 {user.firstName} {user.lastName}
               </h1>
-              <h4 className="subtitle">{user.email}</h4>
+              <h4 className="subtitle">Bienvenido {user.email}</h4>
             </div>
           </div>
         </header>
+        {/* <section>
+          <p>{event.description}</p>
+        </section> */}
         <section>
           <div className="qr-container">
             <p>{loaded && <QRCode className="qrcore-wrapper" value={qr} />}</p>
@@ -71,7 +74,7 @@ export const ReportAssistanceComponent: React.SFC<
           <p> </p>
         </section> */}
       </article>
-    </>
+    </PageFullWidthWrapper>
   );
 };
 
@@ -85,7 +88,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const ReportAssistance = connect(
+export const ReportAttendance = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ReportAssistanceComponent);
+)(ReportAttendanceComponent);

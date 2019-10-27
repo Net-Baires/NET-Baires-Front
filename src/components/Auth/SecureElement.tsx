@@ -4,15 +4,24 @@ import { hasPermission } from "../../services/authService";
 
 type SecureElementProps = {
   rol?: string;
+  rols?: string[];
 };
 
 export const SecureElement: React.SFC<SecureElementProps> = ({
   children,
-  rol
+  rol,
+  rols
 }) => {
   const { isLoggued } = useContext(UserContext);
 
-  if (isLoggued && children != null && (rol == null || hasPermission(rol))) {
+  const checkRoles = rols != null && rols.some(r => hasPermission(r));
+  const checkHasPermissionResult = rol != null && hasPermission(rol);
+
+  if (
+    isLoggued &&
+    children != null &&
+    (checkHasPermissionResult || checkRoles)
+  ) {
     return <>{children}</>;
   }
   return <></>;

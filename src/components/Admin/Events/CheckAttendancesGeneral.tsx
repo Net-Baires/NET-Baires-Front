@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
 import QRCode from "qrcode.react";
-import { getCheckAssistanceGeneral } from "../../../services/eventsServices";
 import { getCurrentUser } from "../../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { EventToReportAssistance } from "../../../services/models/Events/EventDetailToSync";
+import { EventToReportAttendance } from "../../../services/models/Events/EventDetailToSync";
+import { getCheckAttendanceGeneral } from "../../../services/eventsServices";
 
-type CheckAssistanceGeneralProps = {
+type CheckAttendancesGeneralProps = {
   loading: () => void;
   ready: () => void;
 };
-type CheckAssistanceGeneralParams = {
+type CheckAttendancesGeneralParams = {
   id: number;
 };
 
-type CheckAssistanceGeneralPropsAndRouter = CheckAssistanceGeneralParams &
-  CheckAssistanceGeneralProps;
-export const CheckAssistanceGeneralComponent: React.SFC<
-  RouteComponentProps<CheckAssistanceGeneralPropsAndRouter> &
-    CheckAssistanceGeneralProps
+type CheckAttendancesGeneralPropsAndRouter = CheckAttendancesGeneralParams &
+  CheckAttendancesGeneralProps;
+export const CheckAttendancesGeneralComponent: React.SFC<
+  RouteComponentProps<CheckAttendancesGeneralPropsAndRouter> &
+    CheckAttendancesGeneralProps
 > = ({ match, ...props }) => {
   const [qr, setQr] = useState("a");
-  const [event, setEvent] = useState({} as EventToReportAssistance);
+  const [event, setEvent] = useState({} as EventToReportAttendance);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     props.loading();
-    getCheckAssistanceGeneral(match.params.id).then(x => {
+    getCheckAttendanceGeneral(match.params.id).then(x => {
       setQr(x.token);
       setEvent(x);
       setLoaded(true);
@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const CheckAssistanceGeneral = connect(
+export const CheckAttendancesGeneral = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CheckAssistanceGeneralComponent);
+)(CheckAttendancesGeneralComponent);
