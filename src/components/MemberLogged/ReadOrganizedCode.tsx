@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import QrReader from "react-qr-scanner";
 import { reportAttendanceGeneral } from "../../services/eventsServices";
+import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 
 type ReadOrganizedCodeProps = {
   name: string;
@@ -30,7 +31,7 @@ export const ReadOrganizedCode: React.SFC<
     width: 400
   };
   return (
-    <>
+    <PageCenterWrapper>
       <div className="card border-primary mb-3 qr-panel">
         <div className="card-header">Lector</div>
         <div className="card-body">
@@ -45,6 +46,6 @@ export const ReadOrganizedCode: React.SFC<
           {!showReader && <h1>Gracias por venir!!</h1>}
         </div>
       </div>
-    </>
+    </PageCenterWrapper>
   );
 };
