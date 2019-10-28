@@ -15,7 +15,8 @@ import { ToastProvider } from "react-toast-notifications";
 import { reactAI } from "react-appinsights";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { Config } from "./services/config";
-
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 let storeGlobal = createStore(rootReducer);
 let appInsights = new ApplicationInsights({
   config: {
@@ -27,12 +28,16 @@ let appInsights = new ApplicationInsights({
   }
 });
 appInsights.loadAppInsights();
+const history = createBrowserHistory();
+
 ReactDOM.render(
   <UserProvider>
     <Provider store={storeGlobal}>
       <ThroughProvider>
         <ToastProvider>
-          <AppConnected />
+          <Router history={history}>
+            <AppConnected />
+          </Router>
         </ToastProvider>
       </ThroughProvider>
     </Provider>
