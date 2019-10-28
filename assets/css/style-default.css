@@ -11691,7 +11691,7 @@ blockquote.lgx-testi-single:before {
 /* 2.20 FOOTER
 ---------------------------------------------------------------------*/
 .lgx-footer {
-  background: url('http://placehold.it/1920x850') bottom center no-repeat;
+  /* background: url('http://placehold.it/1920x850') bottom center no-repeat; */
   -webkit-background-size: cover;
   -o-background-size: cover;
   -moz-background-size: cover;
