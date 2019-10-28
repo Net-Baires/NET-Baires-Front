@@ -12,7 +12,21 @@ import { createStore } from "redux";
 import rootReducer from "./store";
 import { ThroughProvider } from "react-through";
 import { ToastProvider } from "react-toast-notifications";
+import { reactAI } from "react-appinsights";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
+import { Config } from "./services/config";
+
 let storeGlobal = createStore(rootReducer);
+let appInsights = new ApplicationInsights({
+  config: {
+    instrumentationKey: Config.instrumentationKey,
+    extensions: [reactAI],
+    extensionConfig: {
+      [reactAI.extensionId]: { debug: false }
+    }
+  }
+});
+appInsights.loadAppInsights();
 ReactDOM.render(
   <UserProvider>
     <Provider store={storeGlobal}>

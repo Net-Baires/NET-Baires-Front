@@ -27,4 +27,5 @@ export interface Integrations {
 export interface Config {
   api: Api;
   integrations: Integrations;
+  instrumentationKey: string;
 }

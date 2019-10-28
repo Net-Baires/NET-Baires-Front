@@ -3,6 +3,7 @@
     "base": "${NET-Baires.api.base}$",
     "baseRemote": "${NET-Baires.api.baseRemote}$"
   },
+  "instrumentationKey": "${NET-Baires.instrumentationKey}$",
   "integrations": {
     "meetup": {
       "clientId": "${NET-Baires.meetup.clientId}$",
