@@ -13,12 +13,12 @@ export const Home: React.SFC<LoginProps> = () => {
     <>
       <HomeHeaderBanner></HomeHeaderBanner>
       {/* <NextEvent></NextEvent> */}
-      <HomeSpeakers></HomeSpeakers>
+      {/* <HomeSpeakers></HomeSpeakers> */}
       {/* <HomeSponsors></HomeSponsors> */}
       {/* <LastEvents></LastEvents> */}
       {/* <PhotosSummary></PhotosSummary> */}
-      <HomeOrganizers></HomeOrganizers>
-      <VideoPreview></VideoPreview>
+      {/* <HomeOrganizers></HomeOrganizers> */}
+      {/* <VideoPreview></VideoPreview> */}
     </>
   );
 };
