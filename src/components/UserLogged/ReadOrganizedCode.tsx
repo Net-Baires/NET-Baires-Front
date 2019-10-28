@@ -2,6 +2,7 @@ import React, { useState, useEffect, MouseEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import QrReader from "./node_modules/react-qr-scanner";
 import { reportAssitance } from "../../../services/eventsServices";
+import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 
 type ReadOrganizedCodeProps = {
   name: string;
@@ -37,20 +38,15 @@ export const ReadOrganizedCode: React.SFC<
     width: 400
   };
   return (
-    <>
-      <div className="card border-primary mb-3 qr-panel">
-        <div className="card-header">Lector</div>
-        <div className="card-body">
-          {showReader && (
-            <QrReader
-              delay={100}
-              style={previewStyle}
-              onError={handleError}
-              onScan={handleScan}
-            />
-          )}
-        </div>
-      </div>
-    </>
+    <PageFullWidthWrapper>
+      {showReader && (
+        <QrReader
+          delay={100}
+          style={previewStyle}
+          onError={handleError}
+          onScan={handleScan}
+        />
+      )}
+    </PageFullWidthWrapper>
   );
 };

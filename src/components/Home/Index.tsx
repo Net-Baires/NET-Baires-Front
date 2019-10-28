@@ -14,7 +14,7 @@ export const Home: React.SFC<LoginProps> = () => {
       <HomeHeaderBanner></HomeHeaderBanner>
       {/* <NextEvent></NextEvent> */}
       <HomeSpeakers></HomeSpeakers>
-      <HomeSponsors></HomeSponsors>
+      {/* <HomeSponsors></HomeSponsors> */}
       {/* <LastEvents></LastEvents> */}
       {/* <PhotosSummary></PhotosSummary> */}
       <HomeOrganizers></HomeOrganizers>

@@ -222,14 +222,14 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = () => {
     <>
       {/* <ShareProfile urlToShare={"www.google.com.ar"}></ShareProfile> */}
 
-      {!isEmpty(userDetail) && (
-        <PageFullWidthWrapper>
+      <PageFullWidthWrapper>
+        {!isEmpty(userDetail) && (
           <EditAllUserFormik
             {...userDetail}
             saveUser={saveUser}
           ></EditAllUserFormik>
-        </PageFullWidthWrapper>
-      )}
+        )}
+      </PageFullWidthWrapper>
     </>
   );
 };

@@ -4,6 +4,7 @@ import QrReader from "react-qr-scanner";
 import { reportAttendance } from "../../../services/eventsServices";
 import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 import { useToasts } from "react-toast-notifications";
+import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 
 type EventLiveAttendancesProps = {
   name: string;
@@ -55,20 +56,15 @@ export const EventLiveAttendances: React.SFC<
     width: 400
   };
   return (
-    <PageCenterWrapper>
-      <div className="card border-primary mb-3 qr-panel">
-        <div className="card-header">Lector</div>
-        <div className="card-body">
-          {showReader && (
-            <QrReader
-              delay={100}
-              style={previewStyle}
-              onError={handleError}
-              onScan={handleScan}
-            />
-          )}
-        </div>
-      </div>
-    </PageCenterWrapper>
+    <PageFullWidthWrapper>
+      {showReader && (
+        <QrReader
+          delay={100}
+          style={previewStyle}
+          onError={handleError}
+          onScan={handleScan}
+        />
+      )}
+    </PageFullWidthWrapper>
   );
 };
