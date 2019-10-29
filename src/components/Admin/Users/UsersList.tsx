@@ -72,11 +72,13 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
     },
     {
       dataField: "email",
+      sort: true,
       text: "Email"
     },
     {
       dataField: "blocked",
       text: "Bloqueado",
+      sort: true,
       style: {
         textAlign: "center",
         height: "2px"
@@ -91,6 +93,8 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
     {
       dataField: "organized",
       text: "Organizador",
+      sort: true,
+
       style: {
         textAlign: "center",
         height: "2px"
@@ -104,6 +108,8 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
     },
     {
       dataField: "colaborator",
+      sort: true,
+
       text: "Colaborador",
       style: {
         textAlign: "center",
