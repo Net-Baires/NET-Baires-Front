@@ -1,6 +1,7 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { GenerateSW } = require("workbox-webpack-plugin");
 module.exports = function(env) {
   const configPath = path.join(__dirname, `config.${env.APP_ENV}.json`);
   return {
@@ -89,8 +90,13 @@ module.exports = function(env) {
       }),
       new CopyPlugin([
         { from: "assets", to: "assets" },
-        { from: "web.config", to: "web.config" }
+        { from: "web.config", to: "web.config" },
+        { from: "src/sw.js", to: "dist/sw.js" }
       ])
+      // ,
+      // new GenerateSW({
+      //   swDest: path.resolve("src", "sw.js")
+      // })
     ]
   };
 };

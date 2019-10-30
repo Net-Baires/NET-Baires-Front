@@ -3,6 +3,7 @@ import { RouteComponentProps, useHistory } from "react-router-dom";
 import { EventToSync } from "../../../services/models/Events/EventToSync";
 import { getEventsLive } from "../../../services/eventsServices";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { formatStringDate } from "../../../helpers/DateHelpers";
 type EventsInLiveToDoProps = {
   name: string;
 };
@@ -51,7 +52,7 @@ export const EventsInLiveToDo: React.SFC<
                 <tr key={event.id}>
                   <th scope="row">{event.id}</th>
                   <td>{event.title}</td>
-                  <td>{event.date}</td>
+                  <td>{formatStringDate(event.date)}</td>
                   <td>
                     <button
                       type="button"

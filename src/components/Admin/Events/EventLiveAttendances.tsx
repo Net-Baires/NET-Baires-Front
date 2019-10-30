@@ -51,19 +51,12 @@ export const EventLiveAttendances: React.SFC<
   const handleError = (err: any) => {
     console.error(err);
   };
-  const previewStyle = {
-    height: 400,
-    width: 400
-  };
   return (
     <PageFullWidthWrapper>
       {showReader && (
-        <QrReader
-          delay={100}
-          style={previewStyle}
-          onError={handleError}
-          onScan={handleScan}
-        />
+        <div className="qr-lector-container">
+          <QrReader delay={100} onError={handleError} onScan={handleScan} />
+        </div>
       )}
     </PageFullWidthWrapper>
   );

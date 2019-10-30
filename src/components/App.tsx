@@ -172,7 +172,7 @@ export const App: React.SFC<AppProps> = props => {
             />
             <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
 
-            <PrivateRoute exact path="/profile" component={UserProfile} />
+            <PrivateRoute exact path="/admin/profile" component={UserProfile} />
 
             <Route exact path="/login" component={Login} />
             <PrivateRoute exact path="/admin/panel" component={ControlPanel} />

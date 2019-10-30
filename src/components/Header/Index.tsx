@@ -6,14 +6,15 @@ import { syncEvents } from "../../services/eventsServices";
 import { slide as Menu } from "react-burger-menu";
 import { SecureElement } from "../Auth/SecureElement";
 import { BreadcrumbsComponent } from "./BreadcrumbsComponent";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { getCurrentUser } from "../../services/authService";
 type HeaderProps = {};
 
 export const Header: React.SFC<HeaderProps> = () => {
   const { isLoggued, logout } = useContext(UserContext);
   const [open] = useState(false);
   let history = useHistory();
-
+  const user = getCurrentUser();
   const handleLogout = () => {
     logout();
     history.push("/");
@@ -160,6 +161,60 @@ export const Header: React.SFC<HeaderProps> = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
+            {!isLoggued ? (
+              <Nav.Item>
+                <NavLink
+                  exact
+                  isActive={handleIsActive}
+                  className="nav-link"
+                  activeClassName="active"
+                  to="/login"
+                >
+                  Login
+                </NavLink>
+              </Nav.Item>
+            ) : (
+              <>
+                <NavDropdown title="Acciones" id="basic-nav-dropdown">
+                  <NavDropdown.Item>
+                    <NavLink
+                      exact
+                      isActive={handleIsActive}
+                      className="nav-link nav-link-dropdown"
+                      activeClassName="active"
+                      to="/admin/profile"
+                    >
+                      Perfil
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <SecureElement rol="Member">
+                    <NavDropdown.Item href="#">
+                      <NavLink
+                        exact
+                        isActive={handleIsActive}
+                        className="nav-link nav-link-dropdown"
+                        activeClassName="active"
+                        to="/member/organizedcode/read"
+                      >
+                        Leer Código
+                      </NavLink>
+                    </NavDropdown.Item>
+                  </SecureElement>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Nav.Item>
+                      <a
+                        onClick={handleLogout}
+                        className="nav-link nav-link-dropdown"
+                        href="#"
+                      >
+                        Desconectarse
+                      </a>
+                    </Nav.Item>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
             <Nav.Item>
               <NavLink
                 exact
@@ -190,6 +245,7 @@ export const Header: React.SFC<HeaderProps> = () => {
                 Organizadores
               </NavLink>
             </Nav.Item> */}
+
             <Nav.Item>
               <NavLink
                 exact
@@ -200,52 +256,15 @@ export const Header: React.SFC<HeaderProps> = () => {
                 Eventos en Vivo
               </NavLink>
             </Nav.Item>
-            {!isLoggued ? (
-              <Nav.Item>
-                <NavLink
-                  exact
-                  isActive={handleIsActive}
-                  className="nav-link"
-                  activeClassName="active"
-                  to="/login"
-                >
-                  Login
-                </NavLink>
-              </Nav.Item>
-            ) : (
-              <>
-                <Nav.Item>
-                  <NavLink
-                    exact
-                    isActive={handleIsActive}
-                    className="nav-link"
-                    activeClassName="active"
-                    to="/profile"
-                  >
-                    Perfil
-                  </NavLink>
-                </Nav.Item>
-                <SecureElement rol="Member">
-                  <Nav.Item>
-                    <NavLink
-                      exact
-                      isActive={handleIsActive}
-                      className="nav-link"
-                      activeClassName="active"
-                      to="/member/organizedcode/read"
-                    >
-                      Leer Código
-                    </NavLink>
-                  </Nav.Item>
-                </SecureElement>
-                <Nav.Item>
-                  <a onClick={handleLogout} className="nav-link" href="#">
-                    Desconectarse
-                  </a>
-                </Nav.Item>
-              </>
-            )}
           </Nav>
+          {isLoggued && (
+            <Navbar.Text>
+              Bienvenido :{" "}
+              <NavLink exact activeClassName="active" to="/">
+                {user.email}
+              </NavLink>
+            </Navbar.Text>
+          )}
         </Navbar.Collapse>
       </Navbar>
 

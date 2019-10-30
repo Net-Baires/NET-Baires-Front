@@ -559,3 +559,9 @@ a {
 .home-sponsor-container {
   height: 100px !important;
 }
+.qr-lector-container video {
+  width: 100%;
+}
+.nav-link-dropdown {
+  color: #0d0d0d !important;
+}

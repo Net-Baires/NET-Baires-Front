@@ -18,6 +18,26 @@ import { Config } from "./services/config";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 let storeGlobal = createStore(rootReducer);
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(registration => {
+        // tslint:disable:no-console
+        console.log("SW registered: ", registration);
+      })
+      .catch(registrationError => {
+        console.log("SW registration failed: ", registrationError);
+      });
+  });
+  window.addEventListener("install", () => {
+    console.log("install;");
+  });
+  window.addEventListener("activate", () => {
+    console.log("activate");
+  });
+}
+
 let appInsights = new ApplicationInsights({
   config: {
     instrumentationKey: Config.instrumentationKey,
