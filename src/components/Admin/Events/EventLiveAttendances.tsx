@@ -1,6 +1,6 @@
 import React, { useState, MouseEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import QrReader from "react-qr-scanner";
+import QrReader from "react-qr-reader";
 import { reportAttendance } from "../../../services/eventsServices";
 import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 import { useToasts } from "react-toast-notifications";
@@ -55,7 +55,7 @@ export const EventLiveAttendances: React.SFC<
     <PageFullWidthWrapper>
       {showReader && (
         <div className="qr-lector-container">
-          <QrReader delay={100} onError={handleError} onScan={handleScan} />
+          <QrReader delay={2000} onError={handleError} onScan={handleScan} />
         </div>
       )}
     </PageFullWidthWrapper>

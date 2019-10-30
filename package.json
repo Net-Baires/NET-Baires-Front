@@ -74,7 +74,7 @@
     "react-draft-wysiwyg": "^1.13.2",
     "react-loading-overlay": "^1.0.1",
     "react-multi-carousel": "^2.3.0",
-    "react-qr-scanner": "0.0.8",
+    "react-qr-reader": "^2.2.1",
     "react-redux": "^7.1.1",
     "react-redux-oauth2": "^0.5.14",
     "react-router-dom": "^5.1.2",

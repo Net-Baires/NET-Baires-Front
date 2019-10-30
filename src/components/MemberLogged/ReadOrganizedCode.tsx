@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import QrReader from "react-qr-scanner";
+import QrReader from "react-qr-reader";
 import { reportAttendanceGeneral } from "../../services/eventsServices";
-import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 
 type ReadOrganizedCodeProps = {
@@ -31,7 +30,7 @@ export const ReadOrganizedCode: React.SFC<
     <PageFullWidthWrapper>
       {showReader && (
         <div className="qr-lector-container">
-          <QrReader delay={100} onError={handleError} onScan={handleScan} />
+          <QrReader delay={1000} onError={handleError} onScan={handleScan} />
         </div>
       )}
       {!showReader && <h1>Gracias por venir!!</h1>}
