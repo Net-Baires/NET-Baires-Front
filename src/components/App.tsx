@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/index.css";
+// import "../styles/index.css";
 import Login from "./Login";
 import { Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home/Index";
@@ -44,7 +44,7 @@ import { BadgesList } from "./Admin/Badges/BadgesList";
 import NotFoundPage from "./NotFoundPage/Index";
 import { EventLiveDashBoard } from "./EventLive/EventLiveDashBoard";
 import { EditEventPage } from "./Admin/Events/EditEventPage";
-
+import { AdminWrapper } from "./Admin/Wrapper";
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -55,9 +55,10 @@ export const App: React.SFC<AppProps> = props => {
   return (
     <>
       <Router history={historyRouter}>
-        <Header></Header>
+        {/* <Header></Header> */}
         <Switch>
           <Route exact path="/" component={Home} />
+
           <LoadingOverlay active={props.isLoading} spinner text="Procesando...">
             <Route exact path="/organizers" component={Organizers} />
             <Route exact path="/JoinSlack" component={JoinSlack} />
@@ -173,15 +174,16 @@ export const App: React.SFC<AppProps> = props => {
             <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
 
             <PrivateRoute exact path="/admin/profile" component={UserProfile} />
-
-            <Route exact path="/login" component={Login} />
+            <AdminWrapper>
+              <Route exact path="/login" component={Login} />
+            </AdminWrapper>
             <PrivateRoute exact path="/admin/panel" component={ControlPanel} />
             <Route exact path="/notfound" component={NotFoundPage} />
           </LoadingOverlay>
 
           <Route exact path="*" component={NotFoundPage} />
         </Switch>
-        <Footer></Footer>
+        {/* <Footer></Footer> */}
       </Router>
     </>
   );
@@ -199,7 +201,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const AppConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);
