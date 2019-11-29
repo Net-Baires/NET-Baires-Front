@@ -13,7 +13,6 @@ import { isEmpty } from "../../../services/objectsservices";
 import { EditEventComponent } from "./Components/EditEventComponent";
 import { AttendeesListToEdit } from "./Components/AttendeesListToEdit";
 import { SponsorsListToEdit } from "./Components/SponsorsListToEdit";
-import { Accordion, Card, Button } from "react-bootstrap";
 type EditEventPageProps = {
   name: string;
   loading: () => void;
@@ -56,7 +55,7 @@ const EditEventPageComponent: React.SFC<
     <PageFullWidthWrapper>
       {!isEmpty(event) && (
         <>
-          <Accordion defaultActiveKey="0">
+          {/* <Accordion defaultActiveKey="0">
             <Card>
               <Card.Header>
                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -106,7 +105,7 @@ const EditEventPageComponent: React.SFC<
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
-          </Accordion>
+          </Accordion> */}
         </>
       )}
     </PageFullWidthWrapper>

@@ -64,7 +64,6 @@
     "react": "^16.10.2",
     "react-add-to-homescreen": "^1.1.0",
     "react-appinsights": "^3.0.0-rc.6",
-    "react-bootstrap": "^1.0.0-beta.14",
     "react-bootstrap-table-next": "^3.2.1",
     "react-bootstrap-table2-paginator": "^2.1.0",
     "react-bootstrap-table2-toolkit": "^2.1.0",

@@ -8,13 +8,13 @@ import PhotosSummary from "./PhotosSummary/Index";
 import VideoPreview from "./VideoPreview/Index";
 import HomeHeaderBanner from "./HomeHeaderBanner/Index";
 
-import '../../../assets/css/bootstrap.min.css';
-import '../../../assets/css/animate.css';
-import '../../../assets/css/owl.carousel.css';
-import '../../../assets/css/magnific-popup.css';
-import '../../../assets/css/animsition.min.css';
-import '../../../assets/css/ionicons.min.css';
-import '../../../assets/css/style-landing.css'
+// import '../../../assets/css/bootstrap.min.css';
+// import '../../../assets/css/animate.css';
+// import '../../../assets/css/owl.carousel.css';
+// import '../../../assets/css/magnific-popup.css';
+// import '../../../assets/css/animsition.min.css';
+// import '../../../assets/css/ionicons.min.css';
+// import '../../../assets/css/style-landing.css'
 
 type LoginProps = {};
 export const Home: React.SFC<LoginProps> = () => {
