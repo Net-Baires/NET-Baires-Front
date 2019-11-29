@@ -1,2 +1,7 @@
 .panel-logo{
-    background-image: url('../../assets/images/Logo-Blanco.png');}
+    background-image: url('../../assets/images/Logo-Blanco.png');
+}
+/* Arreglar diseño origina */
+.profile-notification{
+    margin-left: -260px;
+}

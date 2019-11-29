@@ -1,9 +1,19 @@
 import React, { useContext, useState } from "react";
+import { UserContext } from '../../../contexts/UserContext';
+import { useHistory } from 'react-router';
+import { getCurrentUser } from '../../../services/authService';
 
 type TopBarProps = {};
 
 export const TopBar: React.SFC<TopBarProps> = () => {
-
+    const { isLoggued, logout } = useContext(UserContext);
+    let history = useHistory();
+    const user = getCurrentUser();
+    const handleLogout = () => {
+        logout();
+        history.push("/");
+        history.listen;
+    };
     return (
         <>
 
@@ -108,7 +118,7 @@ export const TopBar: React.SFC<TopBarProps> = () => {
                                     <div className="pro-head">
                                         <img src="assets/images/user/avatar-1.jpg" className="img-radius" alt="User-Profile-Image" />
                                         <span>John Doe</span>
-                                        <a href="auth-signin.html" className="dud-logout" title="Logout">
+                                        <a href="#" onClick={handleLogout} className="dud-logout" title="Logout">
                                             <i className="feather icon-log-out"></i>
                                         </a>
                                     </div>

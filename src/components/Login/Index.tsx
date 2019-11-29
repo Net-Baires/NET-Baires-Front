@@ -48,28 +48,26 @@ const Login: React.SFC<LoginProps> = props => {
   };
   return (
     <>
-      <PageCenterWrapper>
-        {!isLoggued && (
-          <article className="authenticate-conteiner">
-            <header>
-              <h1>Autenticarse</h1>
-            </header>
-            <section>
-              <p>
-                <input
-                  onClick={handleLoginMeetup}
-                  type="submit"
-                  className="fadeIn fourth"
-                  value="Meetup"
-                />
-              </p>
-            </section>
-            {/* <section>
+      {!isLoggued && (
+        <article className="authenticate-conteiner">
+          <header>
+            <h1>Autenticarse</h1>
+          </header>
+          <section>
+            <p>
+              <input
+                onClick={handleLoginMeetup}
+                type="submit"
+                className="fadeIn fourth"
+                value="Meetup"
+              />
+            </p>
+          </section>
+          {/* <section>
           <p> </p>
         </section> */}
-          </article>
-        )}
-      </PageCenterWrapper>
+        </article>
+      )}
     </>
   );
 };
