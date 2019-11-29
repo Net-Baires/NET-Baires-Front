@@ -60,6 +60,8 @@
     "formik": "^1.5.8",
     "jwt-decode": "^2.2.0",
     "mdbreact": "^4.21.1",
+    "perfect-scrollbar": "^1.4.0",
+    "popover": "^2.4.1",
     "qrcode.react": "^0.9.3",
     "react": "^16.10.2",
     "react-add-to-homescreen": "^1.1.0",
@@ -85,6 +87,7 @@
     "react-toast-notifications": "^2.2.5",
     "react-wysiwyg-typescript": "^1.0.2",
     "reactstrap": "^8.0.1",
+    "smooth-scroll": "^16.1.0",
     "workbox-webpack-plugin": "^4.3.1",
     "yup": "^0.27.0"
   }

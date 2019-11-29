@@ -7,16 +7,17 @@ import {
 } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
-export const PrivateRoute = ({ component, ...rest }: RouteProps) => {
+export const PrivateRoute = ({ component, children, ...rest }: RouteProps) => {
   const { isLoggued } = useContext(UserContext);
 
-  if (!component) {
+  if (!component && !children) {
     throw Error("component is undefined");
   }
   const Component = component; // JSX Elements have to be uppercase.
   const render = (props: RouteComponentProps<any>): React.ReactNode => {
     if (isLoggued) {
-      return <Component {...props} />;
+      if (Component)
+        return <Component {...props} />;
     }
     const redirectUrl = props.location.pathname;
 

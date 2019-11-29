@@ -5,3 +5,22 @@
 .profile-notification{
     margin-left: -260px;
 }
+.table-bordered{
+    margin: auto;
+    border-collapse: collapse;
+    overflow-x: auto;
+    /* width: fit-content; */
+    max-width: 100%;
+}
+@media (max-width: 576px) { 
+    .table-bordered{
+        display: block;
+    }
+ }
+.image-badge-prview{
+    width: 100%;
+    margin-top: 20px;
+}
+.sponsors-list-img{
+    width: 100%;
+}

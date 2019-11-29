@@ -3,12 +3,10 @@ import { UserContext } from "../../contexts/UserContext";
 import { login as loginService } from "../../services/loginServices";
 import { useHistory } from "react-router-dom";
 import { Config } from "../../services/config";
-import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 
 var ClientOAuth2 = require("client-oauth2");
 type LoginProps = {};
 const Login: React.SFC<LoginProps> = props => {
-  console.log(props);
   const { login, isLoggued } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

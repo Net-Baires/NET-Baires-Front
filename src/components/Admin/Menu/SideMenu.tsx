@@ -1,11 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, SyntheticEvent, MouseEventHandler } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { NavLink, useHistory } from "react-router-dom";
 import { match } from "react-router";
 import { syncEvents } from "../../../services/eventsServices";
 import { SecureElement } from '../../Auth/SecureElement';
-import { BreadcrumbsComponent } from "./BreadcrumbsComponent";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { getCurrentUser } from "../../../services/authService";
 type SideMenuProps = {};
 
@@ -22,7 +20,9 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
     const handleSyncEvents = () => {
         syncEvents().then(() => { });
     };
-
+    const clickMenu = (event: any) => {
+        event.stopPropagation();
+    };
     const handleIsActive = (match: match<any>): boolean => {
         return (match as unknown) as boolean;
     };
@@ -42,7 +42,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                             </div>
                             <span className="b-title">NET-Baires</span>
                         </NavLink>
-                        <a className="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+                        <a className="mobile-menu" id="mobile-collapse" ><span></span></a>
                     </div>
                     <div className="navbar-content scroll-div">
                         <SecureElement rols={["Admin", "Organizer"]}>
@@ -68,7 +68,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                                 </li>
 
                                 <li data-username="Menu levels Menu level 2.1 Menu level 2.2" className="nav-item pcoded-hasmenu">
-                                    <a href="#!" className="nav-link"><span className="pcoded-micon"><i className="feather icon-check-square"></i></span><span className="pcoded-mtext">Eventos</span></a>
+                                    <a className="nav-link"><span className="pcoded-micon"><i className="feather icon-check-square"></i></span><span className="pcoded-mtext">Eventos</span></a>
                                     <ul className="pcoded-submenu">
                                         <li className="">
                                             <NavLink
@@ -105,7 +105,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                                     </ul>
                                 </li>
                                 <li data-username="Menu levels Menu level 2.1 Menu level 2.2" className="nav-item pcoded-hasmenu">
-                                    <a href="#!" className="nav-link"><span className="pcoded-micon"><i className="fas fa-user"></i></span><span className="pcoded-mtext">Usuarios</span></a>
+                                    <a className="nav-link"><span className="pcoded-micon"><i className="fas fa-user"></i></span><span className="pcoded-mtext">Usuarios</span></a>
                                     <ul className="pcoded-submenu">
                                         <li className="">
                                             <NavLink
@@ -130,7 +130,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                                     </ul>
                                 </li>
                                 <li data-username="Menu levels Menu level 2.1 Menu level 2.2" className="nav-item pcoded-hasmenu">
-                                    <a href="#!" className="nav-link"><span className="pcoded-micon"><i className="fas fa-university"></i></span><span className="pcoded-mtext">Sponsors</span></a>
+                                    <a className="nav-link"><span className="pcoded-micon"><i className="fas fa-university"></i></span><span className="pcoded-mtext">Sponsors</span></a>
                                     <ul className="pcoded-submenu">
                                         <li className="">
                                             <NavLink
@@ -156,7 +156,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                                 </li>
 
                                 <li data-username="Menu levels Menu level 2.1 Menu level 2.2" className="nav-item pcoded-hasmenu">
-                                    <a href="#!" className="nav-link"><span className="pcoded-micon"><i className="fas fa-money-check"></i></span><span className="pcoded-mtext">Badges</span></a>
+                                    <a className="nav-link"><span className="pcoded-micon"><i className="fas fa-money-check"></i></span><span className="pcoded-mtext">Badges</span></a>
                                     <ul className="pcoded-submenu">
                                         <li className="">
                                             <NavLink

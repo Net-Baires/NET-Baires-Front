@@ -70,7 +70,7 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
     }
   ];
   return (
-    <PageFullWidthWrapper>
+    <>
       <SearchWrapper title="Sponsors">
         <ToolkitProvider keyField="id" data={sponsors} columns={columns} search>
           {(props: any) => (
@@ -78,6 +78,7 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
               <SearchBar {...props.searchProps} />
               <hr />
               <BootstrapTable
+                class="table-responsive"
                 keyField="id"
                 {...props.baseProps}
                 pagination={paginationFactory()}
@@ -89,6 +90,6 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
       <button type="button" onClick={handleNew} className="btn btn-primary">
         Nuevo Sponsor
       </button>
-    </PageFullWidthWrapper>
+    </>
   );
 };

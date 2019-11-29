@@ -68,8 +68,8 @@ export const EditSponsorToExport: React.SFC<
     setSureToDelete(false);
   };
   return (
-    <PageCenterWrapper>
-      <MDBContainer className="pepepe">
+    <>
+      {/* <MDBContainer className="pepepe">
         <MDBModal isOpen={sureToDelete}>
           <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
           <MDBModalBody>
@@ -84,7 +84,7 @@ export const EditSponsorToExport: React.SFC<
             </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
-      </MDBContainer>
+      </MDBContainer> */}
       {!isEmpty(sponsor) && (
         <EditSponsorComponent
           {...sponsor}
@@ -100,7 +100,7 @@ export const EditSponsorToExport: React.SFC<
           Eliminar
         </button>
       </div>
-    </PageCenterWrapper>
+    </>
   );
 };
 const mapStateToProps = () => ({});

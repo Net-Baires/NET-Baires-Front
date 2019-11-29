@@ -28,11 +28,9 @@ export const NewSponsorComponent: React.SFC<NewSponsorProps> = ({
       });
   };
   return (
-    <PageCenterWrapper>
-      <EditSponsorComponent
-        saveSponsor={handleSaveSponsor}
-      ></EditSponsorComponent>
-    </PageCenterWrapper>
+    <EditSponsorComponent
+      saveSponsor={handleSaveSponsor}
+    ></EditSponsorComponent>
   );
 };
 

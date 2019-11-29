@@ -90,11 +90,11 @@ export const EventsInLive: React.SFC<
           </tbody>
         </table>
       ) : (
-        <NotFound
-          title="No hay eventos en LIVE"
-          message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
-        ></NotFound>
-      )}
+          <NotFound
+            title="No hay eventos en LIVE"
+            message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
+          ></NotFound>
+        )}
     </PageFullWidthWrapper>
   );
 };

@@ -166,7 +166,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
   };
 
   return (
-    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
+    <>
       {users && (
         <SearchWrapper title="Usuarios">
           <ToolkitProvider keyField="id" data={users} columns={columns} search>
@@ -191,7 +191,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
       >
         Nuevo Usuario
       </NavLink>
-    </PageFullWidthWrapper>
+    </>
   );
 };
 const mapStateToProps = () => ({});

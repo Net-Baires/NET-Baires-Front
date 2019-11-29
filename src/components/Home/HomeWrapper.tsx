@@ -23,7 +23,7 @@ const HomeWrapperComponent: React.SFC = ({ children }) => {
     }
 
     return (<>
-        <div className="wrapper animsition" data-animsition-in-className="fade-in" data-animsition-in-duration="1000" data-animsition-out-className="fade-out" data-animsition-out-duration="1000">
+        <div className="wrapper animsition" data-animsition-in-classname="fade-in" data-animsition-in-duration="1000" data-animsition-out-classname="fade-out" data-animsition-out-duration="1000">
             <div className="container">
                 <nav className="navbar navbar-expand-lg navbar-light navbar-default navbar-fixed-top" role="navigation">
                     <div className="container">

@@ -23,12 +23,12 @@ const NewUserComponent: React.SFC<NewUserProps> = ({ loading, ready }) => {
   };
 
   return (
-    <PageCenterWrapper classWrapper="lgx-page-wrapper">
+    <>
       <EditUserComponent
         saveUser={saveUser}
         user={userToEdit}
       ></EditUserComponent>
-    </PageCenterWrapper>
+    </>
   );
 };
 

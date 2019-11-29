@@ -61,8 +61,8 @@ const EditUserInternalComponent: React.SFC<
   };
 
   return (
-    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
-      <MDBContainer>
+    <>
+      {/* <MDBContainer>
         <MDBModal isOpen={sureToDelete}>
           <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
           <MDBModalBody>
@@ -78,7 +78,7 @@ const EditUserInternalComponent: React.SFC<
             </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
-      </MDBContainer>
+      </MDBContainer> */}
       {!isEmpty(userToEdit) && (
         <EditUserComponent
           saveUser={saveUser}
@@ -103,7 +103,7 @@ const EditUserInternalComponent: React.SFC<
           ></BadgesAssign>
         </div>
       )}
-    </PageFullWidthWrapper>
+    </>
   );
 };
 
