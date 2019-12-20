@@ -34,18 +34,18 @@ export const Home: React.SFC<LoginProps> = () => {
                     <div className="hero-content app-hero-content text-center">
                         <div className="row justify-content-md-center">
                             <div className="col-md-10">
-                                <h1 className="wow fadeInUp" data-wow-delay="0s">Datta Able Bootstrap 4 Admin Template</h1>
-                                <p className="wow fadeInUp" data-wow-delay="0.2s">
-                                    First ever Bootstrap 4 admin template with Flat UI Interface. <br className="hidden-xs" /> Its best choice for your any complex project.
+                                <h1 className="wow fadeInUp main-title" data-wow-delay="0s">NET-Baires</h1>
+                                <p className="wow fadeInUp main-subttitle" data-wow-delay="0.2s">
+                                    Somor la comunidad de .NET mas grande de la Argentina.
                                 </p>
-                                <a className="btn btn-primary btn-action" data-wow-delay="0.2s" href="#!">Live Preview</a>
-                                <a className="btn btn-primary btn-action" data-wow-delay="0.2s" href="#!">Buy Now</a>
+                                <a className="btn btn-primary btn-action" data-wow-delay="0.2s" href="#!">Unirme a Slack</a>
+                                {/* <a className="btn btn-primary btn-action" data-wow-delay="0.2s" href="#!">Buy Now</a> */}
                             </div>
-                            <div className="col-md-12">
+                            {/* <div className="col-md-12">
                                 <div className="hero-image">
                                     <img className="img-fluid" src="assets/images/app_hero_1.png" alt="" />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

@@ -289,7 +289,8 @@ body {
 .navbar-default {
     transition: all 0.6s ease;
     border-color: transparent;
-    background-color: transparent;
+    background: #FFFFFF;
+    opacity: 0.9;
 }
 
 .navbar-default .navbar-toggle {
@@ -380,7 +381,9 @@ body {
 
     .navbar-default {
         border: 0px;
-        background-color: transparent;
+        border-color: transparent;
+    background: #FFFFFF;
+    opacity: 0.9;
     }
 
     .navbar-default .navbar-collapse {
@@ -561,7 +564,8 @@ body {
 }
 
 .app-hero {
-    background: #f4f7fa;
+    background: url(https://net-baires.azureedge.net/images/header.jpg) top center no-repeat;
+    height: 50rem;
 }
 
 .app-hero-content {
@@ -570,11 +574,15 @@ body {
 }
 
 .app-hero-content h1 {
-    color: #111111;
+    color: #ffffff;
+    margin-top: 150px;
+    font-size: 40px;
+    text-transform: uppercase;
 }
 
 .app-hero-content p {
-    color: #111111;
+    color: #ffffff;
+    font-size: 25px;
 }
 
 .app-hero-content img {
@@ -1489,15 +1497,15 @@ label {
     }
 
     .app-hero-content h1 {
-        font-size: 42px;
+        font-size: 85px;
         font-weight: 600;
         line-height: 1.2;
         letter-spacing: -1px;
-        margin-top: 25px;
+        margin-top: 80px;
     }
 
     .app-hero-content p {
-        font-size: 16px
+        font-size: 30px
     }
 
     .app-sub-inner {
@@ -1778,4 +1786,17 @@ label {
     .features-section-2 .features-content h2 {
         margin-top: 10px;
     }
+}
+/* Custom */
+.nav-link {
+    color:black;
+}
+.main-title {
+    color: #FFFFFF;
+}
+ .main-subttitle{
+    color: #FFFFFF;
+}
+.logo-footer-home{
+    width: 180px;
 }

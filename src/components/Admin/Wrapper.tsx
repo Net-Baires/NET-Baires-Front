@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 // import Script from 'react-load-script'
 import { loading, ready } from '../../store/loading/actions';
 import SideMenu from './Menu/SideMenu';
 import FriendsMenu from './Menu/FriendsMenu';
 import TopBar from './Menu/TopBar';
+import { loadScript, loadStyles } from '../../services/helpers/scriptshelpers';
 // import '../../../assets/fonts/fontawesome/css/fontawesome-all.min.css'
 // import '../../../assets/plugins/animation/css/animate.min.css'
 // import '../../../assets/css/style-app.css'
@@ -18,16 +18,10 @@ import TopBar from './Menu/TopBar';
 const AdminWrapperComponent: React.SFC = ({ children }) => {
     useEffect(() => {
         loadScript('assets/js/pcoded.min.js')
+        loadStyles('assets/css/style-app.css');
     });
-    var loadScript = function (src: string) {
-        const script = document.createElement("script");
-
-        script.src = src;
-        document.body.appendChild(script);
-    }
 
     return (<>
-
         <div className="loader-bg">
             <div className="loader-track">
                 <div className="loader-fill"></div>
@@ -35,10 +29,7 @@ const AdminWrapperComponent: React.SFC = ({ children }) => {
         </div>
         <SideMenu></SideMenu>
         <TopBar></TopBar>
-
-
         <FriendsMenu></FriendsMenu>
-
         <div className="pcoded-main-container">
             <div className="pcoded-wrapper">
                 <div className="pcoded-content">
