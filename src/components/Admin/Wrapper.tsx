@@ -6,6 +6,7 @@ import SideMenu from './Menu/SideMenu';
 import FriendsMenu from './Menu/FriendsMenu';
 import TopBar from './Menu/TopBar';
 import { loadScript, loadStyles } from '../../services/helpers/scriptshelpers';
+import { BreadcrumbsComponent } from '../Header/BreadcrumbsComponent';
 
 const AdminWrapperComponent: React.SFC = ({ children }) => {
     useEffect(() => {
@@ -36,13 +37,14 @@ const AdminWrapperComponent: React.SFC = ({ children }) => {
                             <div className="page-block">
                                 <div className="row align-items-center">
                                     <div className="col-md-12">
-                                        <div className="page-header-title">
+                                        {/* <BreadcrumbsComponent></BreadcrumbsComponent> */}
+                                        {/* <div className="page-header-title">
                                             <h5 className="m-b-10">Sample Page</h5>
                                         </div>
                                         <ul className="breadcrumb">
                                             <li className="breadcrumb-item"><a href="index.html"><i className="feather icon-home"></i></a></li>
                                             <li className="breadcrumb-item"><a href="#!">Sample Page</a></li>
-                                        </ul>
+                                        </ul> */}
                                     </div>
                                 </div>
                             </div>

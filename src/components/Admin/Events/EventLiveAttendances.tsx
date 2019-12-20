@@ -52,12 +52,12 @@ export const EventLiveAttendances: React.SFC<
     console.error(err);
   };
   return (
-    <PageFullWidthWrapper>
+    <>
       {showReader && (
         <div className="qr-lector-container">
           <QrReader delay={2000} onError={handleError} onScan={handleScan} />
         </div>
       )}
-    </PageFullWidthWrapper>
+    </>
   );
 };

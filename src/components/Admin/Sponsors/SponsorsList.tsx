@@ -87,6 +87,7 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
           )}
         </ToolkitProvider>
       </SearchWrapper>
+
       <button type="button" onClick={handleNew} className="btn btn-primary">
         Nuevo Sponsor
       </button>

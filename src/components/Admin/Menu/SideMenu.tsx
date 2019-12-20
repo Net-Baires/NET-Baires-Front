@@ -174,6 +174,16 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                                         <span className="pcoded-micon"><i className="fas fa-user-check"></i></span><span className="pcoded-mtext">Recibir Miemebros</span>
                                     </NavLink>
                                 </li>
+                                <li data-username="Animations" className="nav-item">
+                                    <NavLink
+                                        exact
+                                        className="nav-link-slide-bar"
+                                        activeClassName="active"
+                                        to="/logout"
+                                    >
+                                        <span className="pcoded-micon"><i className="fas fa-user-check"></i></span><span className="pcoded-mtext">Desconectarse</span>
+                                    </NavLink>
+                                </li>
 
                             </ul>
                         </SecureElement>

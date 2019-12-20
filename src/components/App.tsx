@@ -48,6 +48,7 @@ import { AdminWrapper } from "./Admin/Wrapper";
 import { HomeWrapper } from './Home/HomeWrapper'
 import { EmptyWrapper } from './Home/EmptyWrapper';
 import { newSponsor } from '../services/sponsorsServices';
+import LogoutComponent from './Login/LogoutComponent';
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -65,15 +66,11 @@ export const App: React.SFC<AppProps> = props => {
               <Home></Home>
             </HomeWrapper>
           </Route>
-          <Route exact path="/login">
-            <HomeWrapper>
-              <Login></Login>
-            </HomeWrapper>
+          <Route exact path="/login" component={Login}></Route>
+          <Route exact path="/logout" component={LogoutComponent}>
+
           </Route>
-          <Route exact path="/login/meetup">
-            <HomeWrapper>
-              <MeetupCallBack></MeetupCallBack>
-            </HomeWrapper>
+          <Route exact path="/login/meetup" component={MeetupCallBack}>
           </Route>
           <Route
             exact
@@ -125,11 +122,11 @@ export const App: React.SFC<AppProps> = props => {
             path="/events/:id(\d+)/live"
             component={EventLiveDashBoard}
           />
-          <PrivateRoute
+          {/* <PrivateRoute
             exact
             path="/EventLive/:id(\d+)"
             component={EventLiveAttendances}
-          />
+          /> */}
 
 
           <PrivateRoute
@@ -141,6 +138,11 @@ export const App: React.SFC<AppProps> = props => {
 
 
           <AdminWrapper>
+            <PrivateRoute
+              exact
+              path="/admin/EventLive/Attendances"
+              component={EventLiveAttendances}
+            />
             <PrivateRoute
               exact
               path="/admin/eventsToSync"
@@ -191,11 +193,7 @@ export const App: React.SFC<AppProps> = props => {
             component={EventsInLiveToDo}
           />
 
-          <PrivateRoute
-            exact
-            path="/admin/EventLive/Attendances"
-            component={EventLiveAttendances}
-          />
+
 
           <PrivateRoute
             exact
@@ -204,16 +202,16 @@ export const App: React.SFC<AppProps> = props => {
           />
 
 
-          <PrivateRoute exact path="/app/admin/badges" component={BadgesList} />
+          <PrivateRoute exact path="/admin/badges" component={BadgesList} />
           <PrivateRoute
             exact
-            path="/app/admin/badges/:id(\d+)/Edit"
+            path="/admin/badges/:id(\d+)/Edit"
             component={EditBadge}
           />
-          <PrivateRoute exact path="/app/admin/badges/new" component={NewBadge} />
+          <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
 
-          <PrivateRoute exact path="/app/admin/profile" component={UserProfile} />
-          <PrivateRoute exact path="/app/admin/panel">
+          <PrivateRoute exact path="/admin/profile" component={UserProfile} />
+          <PrivateRoute exact path="/admin/panel">
             <AdminWrapper>
               <ControlPanel></ControlPanel>
             </AdminWrapper>

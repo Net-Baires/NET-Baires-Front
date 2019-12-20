@@ -2,7 +2,7 @@ import { RouteComponentProps, useLocation, useHistory } from "react-router";
 import React, { useEffect, useContext } from "react";
 import { loginWithMeetupToken } from "../../services/loginServices";
 import { UserContext } from "../../contexts/UserContext";
-import { User } from "services/models/User";
+import Loading from './Loading';
 type MeetupCallBackProps = {
   name: string;
 };
@@ -25,9 +25,11 @@ export const MeetupCallBack: React.SFC<
         localStorage.setItem("RedirectUrl", "/");
         history.push(redirectUrl);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
-  return <div></div>;
+  return <div>
+    <Loading></Loading>
+  </div>;
 };
 
 export default MeetupCallBack;

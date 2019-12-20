@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
 import { loading, ready } from '../../store/loading/actions';
+import { NavLink } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 const MenuHomeComponent: React.SFC = () => {
+    const { isLoggued } = useContext(UserContext);
     return (
         <div className="container">
             <nav className="navbar navbar-expand-lg navbar-light navbar-default navbar-fixed-top" role="navigation">
@@ -38,7 +41,22 @@ const MenuHomeComponent: React.SFC = () => {
                                 <a className="nav-link page-scroll" href="#pricing">Organizadores</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#!">Contactate</a>
+                                {isLoggued ?
+
+                                    <NavLink
+                                        className="nav-link  page-scroll"
+                                        to="/logout"
+                                    >
+                                        Desconectate
+                              </NavLink> :
+                                    <NavLink
+                                        className="nav-link  page-scroll"
+                                        to="/login"
+                                    >
+                                        Conectate
+                            </NavLink>
+                                }
+
                             </li>
                         </ul>
                     </div>
