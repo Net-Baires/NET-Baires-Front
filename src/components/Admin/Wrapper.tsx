@@ -6,22 +6,19 @@ import SideMenu from './Menu/SideMenu';
 import FriendsMenu from './Menu/FriendsMenu';
 import TopBar from './Menu/TopBar';
 import { loadScript, loadStyles } from '../../services/helpers/scriptshelpers';
-// import '../../../assets/fonts/fontawesome/css/fontawesome-all.min.css'
-// import '../../../assets/plugins/animation/css/animate.min.css'
-// import '../../../assets/css/style-app.css'
-// type EditUserParams = {
-//     id: string;
-//     loading: () => void;
-//     ready: () => void;
-// };
 
 const AdminWrapperComponent: React.SFC = ({ children }) => {
     useEffect(() => {
-        loadScript('assets/js/pcoded.min.js')
+        loadScript("assets/js/vendor-all.min.js");
+        loadScript("assets/plugins/bootstrap/js/bootstrap.min.js");
+        loadScript('assets/js/pcoded.js')
         loadStyles('assets/css/style-app.css');
+
+        // loadScript("assets/js/pcoded.min.js");
     });
 
     return (<>
+
         <div className="loader-bg">
             <div className="loader-track">
                 <div className="loader-fill"></div>

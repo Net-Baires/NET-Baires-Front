@@ -204,16 +204,16 @@ export const App: React.SFC<AppProps> = props => {
           />
 
 
-          <PrivateRoute exact path="/admin/badges" component={BadgesList} />
+          <PrivateRoute exact path="/app/admin/badges" component={BadgesList} />
           <PrivateRoute
             exact
-            path="/admin/badges/:id(\d+)/Edit"
+            path="/app/admin/badges/:id(\d+)/Edit"
             component={EditBadge}
           />
-          <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
+          <PrivateRoute exact path="/app/admin/badges/new" component={NewBadge} />
 
-          <PrivateRoute exact path="/admin/profile" component={UserProfile} />
-          <PrivateRoute exact path="/admin/panel">
+          <PrivateRoute exact path="/app/admin/profile" component={UserProfile} />
+          <PrivateRoute exact path="/app/admin/panel">
             <AdminWrapper>
               <ControlPanel></ControlPanel>
             </AdminWrapper>

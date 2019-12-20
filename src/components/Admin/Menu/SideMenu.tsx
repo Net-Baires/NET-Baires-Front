@@ -1,30 +1,13 @@
-import React, { useContext, useState, SyntheticEvent, MouseEventHandler } from "react";
-import { UserContext } from "../../../contexts/UserContext";
-import { NavLink, useHistory } from "react-router-dom";
-import { match } from "react-router";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { syncEvents } from "../../../services/eventsServices";
 import { SecureElement } from '../../Auth/SecureElement';
-import { getCurrentUser } from "../../../services/authService";
 type SideMenuProps = {};
 
 export const SideMenu: React.SFC<SideMenuProps> = () => {
-    const { isLoggued, logout } = useContext(UserContext);
-    const [open] = useState(false);
-    let history = useHistory();
-    const user = getCurrentUser();
-    const handleLogout = () => {
-        logout();
-        history.push("/");
-        history.listen;
-    };
+    const [] = useState(false);
     const handleSyncEvents = () => {
         syncEvents().then(() => { });
-    };
-    const clickMenu = (event: any) => {
-        event.stopPropagation();
-    };
-    const handleIsActive = (match: match<any>): boolean => {
-        return (match as unknown) as boolean;
     };
     return (
         <>
@@ -38,7 +21,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                             to="/admin/panel"
                         >
                             <div className="b-bg panel-logo">
-                                <i className="feather icon-trending-up"></i>
+                                {/* <i className="feather icon-trending-up"></i> */}
                             </div>
                             <span className="b-title">NET-Baires</span>
                         </NavLink>

@@ -1,5 +1,7 @@
 .panel-logo{
-    background-image: url('../../assets/images/Logo-Blanco.png');
+    background-image: url('../../assets/images/Logo-Blanco.png') !important;
+    background-repeat: no-repeat !important;
+    background-size: contain  !important;
 }
 /* Arreglar diseño origina */
 .profile-notification{
@@ -12,8 +14,8 @@
     /* width: fit-content; */
     max-width: 100%;
 }
+.table-bordered{
 @media (max-width: 576px) { 
-    .table-bordered{
         display: block;
     }
  }
