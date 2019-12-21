@@ -1,5 +1,5 @@
 import React, { useState, useEffect, MouseEvent } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { RouteComponentProps, useHistory, NavLink } from "react-router-dom";
 import { EventToSync } from "../../../services/models/Events/EventToSync";
 import { getEventsLive } from "../../../services/eventsServices";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
@@ -13,9 +13,9 @@ type EventsInLiveToDoParams = {
 
 type EventsInLiveToDoPropsAndRouter = EventsInLiveToDoParams &
   EventsInLiveToDoProps;
-export const EventsInLiveToDo: React.SFC<
-  RouteComponentProps<EventsInLiveToDoPropsAndRouter>
-> = () => {
+export const EventsInLiveToDo: React.SFC<RouteComponentProps<
+  EventsInLiveToDoPropsAndRouter
+>> = () => {
   let history = useHistory();
 
   const defaultEventsInLiveToDo = new Array<EventToSync>();
@@ -36,7 +36,7 @@ export const EventsInLiveToDo: React.SFC<
   };
   return (
     <>
-      <PageFullWidthWrapper>
+      <>
         {EventsInLiveToDo && (
           <table className="table">
             <thead className="thead-light">
@@ -44,7 +44,9 @@ export const EventsInLiveToDo: React.SFC<
                 <th scope="col">#</th>
                 <th scope="col">Titulo</th>
                 <th scope="col">Fecha</th>
-                <th scope="col">Acción</th>
+                <th scope="col" colSpan="2">
+                  Acción
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -62,12 +64,21 @@ export const EventsInLiveToDo: React.SFC<
                       Asistencia General
                     </button>
                   </td>
+                  <td>
+                    <NavLink
+                      className="btn btn-success"
+                      activeClassName="active"
+                      to={`/admin/events/${event.id}/live/panel`}
+                    >
+                      Panel
+                    </NavLink>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
-      </PageFullWidthWrapper>
+      </>
     </>
   );
 };

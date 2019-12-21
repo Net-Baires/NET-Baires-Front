@@ -45,10 +45,11 @@ import NotFoundPage from "./NotFoundPage/Index";
 import { EventLiveDashBoard } from "./EventLive/EventLiveDashBoard";
 import { EditEventPage } from "./Admin/Events/EditEventPage";
 import { AdminWrapper } from "./Admin/Wrapper";
-import { HomeWrapper } from './Home/HomeWrapper'
-import { EmptyWrapper } from './Home/EmptyWrapper';
-import { newSponsor } from '../services/sponsorsServices';
-import LogoutComponent from './Login/LogoutComponent';
+import { HomeWrapper } from "./Home/HomeWrapper";
+import { EmptyWrapper } from "./Home/EmptyWrapper";
+import { newSponsor } from "../services/sponsorsServices";
+import LogoutComponent from "./Login/LogoutComponent";
+import { AdminEventLivePanel } from "./Admin/Events/AdminEventLivePanel";
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -67,19 +68,13 @@ export const App: React.SFC<AppProps> = props => {
             </HomeWrapper>
           </Route>
           <Route exact path="/login" component={Login}></Route>
-          <Route exact path="/logout" component={LogoutComponent}>
-
-          </Route>
-          <Route exact path="/login/meetup" component={MeetupCallBack}>
-          </Route>
-          <Route
-            exact
-            path="/login/eventBrite">
+          <Route exact path="/logout" component={LogoutComponent}></Route>
+          <Route exact path="/login/meetup" component={MeetupCallBack}></Route>
+          <Route exact path="/login/eventBrite">
             <HomeWrapper>
               <EventBriteCallBack></EventBriteCallBack>
             </HomeWrapper>
           </Route>
-
 
           {/* <LoadingOverlay active={props.isLoading} spinner text="Procesando..."> */}
           <Route exact path="/organizers">
@@ -88,9 +83,7 @@ export const App: React.SFC<AppProps> = props => {
           <Route exact path="/JoinSlack">
             <JoinSlack></JoinSlack>
           </Route>
-          <Route
-            exact
-            path="/organizers/:id(\d+)?">
+          <Route exact path="/organizers/:id(\d+)?">
             <OrganizerDetail></OrganizerDetail>
           </Route>
 
@@ -98,9 +91,7 @@ export const App: React.SFC<AppProps> = props => {
             <SpeakerDetail></SpeakerDetail>
           </Route>
 
-          <Route
-            exact
-            path="/members/:id(\d+)/profile">
+          <Route exact path="/members/:id(\d+)/profile">
             <PublicProfile></PublicProfile>
           </Route>
           <Route exact path="/sponsor/:id(\d+)?">
@@ -128,14 +119,11 @@ export const App: React.SFC<AppProps> = props => {
             component={EventLiveAttendances}
           /> */}
 
-
           <PrivateRoute
             exact
             path="/member/events/:id(\d+)/attendance"
             component={ReportAttendance}
           />
-
-
 
           <AdminWrapper>
             <PrivateRoute
@@ -148,6 +136,23 @@ export const App: React.SFC<AppProps> = props => {
               path="/admin/eventsToSync"
               component={EventsToSync}
             />
+
+            <PrivateRoute
+              exact
+              path="/admin/events/live"
+              component={EventsInLiveToDo}
+            />
+            <PrivateRoute
+              exact
+              path="/admin/events/:id/attendances/general"
+              component={CheckAttendancesGeneral}
+            />
+            <PrivateRoute
+              exact
+              path="/admin/events/:id/live/panel"
+              component={AdminEventLivePanel}
+            />
+
             <PrivateRoute exact path="/admin/events" component={EventsList} />
             <PrivateRoute
               exact
@@ -162,7 +167,8 @@ export const App: React.SFC<AppProps> = props => {
             <PrivateRoute
               exact
               path="/admin/sponsors/new"
-              component={NewSponsor} />
+              component={NewSponsor}
+            />
             <PrivateRoute
               exact
               path="/admin/sponsors/:id/edit"
@@ -181,26 +187,12 @@ export const App: React.SFC<AppProps> = props => {
             />
             <PrivateRoute exact path="/admin/users/new" component={NewUser} />
           </AdminWrapper>
-          <PrivateRoute
-            exact
-            path="/admin/events/:id/attendances/general"
-            component={CheckAttendancesGeneral}
-          />
-
-          <PrivateRoute
-            exact
-            path="/admin/events/live"
-            component={EventsInLiveToDo}
-          />
-
-
 
           <PrivateRoute
             exact
             path="/member/organizedcode/read"
             component={ReadOrganizedCode}
           />
-
 
           <PrivateRoute exact path="/admin/badges" component={BadgesList} />
           <PrivateRoute

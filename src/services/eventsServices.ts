@@ -20,13 +20,15 @@ export const syncEvent = (idEvent: number): Promise<MeEvent[]> => {
   return putRequest(`/events/${idEvent}/sync`);
 };
 export const getEventsToSync = (): Promise<EventToSync[]> =>
-  getRequest("/events/ToSync");
+  getRequest("/events?done=false");
 export const getEvents = (): Promise<EventDetail[]> => getRequest("/events");
 export const getEventLive = (id: number): Promise<EventDetail> =>
   getRequest(`/events/${id}/live`);
+export const GetAdminLiveEventDetail = (id: number): Promise<EventDetail> =>
+  getRequest(`/events/${id}/live/detail`);
 
 export const getEventsLive = (): Promise<EventToSync[]> => {
-  return getRequest("/events/live");
+  return getRequest("/events?live=true");
 };
 
 export const updateEvent = (

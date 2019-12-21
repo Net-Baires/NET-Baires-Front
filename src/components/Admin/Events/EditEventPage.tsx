@@ -23,9 +23,10 @@ type EditEventPageParams = {
 };
 
 type EditEventPagePropsAndRouter = EditEventPageParams & EditEventPageProps;
-const EditEventPageComponent: React.SFC<
-  RouteComponentProps<EditEventPagePropsAndRouter> & EditEventPageProps
-> = ({ loading, ready, ...props }) => {
+const EditEventPageComponent: React.SFC<RouteComponentProps<
+  EditEventPagePropsAndRouter
+> &
+  EditEventPageProps> = ({ loading, ready, ...props }) => {
   const [event, setEvent] = useState({} as EventDetail);
 
   const history = useHistory();

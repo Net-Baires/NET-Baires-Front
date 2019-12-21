@@ -18,10 +18,10 @@ type CheckAttendancesGeneralParams = {
 
 type CheckAttendancesGeneralPropsAndRouter = CheckAttendancesGeneralParams &
   CheckAttendancesGeneralProps;
-export const CheckAttendancesGeneralComponent: React.SFC<
-  RouteComponentProps<CheckAttendancesGeneralPropsAndRouter> &
-    CheckAttendancesGeneralProps
-> = ({ match, ...props }) => {
+export const CheckAttendancesGeneralComponent: React.SFC<RouteComponentProps<
+  CheckAttendancesGeneralPropsAndRouter
+> &
+  CheckAttendancesGeneralProps> = ({ match, ...props }) => {
   const [qr, setQr] = useState("a");
   const [event, setEvent] = useState({} as EventToReportAttendance);
   const [loaded, setLoaded] = useState(false);
@@ -35,7 +35,7 @@ export const CheckAttendancesGeneralComponent: React.SFC<
     });
   }, []);
   return (
-    <PageCenterWrapper>
+    <>
       <article>
         <header>
           <h1>Contanos si viniste!!!</h1>
@@ -68,7 +68,7 @@ export const CheckAttendancesGeneralComponent: React.SFC<
           <p> </p>
         </section> */}
       </article>
-    </PageCenterWrapper>
+    </>
   );
 };
 

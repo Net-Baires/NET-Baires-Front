@@ -10597,3 +10597,6 @@ div.code-toolbar > .toolbar span:hover {
   }
 }
 /**====== File Upload css end ======**/
+.img-preview-list-events{
+  width: 200px;
+}

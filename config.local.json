@@ -1,7 +1,7 @@
 {
   "api": {
     "base": "http://localhost:8080/",
-    "baseRemote": "http://localhost:52691"
+    "baseRemote": "https://localhost:5001"
   },
   "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
   "integrations": {
@@ -11,9 +11,7 @@
       "accessTokenUri": "https://secure.meetup.com/oauth2/access",
       "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
       "redirectUri": "http://localhost:8080/login/meetup",
-      "scopes": [
-        "basic"
-      ]
+      "scopes": ["basic"]
     },
     "eventBrite": {
       "clientId": "",
