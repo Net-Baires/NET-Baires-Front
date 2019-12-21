@@ -1,5 +1,5 @@
 import { getRequest, putRequest } from "./requestServices";
-import { EventsAttendees } from "./models/sponsor";
+import { EventsAttendees } from "./models/EventsAttendees";
 
 export const getAttendees = (idEvent: number): Promise<EventsAttendees[]> => {
   return getRequest(`/events/${idEvent}/attendees`);

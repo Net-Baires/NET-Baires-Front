@@ -1,13 +1,11 @@
 import { EventDetail, UpdateEvent } from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
-import {
-  EventDetailToSync,
-  EventToReportAttendance
-} from "./models/Events/EventDetailToSync";
+import { EventDetailToSync } from "./models/Events/EventDetailToSync";
+import { EventToReportAttendance } from "./models/Events/EventToReportAttendance";
 import { Config } from "./config";
 import { getRequest, putRequest } from "./requestServices";
-import { EventsAttendees } from "./models/sponsor";
+import { EventsAttendees } from "./models/EventsAttendees";
 
 export const getNextEvent = (): Promise<EventDetail> => {
   return fetch("http://localhost:3000/events/1").then(x => x.json());

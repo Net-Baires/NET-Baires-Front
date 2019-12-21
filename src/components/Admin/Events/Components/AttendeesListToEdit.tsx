@@ -1,5 +1,5 @@
 import React, { useState, useEffect, MouseEvent } from "react";
-import { EventsAttendees } from "../../../../services/models/sponsor";
+import { EventsAttendees } from "../../../../services/models/EventsAttendees";
 import { EventDetail } from "../../../../services/models/Events/Event";
 import {
   getAttendees,

@@ -5,7 +5,7 @@ import { getEventToReportAttendance } from "../../services/eventsServices";
 import { getCurrentUser } from "../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
-import { EventToReportAttendance } from "../../services/models/Events/EventDetailToSync";
+import { EventToReportAttendance } from "../../services/models/Events/EventToReportAttendance";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 
 type ReportAttendanceProps = {
@@ -18,9 +18,10 @@ type ReportAttendanceParams = {
 
 type ReportAttendancePropsAndRouter = ReportAttendanceParams &
   ReportAttendanceProps;
-export const ReportAttendanceComponent: React.SFC<
-  RouteComponentProps<ReportAttendancePropsAndRouter> & ReportAttendanceProps
-> = ({ match, ...props }) => {
+export const ReportAttendanceComponent: React.SFC<RouteComponentProps<
+  ReportAttendancePropsAndRouter
+> &
+  ReportAttendanceProps> = ({ match, ...props }) => {
   const history = useHistory();
   const [qr, setQr] = useState("a");
   const [event, setEvent] = useState({} as EventToReportAttendance);

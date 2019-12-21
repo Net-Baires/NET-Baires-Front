@@ -6,7 +6,8 @@ import {
 } from "../../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../../store/loading/actions";
-import { EventsAttendees, Sponsor } from "../../../../services/models/sponsor";
+import { Sponsor } from "../../../../services/models/sponsor";
+import { EventsAttendees } from "../../../../services/models/EventsAttendees";
 import { SearchWrapper } from "../../../Common/SearchWrapper";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";

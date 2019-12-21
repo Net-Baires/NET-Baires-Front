@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import { getOrganizers } from "../../../services/organizersServices";
 import { Member } from "../../../services/models/Member";
 import { isEmpty } from "../../../services/objectsservices";
-type HomeOrganizersProps = {};
-const HomeOrganizers: React.SFC<HomeOrganizersProps> = () => {
-  let organizerDefault: Member[] = [];
-  const [organizers, setOrganizers] = useState(organizerDefault);
-  useEffect(() => {
-    getOrganizers().then(x => setOrganizers(x));
-  }, []);
+type HomeOrganizersProps = {
+  organizers: Member[];
+};
+const HomeOrganizers: React.SFC<HomeOrganizersProps> = ({ organizers }) => {
   return (
     <>
       {!isEmpty(organizers) && (

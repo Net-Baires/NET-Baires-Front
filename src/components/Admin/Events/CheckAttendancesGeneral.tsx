@@ -4,7 +4,7 @@ import QRCode from "qrcode.react";
 import { getCurrentUser } from "../../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { EventToReportAttendance } from "../../../services/models/Events/EventDetailToSync";
+import { EventToReportAttendance } from "../../../services/models/Events/EventToReportAttendance";
 import { getCheckAttendanceGeneral } from "../../../services/eventsServices";
 import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 
