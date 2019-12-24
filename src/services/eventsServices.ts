@@ -6,6 +6,7 @@ import { EventToReportAttendance } from "./models/Events/EventToReportAttendance
 import { Config } from "./config";
 import { getRequest, putRequest } from "./requestServices";
 import { EventsAttendees } from "./models/EventsAttendees";
+import { EventLiveDetail } from "./models/Events/EventLiveDetail";
 
 export const getNextEvent = (): Promise<EventDetail> => {
   return fetch("http://localhost:3000/events/1").then(x => x.json());
@@ -22,10 +23,10 @@ export const getEventsToSync = (): Promise<EventToSync[]> =>
 export const getEvents = (): Promise<EventDetail[]> => getRequest("/events");
 export const getEventLive = (id: number): Promise<EventDetail> =>
   getRequest(`/events/${id}/live`);
-export const GetAdminLiveEventDetail = (id: number): Promise<EventDetail> =>
+export const GetAdminLiveEventDetail = (id: number): Promise<EventLiveDetail> =>
   getRequest(`/events/${id}/live/detail`);
 
-export const getEventsLive = (): Promise<EventToSync[]> => {
+export const getEventsLive = (): Promise<EventDetail[]> => {
   return getRequest("/events?live=true");
 };
 

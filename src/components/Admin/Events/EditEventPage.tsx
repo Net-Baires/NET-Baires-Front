@@ -53,9 +53,128 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
     console.log(event);
   };
   return (
-    <PageFullWidthWrapper>
+    <>
       {!isEmpty(event) && (
         <>
+          <div className="col-sm-12">
+            <h5 className="mt-4">Editar Evento</h5>
+            <hr></hr>
+            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  id="pills-home-tab"
+                  data-toggle="pill"
+                  href="#pills-home"
+                  role="tab"
+                  aria-controls="pills-home"
+                  aria-selected="false"
+                >
+                  Detalle
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link show"
+                  id="pills-profile-tab"
+                  data-toggle="pill"
+                  href="#pills-profile"
+                  role="tab"
+                  aria-controls="pills-profile"
+                  aria-selected="false"
+                >
+                  Asistentes
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link active show"
+                  id="pills-contact-tab"
+                  data-toggle="pill"
+                  href="#pills-contact"
+                  role="tab"
+                  aria-controls="pills-contact"
+                  aria-selected="true"
+                >
+                  Sponsors
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link active show"
+                  id="speaker-tab"
+                  data-toggle="pill"
+                  href="#speaker"
+                  role="tab"
+                  aria-controls="speaker"
+                  aria-selected="true"
+                >
+                  Speakers
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link active show"
+                  id="notas-tab"
+                  data-toggle="pill"
+                  href="#notas"
+                  role="tab"
+                  aria-controls="notas"
+                  aria-selected="true"
+                >
+                  Notas
+                </a>
+              </li>
+            </ul>
+            <div className="tab-content" id="pills-tabContent">
+              <div
+                className="tab-pane fade"
+                id="pills-home"
+                role="tabpanel"
+                aria-labelledby="pills-home-tab"
+              >
+                <EditEventComponent
+                  saveEvent={handleSave}
+                  event={event}
+                ></EditEventComponent>
+              </div>
+              <div
+                className="tab-pane fade"
+                id="pills-profile"
+                role="tabpanel"
+                aria-labelledby="pills-profile-tab"
+              >
+                {!isEmpty(event) && (
+                  <AttendeesListToEdit
+                    eventInEdition={event}
+                  ></AttendeesListToEdit>
+                )}
+              </div>
+              <div
+                className="tab-pane fade active show"
+                id="pills-contact"
+                role="tabpanel"
+                aria-labelledby="pills-contact-tab"
+              >
+                <SponsorsListToEdit
+                  updateSponsors={updateSponsors}
+                  eventInEdition={event}
+                ></SponsorsListToEdit>
+              </div>
+              <div
+                className="tab-pane fade active show"
+                id="speakers"
+                role="tabpanel"
+                aria-labelledby="speakers-tab"
+              ></div>
+              <div
+                className="tab-pane fade active show"
+                id="notas"
+                role="tabpanel"
+                aria-labelledby="notas-tab"
+              ></div>
+            </div>
+          </div>
           {/* <Accordion defaultActiveKey="0">
             <Card>
               <Card.Header>
@@ -64,15 +183,12 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
                 </Accordion.Toggle>
               </Card.Header>
               <Accordion.Collapse eventKey="0">
-                <Card.Body>
-                  <EditEventComponent
-                    saveEvent={handleSave}
-                    event={event}
-                  ></EditEventComponent>
-                  {event.sponsors.map(x => {
-                    <label>{x.detail}</label>;
-                  })}
-                </Card.Body>
+                <Card.Body> */}
+
+          {/* {event.sponsors.map(x => {
+            <label>{x.detail}</label>;
+          })} */}
+          {/* </Card.Body>
               </Accordion.Collapse>
             </Card>
             <Card>
@@ -82,34 +198,27 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
                 </Accordion.Toggle>
               </Card.Header>
               <Accordion.Collapse eventKey="1">
-                <Card.Body>
-                  {!isEmpty(event) && (
-                    <AttendeesListToEdit
-                      eventInEdition={event}
-                    ></AttendeesListToEdit>
-                  )}
-                </Card.Body>
+                <Card.Body> */}
+
+          {/* </Card.Body>
               </Accordion.Collapse>
-            </Card>
-            <Card>
+            </Card> */}
+          {/* <Card>
               <Card.Header>
                 <Accordion.Toggle as={Button} variant="link" eventKey="2">
                   Evitar Sponsors
                 </Accordion.Toggle>
               </Card.Header>
               <Accordion.Collapse eventKey="2">
-                <Card.Body>
-                  <SponsorsListToEdit
-                    updateSponsors={updateSponsors}
-                    eventInEdition={event}
-                  ></SponsorsListToEdit>
-                </Card.Body>
+                <Card.Body> */}
+
+          {/* </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion> */}
         </>
       )}
-    </PageFullWidthWrapper>
+    </>
   );
 };
 

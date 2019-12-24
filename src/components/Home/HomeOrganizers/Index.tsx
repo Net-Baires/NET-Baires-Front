@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { getOrganizers } from "../../../services/organizersServices";
+import React from "react";
 import { Member } from "../../../services/models/Member";
 import { isEmpty } from "../../../services/objectsservices";
 type HomeOrganizersProps = {
@@ -9,28 +8,36 @@ const HomeOrganizers: React.SFC<HomeOrganizersProps> = ({ organizers }) => {
   return (
     <>
       {!isEmpty(organizers) && (
-        <section>
-          <div id="lgx-testimonial" className="lgx-testimonial">
-            <div className="lgx-inner">
-              <div className="container">
-                <div className="row">
-                  <div className="col-xs-12">
-                    <div className="lgx-heading">
-                      <h2 className="heading">Organizadores de la Comunidad</h2>
-                      <h3 className="subheading">
-                        Estos son los miembros que trabajan por nuestra
-                        comunidad
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div
-                    id="lgx-owltestimonial"
-                    className="lgx-owltestimonial lgx-owlnews"
-                  >
-                    {organizers.map(organizer => (
-                      <div className="lgx-single-speaker2 lgx-single-speaker3">
+        <div className="testimonial-section">
+          <div className="container">
+            <div className="row text-center">
+              {organizers.map(organizer => (
+                <div className="col-md-4">
+                  <div className="testimonials owl-carousel owl-theme">
+                    <div className="testimonial-single">
+                      <img
+                        className="img-circle"
+                        src={organizer.picture}
+                        alt="Client Testimonoal"
+                      />
+                      <div
+                        className="testimonial-text wow fadeInUp"
+                        data-wow-delay="0.2s"
+                      >
+                        <p>
+                          Totally flexible admin template. Easy to use and easy
+                          to manage all the elements in entire theme.{" "}
+                          <br className="hidden-xs" /> Great support team behind
+                          this product. Low turnaround time with exact support
+                          which i needed.
+                        </p>
+                        <h3>Code Quality</h3>
+                        <h3> - amit1134 [Buyer - NZ]</h3>
+                        <i className="ion ion-star"></i>
+                        <i className="ion ion-star"></i>
+                        <i className="ion ion-star"></i>
+                        <i className="ion ion-star"></i>
+                        <i className="ion ion-star"></i>
                         <figure>
                           <a className="profile-img" href="speakers.html">
                             <img src={organizer.picture} alt="Speaker" />
@@ -90,41 +97,14 @@ const HomeOrganizers: React.SFC<HomeOrganizersProps> = ({ organizers }) => {
                           </figcaption>
                         </figure>
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-        </section>
+        </div>
       )}
-      {/* <h1 className="my-4">Organizadores</h1>
-      <div className="row">
-        {organizer.map(organizer => (
-          <div key={organizer.id} className="col-lg-4 mb-4">
-            <div className="card h-100">
-              <h4 className="card-header">
-                {organizer.name} - {organizer.lastName}
-              </h4>
-              <div className="card-body">
-                <p className="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Sapiente esse necessitatibus neque.
-                </p>
-              </div>
-              <div className="card-footer">
-                <NavLink
-                  exact
-                  className="btn btn-primary"
-                  to={`/organizador/${organizer.id}`}
-                >
-                  Learn More
-                </NavLink>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div> */}
     </>
   );
 };

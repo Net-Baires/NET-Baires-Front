@@ -4,6 +4,7 @@ import { EventToSync } from "../../../services/models/Events/EventToSync";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { GetAdminLiveEventDetail } from "../../../services/eventsServices";
+import { EventLiveDetail } from "../../../services/models/Events/EventLiveDetail";
 
 type AdminEventLivePanelProps = {
   name: string;
@@ -21,7 +22,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
 > &
   AdminEventLivePanelProps> = ({ loading, ready, ...props }) => {
   const history = useHistory();
-  const [eventDetail, setEventDetail] = useState({});
+  const [eventDetail, setEventDetail] = useState<EventLiveDetail>();
   useEffect(() => {
     loading();
     GetAdminLiveEventDetail(+props.match.params.id).then(s => {
@@ -32,6 +33,13 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
 
   return (
     <>
+      <div className="col-sm-12">
+        <div className="card">
+          <div className="card-header">
+            <h5>{eventDetail.title}</h5>
+          </div>
+        </div>
+      </div>
       <div className="row">
         <div className="col-md-6 col-xl-4">
           <div className="card theme-bg">

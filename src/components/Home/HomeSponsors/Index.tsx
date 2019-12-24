@@ -20,11 +20,13 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = ({ sponsors }) => {
                   </div>
                   {sponsors.map(sponsor => (
                     <div
+                      key={sponsor.id}
                       className="col-sm-3 wow fadeInUp sponsor-home"
                       data-wow-delay="0.2s"
                     >
                       <img src={sponsor.logoUrl} alt={sponsor.name} />
                       <h1>{sponsor.name}</h1>
+                      <p>{sponsor.description}</p>
                     </div>
                   ))}
                 </div>

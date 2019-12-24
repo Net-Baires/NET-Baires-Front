@@ -36,49 +36,47 @@ export const EventsInLiveToDo: React.SFC<RouteComponentProps<
   };
   return (
     <>
-      <>
-        {EventsInLiveToDo && (
-          <table className="table">
-            <thead className="thead-light">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Titulo</th>
-                <th scope="col">Fecha</th>
-                <th scope="col" colSpan="2">
-                  Acción
-                </th>
+      {EventsInLiveToDo && (
+        <table className="table">
+          <thead className="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titulo</th>
+              <th scope="col">Fecha</th>
+              <th scope="col" colSpan="2">
+                Acción
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {EventsInLiveToDo.map(event => (
+              <tr key={event.id}>
+                <th scope="row">{event.id}</th>
+                <td>{event.title}</td>
+                <td>{formatStringDate(event.date)}</td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={e => handleAssistance(e, event)}
+                    className="btn btn-info"
+                  >
+                    Asistencia General
+                  </button>
+                </td>
+                <td>
+                  <NavLink
+                    className="btn btn-success"
+                    activeClassName="active"
+                    to={`/admin/events/${event.id}/live/panel`}
+                  >
+                    Panel
+                  </NavLink>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {EventsInLiveToDo.map(event => (
-                <tr key={event.id}>
-                  <th scope="row">{event.id}</th>
-                  <td>{event.title}</td>
-                  <td>{formatStringDate(event.date)}</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={e => handleAssistance(e, event)}
-                      className="btn btn-info"
-                    >
-                      Asistencia General
-                    </button>
-                  </td>
-                  <td>
-                    <NavLink
-                      className="btn btn-success"
-                      activeClassName="active"
-                      to={`/admin/events/${event.id}/live/panel`}
-                    >
-                      Panel
-                    </NavLink>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 };

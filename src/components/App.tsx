@@ -142,6 +142,7 @@ export const App: React.SFC<AppProps> = props => {
               path="/admin/events/live"
               component={EventsInLiveToDo}
             />
+
             <PrivateRoute
               exact
               path="/admin/events/:id/attendances/general"
@@ -169,6 +170,11 @@ export const App: React.SFC<AppProps> = props => {
               path="/admin/sponsors/new"
               component={NewSponsor}
             />
+            <PrivateRoute
+              exact
+              path="/admin/panel"
+              component={ControlPanel}
+            ></PrivateRoute>
             <PrivateRoute
               exact
               path="/admin/sponsors/:id/edit"
@@ -203,11 +209,6 @@ export const App: React.SFC<AppProps> = props => {
           <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
 
           <PrivateRoute exact path="/admin/profile" component={UserProfile} />
-          <PrivateRoute exact path="/admin/panel">
-            <AdminWrapper>
-              <ControlPanel></ControlPanel>
-            </AdminWrapper>
-          </PrivateRoute>
 
           <Route exact path="/notfound" component={NotFoundPage} />
           {/* </LoadingOverlay> */}

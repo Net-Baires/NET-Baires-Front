@@ -10,6 +10,10 @@ export interface EventDetail {
   live: boolean;
   platform: string;
   sponsors: SponsorEvent[];
+  attended: number;
+  registered: number;
+  didNotAttend: number;
+  eventId: string;
 }
 export interface SponsorEvent {
   sponsorId: number;

@@ -7,6 +7,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { CardWrapper } from "../../Common/CardWrapper";
 type EventsProps = {
   name: string;
 };
@@ -14,9 +15,9 @@ type EventsParams = {
   id: number;
 };
 type EventsPropsAndRouter = EventsParams & EventsProps;
-export const EventsList: React.SFC<
-  RouteComponentProps<EventsPropsAndRouter>
-> = () => {
+export const EventsList: React.SFC<RouteComponentProps<
+  EventsPropsAndRouter
+>> = () => {
   const [events, setEvents] = useState(new Array<EventDetail>());
   useEffect(() => {
     getEvents().then(s => {
@@ -75,33 +76,31 @@ export const EventsList: React.SFC<
     }
   ];
   return (
-    <>
-      <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
-        <article>
-          <div>
-            {events && (
-              <ToolkitProvider
-                keyField="id"
-                data={events}
-                columns={columns}
-                search
-              >
-                {(props: any) => (
-                  <div>
-                    <SearchBar {...props.searchProps} />
-                    <hr />
-                    <BootstrapTable
-                      keyField="id"
-                      {...props.baseProps}
-                      pagination={paginationFactory()}
-                    />
-                  </div>
-                )}
-              </ToolkitProvider>
-            )}
-          </div>
-        </article>
-      </PageFullWidthWrapper>
-    </>
+    <CardWrapper cardTitle="Mis eventos">
+      <article>
+        <div>
+          {events && (
+            <ToolkitProvider
+              keyField="id"
+              data={events}
+              columns={columns}
+              search
+            >
+              {(props: any) => (
+                <div>
+                  <SearchBar {...props.searchProps} />
+                  <hr />
+                  <BootstrapTable
+                    keyField="id"
+                    {...props.baseProps}
+                    pagination={paginationFactory()}
+                  />
+                </div>
+              )}
+            </ToolkitProvider>
+          )}
+        </div>
+      </article>
+    </CardWrapper>
   );
 };

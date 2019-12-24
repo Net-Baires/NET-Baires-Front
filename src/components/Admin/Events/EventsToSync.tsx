@@ -18,9 +18,10 @@ type EventsToSyncParams = {
 };
 
 type EventsToSyncPropsAndRouter = EventsToSyncParams & EventsToSyncProps;
-const EventsToSyncComponent: React.SFC<
-  RouteComponentProps<EventsToSyncPropsAndRouter> & EventsToSyncProps
-> = ({ loading, ready }) => {
+const EventsToSyncComponent: React.SFC<RouteComponentProps<
+  EventsToSyncPropsAndRouter
+> &
+  EventsToSyncProps> = ({ loading, ready }) => {
   const history = useHistory();
   const defaultEventsToSync = new Array<EventToSync>();
   const [eventsToSync, setEventoToSync] = useState(defaultEventsToSync);
@@ -46,7 +47,7 @@ const EventsToSyncComponent: React.SFC<
     history.push(`/admin/events/${meEvent.id}/edit`);
   };
   return (
-    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
+    <>
       {eventsToSync && (
         <table className="table">
           <thead className="thead-light">
@@ -111,7 +112,7 @@ const EventsToSyncComponent: React.SFC<
           </tbody>
         </table>
       )}
-    </PageFullWidthWrapper>
+    </>
   );
 };
 const mapStateToProps = () => ({});
