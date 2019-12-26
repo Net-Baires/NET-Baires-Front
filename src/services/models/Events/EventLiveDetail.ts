@@ -3,6 +3,7 @@ export interface EventLiveDetail {
   title: string;
   description: string;
   platform: string;
+  startLiveTime: any;
   imageUrl: string;
   generalAttendance: ReportGeneralAttendance;
   membersDetails: Members;

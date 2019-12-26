@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { GetAdminLiveEventDetail } from "../../../services/eventsServices";
 import { EventLiveDetail } from "../../../services/models/Events/EventLiveDetail";
-
+import Countdown from "react-countdown-now";
+import { AddUserToEvent } from "../Users/AddUserToEvent";
 type AdminEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -22,7 +23,9 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
 > &
   AdminEventLivePanelProps> = ({ loading, ready, ...props }) => {
   const history = useHistory();
-  const [eventDetail, setEventDetail] = useState<EventLiveDetail>();
+  const [eventDetail, setEventDetail] = useState<EventLiveDetail>(
+    {} as EventLiveDetail
+  );
   useEffect(() => {
     loading();
     GetAdminLiveEventDetail(+props.match.params.id).then(s => {
@@ -47,6 +50,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
               <h5 className="text-white">Evento Live</h5>
             </div>
             <div className="card-block text-center">
+              <Countdown date={Date.now() + 10000} />,
               <h2 className="f-w-300 m-b-30 text-white">00:24:38</h2>
               <i className="feather icon-play f-50 text-white d-block m-b-25"></i>
             </div>
@@ -82,6 +86,8 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
             </div>
           </div>
         </div>
+
+        <AddUserToEvent idEvent={eventDetail.id}></AddUserToEvent>
         <div className="col-xl-8 col-md-6">
           <div className="card Recent-Users">
             <div className="card-header">
