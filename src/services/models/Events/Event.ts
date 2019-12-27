@@ -23,6 +23,7 @@ export interface SponsorEvent {
 export interface UpdateEvent {
   title?: string;
   description?: string;
+  generalAttended?: boolean;
   imageUrl?: string;
   url?: string;
   done?: boolean;

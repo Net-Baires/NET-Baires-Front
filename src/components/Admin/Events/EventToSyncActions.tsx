@@ -1,6 +1,7 @@
 import React, { MouseEvent } from "react";
 import { updateEvent, syncEvent } from "../../../services/eventsServices";
 import { UpdateEvent } from "../../../services/models/Events/Event";
+import ReactTooltip from "react-tooltip";
 
 export interface EventToSyncAction {
   id: number;
@@ -16,9 +17,11 @@ type EventToSyncActionsParams = {};
 
 type EventToSyncActionsPropsAndRouter = EventToSyncActionsParams &
   EventToSyncActionsProps;
-export const EventToSyncActions: React.SFC<
-  EventToSyncActionsPropsAndRouter
-> = ({ loading, ready, eventAction }) => {
+export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = ({
+  loading,
+  ready,
+  eventAction
+}) => {
   const handleCloseEvent = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     eventAction.live = false;
@@ -57,6 +60,7 @@ export const EventToSyncActions: React.SFC<
     <>
       {!eventAction.live ? (
         <button
+          data-tip="Comenzar evento, poner en Live"
           type="button"
           onClick={e => handleLiveEvent(e, true)}
           className="btn btn-success events-actions-button"
@@ -65,14 +69,16 @@ export const EventToSyncActions: React.SFC<
         </button>
       ) : (
         <button
+          data-tip="Deneter evento que se encuentra Live"
           type="button"
           onClick={e => handleLiveEvent(e, false)}
-          className="btn btn-warning events-actions-button"
+          className="btn btn-warxning events-actions-button"
         >
           <i className="fas fa-stop"></i>
         </button>
       )}
       <button
+        data-tip="Cerrar evento (Marcar como ya ejecutado)"
         type="button"
         onClick={e => handleCloseEvent(e)}
         className="btn btn-danger events-actions-button"
@@ -80,12 +86,15 @@ export const EventToSyncActions: React.SFC<
         <i className="fas fa-window-close"></i>
       </button>
       <button
+        data-tip="Sincronizar evento"
         type="button"
         onClick={e => handleSyncEvent(e)}
         className="btn btn-info events-actions-button"
       >
         <i className="fas fa-sync"></i>
       </button>
+
+      <ReactTooltip />
     </>
   );
 };

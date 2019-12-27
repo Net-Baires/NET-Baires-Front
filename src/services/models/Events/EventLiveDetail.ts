@@ -5,6 +5,7 @@ export interface EventLiveDetail {
   platform: string;
   startLiveTime: any;
   imageUrl: string;
+  generalAttended: boolean;
   generalAttendance: ReportGeneralAttendance;
   membersDetails: Members;
 }

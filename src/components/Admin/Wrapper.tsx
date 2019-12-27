@@ -6,9 +6,15 @@ import SideMenu from "./Menu/SideMenu";
 import FriendsMenu from "./Menu/FriendsMenu";
 import TopBar from "./Menu/TopBar";
 import { loadScript, loadStyles } from "../../services/helpers/scriptshelpers";
-import { BreadcrumbsComponent } from "../Header/BreadcrumbsComponent";
-
-const AdminWrapperComponent: React.SFC = ({ children }) => {
+import ReactTooltip from "react-tooltip";
+import LoadingOverlay from "react-loading-overlay";
+import { AppState } from "../../store";
+interface AppProps {
+  isLoading: boolean;
+  loading: () => void;
+  ready: () => void;
+}
+const AdminWrapperComponent: React.SFC = ({ children, ...props }) => {
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
     loadScript("assets/plugins/bootstrap/js/bootstrap.min.js");
@@ -50,7 +56,15 @@ const AdminWrapperComponent: React.SFC = ({ children }) => {
               </div>
               <div className="main-body">
                 <div className="page-wrapper">
-                  <div className="row">{children}</div>
+                  <LoadingOverlay
+                    active={props.isLoading}
+                    spinner
+                    clasName="row"
+                    text="Procesando..."
+                    // tslint:disable-next-line: indent
+                  >
+                    {children}
+                  </LoadingOverlay>
                 </div>
               </div>
             </div>
@@ -61,7 +75,9 @@ const AdminWrapperComponent: React.SFC = ({ children }) => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state: AppState) => ({
+  isLoading: state.loading.isLoading
+});
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {
     dispatch(loading());

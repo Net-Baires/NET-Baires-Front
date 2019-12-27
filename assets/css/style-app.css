@@ -10707,3 +10707,22 @@ height: 311px;
 .react-autosuggest__suggestion--focused .highlight {
   color: #120000;
 }
+}
+.event-list-title {
+    max-width: 225px;
+  overflow: hidden;
+  }
+  .platform-icon{
+    height: 40px;
+  }
+  .event-list-card-title{
+    height: 85px !important;
+    overflow: hidden;
+  }
+  .rounded-circle-event-list{
+    border-radius: 20%!important;
+    height: 160px;
+  }
+.eventToSync-container button i {
+  margin: 0px !important;
+}

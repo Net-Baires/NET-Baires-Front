@@ -9,6 +9,7 @@ import { Member } from "../../services/models/Member";
 import { Sponsor } from "../../services/models/sponsor";
 import { EventDetail } from "../../services/models/Events/Event";
 import NumbersHomeSummary from "./NumbersHomeSummary";
+import HomeHeaderBanner from "./HomeHeaderBanner/Index";
 
 type LoginProps = {};
 export const Home: React.SFC<LoginProps> = () => {
@@ -37,45 +38,12 @@ export const Home: React.SFC<LoginProps> = () => {
     <>
       {/* <HomeHeaderBanner></HomeHeaderBanner> */}
       {/* <NextEvent></NextEvent> */}
-      {/* <HomeSpeakers speakers={speakers}></HomeSpeakers> */}
 
       {/* <LastEvents events={lastEvents}></LastEvents> */}
       {/* <PhotosSummary></PhotosSummary> */}
       {/* <HomeOrganizers organizers={organizers}></HomeOrganizers> */}
       {/* <VideoPreview></VideoPreview> */}
-
-      <div className="hero-section app-hero">
-        <div className="container">
-          <div className="hero-content app-hero-content text-center">
-            <div className="row justify-content-md-center">
-              <div className="col-md-10">
-                <h1 className="wow fadeInUp main-title" data-wow-delay="0s">
-                  NET-Baires
-                </h1>
-                <p
-                  className="wow fadeInUp main-subttitle"
-                  data-wow-delay="0.2s"
-                >
-                  Somor la comunidad de .NET mas grande de la Argentina.
-                </p>
-                <a
-                  className="btn btn-primary btn-action"
-                  data-wow-delay="0.2s"
-                  href="#!"
-                >
-                  Unirme a Slack
-                </a>
-                {/* <a className="btn btn-primary btn-action" data-wow-delay="0.2s" href="#!">Buy Now</a> */}
-              </div>
-              {/* <div className="col-md-12">
-                                <div className="hero-image">
-                                    <img className="img-fluid" src="assets/images/app_hero_1.png" alt="" />
-                                </div>
-                            </div> */}
-            </div>
-          </div>
-        </div>
-      </div>
+      <HomeSpeakers speakers={speakers}></HomeSpeakers>
       <div className="services-section text-center" id="services">
         <div className="container">
           <div className="row  justify-content-md-center">

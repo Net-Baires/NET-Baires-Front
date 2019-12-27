@@ -28,9 +28,9 @@ const MenuHomeComponent: React.SFC = () => {
             <ul className="navbar-nav mr-auto"></ul>
             <ul className="navbar-nav my-2 my-lg-0">
               <li className="nav-item">
-                <a className="nav-link page-scroll" href="#main">
+                <NavLink className="nav-link  page-scroll" to="/#!">
                   Home
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
                 <a className="nav-link page-scroll" href="#services">

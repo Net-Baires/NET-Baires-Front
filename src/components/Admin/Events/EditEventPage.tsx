@@ -50,7 +50,7 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
   const updateSponsors = (sponsors: SponsorEvent[]) => {
     event.sponsors = sponsors;
     setEvent(event);
-    console.log(event);
+    handleSave(event);
   };
   return (
     <>
@@ -99,32 +99,6 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
                   Sponsors
                 </a>
               </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link active show"
-                  id="speaker-tab"
-                  data-toggle="pill"
-                  href="#speaker"
-                  role="tab"
-                  aria-controls="speaker"
-                  aria-selected="true"
-                >
-                  Speakers
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link active show"
-                  id="notas-tab"
-                  data-toggle="pill"
-                  href="#notas"
-                  role="tab"
-                  aria-controls="notas"
-                  aria-selected="true"
-                >
-                  Notas
-                </a>
-              </li>
             </ul>
             <div className="tab-content" id="pills-tabContent">
               <div
@@ -161,18 +135,6 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
                   eventInEdition={event}
                 ></SponsorsListToEdit>
               </div>
-              <div
-                className="tab-pane fade active show"
-                id="speakers"
-                role="tabpanel"
-                aria-labelledby="speakers-tab"
-              ></div>
-              <div
-                className="tab-pane fade active show"
-                id="notas"
-                role="tabpanel"
-                aria-labelledby="notas-tab"
-              ></div>
             </div>
           </div>
           {/* <Accordion defaultActiveKey="0">

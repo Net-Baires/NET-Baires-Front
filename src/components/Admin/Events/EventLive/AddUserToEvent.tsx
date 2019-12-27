@@ -1,9 +1,11 @@
 import React, { useState, SyntheticEvent } from "react";
-import { Member } from "../../../services/models/Member";
+import { Member } from "../../../../services/models/Member";
 import Autosuggest from "react-autosuggest";
-import { getMemberByQuery } from "../../../services/membersServices";
-import { updateAttende } from "../../../services/attendeesServices";
-import { EventsAttendees } from "../../../services/models/EventsAttendees";
+import { getMemberByQuery } from "../../../../services/membersServices";
+import { updateAttende } from "../../../../services/attendeesServices";
+import ReactTooltip from "react-tooltip";
+import { isEmpty } from "../../../../services/objectsservices";
+
 type NewUserProps = {
   idEvent: number;
 };
@@ -14,22 +16,30 @@ export const AddUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
   const [value, setValue] = useState("");
   const handleSearch = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    setReadySearch(true);
+    if (!isEmpty(memberToSearch)) setReadySearch(true);
   };
-  const handleAddToEvent = (event: SyntheticEvent<HTMLAnchorElement>) => {
+  const handleAttended = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    updateAttende(idEvent, memberToSearch.id, { attended: true }).then(s => {
+    updateAttende(idEvent, memberToSearch.id, { attended: true }).then(() => {
       setReadySearch(false);
       setValue("");
     });
   };
-
-  // When suggestion is clicked, Autosuggest needs to populate the input
-  // based on the clicked suggestion. Teach Autosuggest how to calculate the
-  // input value for every given suggestion.
+  const handleDidNotAttended = (event: SyntheticEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    updateAttende(idEvent, memberToSearch.id, { attended: false }).then(() => {
+      searchScreen();
+    });
+  };
+  const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    searchScreen();
+  };
+  const searchScreen = () => {
+    setReadySearch(false);
+    setValue("");
+  };
   const getSuggestionValue = (suggestion: Member) => suggestion.firstName;
-
-  // Use your imagination to render suggestions.
   const renderSuggestion = (suggestion: Member) => {
     return <div>{suggestion.firstName}</div>;
   };
@@ -37,15 +47,12 @@ export const AddUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
     setValue(newValue);
   };
 
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
   const onSuggestionsFetchRequested = ({ value }: any) => {
     getMemberByQuery(value).then(v => {
       setSuggestions(v);
     });
   };
 
-  // Autosuggest will call this function every time you need to clear suggestions.
   const onSuggestionsClearRequested = () => {
     setSuggestions([]);
   };
@@ -79,29 +86,32 @@ export const AddUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
               <div className="row m-t-30">
                 <div className="col-4 p-r-0">
                   <a
-                    onClick={handleAddToEvent}
+                    onClick={handleAttended}
+                    data-tip="Asistio"
                     href="#!"
                     className="btn btn-primary shadow-2 text-uppercase btn-block"
                   >
-                    Asistio
+                    <i className="feather icon-check-square"></i>
                   </a>
                 </div>
-                <div className="col-4 p-r-0">
+                <div className="col-4 p-r">
                   <a
-                    onClick={handleAddToEvent}
+                    data-tip="No asistio"
+                    onClick={handleDidNotAttended}
                     href="#!"
-                    className="btn btn-primary shadow-2 text-uppercase btn-block"
+                    className="btn btn-warning shadow-2 text-uppercase btn-block"
                   >
-                    Falto
+                    <i className="feather icon-x-circle"></i>
+                    <ReactTooltip />
                   </a>
                 </div>
-                <div className="col-4 p-r-0">
+                <div className="col-4 p-r">
                   <a
-                    onClick={handleAddToEvent}
+                    onClick={handleClose}
                     href="#!"
                     className="btn btn-primary shadow-2 text-uppercase btn-block"
                   >
-                    Cerrar
+                    C
                   </a>
                 </div>
               </div>

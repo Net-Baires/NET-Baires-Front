@@ -3,6 +3,8 @@ import { getEventsLive } from "../../../services/eventsServices";
 import { isEmpty } from "../../../services/objectsservices";
 import { EventDetail } from "../../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
+import { CardWrapper } from "../../Common/CardWrapper";
+import { EventActions } from "./EventActions";
 
 type ControlPanelProps = {};
 const ControlPanel: React.SFC<ControlPanelProps> = () => {
@@ -86,6 +88,7 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
             </div>
           </div>
         ))}
+      <EventActions></EventActions>
     </>
   );
 };

@@ -2,15 +2,18 @@ import React from "react";
 
 type CardWrapperProps = {
   cardTitle?: string;
+  colSize?: number;
 };
 
 export const CardWrapper: React.SFC<CardWrapperProps> = ({
   children,
+  colSize,
   cardTitle
 }) => {
+  if (colSize == null) colSize = 12;
   return (
     <>
-      <div className="col-sm-12">
+      <div className={`col-sm-${colSize}`}>
         <div className="card">
           <div className="card-header">
             <h5>{cardTitle}</h5>

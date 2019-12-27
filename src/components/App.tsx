@@ -49,7 +49,7 @@ import { HomeWrapper } from "./Home/HomeWrapper";
 import { EmptyWrapper } from "./Home/EmptyWrapper";
 import { newSponsor } from "../services/sponsorsServices";
 import LogoutComponent from "./Login/LogoutComponent";
-import { AdminEventLivePanel } from "./Admin/Events/AdminEventLivePanel";
+import { AdminEventLivePanel } from "./Admin/Events/EventLive/AdminEventLivePanel";
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -67,6 +67,11 @@ export const App: React.SFC<AppProps> = props => {
               <Home></Home>
             </HomeWrapper>
           </Route>
+          <Route exact path="/JoinSlack">
+            <HomeWrapper>
+              <JoinSlack></JoinSlack>
+            </HomeWrapper>
+          </Route>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/logout" component={LogoutComponent}></Route>
           <Route exact path="/login/meetup" component={MeetupCallBack}></Route>
@@ -76,13 +81,10 @@ export const App: React.SFC<AppProps> = props => {
             </HomeWrapper>
           </Route>
 
-          {/* <LoadingOverlay active={props.isLoading} spinner text="Procesando..."> */}
           <Route exact path="/organizers">
             <Organizers></Organizers>
           </Route>
-          <Route exact path="/JoinSlack">
-            <JoinSlack></JoinSlack>
-          </Route>
+
           <Route exact path="/organizers/:id(\d+)?">
             <OrganizerDetail></OrganizerDetail>
           </Route>
@@ -128,13 +130,13 @@ export const App: React.SFC<AppProps> = props => {
           <AdminWrapper>
             <PrivateRoute
               exact
-              path="/admin/EventLive/Attendances"
-              component={EventLiveAttendances}
+              path="/admin/eventsToSync"
+              component={EventsToSync}
             />
             <PrivateRoute
               exact
-              path="/admin/eventsToSync"
-              component={EventsToSync}
+              path="/admin/EventLive/Attendances"
+              component={EventLiveAttendances}
             />
 
             <PrivateRoute
@@ -211,7 +213,6 @@ export const App: React.SFC<AppProps> = props => {
           <PrivateRoute exact path="/admin/profile" component={UserProfile} />
 
           <Route exact path="/notfound" component={NotFoundPage} />
-          {/* </LoadingOverlay> */}
           <Route exact path="*">
             <NotFoundPage></NotFoundPage>
           </Route>
