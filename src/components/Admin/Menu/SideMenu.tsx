@@ -45,6 +45,19 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                     <span className="pcoded-mtext">Panel de Control</span>
                   </NavLink>
                 </SecureElement>
+                <SecureElement rols={["Member"]}>
+                  <NavLink
+                    exact
+                    className="nav-link-slide-bar"
+                    activeClassName="active"
+                    to="/member/panel"
+                  >
+                    <span className="pcoded-micon">
+                      <i className="fab fa-cpanel"></i>
+                    </span>
+                    <span className="pcoded-mtext">Panel de Control</span>
+                  </NavLink>
+                </SecureElement>
               </li>
               <li className="nav-item pcoded-menu-caption">
                 <label>Other</label>
@@ -110,115 +123,123 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                 data-username="Menu levels Menu level 2.1 Menu level 2.2"
                 className="nav-item pcoded-hasmenu"
               >
-                <a className="nav-link">
-                  <span className="pcoded-micon">
-                    <i className="fas fa-user"></i>
-                  </span>
-                  <span className="pcoded-mtext">Usuarios</span>
-                </a>
-                <ul className="pcoded-submenu">
-                  <li className="">
-                    <NavLink
-                      exact
-                      className="nav-link-slide-bar"
-                      activeClassName="active"
-                      to="/admin/users"
-                    >
-                      Lista
-                    </NavLink>
-                  </li>
-                  <li className="">
-                    <NavLink
-                      exact
-                      className="nav-link-slide-bar"
-                      activeClassName="active"
-                      to="/admin/users/new"
-                    >
-                      Nuevo
-                    </NavLink>
-                  </li>
-                </ul>
+                <SecureElement rols={["Admin"]}>
+                  <a className="nav-link">
+                    <span className="pcoded-micon">
+                      <i className="fas fa-user"></i>
+                    </span>
+                    <span className="pcoded-mtext">Usuarios</span>
+                  </a>
+                  <ul className="pcoded-submenu">
+                    <li className="">
+                      <NavLink
+                        exact
+                        className="nav-link-slide-bar"
+                        activeClassName="active"
+                        to="/admin/users"
+                      >
+                        Lista
+                      </NavLink>
+                    </li>
+                    <li className="">
+                      <NavLink
+                        exact
+                        className="nav-link-slide-bar"
+                        activeClassName="active"
+                        to="/admin/users/new"
+                      >
+                        Nuevo
+                      </NavLink>
+                    </li>
+                  </ul>
+                </SecureElement>
               </li>
               <li
                 data-username="Menu levels Menu level 2.1 Menu level 2.2"
                 className="nav-item pcoded-hasmenu"
               >
-                <a className="nav-link">
-                  <span className="pcoded-micon">
-                    <i className="fas fa-university"></i>
-                  </span>
-                  <span className="pcoded-mtext">Sponsors</span>
-                </a>
-                <ul className="pcoded-submenu">
-                  <li className="">
-                    <NavLink
-                      exact
-                      className="nav-link-slide-bar"
-                      activeClassName="active"
-                      to="/admin/sponsors"
-                    >
-                      Lista
-                    </NavLink>
-                  </li>
-                  <li className="">
-                    <NavLink
-                      exact
-                      className="nav-link-slide-bar"
-                      activeClassName="active"
-                      to="/admin/sponsors/new"
-                    >
-                      Nuevo
-                    </NavLink>
-                  </li>
-                </ul>
+                <SecureElement rols={["Admin"]}>
+                  <a className="nav-link">
+                    <span className="pcoded-micon">
+                      <i className="fas fa-university"></i>
+                    </span>
+                    <span className="pcoded-mtext">Sponsors</span>
+                  </a>
+                  <ul className="pcoded-submenu">
+                    <li className="">
+                      <NavLink
+                        exact
+                        className="nav-link-slide-bar"
+                        activeClassName="active"
+                        to="/admin/sponsors"
+                      >
+                        Lista
+                      </NavLink>
+                    </li>
+                    <li className="">
+                      <NavLink
+                        exact
+                        className="nav-link-slide-bar"
+                        activeClassName="active"
+                        to="/admin/sponsors/new"
+                      >
+                        Nuevo
+                      </NavLink>
+                    </li>
+                  </ul>
+                </SecureElement>
               </li>
 
               <li
                 data-username="Menu levels Menu level 2.1 Menu level 2.2"
                 className="nav-item pcoded-hasmenu"
               >
-                <a className="nav-link">
-                  <span className="pcoded-micon">
-                    <i className="fas fa-money-check"></i>
-                  </span>
-                  <span className="pcoded-mtext">Badges</span>
-                </a>
-                <ul className="pcoded-submenu">
-                  <li className="">
-                    <NavLink
-                      exact
-                      className="nav-link-slide-bar"
-                      activeClassName="active"
-                      to="/admin/badges"
-                    >
-                      Lista
-                    </NavLink>
-                  </li>
-                  <li className="">
-                    <NavLink
-                      exact
-                      className="nav-link-slide-bar"
-                      activeClassName="active"
-                      to="/admin/badges/new"
-                    >
-                      Nuevo
-                    </NavLink>
-                  </li>
-                </ul>
+                <SecureElement rols={["Admin"]}>
+                  <a className="nav-link">
+                    <span className="pcoded-micon">
+                      <i className="fas fa-money-check"></i>
+                    </span>
+                    <span className="pcoded-mtext">Badges</span>
+                  </a>
+                  <ul className="pcoded-submenu">
+                    <li className="">
+                      <NavLink
+                        exact
+                        className="nav-link-slide-bar"
+                        activeClassName="active"
+                        to="/admin/badges"
+                      >
+                        Lista
+                      </NavLink>
+                    </li>
+                    <li className="">
+                      <NavLink
+                        exact
+                        className="nav-link-slide-bar"
+                        activeClassName="active"
+                        to="/admin/badges/new"
+                      >
+                        Nuevo
+                      </NavLink>
+                    </li>
+                  </ul>
+                </SecureElement>
               </li>
 
               <li data-username="Animations" className="nav-item">
-                <NavLink
-                  exact
-                  className="nav-link-slide-bar"
-                  activeClassName="active"
-                  to="/admin/EventLive/Attendances"
-                >
-                  <span className="pcoded-micon">
-                    <i className="fas fa-user-check"></i>
-                  </span>
-                  <span className="pcoded-mtext">Recibir Miemebros</span>
-                </NavLink>
+                <SecureElement rols={["Admin", "Organizer"]}>
+                  <NavLink
+                    exact
+                    className="nav-link-slide-bar"
+                    activeClassName="active"
+                    to="/admin/EventLive/Attendances"
+                  >
+                    <span className="pcoded-micon">
+                      <i className="fas fa-user-check"></i>
+                    </span>
+                    <span className="pcoded-mtext">Recibir Miemebros</span>
+                  </NavLink>
+                </SecureElement>
               </li>
               <li data-username="Animations" className="nav-item">
                 <NavLink

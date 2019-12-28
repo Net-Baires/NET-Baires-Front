@@ -1945,3 +1945,18 @@ label {
 .services .services-icon {
   background-color: transparent !important;
 }
+.event-live-list-title {
+  height: 65px;
+}
+.icon-live-list-image-container {
+  padding: 0px !important;
+}
+.icon-live-list-image {
+  width: auto !important;
+  height: 140px !important;
+  margin-bottom: 10px !important;
+}
+.btn-event-live {
+  margin-bottom: 15px;
+  width: 100%;
+}

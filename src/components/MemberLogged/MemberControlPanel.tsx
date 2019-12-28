@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getEventsLive } from "../../../services/eventsServices";
-import { isEmpty } from "../../../services/objectsservices";
-import { EventDetail } from "../../../services/models/Events/Event";
+import { getEventsLive } from "../../services/eventsServices";
+import { isEmpty } from "../../services/objectsservices";
+import { EventDetail } from "../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
-import { CardWrapper } from "../../Common/CardWrapper";
-import { EventActions } from "./EventActions";
+import { EventActions } from "../Admin/controlPanel/EventActions";
 
-type ControlPanelProps = {};
-const ControlPanel: React.SFC<ControlPanelProps> = () => {
+type MemberControlPanelProps = {};
+const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
   const [eventsLive, setEventsLive] = useState(new Array<EventDetail>());
   useEffect(() => {
     getEventsLive().then(e => {
@@ -94,8 +93,7 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
             </div>
           ))}
       </div>
-      <EventActions></EventActions>
     </>
   );
 };
-export default ControlPanel;
+export default MemberControlPanel;

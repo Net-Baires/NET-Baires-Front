@@ -50,6 +50,8 @@ import { EmptyWrapper } from "./Home/EmptyWrapper";
 import { newSponsor } from "../services/sponsorsServices";
 import LogoutComponent from "./Login/LogoutComponent";
 import { AdminEventLivePanel } from "./Admin/Events/EventLive/AdminEventLivePanel";
+import MemberControlPanel from "./MemberLogged/MemberControlPanel";
+import { EventsLivePublicDetail } from "./EventLive/EventsLivePublicDetail";
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -108,26 +110,37 @@ export const App: React.SFC<AppProps> = props => {
           </Route>
 
           <Route exact path="/events/live">
-            <EventsInLive></EventsInLive>
+            <HomeWrapper>
+              <EventsInLive></EventsInLive>
+            </HomeWrapper>
           </Route>
-          <Route
-            exact
-            path="/events/:id(\d+)/live"
-            component={EventLiveDashBoard}
-          />
+          <Route exact path="/events/:id/live">
+            <HomeWrapper>
+              <EventsLivePublicDetail></EventsLivePublicDetail>
+            </HomeWrapper>
+          </Route>
           {/* <PrivateRoute
             exact
             path="/EventLive/:id(\d+)"
             component={EventLiveAttendances}
           /> */}
 
-          <PrivateRoute
-            exact
-            path="/member/events/:id(\d+)/attendance"
-            component={ReportAttendance}
-          />
-
           <AdminWrapper>
+            <PrivateRoute
+              exact
+              path="/member/events/:id(\d+)/attendance"
+              component={ReportAttendance}
+            />
+            <PrivateRoute
+              exact
+              path="/member/panel"
+              component={MemberControlPanel}
+            ></PrivateRoute>
+            <PrivateRoute
+              exact
+              path="/member/events/:id/live/panel"
+              component={EventLiveDashBoard}
+            />
             <PrivateRoute
               exact
               path="/admin/eventsToSync"

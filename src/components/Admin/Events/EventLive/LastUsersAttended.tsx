@@ -1,6 +1,10 @@
 import React from "react";
 import { MemberDetail } from "../../../../services/models/Events/EventLiveDetail";
 import { CardWrapper } from "../../../Common/CardWrapper";
+import {
+  formatStringDate,
+  formatStringTime
+} from "../../../../helpers/DateHelpers";
 type NewUserProps = {
   members: MemberDetail[];
 };
@@ -17,7 +21,11 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
                     <img
                       className="rounded-circle"
                       style={{ width: "40px" }}
-                      src={member.picture}
+                      src={
+                        member.picture != ""
+                          ? member.picture
+                          : "assets/images/no-image-profile.png"
+                      }
                       alt="activity-user"
                     ></img>
                   </td>
@@ -28,7 +36,8 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
                   <td>
                     <h6 className="text-muted">
                       <i className="fas fa-circle text-c-green f-10 m-r-15"></i>
-                      11 MAY 12:56
+                      {formatStringDate(member.attendedTime)} -{" "}
+                      {formatStringTime(member.attendedTime)}
                     </h6>
                   </td>
                   <td>

@@ -11,6 +11,7 @@ export interface EventLiveDetail {
 }
 export interface ReportGeneralAttendance {
   tokenToReportGeneralAttendance: string;
+  generalAttendedCode: string;
 }
 export interface Members {
   totalMembersRegistered: number;
@@ -23,4 +24,5 @@ export interface MemberDetail {
   lastName: string;
   username: string;
   picture: string;
+  attendedTime: Date;
 }

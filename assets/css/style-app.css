@@ -7748,9 +7748,9 @@ a.btn-theme.active {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-.btn > i {
+/* .btn > i {
   margin-right: 12px;
-}
+} */
 .btn.btn-icon, .btn.drp-icon {
   width: 45px;
   height: 45px;
@@ -10707,7 +10707,6 @@ height: 311px;
 .react-autosuggest__suggestion--focused .highlight {
   color: #120000;
 }
-}
 .event-list-title {
     max-width: 225px;
   overflow: hidden;
@@ -10726,3 +10725,14 @@ height: 311px;
 .eventToSync-container button i {
   margin: 0px !important;
 }
+img.img-preview-member {
+  height: 45px;
+}
+.card-container{
+  height: 360px;
+  }
+  .rounded-circle-sync-user-to-event{ height: 105px;}
+  .img-report-assitance{
+  width: 100%;}
+  .center-content{
+  text-align: center;}

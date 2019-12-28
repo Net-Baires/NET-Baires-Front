@@ -2,33 +2,48 @@ import React, { useState, SyntheticEvent } from "react";
 import { Member } from "../../../../services/models/Member";
 import Autosuggest from "react-autosuggest";
 import { getMemberByQuery } from "../../../../services/membersServices";
-import { updateAttende } from "../../../../services/attendeesServices";
+import {
+  updateAttende,
+  getAttendeeDetail
+} from "../../../../services/attendeesServices";
 import ReactTooltip from "react-tooltip";
 import { isEmpty } from "../../../../services/objectsservices";
+import { EventsAttendees } from "../../../../services/models/EventsAttendees";
 
 type NewUserProps = {
   idEvent: number;
 };
-export const AddUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
+export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
   const [readySearch, setReadySearch] = useState(false);
   const [memberToSearch, setMemberToSearch] = useState({} as Member);
+  const [attendeeDetail, setAttendeeDetail] = useState({} as EventsAttendees);
   const [suggestions, setSuggestions] = useState({});
   const [value, setValue] = useState("");
   const handleSearch = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    if (!isEmpty(memberToSearch)) setReadySearch(true);
+    if (!isEmpty(memberToSearch)) {
+      getAttendeeDetail(idEvent, memberToSearch.id).then(detail => {
+        if (detail == null)
+          setAttendeeDetail({
+            memberDetail: {
+              firstName: memberToSearch.firstName,
+              picture: memberToSearch.picture
+            }
+          });
+        else setAttendeeDetail(detail);
+        setReadySearch(true);
+      });
+    }
   };
-  const handleAttended = (event: SyntheticEvent<HTMLAnchorElement>) => {
+
+  const handleClickOnAttendedButton = (
+    event: SyntheticEvent<HTMLAnchorElement>,
+    eventAttendee: EventsAttendees
+  ) => {
     event.preventDefault();
-    updateAttende(idEvent, memberToSearch.id, { attended: true }).then(() => {
+    updateAttende(idEvent, memberToSearch.id, eventAttendee).then(() => {
       setReadySearch(false);
       setValue("");
-    });
-  };
-  const handleDidNotAttended = (event: SyntheticEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    updateAttende(idEvent, memberToSearch.id, { attended: false }).then(() => {
-      searchScreen();
     });
   };
   const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {
@@ -76,42 +91,66 @@ export const AddUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
           {readySearch ? (
             <div className="card-block text-center">
               <h5>{memberToSearch.firstName}</h5>
-              <span className="d-block mb-4">UX Designer</span>
+              {/* <span className="d-block mb-4">{memberToSearch.}</span> */}
               <img
-                className="img-fluid rounded-circle"
+                className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
                 style={{ width: "70px;" }}
-                src="assets/images/user/avatar-2.jpg"
+                src={
+                  memberToSearch.picture != ""
+                    ? memberToSearch.picture
+                    : "assets/images/no-image-profile.png"
+                }
                 alt="dashboard-user"
               ></img>
               <div className="row m-t-30">
-                <div className="col-4 p-r-0">
-                  <a
-                    onClick={handleAttended}
-                    data-tip="Asistio"
-                    href="#!"
-                    className="btn btn-primary shadow-2 text-uppercase btn-block"
-                  >
-                    <i className="feather icon-check-square"></i>
-                  </a>
+                <div className="col-6 p-r-0">
+                  {attendeeDetail.attended == null ? (
+                    <a
+                      onClick={e =>
+                        handleClickOnAttendedButton(e, { attended: true })
+                      }
+                      data-tip="Asistio"
+                      href="#!"
+                      className="btn btn-success shadow-2 text-uppercase btn-block"
+                    >
+                      {/* <i className="feather icon-check-square"></i> */}
+                      Participar
+                    </a>
+                  ) : attendeeDetail.attended ? (
+                    <a
+                      onClick={e =>
+                        handleClickOnAttendedButton(e, { attended: false })
+                      }
+                      data-tip="Asistio"
+                      href="#!"
+                      className="btn btn-success shadow-2 text-uppercase btn-block"
+                    >
+                      {/* <i className="feather icon-check-square"></i> */}
+                      Presente
+                    </a>
+                  ) : (
+                    <a
+                      onClick={e =>
+                        handleClickOnAttendedButton(e, { attended: true })
+                      }
+                      data-tip="Asistio"
+                      href="#!"
+                      className="btn btn-danger shadow-2 text-uppercase btn-block"
+                    >
+                      {/* <i className="feather icon-check-square"></i> */}
+                      Ausente
+                    </a>
+                  )}
                 </div>
-                <div className="col-4 p-r">
-                  <a
-                    data-tip="No asistio"
-                    onClick={handleDidNotAttended}
-                    href="#!"
-                    className="btn btn-warning shadow-2 text-uppercase btn-block"
-                  >
-                    <i className="feather icon-x-circle"></i>
-                    <ReactTooltip />
-                  </a>
-                </div>
-                <div className="col-4 p-r">
+
+                <div className="col-6 p-r">
                   <a
                     onClick={handleClose}
                     href="#!"
-                    className="btn btn-primary shadow-2 text-uppercase btn-block"
+                    className="btn btn-info shadow-2 text-uppercase btn-block"
                   >
-                    C
+                    {/* <i className="feather icon-x-circle"></i> */}
+                    Buscar
                   </a>
                 </div>
               </div>

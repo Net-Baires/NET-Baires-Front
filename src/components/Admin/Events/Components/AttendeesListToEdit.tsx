@@ -36,19 +36,19 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
   const { SearchBar } = Search;
   const columns = [
     {
-      dataField: "id",
+      dataField: "memberDetail.id",
       text: "Id"
     },
     {
-      dataField: "firstName",
+      dataField: "memberDetail.firstName",
       text: "Nombre"
     },
     {
-      dataField: "lastName",
+      dataField: "memberDetail.lastName",
       text: "Apellido"
     },
     {
-      dataField: "email",
+      dataField: "memberDetail.email",
       text: "Email"
     },
     {
@@ -145,7 +145,10 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
         height: "2px"
       },
       formatter: (_cellContent: any, attende: EventsAttendees) => (
-        <img className="img-preview-member" src={attende.picture}></img>
+        <img
+          className="img-preview-member"
+          src={attende.memberDetail.picture}
+        ></img>
       )
     }
   ];
@@ -166,7 +169,11 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       usersToUpdate[updateIndex].didNotAttend = true;
       usersToUpdate[updateIndex].attended = false;
     }
-    updateAttendeLocal(member.id, usersToUpdate[updateIndex], usersToUpdate);
+    updateAttendeLocal(
+      member.memberDetail.id,
+      usersToUpdate[updateIndex],
+      usersToUpdate
+    );
   };
   const handleUserSpeaker = (
     eventInput: MouseEvent<HTMLButtonElement>,
@@ -177,7 +184,11 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     const updateIndex = eventsAttendees.indexOf(member);
     const usersToUpdate = eventsAttendees.slice();
     usersToUpdate[updateIndex].speaker = isChecked;
-    updateAttendeLocal(member.id, usersToUpdate[updateIndex], usersToUpdate);
+    updateAttendeLocal(
+      member.memberDetail.id,
+      usersToUpdate[updateIndex],
+      usersToUpdate
+    );
   };
   const handleUserOrganizer = (
     eventInput: MouseEvent<HTMLButtonElement>,
@@ -188,7 +199,11 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     const updateIndex = eventsAttendees.indexOf(member);
     const usersToUpdate = eventsAttendees.slice();
     usersToUpdate[updateIndex].organizer = isChecked;
-    updateAttendeLocal(member.id, usersToUpdate[updateIndex], usersToUpdate);
+    updateAttendeLocal(
+      member.memberDetail.id,
+      usersToUpdate[updateIndex],
+      usersToUpdate
+    );
   };
 
   const updateAttendeLocal = (
@@ -219,6 +234,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
                 <SearchBar {...props.searchProps} />
                 <hr />
                 <BootstrapTable
+                  className="table-responsive"
                   keyField="id"
                   {...props.baseProps}
                   pagination={paginationFactory()}

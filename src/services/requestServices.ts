@@ -35,8 +35,8 @@ const doRequest = <TBody, TResponse>(
     generateOptions<TBody>(method, body)
   ).then(response => {
     if (response.status === 204) return defaultValue;
-    if (response.status.toString() == "404")
-      window.history.pushState({}, null as any, "/NotFound");
+    // if (response.status.toString() == "404")
+    //   window.history.pushState({}, null as any, "/NotFound");
     if (response.status.toString().indexOf("40") >= 0)
       return Promise.reject(response.status);
     return response.json();

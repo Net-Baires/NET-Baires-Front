@@ -8,9 +8,11 @@ import {
 } from "../../../../services/eventsServices";
 import { EventLiveDetail } from "../../../../services/models/Events/EventLiveDetail";
 import Countdown from "react-countdown-now";
-import { AddUserToEvent } from "./AddUserToEvent";
 import { LastUsersAttended } from "./LastUsersAttended";
 import { isEmpty } from "../../../../services/objectsservices";
+import { SyncUserToEvent } from "./SyncUserToEvent";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 type AdminEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -29,12 +31,16 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
   const [eventDetail, setEventDetail] = useState<EventLiveDetail>(
     {} as EventLiveDetail
   );
+  const [hour, setHours] = useState(0);
+  const [minute, setMinutes] = useState(0);
+  const [second, setSeconds] = useState(0);
   const history = useHistory();
   const loadEventDetail = () => {
     GetAdminLiveEventDetail(+props.match.params.id).then(s => {
       if (s == null) history.push("/admin/panel");
       setEventDetail(s);
       ready();
+      tick(s);
     });
   };
   useEffect(() => {
@@ -47,11 +53,62 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
   ) => {
     event.preventDefault();
     loading();
-    updateEvent(eventDetail.id, { generalAttended: enable }).then(x => {
-      loadEventDetail();
-    });
+    updateEvent(eventDetail.id, { generalAttended: enable, live: true }).then(
+      x => {
+        loadEventDetail();
+      }
+    );
   };
 
+  const handlePauseEvent = (
+    event: SyntheticEvent<HTMLButtonElement>,
+    enable: boolean
+  ) => {
+    event.preventDefault();
+    confirmAlert({
+      title: "Detener Evento",
+      message: "¿Esta seguro que quiere detener el evento?",
+      buttons: [
+        {
+          label: "Si",
+          onClick: () => {
+            loading();
+            updateEvent(eventDetail.id, {
+              generalAttended: false,
+              live: false
+            }).then(() => {
+              ready();
+              history.push("/admin/panel");
+            });
+          }
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+  const tick = (event: EventLiveDetail) => {
+    let dateToAdd = new Date(event.startLiveTime);
+    setInterval(() => {
+      const today = dateToAdd;
+      const endDate = new Date();
+      const days = parseInt((endDate - today) / (1000 * 60 * 60 * 24));
+      const hours = parseInt(
+        (Math.abs(endDate - today) / (1000 * 60 * 60)) % 24
+      );
+      const minutes = parseInt(
+        (Math.abs(endDate.getTime() - today.getTime()) / (1000 * 60)) % 60
+      );
+      const seconds = parseInt(
+        (Math.abs(endDate.getTime() - today.getTime()) / 1000) % 60
+      );
+      setHours(hours);
+      setMinutes(minutes);
+      setSeconds(seconds);
+    }, 1000);
+  };
   return (
     <>
       <div className="col-sm-12">
@@ -69,9 +126,14 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
                 <h5 className="text-white">Evento Live</h5>
               </div>
               <div className="card-block text-center">
-                <Countdown date={Date.now() + 10000} />,
-                <h2 className="f-w-300 m-b-30 text-white">00:24:38</h2>
-                <i className="feather icon-play f-50 text-white d-block m-b-25"></i>
+                <h2 className="f-w-300 m-b-30 text-white">
+                  {hour}:{minute}:{second}
+                </h2>
+                <i
+                  style={{ cursor: "pointer" }}
+                  onClick={handlePauseEvent}
+                  className="feather icon-pause f-50 text-white d-block m-b-25"
+                ></i>
               </div>
             </div>
           </div>
@@ -126,7 +188,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
 
           {!isEmpty(eventDetail) && (
             <>
-              <AddUserToEvent idEvent={eventDetail.id}></AddUserToEvent>
+              <SyncUserToEvent idEvent={eventDetail.id}></SyncUserToEvent>
               <LastUsersAttended
                 members={eventDetail.membersDetails.membersAttended}
               ></LastUsersAttended>

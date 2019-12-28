@@ -3,8 +3,8 @@ $(document).ready(function() {
     togglemenu();
     menuhrres();
     var vw = $(window)[0].innerWidth;
-    $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover();
+    // $('[data-toggle="tooltip"]').tooltip();
+    // $('[data-toggle="popover"]').popover();
     $('.to-do-list input[type=checkbox]').on('click', function() {
         if ($(this).prop('checked'))
             $(this).parent().addClass('done-task');
@@ -101,43 +101,43 @@ $(document).ready(function() {
         });
     }
     // Friend scroll
-    if (vw >= 1024) {
-        var px = new PerfectScrollbar('.main-friend-cont', {
-            wheelSpeed: .5,
-            swipeEasing: 0,
-            suppressScrollX: !0,
-            wheelPropagation: 1,
-            minScrollbarLength: 40,
-        });
-        var px = new PerfectScrollbar('.main-chat-cont', {
-            wheelSpeed: .5,
-            swipeEasing: 0,
-            suppressScrollX: !0,
-            wheelPropagation: 1,
-            minScrollbarLength: 40,
-        });
-    }
+    // if (vw >= 1024) {
+    //     var px = new PerfectScrollbar('.main-friend-cont', {
+    //         wheelSpeed: .5,
+    //         swipeEasing: 0,
+    //         suppressScrollX: !0,
+    //         wheelPropagation: 1,
+    //         minScrollbarLength: 40,
+    //     });
+    //     var px = new PerfectScrollbar('.main-chat-cont', {
+    //         wheelSpeed: .5,
+    //         swipeEasing: 0,
+    //         suppressScrollX: !0,
+    //         wheelPropagation: 1,
+    //         minScrollbarLength: 40,
+    //     });
+    // }
     // Menu scroll
-    if (!$('.pcoded-navbar').hasClass('theme-horizontal')) {
-        var vw = $(window)[0].innerWidth;
-        if (vw < 992 || $('.pcoded-navbar').hasClass('menupos-static')) {
-            var px = new PerfectScrollbar('.navbar-content', {
-                wheelSpeed: .5,
-                swipeEasing: 0,
-                suppressScrollX: !0,
-                wheelPropagation: 1,
-                minScrollbarLength: 40,
-            });
-        }else{
-            var px = new PerfectScrollbar('.navbar-content', {
-                wheelSpeed: .5,
-                swipeEasing: 0,
-                suppressScrollX: !0,
-                wheelPropagation: 1,
-                minScrollbarLength: 40,
-            });
-        }
-    }
+    // if (!$('.pcoded-navbar').hasClass('theme-horizontal')) {
+    //     var vw = $(window)[0].innerWidth;
+    //     if (vw < 992 || $('.pcoded-navbar').hasClass('menupos-static')) {
+    //         var px = new PerfectScrollbar('.navbar-content', {
+    //             wheelSpeed: .5,
+    //             swipeEasing: 0,
+    //             suppressScrollX: !0,
+    //             wheelPropagation: 1,
+    //             minScrollbarLength: 40,
+    //         });
+    //     }else{
+    //         var px = new PerfectScrollbar('.navbar-content', {
+    //             wheelSpeed: .5,
+    //             swipeEasing: 0,
+    //             suppressScrollX: !0,
+    //             wheelPropagation: 1,
+    //             minScrollbarLength: 40,
+    //         });
+    //     }
+    // }
 
     function fc(e) {
         if (e.which == 13) {

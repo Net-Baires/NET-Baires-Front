@@ -42,7 +42,7 @@ export const getEvent = (id: number): Promise<EventDetail> =>
 
 export const getEventToReportAttendance = (
   id: number
-): Promise<EventToReportAttendance> => getRequest(`/events/${id}/attendances`);
+): Promise<EventToReportAttendance> => getRequest(`/events/${id}/attendance`);
 export const getCheckAttendanceGeneral = (
   id: number
 ): Promise<EventToReportAttendance> =>

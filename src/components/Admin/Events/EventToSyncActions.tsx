@@ -72,7 +72,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
           data-tip="Deneter evento que se encuentra Live"
           type="button"
           onClick={e => handleLiveEvent(e, false)}
-          className="btn btn-warxning events-actions-button"
+          className="btn btn-warning events-actions-button"
         >
           <i className="fas fa-stop"></i>
         </button>

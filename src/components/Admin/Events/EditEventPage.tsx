@@ -7,8 +7,6 @@ import {
 } from "../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { EventToSyncActions } from "./EventToSyncActions";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { isEmpty } from "../../../services/objectsservices";
 import { EditEventComponent } from "./Components/EditEventComponent";
 import { AttendeesListToEdit } from "./Components/AttendeesListToEdit";
@@ -29,7 +27,6 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
   EditEventPageProps> = ({ loading, ready, ...props }) => {
   const [event, setEvent] = useState({} as EventDetail);
 
-  const history = useHistory();
   const loadEvent = () => {
     loading();
     getEvent(props.match.params.id).then(event => {
@@ -46,7 +43,6 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
       ready();
     });
   };
-  const handlerReadyAction = () => loadEvent();
   const updateSponsors = (sponsors: SponsorEvent[]) => {
     event.sponsors = sponsors;
     setEvent(event);
@@ -59,6 +55,15 @@ const EditEventPageComponent: React.SFC<RouteComponentProps<
           <div className="col-sm-12">
             <h5 className="mt-4">Editar Evento</h5>
             <hr></hr>
+          </div>
+          <div className="col-sm-12">
+            <div className="card">
+              <div className="card-header">
+                <h5>{event.title}</h5>
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-12">
             <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
               <li className="nav-item">
                 <a

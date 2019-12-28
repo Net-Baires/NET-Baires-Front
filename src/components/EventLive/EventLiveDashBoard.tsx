@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { RouteComponentProps, useHistory } from "react-router";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
-import { getEventLive } from "../../services/eventsServices";
+import {
+  getEventLive,
+  GetAdminLiveEventDetail
+} from "../../services/eventsServices";
 import { EventDetail } from "../../services/models/Events/Event";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { isEmpty } from "../../services/objectsservices";
-import { NotFound } from "../Common/NotFoun";
+import { EventLiveDetail } from "../../services/models/Events/EventLiveDetail";
 
 type EventLiveDashBoardProps = {
   loading: () => void;
@@ -18,16 +21,16 @@ type EventLiveDashBoardParams = {
 
 type EventLiveDashBoardPropsAndRouter = EventLiveDashBoardParams &
   EventLiveDashBoardProps;
-export const EventLiveDashBoardComponent: React.SFC<
-  RouteComponentProps<EventLiveDashBoardPropsAndRouter> &
-    EventLiveDashBoardProps
-> = ({ match, loading, ready }) => {
+
+const EventLiveDashBoardComponent: React.SFC<RouteComponentProps<
+  EventLiveDashBoardPropsAndRouter
+>> = ({ loading, ready, ...props }) => {
   const history = useHistory();
-  const [event, setEvent] = useState({} as EventDetail);
+  const [event, setEvent] = useState({} as EventLiveDetail);
   const [error, setError] = useState(false);
   useEffect(() => {
     loading();
-    getEventLive(+match.params.id)
+    GetAdminLiveEventDetail(+props.match.params.id)
       .then(x => {
         setEvent(x);
         ready();
@@ -38,7 +41,7 @@ export const EventLiveDashBoardComponent: React.SFC<
   }, []);
 
   return (
-    <PageFullWidthWrapper classWrapper="lgx-post-wrapper">
+    <>
       {!error ? (
         <article>
           <header>
@@ -87,7 +90,7 @@ export const EventLiveDashBoardComponent: React.SFC<
           message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
         ></NotFound>
       )}
-    </PageFullWidthWrapper>
+    </>
   );
 };
 
