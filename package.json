@@ -7,7 +7,7 @@
     "bundle": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "mock": "json-server db.json",
-    "start": "concurrently  \"webpack-dev-server --mode development  --env.APP_ENV=local --open --hot\"  \" json-server db.json \"",
+    "start": "concurrently  \"webpack-dev-server --mode development  --env.APP_ENV=local --open --hot\"",
     "build:prod": "webpack --mode production --env.APP_ENV=prod",
     "check-types": "tsc"
   },
@@ -92,6 +92,7 @@
     "react-stopwatch": "^2.0.4",
     "react-through": "^1.1.4",
     "react-toast-notifications": "^2.2.5",
+    "react-toastify": "^5.4.1",
     "react-tooltip": "^3.11.1",
     "react-wysiwyg-typescript": "^1.0.2",
     "reactstrap": "^8.0.1",

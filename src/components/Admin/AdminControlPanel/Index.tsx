@@ -5,6 +5,7 @@ import { EventDetail } from "../../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
 import { CardWrapper } from "../../Common/CardWrapper";
 import { EventActions } from "./EventActions";
+import { SecureElement } from '../../Auth/SecureElement';
 
 type ControlPanelProps = {};
 const ControlPanel: React.SFC<ControlPanelProps> = () => {
@@ -80,14 +81,26 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
                     </div>
                   </div>
                   <div className="designer m-t-30">
-                    <NavLink
-                      exact
-                      className="btn btn-primary shadow-2 text-uppercase btn-block"
-                      activeClassName="active"
-                      to={`/admin/events/${event.id}/live/panel`}
-                    >
-                      Panel de Control
+                    <SecureElement roles={["Admin", "Organizer"]}>
+                      <NavLink
+                        exact
+                        className="btn btn-primary shadow-2 text-uppercase btn-block"
+                        activeClassName="active"
+                        to={`/admin/events/${event.id}/live/panel`}
+                      >
+                        Panel de Control
                     </NavLink>
+                    </SecureElement>
+                    <SecureElement roles={["Member"]}>
+                      <NavLink
+                        exact
+                        className="btn btn-primary shadow-2 text-uppercase btn-block"
+                        activeClassName="active"
+                        to={`/member/events/${event.id}/live/panel`}
+                      >
+                        Panel de Control
+                    </NavLink>
+                    </SecureElement>
                   </div>
                 </div>
               </div>

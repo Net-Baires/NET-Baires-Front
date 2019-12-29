@@ -7,7 +7,7 @@ type SideMenuProps = {};
 export const SideMenu: React.SFC<SideMenuProps> = () => {
   const [] = useState(false);
   const handleSyncEvents = () => {
-    syncEvents().then(() => {});
+    syncEvents().then(() => { });
   };
   return (
     <>
@@ -32,7 +32,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
           <div className="navbar-content scroll-div">
             <ul className="nav pcoded-inner-navbar">
               <li data-username="landing page" className="nav-item">
-                <SecureElement rols={["Admin", "Organizer"]}>
+                <SecureElement roles={["Admin", "Organizer"]}>
                   <NavLink
                     exact
                     className="nav-link-slide-bar"
@@ -45,7 +45,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                     <span className="pcoded-mtext">Panel de Control</span>
                   </NavLink>
                 </SecureElement>
-                <SecureElement rols={["Member"]}>
+                <SecureElement roles={["Member"]}>
                   <NavLink
                     exact
                     className="nav-link-slide-bar"
@@ -67,15 +67,16 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                 data-username="Menu levels Menu level 2.1 Menu level 2.2"
                 className="nav-item pcoded-hasmenu"
               >
-                <a className="nav-link">
-                  <span className="pcoded-micon">
-                    <i className="feather icon-check-square"></i>
-                  </span>
-                  <span className="pcoded-mtext">Eventos</span>
-                </a>
-                <ul className="pcoded-submenu">
-                  <li className="">
-                    <SecureElement rols={["Admin", "Organizer"]}>
+
+                <SecureElement roles={["Admin", "Organizer"]}>
+                  <a className="nav-link">
+                    <span className="pcoded-micon">
+                      <i className="feather icon-check-square"></i>
+                    </span>
+                    <span className="pcoded-mtext">Eventos</span>
+                  </a>
+                  <ul className="pcoded-submenu">
+                    <li className="">
                       <NavLink
                         exact
                         activeClassName="active"
@@ -83,10 +84,8 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                       >
                         Mis Eventos
                       </NavLink>
-                    </SecureElement>
-                  </li>
-                  <li className="">
-                    <SecureElement rols={["Admin", "Organizer"]}>
+                    </li>
+                    <li className="">
                       <NavLink
                         exact
                         activeClassName="active"
@@ -94,10 +93,8 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                       >
                         Eventos para Sincronizar
                       </NavLink>
-                    </SecureElement>
-                  </li>
-                  <li className="">
-                    <SecureElement rols={["Admin", "Organizer"]}>
+                    </li>
+                    <li className="">
                       <NavLink
                         exact
                         activeClassName="active"
@@ -105,25 +102,23 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                       >
                         Eventos en vivo
                       </NavLink>
-                    </SecureElement>
-                  </li>
-                  <li className="">
-                    <SecureElement rols={["Admin", "Organizer"]}>
+                    </li>
+                    <li className="">
                       <a
                         className="nav-link-slide-bar"
                         onClick={handleSyncEvents}
                       >
                         Sync Eventos
                       </a>
-                    </SecureElement>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                </SecureElement>
               </li>
               <li
                 data-username="Menu levels Menu level 2.1 Menu level 2.2"
                 className="nav-item pcoded-hasmenu"
               >
-                <SecureElement rols={["Admin"]}>
+                <SecureElement roles={["Admin"]}>
                   <a className="nav-link">
                     <span className="pcoded-micon">
                       <i className="fas fa-user"></i>
@@ -158,7 +153,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                 data-username="Menu levels Menu level 2.1 Menu level 2.2"
                 className="nav-item pcoded-hasmenu"
               >
-                <SecureElement rols={["Admin"]}>
+                <SecureElement roles={["Admin"]}>
                   <a className="nav-link">
                     <span className="pcoded-micon">
                       <i className="fas fa-university"></i>
@@ -194,7 +189,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
                 data-username="Menu levels Menu level 2.1 Menu level 2.2"
                 className="nav-item pcoded-hasmenu"
               >
-                <SecureElement rols={["Admin"]}>
+                <SecureElement roles={["Admin"]}>
                   <a className="nav-link">
                     <span className="pcoded-micon">
                       <i className="fas fa-money-check"></i>
@@ -227,7 +222,7 @@ export const SideMenu: React.SFC<SideMenuProps> = () => {
               </li>
 
               <li data-username="Animations" className="nav-item">
-                <SecureElement rols={["Admin", "Organizer"]}>
+                <SecureElement roles={["Admin", "Organizer"]}>
                   <NavLink
                     exact
                     className="nav-link-slide-bar"

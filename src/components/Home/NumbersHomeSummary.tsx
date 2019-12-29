@@ -68,7 +68,6 @@ const NumbersHomeSummary: React.SFC<NumbersHomeSummaryProps> = ({
           </div>
         </div>
       </div>
-      )}
     </>
   );
 };

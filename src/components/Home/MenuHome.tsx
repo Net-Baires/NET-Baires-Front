@@ -61,6 +61,11 @@ const MenuHomeComponent: React.SFC = () => {
                 </a>
               </li>
               <li className="nav-item">
+                <NavLink className="nav-link  page-scroll" to="/events/live">
+                  Eventos en vivo
+                  </NavLink>
+              </li>
+              <li className="nav-item">
                 {isLoggued && (
                   <NavLink className="nav-link  page-scroll" to="/admin/panel">
                     App
@@ -73,10 +78,10 @@ const MenuHomeComponent: React.SFC = () => {
                     Desconectate
                   </NavLink>
                 ) : (
-                  <NavLink className="nav-link  page-scroll" to="/login">
-                    Conectate
+                    <NavLink className="nav-link  page-scroll" to="/login">
+                      Conectate
                   </NavLink>
-                )}
+                  )}
               </li>
             </ul>
           </div>

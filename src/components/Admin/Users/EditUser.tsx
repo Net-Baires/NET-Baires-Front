@@ -20,6 +20,7 @@ import { loading, ready } from "../../../store/loading/actions";
 import { Member } from "../../../services/models/Member";
 import { BadgesAssign } from "../../Badges/BadgesAssign";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { CardWrapper } from '../../Common/CardWrapper';
 type EditUserParams = {
   id: string;
   loading: () => void;
@@ -61,8 +62,8 @@ const EditUserInternalComponent: React.SFC<
   };
 
   return (
-    <>
-      {/* <MDBContainer>
+    <CardWrapper cardTitle="Editar Usuario">
+      <MDBContainer>
         <MDBModal isOpen={sureToDelete}>
           <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
           <MDBModalBody>
@@ -78,23 +79,21 @@ const EditUserInternalComponent: React.SFC<
             </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
-      </MDBContainer> */}
+      </MDBContainer>
       {!isEmpty(userToEdit) && (
         <EditUserComponent
           saveUser={saveUser}
           user={userToEdit}
         ></EditUserComponent>
       )}
-      <div className="row">
-        <button
-          type="button"
-          onClick={deleteUser}
-          className="btn btn-danger btn-full-width"
-        >
-          Eliminar
+      <button
+        type="button"
+        onClick={deleteUser}
+        className="btn btn-danger btn-full-width"
+      >
+        Eliminar
         </button>
-      </div>
-      {loaded && (
+      {/* {loaded && (
         <div className="row">
           <BadgesAssign
             memberId={userToEdit.id}
@@ -102,8 +101,8 @@ const EditUserInternalComponent: React.SFC<
             loaded={ready}
           ></BadgesAssign>
         </div>
-      )}
-    </>
+      )} */}
+    </CardWrapper>
   );
 };
 

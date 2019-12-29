@@ -28,6 +28,7 @@ type EditSponsorParams = {
   id: number;
 };
 import { EditSponsorComponent } from "./components/EditSponsorComponent";
+import { CardWrapper } from '../../Common/CardWrapper';
 
 type EditSponsorPropsAndRouter = EditSponsorParams & EditSponsorProps;
 export const EditSponsorToExport: React.SFC<
@@ -68,23 +69,8 @@ export const EditSponsorToExport: React.SFC<
     setSureToDelete(false);
   };
   return (
-    <>
-      {/* <MDBContainer className="pepepe">
-        <MDBModal isOpen={sureToDelete}>
-          <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
-          <MDBModalBody>
-            ¿Esta seguro que quiere eliminar el Sponsor <b>{sponsor.name}</b>?
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn onClick={handleCancel} color="secondary">
-              Cancelar
-            </MDBBtn>
-            <MDBBtn onClick={handleConfirmDelete} color="danger">
-              Eliminar
-            </MDBBtn>
-          </MDBModalFooter>
-        </MDBModal>
-      </MDBContainer> */}
+    <CardWrapper cardTitle="Editar Sponsor">
+
       {!isEmpty(sponsor) && (
         <EditSponsorComponent
           {...sponsor}
@@ -100,7 +86,7 @@ export const EditSponsorToExport: React.SFC<
           Eliminar
         </button>
       </div>
-    </>
+    </CardWrapper>
   );
 };
 const mapStateToProps = () => ({});

@@ -9,6 +9,7 @@ import { loadScript, loadStyles } from "../../services/helpers/scriptshelpers";
 import ReactTooltip from "react-tooltip";
 import LoadingOverlay from "react-loading-overlay";
 import { AppState } from "../../store";
+import { ToastContainer } from 'react-toastify';
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -61,10 +62,11 @@ const AdminWrapperComponent: React.SFC = ({ children, ...props }) => {
                     spinner
                     clasName="row"
                     text="Procesando..."
-                    // tslint:disable-next-line: indent
+                  // tslint:disable-next-line: indent
                   >
                     {children}
                   </LoadingOverlay>
+                  <ToastContainer />
                 </div>
               </div>
             </div>

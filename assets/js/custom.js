@@ -1,13 +1,13 @@
 /* ----- Custom Scripts for Destiny template ----- */
 
-jQuery(function($) {
+jQuery(function ($) {
   "use strict";
 
   // get the value of the bottom of the #main element by adding the offset of that element plus its height, set it as a variable
   var mainbottom = $("#main").offset().top;
 
   // on scroll,
-  $(window).on("scroll", function() {
+  $(window).on("scroll", function () {
     // we round here to reduce a little workload
     stop = Math.round($(window).scrollTop());
     if (stop > mainbottom) {
@@ -19,7 +19,7 @@ jQuery(function($) {
   });
   // Collapse navbar on click
 
-  $(document).on("click.nav", ".navbar-collapse.in", function(e) {
+  $(document).on("click.nav", ".navbar-collapse.in", function (e) {
     if ($(e.target).is("a")) {
       $(this)
         .removeClass("in")
@@ -50,8 +50,8 @@ jQuery(function($) {
 
   /* ------ jQuery for Easing min -- */
 
-  $(function() {
-    $("a.page-scroll").bind("click", function(event) {
+  $(function () {
+    $("a.page-scroll").bind("click", function (event) {
       var $anchor = $(this);
       $("html, body")
         .stop()
@@ -80,21 +80,21 @@ jQuery(function($) {
 
   /* ----- Jarallax Init ----- */
 
-  $(".jarallax").jarallax({
-    speed: 0.7
-  });
+  // $(".jarallax").jarallax({
+  //   speed: 0.7
+  // });
 
-  /* ----- Jarallax Personal Homepage Init ----- */
+  // /* ----- Jarallax Personal Homepage Init ----- */
 
-  $(".personal-jarallax").jarallax({
-    speed: 0.7
-  });
+  // $(".personal-jarallax").jarallax({
+  //   speed: 0.7
+  // });
 
   /*----- Preloader ----- */
 
-  $(window).load(function() {
-    setTimeout(function() {
-      $("#loading").fadeOut("slow", function() {});
+  $(window).load(function () {
+    setTimeout(function () {
+      $("#loading").fadeOut("slow", function () { });
     }, 3000);
   });
 
@@ -104,10 +104,10 @@ jQuery(function($) {
 
   /* ----- Counter Up ----- */
 
-  $(".counter").counterUp({
-    delay: 10,
-    time: 1000
-  });
+  // $(".counter").counterUp({
+  //   delay: 10,
+  //   time: 1000
+  // });
 
   /* ----- Countdown ----- */
 
@@ -132,7 +132,7 @@ jQuery(function($) {
   ----------- Scroll To Top -----------
   ------------------------------------*/
 
-  $(window).scroll(function() {
+  $(window).scroll(function () {
     if ($(this).scrollTop() > 1000) {
       $("#back-top").fadeIn();
     } else {
@@ -140,7 +140,7 @@ jQuery(function($) {
     }
   });
   // scroll body to 0px on click
-  $("#back-top").on("click", function() {
+  $("#back-top").on("click", function () {
     $("#back-top").tooltip("hide");
     $("body,html").animate(
       {
@@ -173,14 +173,14 @@ jQuery(function($) {
     overlay: false,
     overlayClass: "animsition-overlay-slide",
     overlayParentElement: "body",
-    transition: function(url) {
+    transition: function (url) {
       window.location.href = url;
     }
   });
 
   /*----- Subscription Form ----- */
 
-  $(".subscribe-form").submit(function(e) {
+  $(".subscribe-form").submit(function (e) {
     e.preventDefault();
     var postdata = $(".subscribe-form").serialize();
     $.ajax({
@@ -188,17 +188,17 @@ jQuery(function($) {
       url: "assets/php/subscribe.php",
       data: postdata,
       dataType: "json",
-      success: function(json) {
+      success: function (json) {
         if (json.valid == 0) {
           $(".success-message").hide();
           $(".error-message").hide();
           $(".error-message").html(json.message);
-          $(".error-message").fadeIn("fast", function() {
+          $(".error-message").fadeIn("fast", function () {
             $(".subscribe-form")
               .addClass("animated flash")
               .one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() {
+                function () {
                   $(this).removeClass("animated flash");
                 }
               );
@@ -208,7 +208,7 @@ jQuery(function($) {
           $(".success-message").hide();
           $(".subscribe-form").hide();
           $(".success-message").html(json.message);
-          $(".success-message").fadeIn("fast", function() {
+          $(".success-message").fadeIn("fast", function () {
             $(".top-content").backstretch("resize");
           });
         }

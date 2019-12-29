@@ -5,7 +5,9 @@ import { EditUserComponent } from "./components/EditUserComponent";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { Member } from "../../../services/models/Member";
-import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
+import { CardWrapper } from '../../Common/CardWrapper';
+import { errorToast } from '../../../services/toastServices';
+
 type NewUserProps = {
   loading: () => void;
   ready: () => void;
@@ -16,19 +18,22 @@ const NewUserComponent: React.SFC<NewUserProps> = ({ loading, ready }) => {
 
   const saveUser = (user: Member) => {
     loading();
-    newUser(user).then(x => {
+    newUser(user).then(() => {
       ready();
-      history.push("admin/users");
+      history.push("/admin/users");
+    }).catch(() => {
+      errorToast("Error al intentar crear un usuario");
+      ready();
     });
   };
 
   return (
-    <>
+    <CardWrapper cardTitle="Nuevo Usuario">
       <EditUserComponent
         saveUser={saveUser}
         user={userToEdit}
       ></EditUserComponent>
-    </>
+    </CardWrapper>
   );
 };
 

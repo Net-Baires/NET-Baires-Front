@@ -1,10 +1,10 @@
 import React from "react";
-import { MemberDetail } from "../../../../services/models/Events/EventLiveDetail";
-import { CardWrapper } from "../../../Common/CardWrapper";
+import { MemberDetail } from "../../services/models/Events/EventLiveDetail";
+import { CardWrapper } from "../Common/CardWrapper";
 import {
   formatStringDate,
   formatStringTime
-} from "../../../../helpers/DateHelpers";
+} from "../../helpers/DateHelpers";
 type NewUserProps = {
   members: MemberDetail[];
 };
@@ -16,13 +16,13 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
           <table className="table table-hover">
             <tbody>
               {members.map(member => (
-                <tr className="unread">
+                <tr key={member.id} className="unread">
                   <td>
                     <img
                       className="rounded-circle"
                       style={{ width: "40px" }}
                       src={
-                        member.picture != ""
+                        member.picture != "" && member.picture != null
                           ? member.picture
                           : "assets/images/no-image-profile.png"
                       }

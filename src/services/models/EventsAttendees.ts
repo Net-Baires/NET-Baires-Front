@@ -5,15 +5,15 @@ export interface EventsAttendees {
   attended?: boolean;
   notifiedAbsence?: boolean;
   doNotKnow?: boolean;
-  didNotAttend: boolean;
-  memberDetail: EventsAttendeesMemberDetail;
+  didNotAttend?: boolean;
+  memberDetail?: EventsAttendeesMemberDetail;
 }
 export interface EventsAttendeesMemberDetail {
-  id: number;
-  firstName: string;
-  firstLogin: string;
-  picture: string;
-  blocked: boolean;
-  organized: boolean;
-  colaborator: boolean;
+  id?: number;
+  firstName?: string;
+  firstLogin?: string;
+  picture?: string;
+  blocked?: boolean;
+  organized?: boolean;
+  colaborator?: boolean;
 }

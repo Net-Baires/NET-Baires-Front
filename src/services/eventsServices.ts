@@ -56,6 +56,12 @@ export const reportAttendanceGeneral = (
 ): Promise<EventToSync> => {
   return putRequest(`/events/attendances/general/${token}`);
 };
+export const reportAttendanceGeneralByCode = (
+  id: number,
+  code: string
+): Promise<EventToSync> => {
+  return putRequest(`/events/${id}/attendances/general/${code}`);
+};
 
 export const getEventToSync = (
   id: string,

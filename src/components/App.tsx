@@ -5,14 +5,11 @@ import { Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home/Index";
 import historyRouter from "./router/HistoryRouter";
 import Organizers from "./organizers";
-import Header from "./Header";
-import Footer from "./Footer";
 import Sponsor from "./Sponsor";
 import SpeakerDetail from "./SpeakerDetail";
 import OrganizerDetail from "./OrganizerDetail";
-import ControlPanel from "./Admin/controlPanel";
+import ControlPanel from "./Admin/AdminControlPanel";
 import { PrivateRoute } from "./router/PrivateRoute";
-import LoadingOverlay from "react-loading-overlay";
 import { AppState } from "../store";
 import { loading, ready } from "../store/loading/actions";
 import { connect } from "react-redux";
@@ -42,23 +39,21 @@ import { NewBadge } from "./Admin/Badges/NewBadge";
 import { EditBadge } from "./Admin/Badges/EditBadge";
 import { BadgesList } from "./Admin/Badges/BadgesList";
 import NotFoundPage from "./NotFoundPage/Index";
-import { EventLiveDashBoard } from "./EventLive/EventLiveDashBoard";
 import { EditEventPage } from "./Admin/Events/EditEventPage";
 import { AdminWrapper } from "./Admin/Wrapper";
 import { HomeWrapper } from "./Home/HomeWrapper";
-import { EmptyWrapper } from "./Home/EmptyWrapper";
-import { newSponsor } from "../services/sponsorsServices";
 import LogoutComponent from "./Login/LogoutComponent";
 import { AdminEventLivePanel } from "./Admin/Events/EventLive/AdminEventLivePanel";
 import MemberControlPanel from "./MemberLogged/MemberControlPanel";
 import { EventsLivePublicDetail } from "./EventLive/EventsLivePublicDetail";
+import { MemberEventLivePanel } from './MemberLogged/MemberEventLivePanel';
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
   ready: () => void;
 }
 
-export const App: React.SFC<AppProps> = props => {
+export const App: React.SFC<AppProps> = () => {
   return (
     <>
       <Router history={historyRouter}>
@@ -139,7 +134,7 @@ export const App: React.SFC<AppProps> = props => {
             <PrivateRoute
               exact
               path="/member/events/:id/live/panel"
-              component={EventLiveDashBoard}
+              component={MemberEventLivePanel}
             />
             <PrivateRoute
               exact
@@ -186,11 +181,13 @@ export const App: React.SFC<AppProps> = props => {
               component={NewSponsor}
             />
             <PrivateRoute
+              roles={["Admin", "Organizer"]}
               exact
               path="/admin/panel"
               component={ControlPanel}
             ></PrivateRoute>
             <PrivateRoute
+              roles={["Admin"]}
               exact
               path="/admin/sponsors/:id/edit"
               component={EditSponsor}
@@ -200,7 +197,7 @@ export const App: React.SFC<AppProps> = props => {
               path="/admin/sponsors"
               component={SponsorsList}
             />
-            <PrivateRoute exact path="/admin/users" component={UsersList} />
+            <PrivateRoute roles={["admin"]} exact path="/admin/users" component={UsersList} />
             <PrivateRoute
               exact
               path="/admin/users/:id(\d+)/Edit"

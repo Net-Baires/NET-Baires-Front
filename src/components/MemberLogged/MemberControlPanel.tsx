@@ -3,7 +3,8 @@ import { getEventsLive } from "../../services/eventsServices";
 import { isEmpty } from "../../services/objectsservices";
 import { EventDetail } from "../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
-import { EventActions } from "../Admin/controlPanel/EventActions";
+import { EventActions } from "../Admin/AdminControlPanel/EventActions";
+import ControlPanelEventsLive from '../EventLive/ControlPanelEventsLive';
 
 type MemberControlPanelProps = {};
 const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
@@ -22,13 +23,6 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
               <p>
                 Estos son los eventos que se encuentran ocurriendo en este
                 momento.
-                {/* <a
-              href="index-form-package.html"
-              target="_blank"
-              className="alert-link"
-            >
-              CHECKOUT
-            </a> */}
               </p>
               <label className="text-muted">
                 Copy/paste source code in your page in just couples of seconds.
@@ -42,57 +36,47 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
               </div>
             </div>
           </div>
-        </>
-      )}
-      <div className="row">
-        {eventsLive &&
-          eventsLive.map(event => (
-            <div key={event.id} className="col-xl-4 col-md-6">
-              <div className="card user-designer">
-                <div className="card-block text-center">
-                  <div className="event-live-card-title">
-                    <h5>{event.title}</h5>
-                  </div>
-                  {/* <span className="d-block mb-4">UX Designer</span> */}
-                  <img
-                    className="event-live-card-image"
-                    style={{ height: "170px" }}
-                    src={
-                      event.imageUrl != null
-                        ? event.imageUrl
-                        : "/assets/images/imagenotfound.png"
-                    }
-                    alt="dashboard-user"
-                  ></img>
-                  <div className="row m-t-30">
-                    <div className="col-md-4 col-6">
-                      <h5>{event.registered}</h5>
-                      <span className="text-muted">Registrados</span>
+          <div className="row">
+            <ControlPanelEventsLive eventsDetail={eventsLive}></ControlPanelEventsLive>
+          </div>
+          <div className="row">
+
+            <div className="col-md-6 col-xl-4">
+              <div className="card card-social">
+                <div className="card-block border-bottom">
+                  <div className="row align-items-center justify-content-center">
+                    <div className="col-auto">
+                      <i className="fab fa-twitter text-c-blue f-36"></i>
                     </div>
-                    <div className="col-md-4 col-6">
-                      <h5>{event.attended}</h5>
-                      <span className="text-muted">Presentes</span>
-                    </div>
-                    <div className="col-md-4 col-12">
-                      <h5>{event.didNotAttend}</h5>
-                      <span className="text-muted">Ausentes</span>
+                    <div className="col text-right">
+                      <h3>8</h3>
+                      <h5 className="text-c-purple mb-0">68.2% <span className="text-muted">Eventos Registrados</span></h5>
                     </div>
                   </div>
-                  <div className="designer m-t-30">
-                    <NavLink
-                      exact
-                      className="btn btn-primary shadow-2 text-uppercase btn-block"
-                      activeClassName="active"
-                      to={`/admin/events/${event.id}/live/panel`}
-                    >
-                      Panel de Control
-                    </NavLink>
+                </div>
+                <div className="card-block">
+                  <div className="row align-items-center justify-content-center card-active">
+                    <div className="col-6">
+                      <h6 className="text-center m-b-10"><span className="text-muted m-r-5">Presente : </span>5</h6>
+                      <div className="progress">
+                        <div className="progress-bar progress-c-green" role="progressbar" style={{ width: "50%", height: "6px;" }} aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                    <div className="col-6">
+                      <h6 className="text-center  m-b-10"><span className="text-muted m-r-5">Ausente :</span>3</h6>
+                      <div className="progress">
+                        <div className="progress-bar progress-c-blue" role="progressbar" style={{ width: "30%", height: "6px;" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          ))}
-      </div>
+          </div>
+
+        </>
+      )
+      }
     </>
   );
 };

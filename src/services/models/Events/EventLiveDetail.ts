@@ -24,5 +24,5 @@ export interface MemberDetail {
   lastName: string;
   username: string;
   picture: string;
-  attendedTime: Date;
+  attendedTime: string;
 }

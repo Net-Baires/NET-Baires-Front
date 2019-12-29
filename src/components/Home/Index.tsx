@@ -13,6 +13,7 @@ import HomeHeaderBanner from "./HomeHeaderBanner/Index";
 
 type LoginProps = {};
 export const Home: React.SFC<LoginProps> = () => {
+  const [loadReady, setLoadReady] = useState(false);
   const [sponsors, setSponsors] = useState(new Array<Sponsor>());
   const [speakers, setSpeakers] = useState(new Array<Member>());
   const [organizers, setOrganizers] = useState(new Array<Member>());
@@ -32,6 +33,7 @@ export const Home: React.SFC<LoginProps> = () => {
       setTotalSlackMembers(x.totalUsersSlack);
       setTotalMembers(x.totalUsersMeetup);
       setTotalSpeakers(x.totalSpeakers);
+      setLoadReady(true);
     });
   }, []);
   return (
@@ -204,15 +206,18 @@ export const Home: React.SFC<LoginProps> = () => {
           </div>
         </div>
       </div>
-      <HomeOrganizers organizers={organizers}></HomeOrganizers>
+      {loadReady && <>
+        <HomeOrganizers organizers={organizers}></HomeOrganizers>
 
-      <HomeSponsors sponsors={sponsors}></HomeSponsors>
-      <NumbersHomeSummary
-        totalEvents={totalEvents}
-        totalMembers={totalMembers}
-        totalSlackMembers={totalSlackMembers}
-        totalSpeakers={totalSpeakers}
-      ></NumbersHomeSummary>
+        <HomeSponsors sponsors={sponsors}></HomeSponsors>
+        <NumbersHomeSummary
+          totalEvents={totalEvents}
+          totalMembers={totalMembers}
+          totalSlackMembers={totalSlackMembers}
+          totalSpeakers={totalSpeakers}
+        ></NumbersHomeSummary>
+      </>
+      }
       <div className="features-section">
         <div className="f-left">
           <div className="left-content wow fadeInLeft" data-wow-delay="0s">

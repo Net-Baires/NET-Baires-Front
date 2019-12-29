@@ -63,7 +63,7 @@ export const CardWrapper: React.SFC<CardWrapperProps> = ({
               </div>
             </div>
           </div>
-          <div className="card-block">{children}</div>
+          <div className="card-block card-container-general">{children}</div>
         </div>
       </div>
     </>

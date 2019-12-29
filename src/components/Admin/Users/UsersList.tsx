@@ -116,6 +116,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         height: "2px"
       },
       formatter: (_cellContent: any, user: Member) => (
+
         <Checkbox
           checked={user.colaborator}
           onChange={(i: boolean) => handleUserColaborator(i, user)}
@@ -175,6 +176,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
                 <SearchBar {...props.searchProps} />
                 <hr />
                 <BootstrapTable
+                  className="table-scrolleable"
                   keyField="id"
                   {...props.baseProps}
                   pagination={paginationFactory()}

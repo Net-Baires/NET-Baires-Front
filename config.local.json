@@ -11,7 +11,9 @@
       "accessTokenUri": "https://secure.meetup.com/oauth2/access",
       "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
       "redirectUri": "http://localhost:8080/login/meetup",
-      "scopes": ["basic"]
+      "scopes": [
+        "basic"
+      ]
     },
     "eventBrite": {
       "clientId": "",
