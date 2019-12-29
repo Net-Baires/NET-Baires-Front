@@ -14,6 +14,7 @@ import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { Config } from "./services/config";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { initCommunication } from './services/communicationServices';
 let storeGlobal = createStore(rootReducer);
 // if ("serviceWorker" in navigator) {
 //   window.addEventListener("load", () => {
@@ -46,7 +47,7 @@ let appInsights = new ApplicationInsights({
 });
 appInsights.loadAppInsights();
 const history = createBrowserHistory();
-
+initCommunication();
 ReactDOM.render(
   <UserProvider>
     <Provider store={storeGlobal}>

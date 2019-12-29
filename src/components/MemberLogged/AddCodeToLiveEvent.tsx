@@ -3,6 +3,8 @@ import { CardWrapper } from '../Common/CardWrapper';
 import { EventLiveDetail } from '../../services/models/Events/EventLiveDetail';
 import { reportAttendanceGeneralByCode } from '../../services/eventsServices';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { successToast, errorToast } from '../../services/toastServices';
+import { sendMessage, UpdateEventLive, CommunicationMessageType } from '../../services/communicationServices';
 
 
 type AddCodeToLiveEventProps = {
@@ -11,23 +13,28 @@ type AddCodeToLiveEventProps = {
 export const AddCodeToLiveEvent: React.SFC<AddCodeToLiveEventProps> = ({ eventLive }) => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const handleReportCode = (
     event: MouseEvent<HTMLAnchorElement>
   ) => {
     event.preventDefault();
+    if (code == "")
+      return;
     setLoading(true);
     reportAttendanceGeneralByCode(eventLive.id, code)
       .then(() => {
         setLoading(false);
+        successToast("Asistencia Reportada.");
+        sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: eventLive.id });
       })
       .catch(e => {
         setLoading(false);
-
+        errorToast("Error al reportar asistencia, verifique los datos.");
       })
   };
   return (
     <>
-      {eventLive.generalAttended &&
+      {eventLive.generalAttended && !eventLive.attended &&
         <div className="col-xl-4 col-md-6">
           <CardWrapper cardTitle="Reportar Asistencia">
             <div className="card-block text-center">

@@ -8,6 +8,8 @@ export interface EventLiveDetail {
   generalAttended: boolean;
   generalAttendance: ReportGeneralAttendance;
   membersDetails: Members;
+  attended?: boolean;
+  tokenToReportMyAttendance: string;
 }
 export interface ReportGeneralAttendance {
   tokenToReportGeneralAttendance: string;

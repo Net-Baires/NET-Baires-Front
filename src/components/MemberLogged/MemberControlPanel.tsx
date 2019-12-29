@@ -5,6 +5,7 @@ import { EventDetail } from "../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
 import { EventActions } from "../Admin/AdminControlPanel/EventActions";
 import ControlPanelEventsLive from '../EventLive/ControlPanelEventsLive';
+import { subscribe, UpdateEventLive, CommunicationMessageType } from '../../services/communicationServices';
 
 type MemberControlPanelProps = {};
 const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
@@ -13,11 +14,17 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
     getEventsLive().then(e => {
       setEventsLive(e);
     });
+    subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, (data) => {
+      getEventsLive().then(e => {
+        setEventsLive(e);
+      });
+    });
   }, []);
   return (
     <>
       {!isEmpty(eventsLive) && (
         <>
+
           <div className="col-sm-12">
             <div className="alert alert-primary" role="alert">
               <p>

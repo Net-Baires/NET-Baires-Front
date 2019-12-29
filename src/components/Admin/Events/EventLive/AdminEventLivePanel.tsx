@@ -7,13 +7,13 @@ import {
   updateEvent
 } from "../../../../services/eventsServices";
 import { EventLiveDetail } from "../../../../services/models/Events/EventLiveDetail";
-import Countdown from "react-countdown-now";
 import { LastUsersAttended } from "../../../EventLive/LastUsersAttended";
 import { isEmpty } from "../../../../services/objectsservices";
 import { SyncUserToEvent } from "./SyncUserToEvent";
-import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { EventLiveTime } from '../../../EventLive/EventLiveTme';
+import { CardWrapper } from '../../../Common/CardWrapper';
+import { sendMessage, CommunicationMessageType, subscribe, UpdateEventLive } from '../../../../services/communicationServices';
 type AdminEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -42,6 +42,10 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
     };
     useEffect(() => {
       loading();
+      subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, (data) => {
+        if (+data.eventId === +props.match.params.id)
+          loadEventDetail();
+      });
       loadEventDetail();
     }, []);
     const handleGeneralAttended = (
@@ -53,6 +57,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
       updateEvent(eventDetail.id, { generalAttended: enable, live: true }).then(
         x => {
           loadEventDetail();
+          sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: eventDetail.id });
         }
       );
     };
@@ -124,6 +129,16 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
                 <LastUsersAttended
                   members={eventDetail.membersDetails.membersAttended}
                 ></LastUsersAttended>
+                {eventDetail.generalAttended &&
+                  <CardWrapper colSize={4} cardTitle="Datos">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <h4>Código Asistencia Genenral</h4>
+                        <h5>{eventDetail.generalAttendance.generalAttendedCode}</h5>
+                      </div>
+                    </div>
+                  </CardWrapper>
+                }
               </>
             )}
             <div className="col-sm-12">

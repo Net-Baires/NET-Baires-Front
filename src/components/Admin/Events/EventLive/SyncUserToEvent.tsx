@@ -9,6 +9,7 @@ import {
 import ReactTooltip from "react-tooltip";
 import { isEmpty } from "../../../../services/objectsservices";
 import { EventsAttendees } from "../../../../services/models/EventsAttendees";
+import { sendMessage, UpdateEventLive, CommunicationMessageType } from '../../../../services/communicationServices';
 
 type NewUserProps = {
   idEvent: number;
@@ -44,6 +45,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
     updateAttende(idEvent, memberToSearch.id, eventAttendee).then(() => {
       setReadySearch(false);
       setValue("");
+      sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: idEvent });
     });
   };
   const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {
@@ -96,7 +98,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
                 className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
                 style={{ width: "70px;" }}
                 src={
-                  memberToSearch.picture != ""
+                  memberToSearch.picture != "" && memberToSearch.picture != null
                     ? memberToSearch.picture
                     : "assets/images/no-image-profile.png"
                 }
@@ -129,18 +131,18 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
                       Presente
                     </a>
                   ) : (
-                    <a
-                      onClick={e =>
-                        handleClickOnAttendedButton(e, { attended: true })
-                      }
-                      data-tip="Asistio"
-                      href="#!"
-                      className="btn btn-danger shadow-2 text-uppercase btn-block"
-                    >
-                      {/* <i className="feather icon-check-square"></i> */}
-                      Ausente
+                        <a
+                          onClick={e =>
+                            handleClickOnAttendedButton(e, { attended: true })
+                          }
+                          data-tip="Asistio"
+                          href="#!"
+                          className="btn btn-danger shadow-2 text-uppercase btn-block"
+                        >
+                          {/* <i className="feather icon-check-square"></i> */}
+                          Ausente
                     </a>
-                  )}
+                      )}
                 </div>
 
                 <div className="col-6 p-r">
@@ -156,31 +158,32 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
               </div>
             </div>
           ) : (
-            <>
-              <div className="card-block text-center">
-                <h5>Buscar Miembro</h5>
-                <Autosuggest
-                  onSuggestionSelected={onSuggestionSelected}
-                  renderInputComponent={renderInputComponent}
-                  suggestions={suggestions}
-                  onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                  onSuggestionsClearRequested={onSuggestionsClearRequested}
-                  getSuggestionValue={getSuggestionValue}
-                  renderSuggestion={renderSuggestion}
-                  inputProps={inputProps}
-                />
-                <div className="designer m-t-30">
-                  <a
-                    onClick={handleSearch}
-                    href="#!"
-                    className="btn btn-primary shadow-2 text-uppercase btn-block"
-                  >
-                    Buscar
+              <>
+                <div className="card-block text-center">
+                  <h5>Buscar Miembro</h5>
+                  <Autosuggest
+                    onSuggestionSelected={onSuggestionSelected}
+                    renderInputComponent={renderInputComponent}
+                    suggestions={suggestions}
+                    className="aaa"
+                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputProps}
+                  />
+                  <div className="designer m-t-30">
+                    <a
+                      onClick={handleSearch}
+                      href="#!"
+                      className="btn btn-primary shadow-2 text-uppercase btn-block"
+                    >
+                      Buscar
                   </a>
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
         </div>
       </div>
     </>

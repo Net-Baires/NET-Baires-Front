@@ -7,5 +7,14 @@ toast.configure({
     //etc you get the idea
 });
 export const errorToast = (message: string) => toast.error(message, {
-    position: toast.POSITION.BOTTOM_RIGHT
+    position: toast.POSITION.BOTTOM_RIGHT,
+    className: 'alert alert-danger'
+});
+export const successToast = (message: string) => toast.success(message, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    className: 'alert alert-success'
+});
+export const infoToast = (message: string) => toast.info(message, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    className: 'alert alert-primary'
 });

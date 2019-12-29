@@ -11,7 +11,7 @@ export interface EventToSyncAction {
 type EventToSyncActionsProps = {
   eventAction: EventToSyncAction;
   loading: () => void;
-  ready: () => void;
+  ready: (idEvent: number) => void;
 };
 type EventToSyncActionsParams = {};
 
@@ -31,7 +31,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
       live: false,
       done: true
     } as UpdateEvent).then(() => {
-      ready();
+      ready(eventAction.id);
     });
   };
 
@@ -41,7 +41,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
     eventAction.done = true;
     loading();
     syncEvent(eventAction.id).then(() => {
-      ready();
+      ready(eventAction.id);
     });
   };
   const handleLiveEvent = (
@@ -53,7 +53,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
 
     loading();
     updateEvent(eventAction.id, { live: isLive } as UpdateEvent).then(() =>
-      ready()
+      ready(eventAction.id)
     );
   };
   return (
@@ -68,15 +68,15 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
           <i className="fas fa-play"></i>
         </button>
       ) : (
-        <button
-          data-tip="Deneter evento que se encuentra Live"
-          type="button"
-          onClick={e => handleLiveEvent(e, false)}
-          className="btn btn-warning events-actions-button"
-        >
-          <i className="fas fa-stop"></i>
-        </button>
-      )}
+          <button
+            data-tip="Deneter evento que se encuentra Live"
+            type="button"
+            onClick={e => handleLiveEvent(e, false)}
+            className="btn btn-warning events-actions-button"
+          >
+            <i className="fas fa-stop"></i>
+          </button>
+        )}
       <button
         data-tip="Cerrar evento (Marcar como ya ejecutado)"
         type="button"
