@@ -1,4 +1,4 @@
-import Pusher from 'pusher-js';
+
 import { HubConnectionBuilder, HubConnection } from '@microsoft/signalr'
 var _connection: HubConnection;
 export const initCommunication = () => {
@@ -16,12 +16,19 @@ export const initCommunication = () => {
 export const sendMessage = <TData>(messageType: CommunicationMessageType, message: TData) => {
     _connection.invoke("SendMessage", new CommunicationMessage(messageType, message))
 }
+export const sendMessageGeneral = <TData>(messageType: string, message: TData) => {
+    _connection.invoke("SendMessage", new CommunicationMessage(messageType, message))
+}
 export const subscribe = <TData>(messageType: CommunicationMessageType, callback: (data: TData) => void) => {
+    _connection.on(messageType, callback)
+}
+export const subscribeGeneral = <TData>(messageType: string, callback: (data: TData) => void) => {
     _connection.on(messageType, callback)
 }
 
 export enum CommunicationMessageType {
-    UpdateEventLive = "UpdateEventLive"
+    UpdateEventLive = "UpdateEventLive",
+    MemberDirectMessage = "MemberDirectMessage",
 }
 
 class CommunicationMessage<TData> {
@@ -29,4 +36,7 @@ class CommunicationMessage<TData> {
 }
 export interface UpdateEventLive {
     eventId: number;
+}
+export interface MemberDirectMessage {
+    notificationMessage: string;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { connect } from "react-redux";
 // import Script from 'react-load-script'
 import { loading, ready } from "../../store/loading/actions";
@@ -10,20 +10,43 @@ import ReactTooltip from "react-tooltip";
 import LoadingOverlay from "react-loading-overlay";
 import { AppState } from "../../store";
 import { ToastContainer } from 'react-toastify';
+import { subscribe, CommunicationMessageType, subscribeGeneral, MemberDirectMessage } from '../../services/communicationServices';
+import { UserContext } from '../../contexts/UserContext';
+import { infoToast } from '../../services/toastServices';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+  }),
+);
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
   ready: () => void;
 }
-const AdminWrapperComponent: React.SFC = ({ children, ...props }) => {
+const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
+  const { user } = useContext(UserContext);
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
     loadScript("assets/plugins/bootstrap/js/bootstrap.min.js");
     loadScript("assets/js/pcoded.js");
     loadStyles("assets/css/style-app.css");
-
-    // loadScript("assets/js/pcoded.min.js");
   });
+
+  useEffect(() => {
+    subscribeGeneral<MemberDirectMessage>(`${CommunicationMessageType.MemberDirectMessage}-${user.id}`, data => {
+      infoToast(data.notificationMessage)
+    })
+  }, [])
 
   return (
     <>
@@ -57,15 +80,24 @@ const AdminWrapperComponent: React.SFC = ({ children, ...props }) => {
               </div>
               <div className="main-body">
                 <div className="page-wrapper">
-                  <LoadingOverlay
+                  {/* <LoadingOverlay
                     active={props.isLoading}
                     spinner
                     clasName="row"
                     text="Procesando..."
                   // tslint:disable-next-line: indent
+                  > */}
+                  {children}
+                  <Backdrop
+                    className={classes.backdrop}
+                    open={props.isLoading}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
-                    {children}
-                  </LoadingOverlay>
+                    <CircularProgress color="inherit" />
+                  </Backdrop>
+                  {/* </LoadingOverlay> */}
                   <ToastContainer />
                 </div>
               </div>

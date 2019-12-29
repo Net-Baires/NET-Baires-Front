@@ -2,6 +2,8 @@ import React, { MouseEvent } from "react";
 import { updateEvent, syncEvent } from "../../../services/eventsServices";
 import { UpdateEvent } from "../../../services/models/Events/Event";
 import ReactTooltip from "react-tooltip";
+import { SecureElement } from '../../Auth/SecureElement';
+import { NavLink } from 'react-router-dom';
 
 export interface EventToSyncAction {
   id: number;
@@ -56,6 +58,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
       ready(eventAction.id)
     );
   };
+  "      to={`/admin/events/${event.id}/live/panel`}"
   return (
     <>
       {!eventAction.live ? (
@@ -93,7 +96,18 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
       >
         <i className="fas fa-sync"></i>
       </button>
-
+      {eventAction.live &&
+        <SecureElement roles={["Admin", "Organizer"]}>
+          <NavLink
+            exact
+            className="btn btn-info events-actions-button"
+            activeClassName="active"
+            to={`/admin/events/${eventAction.id}/live/panel`}
+          >
+            <i className="fab fa-cpanel"></i>
+          </NavLink>
+        </SecureElement>
+      }
       <ReactTooltip />
     </>
   );

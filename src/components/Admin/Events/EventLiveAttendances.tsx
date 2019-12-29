@@ -1,10 +1,11 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import QrReader from "react-qr-reader";
 import { reportAttendance } from "../../../services/eventsServices";
-import { PageCenterWrapper } from "../../Common/PageCenterWrapper";
 import { useToasts } from "react-toast-notifications";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { successToast } from '../../../services/toastServices';
+import { sendMessage, UpdateEventLive, CommunicationMessageType, sendMessageGeneral, MemberDirectMessage } from '../../../services/communicationServices';
+import { CardWrapper } from '../../Common/CardWrapper';
 
 type EventLiveAttendancesProps = {
   name: string;
@@ -27,19 +28,17 @@ export const EventLiveAttendances: React.SFC<
         setShowReader(true);
       }, 3000);
       reportAttendance(data)
-        .then(() => {
+        .then((e) => {
           const emailOfUser = data.split("|");
           var newArry = [...attended, emailOfUser[0]];
           setAttended(newArry);
           localStorage.setItem("attendedList", JSON.stringify(newArry));
           removeToast(toastStack);
-          addToast("Asistencia Reportada", {
-            appearance: "success",
-            placement: "bottom-right",
-            autoDismissTimeout: 100
-          });
+          successToast("Asistencia Reportada");
+          sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: e.eventId });
+          sendMessageGeneral<MemberDirectMessage>(`${CommunicationMessageType.MemberDirectMessage}-${e.memberId}`, { notificationMessage: "Acaba de ser marcado como presente un evento" });
         })
-        .catch(x =>
+        .catch(() =>
           addToast("Error al reportar el token", {
             appearance: "error",
             transitionState: 100
@@ -54,9 +53,11 @@ export const EventLiveAttendances: React.SFC<
   return (
     <>
       {showReader && (
-        <div className="qr-lector-container">
-          <QrReader delay={2000} onError={handleError} onScan={handleScan} />
-        </div>
+        <CardWrapper cardTitle="Reportar Asistencia">
+          <div className="qr-lector-container">
+            <QrReader delay={2000} onError={handleError} onScan={handleScan} />
+          </div>
+        </CardWrapper>
       )}
     </>
   );

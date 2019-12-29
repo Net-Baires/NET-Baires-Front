@@ -48,7 +48,7 @@ export const getCheckAttendanceGeneral = (
 ): Promise<EventToReportAttendance> =>
   getRequest(`/events/${id}/attendances/general`);
 
-export const reportAttendance = (token: string): Promise<EventToSync> => {
+export const reportAttendance = (token: string): Promise<ReportAttendanceResponse> => {
   return putRequest(`/events/attendances/${token}`);
 };
 export const reportAttendanceGeneral = (
@@ -77,3 +77,7 @@ export const cancelEventsToSync = (
 export const syncEventsToSync = (event: EventToSync): Promise<EventToSync> => {
   return fetch("http://localhost:3000/eventsToSync").then(x => x.json());
 };
+export interface ReportAttendanceResponse {
+  eventId: number;
+  memberId: number;
+}

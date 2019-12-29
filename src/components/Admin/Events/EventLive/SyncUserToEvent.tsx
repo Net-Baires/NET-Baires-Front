@@ -118,10 +118,10 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
                       {/* <i className="feather icon-check-square"></i> */}
                       Participar
                     </a>
-                  ) : attendeeDetail.attended ? (
+                  ) : !attendeeDetail.attended ? (
                     <a
                       onClick={e =>
-                        handleClickOnAttendedButton(e, { attended: false })
+                        handleClickOnAttendedButton(e, { attended: true })
                       }
                       data-tip="Asistio"
                       href="#!"
@@ -133,7 +133,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
                   ) : (
                         <a
                           onClick={e =>
-                            handleClickOnAttendedButton(e, { attended: true })
+                            handleClickOnAttendedButton(e, { attended: false })
                           }
                           data-tip="Asistio"
                           href="#!"

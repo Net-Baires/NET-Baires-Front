@@ -1,28 +1,43 @@
 .panel-logo {
-  background-image: url("../../assets/images/Logo-Blanco.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
+    background-image: url("../../assets/images/Logo-Blanco.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
 }
+
+
 /* Arreglar diseño origina */
+
 .profile-notification {
-  margin-left: -260px;
+    margin-left: -260px;
 }
+
 .table-bordered {
-  margin: auto;
-  border-collapse: collapse;
-  overflow-x: auto;
-  /* width: fit-content; */
-  max-width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    overflow-x: auto;
+    /* width: fit-content; */
+    max-width: 100%;
 }
+
 .table-bordered {
-  @media (max-width: 576px) {
-    display: block;
-  }
+    @media (max-width: 576px) {
+        display: block;
+    }
 }
+
 .image-badge-prview {
-  width: 100%;
-  margin-top: 20px;
+    width: 100%;
+    margin-top: 20px;
 }
+
 .sponsors-list-img {
-  max-width: 120px;
+    max-width: 120px;
+}
+
+.profile-notification {
+    margin-left: 255px;
+}
+
+.pcoded-main-container {
+    margin: 0px !important;
 }
