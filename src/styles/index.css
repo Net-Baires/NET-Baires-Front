@@ -7,8 +7,10 @@
 
 /* Arreglar diseño origina */
 
-.profile-notification {
-    margin-left: -260px;
+@media (min-width: 576px) {
+    .profile-notification {
+        margin-left: -260px !important;
+    }
 }
 
 .table-bordered {
@@ -34,10 +36,48 @@
     max-width: 120px;
 }
 
-.profile-notification {
-    margin-left: 255px;
+
+/* .page-wrapper {
+    display: flex;
+} */
+
+.flex-class {
+    display: flex;
+}
+
+.bar-nav-container {
+    min-height: 70px;
 }
 
 .pcoded-main-container {
-    margin: 0px !important;
+    margin-left: auto !important;
+}
+
+.main-body {
+    width: 100%;
+}
+
+.MuiAppBar-colorPrimary {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.MuiSvgIcon-root {
+    color: black !important;
+}
+
+.MuiInputBase-root {
+    color: black !important;
+}
+
+.MuiDrawer-paperAnchorDockedLeft {
+    box-shadow: 10px 0px 30px grey !important;
+}
+
+.side-menu-logo {
+    height: 50px !important;
+}
+
+.side-menu-close {
+    margin-right: -29px;
 }

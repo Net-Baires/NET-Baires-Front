@@ -2,10 +2,26 @@ import React, { useContext, useState } from "react";
 import { UserContext } from '../../../contexts/UserContext';
 import { useHistory } from 'react-router';
 import { getCurrentUser } from '../../../services/authService';
+import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
+type TopBarProps = {
+    openMenu: () => void;
+};
 
-type TopBarProps = {};
-
-export const TopBar: React.SFC<TopBarProps> = () => {
+export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
     const { isLoggued, logout } = useContext(UserContext);
     let history = useHistory();
     const user = getCurrentUser();
@@ -14,127 +30,222 @@ export const TopBar: React.SFC<TopBarProps> = () => {
         history.push("/");
         history.listen;
     };
-    return (
-        <>
+    const editProfile = () => {
+        history.push("/admin/profile");
+    }
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
-            <header className="navbar pcoded-header navbar-expand-lg navbar-light">
-                <div className="m-header">
-                    <a className="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
-                    <a href="index.html" className="b-brand">
-                        <div className="b-bg">
-                            <i className="feather icon-trending-up"></i>
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMobileMenuClose = () => {
+        setMobileMoreAnchorEl(null);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+        handleMobileMenuClose();
+    };
+
+    const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        openMenu();
+        setMobileMoreAnchorEl(event.currentTarget);
+    };
+
+    const menuId = 'primary-search-account-menu';
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        </Menu>
+    );
+
+    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const renderMobileMenu = (
+        <Menu
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={mobileMenuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+        >
+            <MenuItem>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                    <Badge badgeContent={4} color="secondary">
+                        <MailIcon />
+                    </Badge>
+                </IconButton>
+                <p>Messages</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton aria-label="show 11 new notifications" color="inherit">
+                    <Badge badgeContent={11} color="secondary">
+                        <NotificationsIcon />
+                    </Badge>
+                </IconButton>
+                <p>Notifications</p>
+            </MenuItem>
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>Profile</p>
+            </MenuItem>
+        </Menu>
+    );
+    return (
+        <div className={classes.grow}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={() => openMenu()}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        NET-Baires App
+            </Typography>
+                    {/* <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon />
                         </div>
-                        <span className="b-title">Datta Able</span>
-                    </a>
-                </div>
-                <a className="mobile-menu" id="mobile-header" href="#!">
-                    <i className="feather icon-more-horizontal"></i>
-                </a>
-                <div className="collapse navbar-collapse">
-                    <ul className="navbar-nav mr-auto">
-                        <li><a href="#!" className="full-screen" ><i className="feather icon-maximize"></i></a></li>
-                        <li className="nav-item dropdown">
-                            <a className="dropdown-toggle" href="#" data-toggle="dropdown">Dropdown</a>
-                            <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#!">Action</a></li>
-                                <li><a className="dropdown-item" href="#!">Another action</a></li>
-                                <li><a className="dropdown-item" href="#!">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li className="nav-item">
-                            <div className="main-search">
-                                <div className="input-group">
-                                    <input type="text" id="m-search" className="form-control" placeholder="Search . . ." />
-                                    <a href="#!" className="input-group-append search-close">
-                                        <i className="feather icon-x input-group-text"></i>
-                                    </a>
-                                    <span className="input-group-append search-btn btn btn-primary">
-                                        <i className="feather icon-search input-group-text"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul className="navbar-nav ml-auto">
-                        <li>
-                            <div className="dropdown">
-                                <a className="dropdown-toggle" href="#" data-toggle="dropdown"><i className="icon feather icon-bell"></i></a>
-                                <div className="dropdown-menu dropdown-menu-right notification">
-                                    <div className="noti-head">
-                                        <h6 className="d-inline-block m-b-0">Notifications</h6>
-                                        <div className="float-right">
-                                            <a href="#!" className="m-r-10">mark as read</a>
-                                            <a href="#!">clear all</a>
-                                        </div>
-                                    </div>
-                                    <ul className="noti-body">
-                                        <li className="n-title">
-                                            <p className="m-b-0">NEW</p>
-                                        </li>
-                                        <li className="notification">
-                                            <div className="media">
-                                                <img className="img-radius" src="assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
-                                                <div className="media-body">
-                                                    <p><strong>John Doe</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10"></i>30 min</span></p>
-                                                    <p>New ticket Added</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="n-title">
-                                            <p className="m-b-0">EARLIER</p>
-                                        </li>
-                                        <li className="notification">
-                                            <div className="media">
-                                                <img className="img-radius" src="assets/images/user/avatar-2.jpg" alt="Generic placeholder image" />
-                                                <div className="media-body">
-                                                    <p><strong>Joseph William</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10"></i>30 min</span></p>
-                                                    <p>Prchace New Theme and make payment</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="notification">
-                                            <div className="media">
-                                                <img className="img-radius" src="assets/images/user/avatar-3.jpg" alt="Generic placeholder image" />
-                                                <div className="media-body">
-                                                    <p><strong>Sara Soudein</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10"></i>30 min</span></p>
-                                                    <p>currently login</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div className="noti-footer">
-                                        <a href="#!">show all</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li><a href="#!" className="displayChatbox"><i className="icon feather icon-mail"></i></a></li>
-                        <li>
-                            <div className="dropdown drp-user">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                                    <i className="icon feather icon-settings"></i>
-                                </a>
-                                <div className="dropdown-menu dropdown-menu-right profile-notification">
-                                    <div className="pro-head">
-                                        <img src="assets/images/user/avatar-1.jpg" className="img-radius" alt="User-Profile-Image" />
-                                        <span>John Doe</span>
-                                        <a href="#" onClick={handleLogout} className="dud-logout" title="Logout">
-                                            <i className="feather icon-log-out"></i>
-                                        </a>
-                                    </div>
-                                    <ul className="pro-body">
-                                        <li><a href="#!" className="dropdown-item"><i className="feather icon-settings"></i> Settings</a></li>
-                                        <li><a href="#!" className="dropdown-item"><i className="feather icon-user"></i> Profile</a></li>
-                                        <li><a href="message.html" className="dropdown-item"><i className="feather icon-mail"></i> My Messages</a></li>
-                                        <li><a href="auth-signin.html" className="dropdown-item"><i className="feather icon-lock"></i> Lock Screen</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </header >
-        </>
+                        <InputBase
+                            placeholder="Buscar ..."
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
+                    </div> */}
+                    <div className={classes.grow} />
+                    <div className={classes.sectionDesktop}>
+                        <IconButton aria-label="show 4 new mails" color="inherit">
+                            <Badge badgeContent={4} color="secondary">
+                                <MailIcon />
+                            </Badge>
+                        </IconButton>
+                        <IconButton aria-label="show 17 new notifications" color="inherit">
+                            <Badge badgeContent={17} color="secondary">
+                                <NotificationsIcon />
+                            </Badge>
+                        </IconButton>
+                        <IconButton
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-controls={menuId}
+                            aria-haspopup="true"
+                            onClick={handleProfileMenuOpen}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                    </div>
+                    <div className={classes.sectionMobile}>
+                        <IconButton
+                            aria-label="show more"
+                            aria-controls={mobileMenuId}
+                            aria-haspopup="true"
+                            onClick={handleMobileMenuOpen}
+                            color="inherit"
+                        >
+                            <MoreIcon />
+                        </IconButton>
+                    </div>
+                </Toolbar>
+            </AppBar>
+            {renderMobileMenu}
+            {renderMenu}
+        </div>
     );
 };
 export default TopBar;
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        grow: {
+            flexGrow: 1,
+        },
+        menuButton: {
+            marginRight: theme.spacing(2),
+        },
+        title: {
+            display: 'none',
+            [theme.breakpoints.up('sm')]: {
+                display: 'block',
+            },
+        },
+        search: {
+            position: 'relative',
+            borderRadius: theme.shape.borderRadius,
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+            '&:hover': {
+                backgroundColor: fade(theme.palette.common.white, 0.25),
+            },
+            marginRight: theme.spacing(2),
+            marginLeft: 0,
+            width: '100%',
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: theme.spacing(3),
+                width: 'auto',
+            },
+        },
+        searchIcon: {
+            width: theme.spacing(7),
+            height: '100%',
+            position: 'absolute',
+            pointerEvents: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        inputRoot: {
+            color: 'inherit',
+        },
+        inputInput: {
+            padding: theme.spacing(1, 1, 1, 7),
+            transition: theme.transitions.create('width'),
+            width: '100%',
+            [theme.breakpoints.up('md')]: {
+                width: 200,
+            },
+        },
+        sectionDesktop: {
+            display: 'none',
+            [theme.breakpoints.up('md')]: {
+                display: 'flex',
+            },
+        },
+        sectionMobile: {
+            display: 'flex',
+            [theme.breakpoints.up('md')]: {
+                display: 'none',
+            },
+        },
+    }),
+);

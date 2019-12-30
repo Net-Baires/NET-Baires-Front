@@ -15,7 +15,25 @@ import { UserContext } from '../../contexts/UserContext';
 import { infoToast } from '../../services/toastServices';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+
+import clsx from 'clsx';
+import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backdrop: {
@@ -33,7 +51,16 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   const { user } = useContext(UserContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const classesDrawer = useStylesDrawer();
+  const theme = useTheme();
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
@@ -50,14 +77,20 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
 
   return (
     <>
+      {/* 
       <div className="loader-bg">
         <div className="loader-track">
           <div className="loader-fill"></div>
         </div>
-      </div>
-      <SideMenu></SideMenu>
+      </div> */}
+      {/* <SideMenu></SideMenu>
       <TopBar></TopBar>
-      <FriendsMenu></FriendsMenu>
+      <FriendsMenu></FriendsMenu> */}
+      <TopBar openMenu={() => setOpen(true)}></TopBar>
+
+
+
+
       <div className="pcoded-main-container">
         <div className="pcoded-wrapper">
           <div className="pcoded-content">
@@ -78,8 +111,23 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
                   </div>
                 </div>
               </div>
+              <CssBaseline />
+
+              <Drawer
+                className={classes.drawer}
+                variant="persistent"
+                anchor="left"
+                open={open}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+              >
+
+                <SideMenu closeMenu={() => setOpen(false)}></SideMenu>
+              </Drawer>
               <div className="main-body">
                 <div className="page-wrapper">
+
                   {/* <LoadingOverlay
                     active={props.isLoading}
                     spinner
@@ -125,3 +173,64 @@ export const AdminWrapper = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdminWrapperComponent);
+
+
+const drawerWidth = 240;
+
+const useStylesDrawer = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    appBar: {
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    hide: {
+      display: 'none',
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0, 1),
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-end',
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginLeft: -drawerWidth,
+    },
+    contentShift: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    },
+  }),
+);
