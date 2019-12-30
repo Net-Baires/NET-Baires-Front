@@ -34,6 +34,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { BreadcrumbsComponent } from '../Header/BreadcrumbsComponent';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backdrop: {
@@ -87,10 +88,6 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
       <TopBar></TopBar>
       <FriendsMenu></FriendsMenu> */}
       <TopBar openMenu={() => setOpen(true)}></TopBar>
-
-
-
-
       <div className="pcoded-main-container">
         <div className="pcoded-wrapper">
           <div className="pcoded-content">

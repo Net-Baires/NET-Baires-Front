@@ -44,7 +44,7 @@ const EditUserInternalComponent: React.SFC<
     loading();
     updateUser(user.id, user).then(x => {
       ready();
-      history.push("/admin/users");
+      history.push("/admin/members");
     });
   };
   const deleteUser = (event: MouseEvent<HTMLButtonElement>) => {

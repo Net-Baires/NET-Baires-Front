@@ -64,7 +64,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/users"
+              to="/admin/members"
             >
               <i className="fa fa-fw fa-users"></i>
               Lista de Usuarios

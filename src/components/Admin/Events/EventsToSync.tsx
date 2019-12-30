@@ -40,13 +40,7 @@ const EventsToSyncComponent: React.SFC<RouteComponentProps<
         ready();
       });
     };
-    const handleEditEvent = (
-      event: MouseEvent<HTMLButtonElement>,
-      meEvent: EventToSync
-    ) => {
-      event.preventDefault();
-      history.push(`/admin/events/${meEvent.id}/edit`);
-    };
+
 
     return (
       <div className="row">
@@ -84,19 +78,14 @@ const EventsToSyncComponent: React.SFC<RouteComponentProps<
                     </div>
                   </div>
                   <div className="designer m-t-30 row eventToSync-container">
-                    <EventToSyncActions
-                      eventAction={event}
-                      loading={loading}
-                      ready={handlerReadyAction}
-                    ></EventToSyncActions>
-                    <button
-                      data-tip="Editar Evento"
-                      type="button"
-                      onClick={e => handleEditEvent(e, event)}
-                      className="btn btn-primary events-actions-button"
-                    >
-                      <i className="far fa-edit"></i>
-                    </button>
+                    <div className="col">
+                      <EventToSyncActions
+                        eventAction={event}
+                        loading={loading}
+                        ready={handlerReadyAction}
+                      ></EventToSyncActions>
+
+                    </div>
                   </div>
                 </div>
               </div>

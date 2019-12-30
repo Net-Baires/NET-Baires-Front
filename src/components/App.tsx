@@ -199,7 +199,7 @@ export const App: React.SFC<AppProps> = () => {
                 path="/admin/sponsors"
                 component={SponsorsList}
               />
-              <PrivateRoute roles={["admin"]} exact path="/admin/users" component={UsersList} />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/members" component={UsersList} />
               <PrivateRoute
                 exact
                 path="/admin/users/:id(\d+)/Edit"

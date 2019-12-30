@@ -81,3 +81,15 @@
 .side-menu-close {
     margin-right: -29px;
 }
+
+.side-menu-container .nav-link-slide-bar {
+    display: block;
+}
+
+.side-menu-container .active {
+    background-color: #EBEBEB;
+}
+
+.events-actions-button {
+    width: 100% !important;
+}

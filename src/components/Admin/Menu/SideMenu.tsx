@@ -27,7 +27,6 @@ type SideMenuProps = {
 
 export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
   const [] = useState(false);
-  const lastLocation = useLastLocation();
   const classes = useStyles()
   const [openEvents, setOpenEvents] = React.useState(false)
   // useEffect(() => {
@@ -39,7 +38,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
   };
   return (
 
-    <List component="nav" className={classes.appMenu} disablePadding>
+    <List component="nav" className={`${classes.appMenu} side-menu-container`} disablePadding>
       <ListItem onClick={closeMenu} button className={classes.menuItem}>
 
         <ListItemAvatar>
@@ -51,64 +50,70 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
         </ListItemIcon>
       </ListItem>
       <Divider component="li" />
-      <ListItem button className={classes.menuItem}>
-        <SecureElement roles={["Admin", "Organizer"]}>
+      <SecureElement roles={["Admin", "Organizer"]}>
+
+        <NavLink
+          exact
+          className="nav-link-slide-bar"
+          activeClassName="active"
+          to="/admin/panel"
+        >
+          <ListItem button className={classes.menuItem}>
+            <ListItemIcon className={classes.menuItemIcon}>
+              <IconDashboard />
+            </ListItemIcon>
+            <span className="pcoded-mtext">Panel de Control</span>
+          </ListItem>
+
+        </NavLink>
+      </SecureElement>
+      <SecureElement roles={["Member"]}>
+        <NavLink
+          exact
+          className="nav-link-slide-bar"
+          activeClassName="active"
+          to="/member/panel"
+        >
+          <ListItem button className={classes.menuItem}>
+            <ListItemIcon className={classes.menuItemIcon}>
+              <IconDashboard />
+            </ListItemIcon>
+            <span className="pcoded-mtext">Panel de Control</span>
+            <ListItemText primary="Ptrol" />
+          </ListItem>
+        </NavLink>
+
+      </SecureElement>
+
+
+      <NavLink
+        exact
+        className="nav-link-slide-bar"
+        activeClassName="active"
+        to="/admin/sponsors"
+      >
+        <ListItem button className={classes.menuItem}>
           <ListItemIcon className={classes.menuItemIcon}>
-            <IconDashboard />
+            <BusinessIcon />
           </ListItemIcon>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/admin/panel"
-          >
-            <span className="pcoded-mtext">Panel de Control</span>
-          </NavLink>
-        </SecureElement>
-        <SecureElement roles={["Member"]}>
-          <NavLink
-            exact
-            className="nav-link-slide-bar"
-            activeClassName="active"
-            to="/member/panel"
-          >
-            <span className="pcoded-mtext">Panel de Control</span>
-          </NavLink>
-
-          <ListItemText primary="Ptrol" />
-        </SecureElement>
-      </ListItem>
-
-
-      <ListItem button className={classes.menuItem}>
-        <ListItemIcon className={classes.menuItemIcon}>
-          <BusinessIcon />
-        </ListItemIcon>
-        <NavLink
-          exact
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/admin/sponsors"
-        >
           <ListItemText primary="Sponsors" />
-        </NavLink>
+        </ListItem>
+      </NavLink>
 
-      </ListItem>
-
-      <ListItem button className={classes.menuItem}>
-        <ListItemIcon className={classes.menuItemIcon}>
-          <PeopleAltIcon />
-        </ListItemIcon>
-        <NavLink
-          exact
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/admin/users"
-        >
+      <NavLink
+        exact
+        className="nav-link-slide-bar"
+        activeClassName="active"
+        to="/admin/members"
+      >
+        <ListItem button className={classes.menuItem}>
+          <ListItemIcon className={classes.menuItemIcon}>
+            <PeopleAltIcon />
+          </ListItemIcon>
           <ListItemText primary="Miembros" />
-        </NavLink>
-      </ListItem>
-      <ListItem button onClick={() => setOpenEvents(openEvents)} className={classes.menuItem}>
+        </ListItem>
+      </NavLink>
+      <ListItem button onClick={() => setOpenEvents(!openEvents)} className={classes.menuItem}>
         <ListItemIcon className={classes.menuItemIcon}>
           <EventIcon />
         </ListItemIcon>
@@ -250,7 +255,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //                     exact
     //                     className="nav-link-slide-bar"
     //                     activeClassName="active"
-    //                     to="/admin/users"
+    //                     to="/admin/members"
     //                   >
     //                     Lista
     //                   </NavLink>
