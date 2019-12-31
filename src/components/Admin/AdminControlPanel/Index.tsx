@@ -60,17 +60,17 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
                   <div className="event-live-card-title">
                     <h5>{event.title}</h5>
                   </div>
-                  {/* <span className="d-block mb-4">UX Designer</span> */}
-                  <img
-                    className="event-live-card-image"
-                    style={{ height: "170px" }}
-                    src={
-                      event.imageUrl != null
-                        ? event.imageUrl
-                        : "/assets/images/imagenotfound.png"
-                    }
-                    alt="dashboard-user"
-                  ></img>
+                  <div className="event-live-card-image-container">
+                    <img
+                      className="event-live-card-image"
+                      src={
+                        event.imageUrl != null
+                          ? event.imageUrl
+                          : "/assets/images/imagenotfound.png"
+                      }
+                      alt="dashboard-user"
+                    ></img>
+                  </div>
                   <div className="row m-t-30">
                     <div className="col-md-4 col-6">
                       <h5>{event.registered}</h5>
