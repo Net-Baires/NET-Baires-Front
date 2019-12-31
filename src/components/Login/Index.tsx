@@ -8,7 +8,9 @@ var ClientOAuth2 = require("client-oauth2");
 type LoginProps = {};
 const Login: React.SFC<LoginProps> = () => {
   const { isLoggued } = useContext(UserContext);
-  let history = useHistory();
+  const history = useHistory();
+  if (isLoggued)
+    history.push("/");
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
     loadScript("assets/plugins/bootstrap/js/bootstrap.min.js");
