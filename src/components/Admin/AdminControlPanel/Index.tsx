@@ -6,14 +6,22 @@ import { NavLink } from "react-router-dom";
 import { CardWrapper } from "../../Common/CardWrapper";
 import { EventActions } from "./EventActions";
 import { SecureElement } from '../../Auth/SecureElement';
+import { subscribeDisconnectedMember, subscribeConnectedMember } from '../../../services/syncCommunicationServices';
 
 type ControlPanelProps = {};
 const ControlPanel: React.SFC<ControlPanelProps> = () => {
   const [eventsLive, setEventsLive] = useState(new Array<EventDetail>());
+  const [countUserLoggued, setCountUserLoggued] = useState(0);
   useEffect(() => {
     getEventsLive().then(e => {
       setEventsLive(e);
     });
+    subscribeDisconnectedMember(e => {
+      setCountUserLoggued(e.totalConnected);
+    })
+    subscribeConnectedMember(e => {
+      setCountUserLoggued(e.totalConnected);
+    })
   }, []);
   return (
     <>
@@ -32,9 +40,6 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
               CHECKOUT
             </a> */}
               </p>
-              <label className="text-muted">
-                Copy/paste source code in your page in just couples of seconds.
-              </label>
             </div>
           </div>
           <div className="col-sm-12">
@@ -114,7 +119,7 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
             <div className="card-block  text-center">
               <i className="fas fa-users f-50 text-white m-b-20"></i>
               <h5 className="text-white m-b-15">Usuarios Conectados</h5>
-              <h3 className="text-white f-w-300">8</h3>
+              <h3 className="text-white f-w-300">{countUserLoggued}</h3>
               {/* <span className="text-white">60% More than last Month</span> */}
             </div>
           </div>

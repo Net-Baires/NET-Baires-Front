@@ -84,7 +84,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
 
       </SecureElement>
 
-      <SecureElement roles={["Admin", "Organizer"]}>
+      <SecureElement roles={["Admin"]}>
         <NavLink
           exact
           className="nav-link-slide-bar"

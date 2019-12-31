@@ -13229,3 +13229,9 @@ img.img-preview-member {
 .qr-container-attendance-general {
     margin-top: 100px;
 }
+
+.image-profile-prview {
+    border-radius: 50%;
+    width: 100%;
+    max-width: 300px;
+}

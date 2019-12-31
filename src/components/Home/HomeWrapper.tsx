@@ -5,7 +5,7 @@ import { loadStyles, loadScript } from "../../services/helpers/scriptshelpers";
 import { MenuHome } from "./MenuHome";
 import { FooterHome } from "./FooterHome";
 import HomeHeaderBanner from "./HomeHeaderBanner/Index";
-
+import ScrollUpButton from "react-scroll-up-button"; //Add this line Here
 const HomeWrapperComponent: React.SFC = ({ children }) => {
   useEffect(() => {
     loadStyles("assets/css/bootstrap.min.css");
@@ -23,24 +23,19 @@ const HomeWrapperComponent: React.SFC = ({ children }) => {
     loadScript("assets/js/menu.js");
     loadScript("assets/js/custom.js");
   });
-
+  useEffect(() => {
+  })
   return (
     <>
       <div
-        className="wrapper animsition"
-        data-animsition-in-classname="fade-in"
-        data-animsition-in-duration="1000"
-        data-animsition-out-classname="fade-out"
-        data-animsition-out-duration="1000"
+        className="wrapper "
       >
         <MenuHome></MenuHome>
         <div className="main" id="main">
           <HomeHeaderBanner></HomeHeaderBanner>
           {children}
           <FooterHome></FooterHome>
-          <a id="back-top" className="back-to-top page-scroll" href="#main">
-            <i className="ion-ios-arrow-thin-up"></i>
-          </a>
+          <ScrollUpButton />
         </div>
       </div>
     </>

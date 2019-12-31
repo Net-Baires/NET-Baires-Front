@@ -106,3 +106,14 @@
     width: 40px !important;
     height: 40px !important;
 }
+
+@media (min-width: 992px) {
+    .slider {
+        height: 650px !important;
+    }
+}
+
+.img-slider-home {
+    width: 100%;
+    background-size: 100% 100%;
+}

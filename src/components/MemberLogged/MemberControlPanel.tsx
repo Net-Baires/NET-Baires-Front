@@ -31,9 +31,6 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
                 Estos son los eventos que se encuentran ocurriendo en este
                 momento.
               </p>
-              <label className="text-muted">
-                Copy/paste source code in your page in just couples of seconds.
-              </label>
             </div>
           </div>
           <div className="col-sm-12">
@@ -66,13 +63,13 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
                     <div className="col-6">
                       <h6 className="text-center m-b-10"><span className="text-muted m-r-5">Presente : </span>5</h6>
                       <div className="progress">
-                        <div className="progress-bar progress-c-green" role="progressbar" style={{ width: "50%", height: "6px;" }} aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div className="progress-bar progress-c-green" role="progressbar" style={{ width: "50%", height: "6px" }} aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                     </div>
                     <div className="col-6">
                       <h6 className="text-center  m-b-10"><span className="text-muted m-r-5">Ausente :</span>3</h6>
                       <div className="progress">
-                        <div className="progress-bar progress-c-blue" role="progressbar" style={{ width: "30%", height: "6px;" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div className="progress-bar progress-c-blue" role="progressbar" style={{ width: "30%", height: "6px" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                     </div>
                   </div>

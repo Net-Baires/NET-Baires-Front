@@ -87,11 +87,15 @@ export const App: React.SFC<AppProps> = () => {
             </Route>
 
             <Route exact path="/organizers/:id(\d+)?">
-              <OrganizerDetail></OrganizerDetail>
+              <HomeWrapper>
+                <OrganizerDetail></OrganizerDetail>
+              </HomeWrapper>
             </Route>
 
             <Route exact path="/speaker/:id(\d+)?">
-              <SpeakerDetail></SpeakerDetail>
+              <HomeWrapper>
+                <SpeakerDetail></SpeakerDetail>
+              </HomeWrapper>
             </Route>
 
             <Route exact path="/members/:id(\d+)/profile">
