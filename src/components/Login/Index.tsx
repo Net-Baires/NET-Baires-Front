@@ -13,7 +13,7 @@ const Login: React.SFC<LoginProps> = () => {
     history.push("/");
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
-    loadScript("assets/plugins/bootstrap/js/bootstrap.min.js");
+    loadScript("assets/js/bootstrap.min.js");
     loadScript('assets/js/pcoded.js')
     loadStyles('assets/css/style-login.css');
   });
