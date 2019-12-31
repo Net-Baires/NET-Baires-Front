@@ -1,11 +1,12 @@
 
 import { HubConnectionBuilder, HubConnection } from '@microsoft/signalr'
 import { getToken } from './authService';
+import { Config } from './config';
 var _connection: HubConnection;
 export const initCommunication = () => {
 
     _connection = new HubConnectionBuilder()
-        .withUrl("https://localhost:5001/communicationsHub", { accessTokenFactory: () => getToken() })
+        .withUrl(Config.api.baseRemote + "/communicationsHub", { accessTokenFactory: () => getToken() })
         .build();
     _connection.on("SendMessage", data => {
         console.log(data);
