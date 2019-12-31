@@ -12,8 +12,9 @@ import { updateEventLive, memberNotification } from '../../../../services/syncCo
 
 type NewUserProps = {
   idEvent: number;
+  callbackAction?: () => void;
 };
-export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
+export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackAction }) => {
   const [readySearch, setReadySearch] = useState(false);
   const [memberToSearch, setMemberToSearch] = useState({} as Member);
   const [attendeeDetail, setAttendeeDetail] = useState({} as EventsAttendees);
@@ -47,6 +48,8 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
       updateEventLive(idEvent);
       if (eventAttendee.attended)
         memberNotification(memberToSearch.id, "Acaba de ser marcado como presente en un evento");
+      if (callbackAction != null)
+        callbackAction();
     });
   };
   const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {

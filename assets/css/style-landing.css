@@ -1960,7 +1960,7 @@ label {
 
 .icon-live-list-image {
     width: auto !important;
-    height: 140px !important;
+    max-height: 140px !important;
     margin-bottom: 10px !important;
 }
 

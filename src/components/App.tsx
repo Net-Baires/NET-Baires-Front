@@ -197,38 +197,18 @@ export const App: React.SFC<AppProps> = () => {
                 path="/admin/sponsors/new"
                 component={NewSponsor}
               />
-              <PrivateRoute
-                roles={["Admin", "Organizer"]}
-                exact
-                path="/admin/panel"
-                component={ControlPanel}
-              ></PrivateRoute>
-              <PrivateRoute
-                roles={["Admin"]}
-                exact
-                path="/admin/sponsors/:id/edit"
-                component={EditSponsor}
-              />
-              <PrivateRoute
-                roles={["Admin"]}
-                exact
-                path="/admin/sponsors"
-                component={SponsorsList}
-              />
+              <PrivateRoute roles={["Admin", "Organizer"]} exact path="/admin/panel" component={ControlPanel}              ></PrivateRoute>
+              <PrivateRoute roles={["Admin"]} exact path="/admin/sponsors/:id/edit" component={EditSponsor} />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/sponsors" component={SponsorsList} />
               <PrivateRoute roles={["Admin"]} exact path="/admin/members" component={UsersList} />
               <PrivateRoute roles={["Admin"]} exact path="/admin/users/:id(\d+)/Edit" component={EditUser} />
-              <PrivateRoute exact path="/admin/users/new" component={NewUser} />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/users/new" component={NewUser} />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/badges" component={BadgesList} />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/badges/:id(\d+)/Edit" component={EditBadge} />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/badges/new" component={NewBadge} />
               <PrivateRoute roles={["Member"]} exact path="/member/organizedcode/read" component={ReadOrganizedCode} />
             </AdminWrapper>
 
-
-            <PrivateRoute exact path="/admin/badges" component={BadgesList} />
-            <PrivateRoute
-              exact
-              path="/admin/badges/:id(\d+)/Edit"
-              component={EditBadge}
-            />
-            <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
 
 
 

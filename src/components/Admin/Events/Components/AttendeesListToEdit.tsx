@@ -1,6 +1,6 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 import { EventsAttendees } from "../../../../services/models/EventsAttendees";
-import { EventDetail } from "../../../../services/models/Events/Event";
+import { EventDetail } from '../../../../services/models/Events/Event';
 import {
   getAttendees,
   updateAttende
@@ -12,6 +12,7 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import { updateEventLive, memberNotification } from '../../../../services/syncCommunicationServices';
+import { SyncUserToEvent } from '../EventLive/SyncUserToEvent';
 type AttendeesListToEditProps = {
   eventInEdition: EventDetail;
   loading: () => void;
@@ -28,12 +29,15 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
   );
 
   useEffect(() => {
+    loadAttendees();
+  }, []);
+  const loadAttendees = () => {
     loading();
     getAttendees(eventInEdition.id).then(eventsAttendees => {
       setEventsAttendees(eventsAttendees);
+      ready();
     });
-    ready();
-  }, []);
+  }
   const { SearchBar } = Search;
   const columns = [
     {
@@ -227,7 +231,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
   return (
     <>
       <h2>Asistentes</h2>
-      {eventsAttendees && (
+      {eventsAttendees && (<>
         <SearchWrapper title="Usuarios">
           <ToolkitProvider
             keyField="id"
@@ -249,6 +253,9 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
             )}
           </ToolkitProvider>
         </SearchWrapper>
+        <SyncUserToEvent idEvent={eventInEdition.id}
+          callbackAction={loadAttendees}></SyncUserToEvent>
+      </>
       )}
     </>
   );

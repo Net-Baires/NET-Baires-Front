@@ -3,39 +3,20 @@ import { connect } from "react-redux";
 // import Script from 'react-load-script'
 import { loading, ready } from "../../store/loading/actions";
 import SideMenu from "./Menu/SideMenu";
-import FriendsMenu from "./Menu/FriendsMenu";
 import TopBar from "./Menu/TopBar";
 import { loadScript, loadStyles } from "../../services/helpers/scriptshelpers";
-import ReactTooltip from "react-tooltip";
-import LoadingOverlay from "react-loading-overlay";
 import { AppState } from "../../store";
 import { ToastContainer } from 'react-toastify';
-import { subscribe, CommunicationMessageType, subscribeGeneral, MemberNotification } from '../../services/communicationServices';
 import { UserContext } from '../../contexts/UserContext';
 import { infoToast } from '../../services/toastServices';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import { BreadcrumbsComponent } from '../Header/BreadcrumbsComponent';
 import { subscribeMemberNotification } from '../../services/syncCommunicationServices';
+import AddToHomescreen from 'react-add-to-homescreen';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backdrop: {
@@ -53,16 +34,8 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   const { user } = useContext(UserContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const classesDrawer = useStylesDrawer();
-  const theme = useTheme();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
@@ -76,7 +49,11 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
       infoToast(data.notificationMessage)
     })
   }, [])
-
+  const handleAddToHomescreenClick = () => {
+    alert(`
+    1. Open Share menu
+    2. Tap on "Add to Home Screen" button`);
+  };
   return (
     <>
       {/* 
@@ -133,6 +110,8 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
                     text="Procesando..."
                   // tslint:disable-next-line: indent
                   > */}
+                  <AddToHomescreen onAddToHomescreenClick={handleAddToHomescreenClick} />
+
                   {children}
                   <Backdrop
                     className={classes.backdrop}

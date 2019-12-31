@@ -20,7 +20,7 @@ import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import { ListItemAvatar } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import EventIcon from '@material-ui/icons/Event';
-import { useLastLocation } from 'react-router-last-location';
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
 type SideMenuProps = {
   closeMenu: () => void;
 };
@@ -98,7 +98,19 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             <ListItemText primary="Sponsors" />
           </ListItem>
         </NavLink>
-
+        <NavLink
+          exact
+          className="nav-link-slide-bar"
+          activeClassName="active"
+          to="/admin/badges"
+        >
+          <ListItem button className={classes.menuItem}>
+            <ListItemIcon className={classes.menuItemIcon}>
+              <LoyaltyIcon />
+            </ListItemIcon>
+            <ListItemText primary="Badges" />
+          </ListItem>
+        </NavLink>
         <NavLink
           exact
           className="nav-link-slide-bar"
@@ -112,6 +124,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             <ListItemText primary="Miembros" />
           </ListItem>
         </NavLink>
+
         <ListItem button onClick={() => setOpenEvents(!openEvents)} className={classes.menuItem}>
           <ListItemIcon className={classes.menuItemIcon}>
             <EventIcon />
@@ -137,7 +150,6 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
                 activeClassName="active"
                 to="/admin/eventsToSync"
               >
-
                 <ListItemText inset primary="Eventos para Sincronizar" />
               </NavLink>
             </ListItem>

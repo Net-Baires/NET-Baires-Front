@@ -45,7 +45,7 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
           </div>
           <div className="row">
 
-            <div className="col-md-6 col-xl-4">
+            <div className="col-lg-4">
               <div className="card card-social">
                 <div className="card-block border-bottom">
                   <div className="row align-items-center justify-content-center">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, useEffect, MouseEvent, useContext } from "react";
 import { FormikProps, Field, Form, withFormik } from "formik";
 import * as yup from "yup";
 import { Member } from "../../services/models/Member";
@@ -11,6 +11,8 @@ import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
 import { CardWrapper } from '../Common/CardWrapper';
 import { loading, ready } from '../../store/loading/actions';
 import { successToast } from '../../services/toastServices';
+import { UserContext } from '../../contexts/UserContext';
+import { getCurrentUser } from '../../services/authService';
 interface FormValues extends Member {
   imageData?: File;
   biographyHtml?: EditorState;
@@ -41,7 +43,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
   };
   return (
     <>
-      <div className="form-group">
+      <div className="form-group image-profile-prview-container" >
         <img
           className="image-profile-prview"
           src={props.values.imagePreview}
@@ -205,10 +207,12 @@ type EditAllSponsorProps = {
   ready: () => void;
 };
 const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }) => {
-  const [userDetail, setUserDetail] = useState({} as Member);
+  const [userDetail, setUserDetailState] = useState({} as Member);
+  const { setUserDetail, memberDetail } = useContext(UserContext);
   useEffect(() => {
     loading();
     getMe().then(x => {
+      setUserDetailState(x);
       setUserDetail(x);
       ready();
     });
