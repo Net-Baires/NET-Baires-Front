@@ -6,10 +6,9 @@ import {
   updateAttende,
   getAttendeeDetail
 } from "../../../../services/attendeesServices";
-import ReactTooltip from "react-tooltip";
 import { isEmpty } from "../../../../services/objectsservices";
 import { EventsAttendees } from "../../../../services/models/EventsAttendees";
-import { sendMessage, UpdateEventLive, CommunicationMessageType } from '../../../../services/communicationServices';
+import { updateEventLive } from '../../../../services/syncCommunicationServices';
 
 type NewUserProps = {
   idEvent: number;
@@ -45,7 +44,8 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
     updateAttende(idEvent, memberToSearch.id, eventAttendee).then(() => {
       setReadySearch(false);
       setValue("");
-      sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: idEvent });
+      updateEventLive(idEvent);
+
     });
   };
   const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {

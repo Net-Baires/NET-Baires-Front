@@ -107,7 +107,20 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
             </div>
           ))}
       </div>
-      <EventActions></EventActions>
+      <div className="row">
+        <div className="col-md-3 col-xl-3">
+          <div className="card theme-bg assets-value">
+            <div className="bg-img"></div>
+            <div className="card-block  text-center">
+              <i className="fas fa-users f-50 text-white m-b-20"></i>
+              <h5 className="text-white m-b-15">Usuarios Conectados</h5>
+              <h3 className="text-white f-w-300">8</h3>
+              {/* <span className="text-white">60% More than last Month</span> */}
+            </div>
+          </div>
+        </div>
+        <EventActions></EventActions>
+      </div>
     </>
   );
 };

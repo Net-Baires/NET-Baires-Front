@@ -11,6 +11,7 @@ import { SearchWrapper } from "../../../Common/SearchWrapper";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
+import { updateEventLive, memberNotification } from '../../../../services/syncCommunicationServices';
 type AttendeesListToEditProps = {
   eventInEdition: EventDetail;
   loading: () => void;
@@ -69,14 +70,14 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
               <i className="fas fa-check"></i>
             </button>
           ) : (
-            <button
-              onClick={e => handleUserAttended(e, true, attende)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          )}
+              <button
+                onClick={e => handleUserAttended(e, true, attende)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
         </div>
       )
     },
@@ -98,14 +99,14 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
               <i className="fas fa-check"></i>
             </button>
           ) : (
-            <button
-              onClick={e => handleUserSpeaker(e, true, attende)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          )}
+              <button
+                onClick={e => handleUserSpeaker(e, true, attende)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
         </div>
       )
     },
@@ -127,14 +128,14 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
               <i className="fas fa-check"></i>
             </button>
           ) : (
-            <button
-              onClick={e => handleUserOrganizer(e, true, attende)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          )}
+              <button
+                onClick={e => handleUserOrganizer(e, true, attende)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
         </div>
       )
     },
@@ -172,7 +173,8 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     updateAttendeLocal(
       member.memberDetail.id,
       usersToUpdate[updateIndex],
-      usersToUpdate
+      usersToUpdate,
+      isChecked ? `Acaba de ser registrado en el evento : ${eventInEdition.title}` : null
     );
   };
   const handleUserSpeaker = (
@@ -209,12 +211,16 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
   const updateAttendeLocal = (
     memberId: number,
     attende: EventsAttendees,
-    listOfAttendeesToUpdate: EventsAttendees[]
+    listOfAttendeesToUpdate: EventsAttendees[],
+    messageToMember?: string
   ) => {
     loading();
     updateAttende(eventInEdition.id, memberId, attende).then(() => {
       ready();
       setEventsAttendees(listOfAttendeesToUpdate);
+      updateEventLive(eventInEdition.id);
+      if (messageToMember != null)
+        memberNotification(memberId, messageToMember);
     });
   };
 

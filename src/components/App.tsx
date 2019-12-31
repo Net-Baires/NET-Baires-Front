@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import "../styles/index.css";
 import Login from "./Login";
 import { Router, Route, Switch } from "react-router-dom";
@@ -48,6 +48,7 @@ import MemberControlPanel from "./MemberLogged/MemberControlPanel";
 import { EventsLivePublicDetail } from "./EventLive/EventsLivePublicDetail";
 import { MemberEventLivePanel } from './MemberLogged/MemberEventLivePanel';
 import { LastLocationProvider } from 'react-router-last-location';
+
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -55,6 +56,7 @@ interface AppProps {
 }
 
 export const App: React.SFC<AppProps> = () => {
+
   return (
     <>
       <Router history={historyRouter}>
@@ -129,38 +131,46 @@ export const App: React.SFC<AppProps> = () => {
                 component={ReportAttendance}
               />
               <PrivateRoute
+                roles={["Member"]}
                 exact
                 path="/member/panel"
                 component={MemberControlPanel}
               ></PrivateRoute>
               <PrivateRoute
+                roles={["Member"]}
                 exact
                 path="/member/events/:id/live/panel"
                 component={MemberEventLivePanel}
               />
               <PrivateRoute
+                roles={["Admin"]}
                 exact
                 path="/admin/eventsToSync"
                 component={EventsToSync}
               />
+              {/* Reportar asistencia */}
               <PrivateRoute
+                roles={["Admin", "Organizer"]}
                 exact
                 path="/admin/EventLive/Attendances"
                 component={EventLiveAttendances}
               />
               <PrivateRoute exact path="/admin/profile" component={UserProfile} />
               <PrivateRoute
+                roles={["Admin", "Organizer"]}
                 exact
                 path="/admin/events/live"
                 component={EventsInLiveToDo}
               />
 
               <PrivateRoute
+                roles={["Admin", "Organizer"]}
                 exact
                 path="/admin/events/:id/attendances/general"
                 component={CheckAttendancesGeneral}
               />
               <PrivateRoute
+                roles={["Admin", "Organizer"]}
                 exact
                 path="/admin/events/:id/live/panel"
                 component={AdminEventLivePanel}
@@ -178,6 +188,7 @@ export const App: React.SFC<AppProps> = () => {
                 component={SyncEvent}
               />
               <PrivateRoute
+                roles={["Admin"]}
                 exact
                 path="/admin/sponsors/new"
                 component={NewSponsor}
@@ -195,24 +206,17 @@ export const App: React.SFC<AppProps> = () => {
                 component={EditSponsor}
               />
               <PrivateRoute
+                roles={["Admin"]}
                 exact
                 path="/admin/sponsors"
                 component={SponsorsList}
               />
               <PrivateRoute roles={["Admin"]} exact path="/admin/members" component={UsersList} />
-              <PrivateRoute
-                exact
-                path="/admin/users/:id(\d+)/Edit"
-                component={EditUser}
-              />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/users/:id(\d+)/Edit" component={EditUser} />
               <PrivateRoute exact path="/admin/users/new" component={NewUser} />
+              <PrivateRoute roles={["Member"]} exact path="/member/organizedcode/read" component={ReadOrganizedCode} />
             </AdminWrapper>
 
-            <PrivateRoute
-              exact
-              path="/member/organizedcode/read"
-              component={ReadOrganizedCode}
-            />
 
             <PrivateRoute exact path="/admin/badges" component={BadgesList} />
             <PrivateRoute

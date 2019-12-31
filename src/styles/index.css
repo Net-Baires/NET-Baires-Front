@@ -93,3 +93,16 @@
 .events-actions-button {
     width: 100% !important;
 }
+
+.mis-eventos-container table tr td:nth-child(2) {
+    overflow: hidden;
+    line-height: 1.5em;
+    height: 3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.img-platform-events-list {
+    width: 40px !important;
+    height: 40px !important;
+}

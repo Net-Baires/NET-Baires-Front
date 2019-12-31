@@ -1,7 +1,7 @@
 import { EventDetail, UpdateEvent } from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
-import { EventDetailToSync } from "./models/Events/EventDetailToSync";
+import { EventDetailToSync, CheckAttendanceGeneralResponse } from "./models/Events/EventDetailToSync";
 import { EventToReportAttendance } from "./models/Events/EventToReportAttendance";
 import { Config } from "./config";
 import { getRequest, putRequest } from "./requestServices";
@@ -53,13 +53,13 @@ export const reportAttendance = (token: string): Promise<ReportAttendanceRespons
 };
 export const reportAttendanceGeneral = (
   token: string
-): Promise<EventToSync> => {
+): Promise<CheckAttendanceGeneralResponse> => {
   return putRequest(`/events/attendances/general/${token}`);
 };
 export const reportAttendanceGeneralByCode = (
   id: number,
   code: string
-): Promise<EventToSync> => {
+): Promise<CheckAttendanceGeneralResponse> => {
   return putRequest(`/events/${id}/attendances/general/${code}`);
 };
 

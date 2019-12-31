@@ -13,6 +13,7 @@ import { AddCodeToLiveEvent } from './AddCodeToLiveEvent';
 import { CardWrapper } from '../Common/CardWrapper';
 import { QRCode } from 'react-qr-svg';
 import { subscribe, CommunicationMessageType, UpdateEventLive } from '../../services/communicationServices';
+import { TitleHeader } from '../Common/TitleHeader';
 type MemberEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -47,18 +48,15 @@ const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
       });
       loadEventDetail();
     }, []);
-
+    const handleReadCode = () => {
+      history.push("/member/organizedcode/read");
+    }
 
     return (
       <div className="row">
-        <div className="col-sm-12">
-          <div className="card">
-            <div className="card-header">
-              <h5>{eventDetail.title}</h5>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6 col-xl-4">
+        <TitleHeader title={eventDetail.title}></TitleHeader>
+
+        <div className="col-md-2 col-xl-2">
           <div className="card theme-bg2">
             <div className="card-block customer-visitor">
               <h2 className="text-white text-right mt-2 f-w-300">19:23</h2>
@@ -71,7 +69,6 @@ const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
         </div>
         {!isEmpty(eventDetail) && (<>
           <EventLiveTime eventDetail={eventDetail}></EventLiveTime>
-          <AddCodeToLiveEvent eventLive={eventDetail}></AddCodeToLiveEvent>
           {!eventDetail.attended &&
             <CardWrapper colSize={4} cardTitle="Reportar mi asistencia">
               <div style={{ textAlign: "center" }}>
@@ -83,7 +80,21 @@ const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
                   value={eventDetail.tokenToReportMyAttendance}
                 />
               </div>
-            </CardWrapper>}
+            </CardWrapper>
+          }
+
+          {eventDetail.generalAttended && !eventDetail.attended &&
+            <>
+              <TitleHeader title="Reportar asistencia general"></TitleHeader>
+              <AddCodeToLiveEvent eventLive={eventDetail}></AddCodeToLiveEvent>
+              <CardWrapper colSize={3} cardTitle="Acciones Generales">
+                <button onClick={handleReadCode} className="btn btn-warning shadow-2 text-uppercase btn-block">
+                  Leer Código de Organizador
+              </button>
+              </CardWrapper>
+            </>
+          }
+
         </>
         )}
       </div>

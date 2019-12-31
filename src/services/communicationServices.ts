@@ -1,10 +1,11 @@
 
 import { HubConnectionBuilder, HubConnection } from '@microsoft/signalr'
+import { getToken } from './authService';
 var _connection: HubConnection;
 export const initCommunication = () => {
 
     _connection = new HubConnectionBuilder()
-        .withUrl("https://localhost:5001/communicationsHub")
+        .withUrl("https://localhost:5001/communicationsHub", { accessTokenFactory: () => getToken() })
         .build();
     _connection.on("SendMessage", data => {
         console.log(data);
@@ -28,7 +29,7 @@ export const subscribeGeneral = <TData>(messageType: string, callback: (data: TD
 
 export enum CommunicationMessageType {
     UpdateEventLive = "UpdateEventLive",
-    MemberDirectMessage = "MemberDirectMessage",
+    MemberNotification = "MemberNotification",
 }
 
 class CommunicationMessage<TData> {
@@ -37,6 +38,6 @@ class CommunicationMessage<TData> {
 export interface UpdateEventLive {
     eventId: number;
 }
-export interface MemberDirectMessage {
+export interface MemberNotification {
     notificationMessage: string;
 }

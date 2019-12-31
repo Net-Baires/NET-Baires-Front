@@ -13,7 +13,9 @@ import { SyncUserToEvent } from "./SyncUserToEvent";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { EventLiveTime } from '../../../EventLive/EventLiveTme';
 import { CardWrapper } from '../../../Common/CardWrapper';
-import { sendMessage, CommunicationMessageType, subscribe, UpdateEventLive } from '../../../../services/communicationServices';
+import { CommunicationMessageType, subscribe, UpdateEventLive } from '../../../../services/communicationServices';
+import { updateEventLive } from '../../../../services/syncCommunicationServices';
+import { TitleHeader } from '../../../Common/TitleHeader';
 type AdminEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -55,9 +57,9 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
       event.preventDefault();
       loading();
       updateEvent(eventDetail.id, { generalAttended: enable, live: true }).then(
-        x => {
+        () => {
           loadEventDetail();
-          sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: eventDetail.id });
+          updateEventLive(eventDetail.id);
         }
       );
     };
@@ -65,13 +67,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
 
     return (
       <>
-        <div className="col-sm-12">
-          <div className="card">
-            <div className="card-header">
-              <h5>{eventDetail.title}</h5>
-            </div>
-          </div>
-        </div>
+        <TitleHeader title={eventDetail.title}></TitleHeader>
         <div className="col-sm-12">
           <div className="row">
             {!isEmpty(eventDetail) && (
@@ -182,6 +178,26 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
                               )}
                           </div>
                         </div>
+                        {eventDetail.generalAttendance &&
+                          <div className="form-group row">
+                            <label
+                              className="col-sm-3 col-form-label"
+                            >
+                              Mostrar Qr para Asistencia General
+                        </label>
+                            <div className="col-sm-2">
+                              <button
+                                type="button"
+                                className="btn btn-success form-control"
+                                onClick={e => window.open(`/admin/events/${eventDetail.id}/attendances/general`, '_blank')}
+                                data-toggle="tooltip"
+                                data-original-title="btn btn-danger"
+                              >
+                                Abrir Codigo QR
+                            </button>
+                            </div>
+                          </div>
+                        }
                       </form>
                     </div>
                   </div>

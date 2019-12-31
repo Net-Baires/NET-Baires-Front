@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import QrReader from "react-qr-reader";
-import { reportAttendanceGeneral } from "../../services/eventsServices";
-import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
+import { reportAttendanceGeneral } from '../../services/eventsServices';
+import { CardWrapper } from '../Common/CardWrapper';
+import { updateEventLive } from '../../services/syncCommunicationServices';
+import { successToast } from '../../services/toastServices';
 
 type ReadOrganizedCodeProps = {
   name: string;
@@ -19,7 +21,10 @@ export const ReadOrganizedCode: React.SFC<
   const handleScan = (data: string) => {
     if (data) {
       setShowReader(false);
-      reportAttendanceGeneral(data).then(() => {});
+      reportAttendanceGeneral(data).then((x) => {
+        updateEventLive(x.eventId)
+        successToast("Acaba de ser registrado al evento.")
+      });
     }
   };
 
@@ -27,13 +32,13 @@ export const ReadOrganizedCode: React.SFC<
     console.error(err);
   };
   return (
-    <PageFullWidthWrapper>
+    <CardWrapper cardTitle="Leer código de Organizador">
       {showReader && (
         <div className="qr-lector-container">
           <QrReader delay={1000} onError={handleError} onScan={handleScan} />
         </div>
       )}
       {!showReader && <h1>Gracias por venir!!</h1>}
-    </PageFullWidthWrapper>
+    </CardWrapper>
   );
 };

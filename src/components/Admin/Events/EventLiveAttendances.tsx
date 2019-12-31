@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import QrReader from "react-qr-reader";
 import { reportAttendance } from "../../../services/eventsServices";
-import { useToasts } from "react-toast-notifications";
-import { successToast } from '../../../services/toastServices';
-import { sendMessage, UpdateEventLive, CommunicationMessageType, sendMessageGeneral, MemberDirectMessage } from '../../../services/communicationServices';
+import { successToast, errorToast } from '../../../services/toastServices';
 import { CardWrapper } from '../../Common/CardWrapper';
+import { updateEventLive, memberNotification } from '../../../services/syncCommunicationServices';
 
 type EventLiveAttendancesProps = {
   name: string;
@@ -20,7 +19,6 @@ export const EventLiveAttendances: React.SFC<
 > = () => {
   const [attended, setAttended] = useState(new Array<string>());
   const [showReader, setShowReader] = useState(true);
-  const { addToast, removeToast, toastStack } = useToasts();
   const handleScan = (data: string) => {
     if (data) {
       setShowReader(false);
@@ -33,16 +31,14 @@ export const EventLiveAttendances: React.SFC<
           var newArry = [...attended, emailOfUser[0]];
           setAttended(newArry);
           localStorage.setItem("attendedList", JSON.stringify(newArry));
-          removeToast(toastStack);
+
           successToast("Asistencia Reportada");
-          sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: e.eventId });
-          sendMessageGeneral<MemberDirectMessage>(`${CommunicationMessageType.MemberDirectMessage}-${e.memberId}`, { notificationMessage: "Acaba de ser marcado como presente un evento" });
+
+          updateEventLive(e.eventId);
+          memberNotification(e.memberId, "Acaba de ser marcado como presente en un evento");
         })
         .catch(() =>
-          addToast("Error al reportar el token", {
-            appearance: "error",
-            transitionState: 100
-          })
+          errorToast("Error al reportar el token")
         );
     }
   };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { syncEvents } from "../../../services/eventsServices";
-import { SecureElement } from "../../Auth/SecureElement";
+import { SecureElement } from '../../Auth/SecureElement';
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import List from '@material-ui/core/List'
@@ -10,7 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import Collapse from '@material-ui/core/Collapse'
-
+import CropFreeIcon from '@material-ui/icons/CropFree';
 import IconExpandLess from '@material-ui/icons/ExpandLess'
 import IconExpandMore from '@material-ui/icons/ExpandMore'
 import IconDashboard from '@material-ui/icons/Dashboard'
@@ -78,92 +78,109 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             <ListItemIcon className={classes.menuItemIcon}>
               <IconDashboard />
             </ListItemIcon>
-            <span className="pcoded-mtext">Panel de Control</span>
-            <ListItemText primary="Ptrol" />
+            <ListItemText primary="Panel de Control" />
           </ListItem>
         </NavLink>
 
       </SecureElement>
 
-
-      <NavLink
-        exact
-        className="nav-link-slide-bar"
-        activeClassName="active"
-        to="/admin/sponsors"
-      >
-        <ListItem button className={classes.menuItem}>
-          <ListItemIcon className={classes.menuItemIcon}>
-            <BusinessIcon />
-          </ListItemIcon>
-          <ListItemText primary="Sponsors" />
-        </ListItem>
-      </NavLink>
-
-      <NavLink
-        exact
-        className="nav-link-slide-bar"
-        activeClassName="active"
-        to="/admin/members"
-      >
-        <ListItem button className={classes.menuItem}>
-          <ListItemIcon className={classes.menuItemIcon}>
-            <PeopleAltIcon />
-          </ListItemIcon>
-          <ListItemText primary="Miembros" />
-        </ListItem>
-      </NavLink>
-      <ListItem button onClick={() => setOpenEvents(!openEvents)} className={classes.menuItem}>
-        <ListItemIcon className={classes.menuItemIcon}>
-          <EventIcon />
-        </ListItemIcon>
-        <ListItemText primary="Eventos" />
-        {openEvents ? <IconExpandLess /> : <IconExpandMore />}
-      </ListItem>
-      <Collapse in={openEvents} timeout="auto" unmountOnExit>
-        <Divider />
-        <List component="div" disablePadding>
+      <SecureElement roles={["Admin", "Organizer"]}>
+        <NavLink
+          exact
+          className="nav-link-slide-bar"
+          activeClassName="active"
+          to="/admin/sponsors"
+        >
           <ListItem button className={classes.menuItem}>
+            <ListItemIcon className={classes.menuItemIcon}>
+              <BusinessIcon />
+            </ListItemIcon>
+            <ListItemText primary="Sponsors" />
+          </ListItem>
+        </NavLink>
+
+        <NavLink
+          exact
+          className="nav-link-slide-bar"
+          activeClassName="active"
+          to="/admin/members"
+        >
+          <ListItem button className={classes.menuItem}>
+            <ListItemIcon className={classes.menuItemIcon}>
+              <PeopleAltIcon />
+            </ListItemIcon>
+            <ListItemText primary="Miembros" />
+          </ListItem>
+        </NavLink>
+        <ListItem button onClick={() => setOpenEvents(!openEvents)} className={classes.menuItem}>
+          <ListItemIcon className={classes.menuItemIcon}>
+            <EventIcon />
+          </ListItemIcon>
+          <ListItemText primary="Eventos" />
+          {openEvents ? <IconExpandLess /> : <IconExpandMore />}
+        </ListItem>
+        <Collapse in={openEvents} timeout="auto" unmountOnExit>
+          <Divider />
+          <List component="div" disablePadding>
             <NavLink
               exact
               activeClassName="active"
               to="/admin/events"
             >
-              <ListItemText inset primary="Mis Eventos" />
+              <ListItem button className={classes.menuItem}>
+                <ListItemText inset primary="Mis Eventos" />
+              </ListItem>
             </NavLink>
-          </ListItem>
-          <ListItem button className={classes.menuItem}>
-            <NavLink
-              exact
-              activeClassName="active"
-              to="/admin/eventsToSync"
-            >
+            <ListItem button className={classes.menuItem}>
+              <NavLink
+                exact
+                activeClassName="active"
+                to="/admin/eventsToSync"
+              >
 
-              <ListItemText inset primary="Eventos para Sincronizar" />
-            </NavLink>
-          </ListItem>
-          <ListItem button className={classes.menuItem}>
-            <NavLink
-              exact
-              activeClassName="active"
-              to="/admin/events/live"
-            >
+                <ListItemText inset primary="Eventos para Sincronizar" />
+              </NavLink>
+            </ListItem>
+            <ListItem button className={classes.menuItem}>
+              <NavLink
+                exact
+                activeClassName="active"
+                to="/admin/events/live"
+              >
 
-              <ListItemText inset primary="Eventos en vivo" />
-            </NavLink>
-          </ListItem>
-          <ListItem button className={classes.menuItem}>
-            <a
-              className="nav-link-slide-bar"
-              onClick={handleSyncEvents}
-            >
+                <ListItemText inset primary="Eventos en vivo" />
+              </NavLink>
+            </ListItem>
+            <ListItem button className={classes.menuItem}>
+              <a
+                className="nav-link-slide-bar"
+                onClick={handleSyncEvents}
+              >
 
-              <ListItemText inset primary="Sync Eventos" />
-            </a>
-          </ListItem>
+                <ListItemText inset primary="Sync Eventos" />
+              </a>
+            </ListItem>
 
-        </List>
-      </Collapse>
+          </List>
+        </Collapse>
+
+      </SecureElement>
+
+      <SecureElement roles={["Admin", "Organizer"]}>
+        <ListItem button className={classes.menuItem}>
+          <ListItemIcon className={classes.menuItemIcon}>
+            <CropFreeIcon />
+          </ListItemIcon>
+          <NavLink
+            exact
+            className="nav-link-slide-bar"
+            activeClassName="active"
+            to="/admin/EventLive/Attendances"
+          >
+            <ListItemText primary="Recibir Miembros" />
+          </NavLink>
+        </ListItem>
+      </SecureElement>
       <ListItem button className={classes.menuItem}>
         <ListItemIcon className={classes.menuItemIcon}>
           <ExitToAppIcon />

@@ -9,3 +9,7 @@ export interface EventDetailToSync {
   date: Date;
   attendees: Member[];
 }
+
+export interface CheckAttendanceGeneralResponse {
+  eventId: number;
+}

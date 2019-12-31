@@ -18,8 +18,8 @@ const EventActionsComponent: React.SFC<EventActionsProps> = () => {
     });
   };
   return (
-    <CardWrapper colSize={4} cardTitle="Acciones sobre Evento">
-      <button onClick={handleSyncEvents} className="btn shadow-4 btn-warning">
+    <CardWrapper colSize={3} cardTitle="Acciones Generales">
+      <button onClick={handleSyncEvents} className="btn btn-warning shadow-2 text-uppercase btn-block">
         Sincronizar con Meetup
       </button>
     </CardWrapper>

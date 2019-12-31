@@ -76,7 +76,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
           </button>
         ) : (
             <button
-              data-tip="Deneter evento que se encuentra Live"
+              data-tip="Detener evento que se encuentra Live"
               type="button"
               onClick={e => handleLiveEvent(e, false)}
               className="btn btn-warning events-actions-button"
@@ -112,6 +112,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
           <div className="col">
             <NavLink
               exact
+              data-tip="Abrir panel de evento en vivo"
               className="btn btn-info events-actions-button"
               activeClassName="active"
               to={`/admin/events/${eventAction.id}/live/panel`}

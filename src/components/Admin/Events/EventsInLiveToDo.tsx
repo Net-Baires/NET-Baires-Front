@@ -4,6 +4,7 @@ import { EventToSync } from "../../../services/models/Events/EventToSync";
 import { getEventsLive } from "../../../services/eventsServices";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../../helpers/DateHelpers";
+import { CardWrapper } from '../../Common/CardWrapper';
 type EventsInLiveToDoProps = {
   name: string;
 };
@@ -35,7 +36,7 @@ export const EventsInLiveToDo: React.SFC<RouteComponentProps<
     history.push(`/admin/events/${eventToSync.id}/attendances/general`);
   };
   return (
-    <>
+    <CardWrapper cardTitle="Eventos en vivo">
       {EventsInLiveToDo && (
         <table className="table">
           <thead className="thead-light">
@@ -43,6 +44,7 @@ export const EventsInLiveToDo: React.SFC<RouteComponentProps<
               <th scope="col">#</th>
               <th scope="col">Titulo</th>
               <th scope="col">Fecha</th>
+              <th scope="col">Imagen</th>
               <th scope="col" colSpan="2">
                 Acción
               </th>
@@ -55,13 +57,15 @@ export const EventsInLiveToDo: React.SFC<RouteComponentProps<
                 <td>{event.title}</td>
                 <td>{formatStringDate(event.date)}</td>
                 <td>
-                  <button
-                    type="button"
-                    onClick={e => handleAssistance(e, event)}
-                    className="btn btn-info"
-                  >
-                    Asistencia General
-                  </button>
+                  <img
+                    style={{ height: "100px" }}
+                    src={
+                      event.imageUrl != null
+                        ? event.imageUrl
+                        : "/assets/images/imagenotfound.png"
+                    }
+                    alt="dashboard-user"
+                  ></img>
                 </td>
                 <td>
                   <NavLink
@@ -77,6 +81,6 @@ export const EventsInLiveToDo: React.SFC<RouteComponentProps<
           </tbody>
         </table>
       )}
-    </>
+    </CardWrapper>
   );
 };

@@ -6,8 +6,8 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { CardWrapper } from "../../Common/CardWrapper";
+import { parseDate, formatStringDate } from '../../../helpers/DateHelpers';
 type EventsProps = {
   name: string;
 };
@@ -45,7 +45,26 @@ export const EventsList: React.SFC<RouteComponentProps<
     },
     {
       dataField: "date",
-      text: "Fecha"
+      text: "Fecha",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, event: EventDetail) => (
+        <label >{formatStringDate(event.date)}</label>
+      )
+    },
+    {
+      text: "Plataforma",
+      style: {
+        textAlign: "center",
+        height: "2px"
+      },
+      formatter: (_cellContent: any, event: EventDetail) => (
+        event.platform == "Meetup" ?
+          <img className="img-platform-events-list" src="./assets/images/meetuplogo.png"></img>
+          : <img className="img-platform-events-list" src="./assets/images/eventbritelogo.png"></img>
+      )
     },
     {
       dataField: "imageUrl",
@@ -78,7 +97,7 @@ export const EventsList: React.SFC<RouteComponentProps<
   return (
     <CardWrapper cardTitle="Mis eventos">
       <article>
-        <div>
+        <div className="mis-eventos-container">
           {events && (
             <ToolkitProvider
               keyField="id"

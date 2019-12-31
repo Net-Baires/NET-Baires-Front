@@ -10,7 +10,7 @@ import ReactTooltip from "react-tooltip";
 import LoadingOverlay from "react-loading-overlay";
 import { AppState } from "../../store";
 import { ToastContainer } from 'react-toastify';
-import { subscribe, CommunicationMessageType, subscribeGeneral, MemberDirectMessage } from '../../services/communicationServices';
+import { subscribe, CommunicationMessageType, subscribeGeneral, MemberNotification } from '../../services/communicationServices';
 import { UserContext } from '../../contexts/UserContext';
 import { infoToast } from '../../services/toastServices';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -35,6 +35,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { BreadcrumbsComponent } from '../Header/BreadcrumbsComponent';
+import { subscribeMemberNotification } from '../../services/syncCommunicationServices';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backdrop: {
@@ -71,7 +72,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   });
 
   useEffect(() => {
-    subscribeGeneral<MemberDirectMessage>(`${CommunicationMessageType.MemberDirectMessage}-${user.id}`, data => {
+    subscribeMemberNotification(user.id, data => {
       infoToast(data.notificationMessage)
     })
   }, [])
@@ -88,7 +89,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
       <TopBar></TopBar>
       <FriendsMenu></FriendsMenu> */}
       <TopBar openMenu={() => setOpen(true)}></TopBar>
-      <div className="pcoded-main-container">
+      <div className="pcoded-main-container" onClick={() => setOpen(false)}>
         <div className="pcoded-wrapper">
           <div className="pcoded-content">
             <div className="pcoded-inner-content">

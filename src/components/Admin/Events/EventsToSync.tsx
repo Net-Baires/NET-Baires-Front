@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, useEffect } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { getEventsToSync } from "../../../services/eventsServices";
 import { EventToSync } from "../../../services/models/Events/EventToSync";
@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { EventToSyncActions } from "./EventToSyncActions";
 import { formatStringDate } from "../../../helpers/DateHelpers";
-import { sendMessage, UpdateEventLive, CommunicationMessageType } from '../../../services/communicationServices';
+import { updateEventLive } from '../../../services/syncCommunicationServices';
 
 type EventsToSyncProps = {
   name: string;
@@ -22,7 +22,6 @@ const EventsToSyncComponent: React.SFC<RouteComponentProps<
   EventsToSyncPropsAndRouter
 > &
   EventsToSyncProps> = ({ loading, ready }) => {
-    const history = useHistory();
     const defaultEventsToSync = new Array<EventToSync>();
     const [eventsToSync, setEventoToSync] = useState(defaultEventsToSync);
     useEffect(() => {
@@ -36,7 +35,7 @@ const EventsToSyncComponent: React.SFC<RouteComponentProps<
     const handlerReadyAction = (idEvent: number) => {
       getEventsToSync().then(s => {
         setEventoToSync(s);
-        sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: idEvent });
+        updateEventLive(idEvent);
         ready();
       });
     };
@@ -46,7 +45,7 @@ const EventsToSyncComponent: React.SFC<RouteComponentProps<
       <div className="row">
         {eventsToSync &&
           eventsToSync.map(event => (
-            <div className="col-xl-4 col-md-6">
+            <div key={event.id} className="col-xl-4 col-md-6">
               <div className="card user-designer">
                 <div className="card-block text-center event-list-card">
                   <h5 className="event-list-card-title">{event.title}</h5>
@@ -55,7 +54,6 @@ const EventsToSyncComponent: React.SFC<RouteComponentProps<
                   </span>
                   <img
                     className="img-fluid rounded-circle-event-list"
-                    style={{ width: "70px;" }}
                     src={
                       event.imageUrl != null
                         ? event.imageUrl

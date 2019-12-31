@@ -4,7 +4,7 @@ import { EventLiveDetail } from '../../services/models/Events/EventLiveDetail';
 import { reportAttendanceGeneralByCode } from '../../services/eventsServices';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { successToast, errorToast } from '../../services/toastServices';
-import { sendMessage, UpdateEventLive, CommunicationMessageType } from '../../services/communicationServices';
+import { updateEventLive } from '../../services/syncCommunicationServices';
 
 
 type AddCodeToLiveEventProps = {
@@ -13,7 +13,6 @@ type AddCodeToLiveEventProps = {
 export const AddCodeToLiveEvent: React.SFC<AddCodeToLiveEventProps> = ({ eventLive }) => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const handleReportCode = (
     event: MouseEvent<HTMLAnchorElement>
   ) => {
@@ -25,7 +24,7 @@ export const AddCodeToLiveEvent: React.SFC<AddCodeToLiveEventProps> = ({ eventLi
       .then(() => {
         setLoading(false);
         successToast("Asistencia Reportada.");
-        sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, { eventId: eventLive.id });
+        updateEventLive(eventLive.id);
       })
       .catch(e => {
         setLoading(false);

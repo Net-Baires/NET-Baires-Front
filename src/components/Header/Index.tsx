@@ -268,7 +268,6 @@ export const Header: React.SFC<HeaderProps> = () => {
         </Navbar.Collapse>
       </Navbar>
 
-      <BreadcrumbsComponent></BreadcrumbsComponent>
     </>
   );
 };
