@@ -20,78 +20,88 @@ const EditSponsorComponentForm = (props: FormikProps<FormValues>) => {
     setFieldValue("imagePreview", url);
   };
   return (
-    <Form className="lgx-contactform">
-      <div className="form-group">
-        <label>Nombre</label>
-        <Field type="name" name="name" className="form-control" />
-        {touched.name && errors.name && (
-          <div className="form-error alert alert-danger">{errors.name}</div>
-        )}
-      </div>
-      <div className="form-group">
-        <label>Descripción</label>
-        <Field
-          component="textarea"
-          rows="4"
-          type="description"
-          name="description"
-          className="form-control"
-        />
-        {touched.description && errors.description && (
-          <div className="form-error alert alert-danger">
-            {errors.description}
-          </div>
-        )}
-      </div>
-      <div className="form-group">
-        <label>Url Sitio Web </label>
-        <Field
-          component="input"
-          type="siteUrl"
-          name="siteUrl"
-          className="form-control"
-        />
-        {touched.siteUrl && errors.siteUrl && (
-          <div className="form-error alert alert-danger">{errors.siteUrl}</div>
-        )}
-      </div>
+    <>
 
-      <div className="input-group">
-        <div className="custom-file">
-          <label>Logo</label>
-
-          <input
-            type="file"
-            onChange={(event: any) => {
-              changeFile(event, event.currentTarget.files[0]);
-            }}
-            name="file"
-            className="custom-file-input"
-            id="inputGroupFile01"
-            aria-describedby="inputGroupFileAddon01"
-          ></input>
-          <label className="custom-file-label">Choose file</label>
-          {touched.imageData && errors.imageData && (
+      <Form >
+        <div className="form-group">
+          <label>Nombre</label>
+          <Field type="name" name="name" className="form-control" />
+          {touched.name && errors.name && (
+            <div className="form-error alert alert-danger">{errors.name}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Descripción</label>
+          <Field
+            component="textarea"
+            rows="4"
+            type="description"
+            name="description"
+            className="form-control"
+          />
+          {touched.description && errors.description && (
             <div className="form-error alert alert-danger">
-              {errors.imageData}
+              {errors.description}
             </div>
           )}
         </div>
-      </div>
-      <div className="form-group">
-        <img
-          className="image-badge-prview"
-          src={props.values.imagePreview}
-        ></img>
-      </div>
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="btn btn-primary btn-full-width"
-      >
-        Guardar
+        <div className="form-group">
+          <label>Url Sitio Web </label>
+          <Field
+            component="input"
+            type="siteUrl"
+            name="siteUrl"
+            className="form-control"
+          />
+          {touched.siteUrl && errors.siteUrl && (
+            <div className="form-error alert alert-danger">{errors.siteUrl}</div>
+          )}
+        </div>
+
+        <div className="input-group">
+          <div className="custom-file">
+            <label>Logo</label>
+
+            <input
+              type="file"
+              onChange={(event: any) => {
+                changeFile(event, event.currentTarget.files[0]);
+              }}
+              name="file"
+              className="custom-file-input"
+              id="inputGroupFile01"
+              aria-describedby="inputGroupFileAddon01"
+            ></input>
+            <label className="custom-file-label">Choose file</label>
+            {touched.imageData && errors.imageData && (
+              <div className="form-error alert alert-danger">
+                {errors.imageData}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="row">
+            <div className="col-md-2"></div>
+            <div className="col-xs-12 col-md-8">
+              <img
+                className="image-badge-prview"
+                src={props.values.imagePreview}
+              ></img>
+            </div>
+            <div className="col-md-2"></div>
+
+          </div>
+        </div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn btn-primary btn-full-width"
+        >
+          Guardar
       </button>
-    </Form>
+      </Form>
+    </>
   );
 };
 

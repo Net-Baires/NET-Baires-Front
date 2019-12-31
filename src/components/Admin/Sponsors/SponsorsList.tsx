@@ -7,6 +7,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { SearchWrapper } from "../../Common/SearchWrapper";
+import { CardWrapper } from '../../Common/CardWrapper';
 export const SponsorsList: React.SFC<RouteComponentProps> = () => {
   let history = useHistory();
 
@@ -70,7 +71,7 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
     }
   ];
   return (
-    <PageFullWidthWrapper>
+    <CardWrapper cardTitle="Sponsors">
       <SearchWrapper title="Sponsors">
         <ToolkitProvider keyField="id" data={sponsors} columns={columns} search>
           {(props: any) => (
@@ -78,6 +79,7 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
               <SearchBar {...props.searchProps} />
               <hr />
               <BootstrapTable
+                class="table-responsive"
                 keyField="id"
                 {...props.baseProps}
                 pagination={paginationFactory()}
@@ -86,9 +88,10 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
           )}
         </ToolkitProvider>
       </SearchWrapper>
+
       <button type="button" onClick={handleNew} className="btn btn-primary">
         Nuevo Sponsor
       </button>
-    </PageFullWidthWrapper>
+    </CardWrapper>
   );
 };

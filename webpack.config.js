@@ -2,7 +2,7 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { GenerateSW } = require("workbox-webpack-plugin");
-module.exports = function(env) {
+module.exports = function (env) {
   const configPath = path.join(__dirname, `config.${env.APP_ENV}.json`);
   return {
     devServer: {
@@ -35,9 +35,9 @@ module.exports = function(env) {
         {
           test: /\.jsx?$/, // Match both .js and .jsx files
           exclude: /node_modules/,
-          loader: "babel",
+          loader: "babel-loader",
           query: {
-            presets: ["react"]
+            presets: ["@babel/preset-env"]
           }
         },
         {

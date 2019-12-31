@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { PageCenterWrapper } from "../../../components/Common/PageCenterWrapper";
 import { EditSponsorComponent } from "./components/EditSponsorComponent";
+import { CardWrapper } from '../../Common/CardWrapper';
 type NewSponsorProps = {
   loading: () => void;
   ready: () => void;
@@ -28,11 +29,11 @@ export const NewSponsorComponent: React.SFC<NewSponsorProps> = ({
       });
   };
   return (
-    <PageCenterWrapper>
+    <CardWrapper cardTitle="Nuevo Sponsor">
       <EditSponsorComponent
         saveSponsor={handleSaveSponsor}
       ></EditSponsorComponent>
-    </PageCenterWrapper>
+    </CardWrapper>
   );
 };
 

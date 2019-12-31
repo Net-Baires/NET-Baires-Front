@@ -1,12 +1,12 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, useEffect } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { getEventsToSync } from "../../../services/eventsServices";
 import { EventToSync } from "../../../services/models/Events/EventToSync";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { EventToSyncActions } from "./EventToSyncActions";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { formatStringDate } from "../../../helpers/DateHelpers";
+import { updateEventLive } from '../../../services/syncCommunicationServices';
 
 type EventsToSyncProps = {
   name: string;
@@ -18,102 +18,80 @@ type EventsToSyncParams = {
 };
 
 type EventsToSyncPropsAndRouter = EventsToSyncParams & EventsToSyncProps;
-const EventsToSyncComponent: React.SFC<
-  RouteComponentProps<EventsToSyncPropsAndRouter> & EventsToSyncProps
-> = ({ loading, ready }) => {
-  const history = useHistory();
-  const defaultEventsToSync = new Array<EventToSync>();
-  const [eventsToSync, setEventoToSync] = useState(defaultEventsToSync);
-  useEffect(() => {
-    loading();
-    getEventsToSync().then(s => {
-      setEventoToSync(s);
-      ready();
-    });
-  }, []);
+const EventsToSyncComponent: React.SFC<RouteComponentProps<
+  EventsToSyncPropsAndRouter
+> &
+  EventsToSyncProps> = ({ loading, ready }) => {
+    const defaultEventsToSync = new Array<EventToSync>();
+    const [eventsToSync, setEventoToSync] = useState(defaultEventsToSync);
+    useEffect(() => {
+      loading();
+      getEventsToSync().then(s => {
+        setEventoToSync(s);
+        ready();
+      });
+    }, []);
 
-  const handlerReadyAction = () => {
-    getEventsToSync().then(s => {
-      setEventoToSync(s);
-      ready();
-    });
-  };
-  const handleEditEvent = (
-    event: MouseEvent<HTMLButtonElement>,
-    meEvent: EventToSync
-  ) => {
-    event.preventDefault();
-    history.push(`/admin/events/${meEvent.id}/edit`);
-  };
-  return (
-    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
-      {eventsToSync && (
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Titulo</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Registrados</th>
-              <th scope="col">Asistieron</th>
-              <th scope="col">No Asistieron</th>
-              <th scope="col">Plataforma</th>
-              <th scope="col">Imagen</th>
-              <th scope="col">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {eventsToSync.map(event => (
-              <tr key={event.id}>
-                <th scope="row">{event.id}</th>
-                <td>{event.title}</td>
-                <td>{formatStringDate(event.date)}</td>
-                <td>{event.registered}</td>
-                <td>{event.attended}</td>
-                <td>{event.didNotAttend}</td>
-                <td>
+    const handlerReadyAction = (idEvent: number) => {
+      getEventsToSync().then(s => {
+        setEventoToSync(s);
+        updateEventLive(idEvent);
+        ready();
+      });
+    };
+
+
+    return (
+      <div className="row">
+        {eventsToSync &&
+          eventsToSync.map(event => (
+            <div key={event.id} className="col-xl-4 col-md-6">
+              <div className="card user-designer">
+                <div className="card-block text-center event-list-card">
+                  <h5 className="event-list-card-title">{event.title}</h5>
+                  <span className="d-block mb-4">
+                    {formatStringDate(event.date)}
+                  </span>
                   <img
-                    className="img-preview-list-events"
-                    src={event.imageUrl}
+                    className="img-fluid rounded-circle-event-list"
+                    src={
+                      event.imageUrl != null
+                        ? event.imageUrl
+                        : "/assets/images/imagenotfound.png"
+                    }
+                    alt="dashboard-user"
                   ></img>
-                </td>
-                <td>
-                  {event.platform == "Meetup" && (
-                    <img
-                      className="platform-icon"
-                      src="https://net-baires.azureedge.net/images/meetup-mini-logo.png"
-                    ></img>
-                  )}
-                  {event.platform == "EventBrite" && (
-                    <img
-                      className="platform-icon"
-                      src="https://net-baires.azureedge.net/images/eventbrite-mini-logo.png"
-                    ></img>
-                  )}
-                </td>
+                  <div className="row m-t-30">
+                    <div className="col-md-4 col-6">
+                      <h5>{event.registered}</h5>
+                      <span className="text-muted">Registrados</span>
+                    </div>
+                    <div className="col-md-4 col-6">
+                      <h5>{event.attended}</h5>
+                      <span className="text-muted">Presentes</span>
+                    </div>
+                    <div className="col-md-4 col-12">
+                      <h5>{event.didNotAttend}</h5>
+                      <span className="text-muted">Ausentes</span>
+                    </div>
+                  </div>
+                  <div className="designer m-t-30 row eventToSync-container">
+                    <div className="col">
+                      <EventToSyncActions
+                        eventAction={event}
+                        loading={loading}
+                        ready={handlerReadyAction}
+                      ></EventToSyncActions>
 
-                <td>
-                  <EventToSyncActions
-                    eventAction={event}
-                    loading={loading}
-                    ready={handlerReadyAction}
-                  ></EventToSyncActions>
-                  <button
-                    type="button"
-                    onClick={e => handleEditEvent(e, event)}
-                    className="btn btn-primary events-actions-button"
-                  >
-                    <i className="far fa-edit"></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </PageFullWidthWrapper>
-  );
-};
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+    );
+  };
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {

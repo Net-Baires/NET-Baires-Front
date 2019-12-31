@@ -1,5 +1,5 @@
 import React, { useState, useEffect, MouseEvent } from "react";
-import { EventsAttendees } from "../../../../services/models/sponsor";
+import { EventsAttendees } from "../../../../services/models/EventsAttendees";
 import { EventDetail } from "../../../../services/models/Events/Event";
 import {
   getAttendees,
@@ -11,6 +11,7 @@ import { SearchWrapper } from "../../../Common/SearchWrapper";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
+import { updateEventLive, memberNotification } from '../../../../services/syncCommunicationServices';
 type AttendeesListToEditProps = {
   eventInEdition: EventDetail;
   loading: () => void;
@@ -36,19 +37,19 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
   const { SearchBar } = Search;
   const columns = [
     {
-      dataField: "id",
+      dataField: "memberDetail.id",
       text: "Id"
     },
     {
-      dataField: "firstName",
+      dataField: "memberDetail.firstName",
       text: "Nombre"
     },
     {
-      dataField: "lastName",
+      dataField: "memberDetail.lastName",
       text: "Apellido"
     },
     {
-      dataField: "email",
+      dataField: "memberDetail.email",
       text: "Email"
     },
     {
@@ -69,14 +70,14 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
               <i className="fas fa-check"></i>
             </button>
           ) : (
-            <button
-              onClick={e => handleUserAttended(e, true, attende)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          )}
+              <button
+                onClick={e => handleUserAttended(e, true, attende)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
         </div>
       )
     },
@@ -98,14 +99,14 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
               <i className="fas fa-check"></i>
             </button>
           ) : (
-            <button
-              onClick={e => handleUserSpeaker(e, true, attende)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          )}
+              <button
+                onClick={e => handleUserSpeaker(e, true, attende)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
         </div>
       )
     },
@@ -127,14 +128,14 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
               <i className="fas fa-check"></i>
             </button>
           ) : (
-            <button
-              onClick={e => handleUserOrganizer(e, true, attende)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          )}
+              <button
+                onClick={e => handleUserOrganizer(e, true, attende)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
         </div>
       )
     },
@@ -145,7 +146,10 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
         height: "2px"
       },
       formatter: (_cellContent: any, attende: EventsAttendees) => (
-        <img className="img-preview-member" src={attende.picture}></img>
+        <img
+          className="img-preview-member"
+          src={attende.memberDetail.picture}
+        ></img>
       )
     }
   ];
@@ -166,7 +170,12 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       usersToUpdate[updateIndex].didNotAttend = true;
       usersToUpdate[updateIndex].attended = false;
     }
-    updateAttendeLocal(member.id, usersToUpdate[updateIndex], usersToUpdate);
+    updateAttendeLocal(
+      member.memberDetail.id,
+      usersToUpdate[updateIndex],
+      usersToUpdate,
+      isChecked ? `Acaba de ser registrado en el evento : ${eventInEdition.title}` : null
+    );
   };
   const handleUserSpeaker = (
     eventInput: MouseEvent<HTMLButtonElement>,
@@ -177,7 +186,11 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     const updateIndex = eventsAttendees.indexOf(member);
     const usersToUpdate = eventsAttendees.slice();
     usersToUpdate[updateIndex].speaker = isChecked;
-    updateAttendeLocal(member.id, usersToUpdate[updateIndex], usersToUpdate);
+    updateAttendeLocal(
+      member.memberDetail.id,
+      usersToUpdate[updateIndex],
+      usersToUpdate
+    );
   };
   const handleUserOrganizer = (
     eventInput: MouseEvent<HTMLButtonElement>,
@@ -188,18 +201,26 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     const updateIndex = eventsAttendees.indexOf(member);
     const usersToUpdate = eventsAttendees.slice();
     usersToUpdate[updateIndex].organizer = isChecked;
-    updateAttendeLocal(member.id, usersToUpdate[updateIndex], usersToUpdate);
+    updateAttendeLocal(
+      member.memberDetail.id,
+      usersToUpdate[updateIndex],
+      usersToUpdate
+    );
   };
 
   const updateAttendeLocal = (
     memberId: number,
     attende: EventsAttendees,
-    listOfAttendeesToUpdate: EventsAttendees[]
+    listOfAttendeesToUpdate: EventsAttendees[],
+    messageToMember?: string
   ) => {
     loading();
     updateAttende(eventInEdition.id, memberId, attende).then(() => {
       ready();
       setEventsAttendees(listOfAttendeesToUpdate);
+      updateEventLive(eventInEdition.id);
+      if (messageToMember != null)
+        memberNotification(memberId, messageToMember);
     });
   };
 
@@ -219,6 +240,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
                 <SearchBar {...props.searchProps} />
                 <hr />
                 <BootstrapTable
+                  className="table-responsive"
                   keyField="id"
                   {...props.baseProps}
                   pagination={paginationFactory()}

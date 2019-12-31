@@ -21,7 +21,7 @@ export const Header: React.SFC<HeaderProps> = () => {
     history.listen;
   };
   const handleSyncEvents = () => {
-    syncEvents().then(() => {});
+    syncEvents().then(() => { });
   };
 
   const handleIsActive = (match: match<any>): boolean => {
@@ -29,7 +29,7 @@ export const Header: React.SFC<HeaderProps> = () => {
   };
   return (
     <>
-      <SecureElement rols={["Admin", "Organizer"]}>
+      <SecureElement roles={["Admin", "Organizer"]}>
         <Menu isOpen={open}>
           <SecureElement rol="Admin">
             <NavLink
@@ -64,7 +64,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/users"
+              to="/admin/members"
             >
               <i className="fa fa-fw fa-users"></i>
               Lista de Usuarios
@@ -174,47 +174,47 @@ export const Header: React.SFC<HeaderProps> = () => {
                 </NavLink>
               </Nav.Item>
             ) : (
-              <>
-                <NavDropdown title="Acciones" id="basic-nav-dropdown">
-                  <NavDropdown.Item>
-                    <NavLink
-                      exact
-                      isActive={handleIsActive}
-                      className="nav-link nav-link-dropdown"
-                      activeClassName="active"
-                      to="/admin/profile"
-                    >
-                      Perfil
-                    </NavLink>
-                  </NavDropdown.Item>
-                  <SecureElement rol="Member">
-                    <NavDropdown.Item href="#">
+                <>
+                  <NavDropdown title="Acciones" id="basic-nav-dropdown">
+                    <NavDropdown.Item>
                       <NavLink
                         exact
                         isActive={handleIsActive}
                         className="nav-link nav-link-dropdown"
                         activeClassName="active"
-                        to="/member/organizedcode/read"
+                        to="/admin/profile"
                       >
-                        Leer Código
-                      </NavLink>
+                        Perfil
+                    </NavLink>
                     </NavDropdown.Item>
-                  </SecureElement>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item>
-                    <Nav.Item>
-                      <a
-                        onClick={handleLogout}
-                        className="nav-link nav-link-dropdown"
-                        href="#"
-                      >
-                        Desconectarse
+                    <SecureElement rol="Member">
+                      <NavDropdown.Item href="#">
+                        <NavLink
+                          exact
+                          isActive={handleIsActive}
+                          className="nav-link nav-link-dropdown"
+                          activeClassName="active"
+                          to="/member/organizedcode/read"
+                        >
+                          Leer Código
+                      </NavLink>
+                      </NavDropdown.Item>
+                    </SecureElement>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item>
+                      <Nav.Item>
+                        <a
+                          onClick={handleLogout}
+                          className="nav-link nav-link-dropdown"
+                          href="#"
+                        >
+                          Desconectarse
                       </a>
-                    </Nav.Item>
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </>
-            )}
+                      </Nav.Item>
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
+              )}
             <Nav.Item>
               <NavLink
                 exact
@@ -268,7 +268,6 @@ export const Header: React.SFC<HeaderProps> = () => {
         </Navbar.Collapse>
       </Navbar>
 
-      <BreadcrumbsComponent></BreadcrumbsComponent>
     </>
   );
 };

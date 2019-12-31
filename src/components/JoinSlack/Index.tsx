@@ -25,70 +25,91 @@ export const JoinSlackComponent: React.SFC = () => {
     }
   };
   return (
-    <PageCenterWrapper>
-      <article>
-        <header>
-          <img
-            className="img-slack"
-            src="https://cdn-images-1.medium.com/max/1600/1*LKzOm8aR2dMYUu8ZNvITFg.png"
-          />
-        </header>
-        <header>
-          <figure></figure>
-          <div className="text-area">
-            <div className="speaker-info">
-              <h1 className="title"></h1>
-              <h4 className="subtitle"></h4>
+    <>
+      <div className="services-section text-center" id="services">
+        <div className="container">
+          <div className="row  justify-content-md-center">
+            <div className="col-md-8">
+              <div className="services-content">
+                <h1 className="wow fadeInUp" data-wow-delay="0s">
+                  Sumate a nuestra comunidad de Slack
+                </h1>
+                <p className="wow fadeInUp" data-wow-delay="0.2s">
+                  En nuestros canales de slack podras encontrar a los mejores
+                  profesionales dispuestos a ayudarte. Te pedimos que por favor
+                  respetes las reglas. Saludos.
+                </p>
+              </div>
+            </div>
+            <div className="col-md-12 text-center">
+              <div className="services">
+                <div className="row">
+                  <div
+                    className="col-sm-2 wow fadeInUp"
+                    data-wow-delay="0.2s"
+                  ></div>
+                  <div className="col-sm-8 wow fadeInUp" data-wow-delay="0.2s">
+                    <div className="services-icon">
+                      <img
+                        className="img-slack"
+                        style={{ width: "200px" }}
+                        src="https://cdn-images-1.medium.com/max/1600/1*LKzOm8aR2dMYUu8ZNvITFg.png"
+                      />
+                    </div>
+                    <div className="services-description">
+                      <form method="POST" className="lgx-subscribe-form">
+                        <div className="form-group form-group-email">
+                          <input
+                            asp-for="Email"
+                            type="email"
+                            value={email}
+                            onChange={x => {
+                              setIsSuccess(false);
+                              setError("");
+                              setEmail(x.target.value);
+                            }}
+                            id="subscribe"
+                            placeholder="Ingresa tu dirección de Email ..."
+                            className="form-control"
+                          />
+                          {error != "" && (
+                            <div className="form-error alert alert-danger">
+                              {error}
+                            </div>
+                          )}
+                          {isSuccess && (
+                            <div className="form-error alert alert-success">
+                              La invitación fue enviada a <b>{email}</b>, revise
+                              su correo y confirme la invitación.
+                            </div>
+                          )}
+                        </div>
+                        <div className="form-group form-group-submit">
+                          <button
+                            asp-page-handler="Invite"
+                            type="submit"
+                            name="lgx-submit"
+                            onClick={handleSubmit}
+                            id="lgx-submit"
+                            className="btn btn-success"
+                          >
+                            <span>Invitar</span>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div
+                    className="col-sm-2 wow fadeInUp"
+                    data-wow-delay="0.2s"
+                  ></div>
+                </div>
+              </div>
             </div>
           </div>
-        </header>
-        <section>
-          <p>
-            <form method="POST" className="lgx-subscribe-form">
-              <div className="form-group form-group-email">
-                <input
-                  asp-for="Email"
-                  type="email"
-                  value={email}
-                  onChange={x => {
-                    setIsSuccess(false);
-                    setError("");
-                    setEmail(x.target.value);
-                  }}
-                  id="subscribe"
-                  placeholder="Ingresa tu dirección de Email ..."
-                  className="form-control lgx-input-form form-control"
-                />
-                {error != "" && (
-                  <div className="form-error alert alert-danger">{error}</div>
-                )}
-                {isSuccess && (
-                  <div className="form-error alert alert-success">
-                    La invitación fue enviada a <b>{email}</b>, revise su correo
-                    y confirme la invitación.
-                  </div>
-                )}
-              </div>
-              <div className="form-group form-group-submit">
-                <button
-                  asp-page-handler="Invite"
-                  type="submit"
-                  name="lgx-submit"
-                  onClick={handleSubmit}
-                  id="lgx-submit"
-                  className="lgx-btn lgx-submit"
-                >
-                  <span>Invitar</span>
-                </button>
-              </div>
-            </form>
-          </p>
-        </section>
-        {/* <section>
-          <p> </p>
-        </section> */}
-      </article>
-    </PageCenterWrapper>
+        </div>
+      </div>
+    </>
   );
 };
 

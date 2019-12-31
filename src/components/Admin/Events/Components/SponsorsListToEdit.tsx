@@ -6,11 +6,17 @@ import {
 } from "../../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../../store/loading/actions";
-import { EventsAttendees, Sponsor } from "../../../../services/models/sponsor";
+import { Sponsor } from "../../../../services/models/sponsor";
+import { EventsAttendees } from "../../../../services/models/EventsAttendees";
 import { SearchWrapper } from "../../../Common/SearchWrapper";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
-
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Switch from "@material-ui/core/Switch";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
 type SponsorsListToEditProps = {
@@ -32,9 +38,9 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
   useEffect(() => {
     getSponsors().then(sponsors => {
       var spon = sponsors.map(x => {
-        var colaboration = eventInEdition.sponsors.find(
-          s => s.sponsorId == x.id
-        );
+        var colaboration = null;
+        if (eventInEdition.sponsors != null)
+          colaboration = eventInEdition.sponsors.find(s => s.sponsorId == x.id);
         return new SponsorToEvent(
           x,
           colaboration != null,
@@ -46,7 +52,7 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
   }, []);
 
   const handleSponsorColaborate = (
-    eventInput: MouseEvent<HTMLButtonElement>,
+    eventInput: ChangeEvent<HTMLInputElement>,
     sponsor: SponsorToEvent,
     collaborated: boolean
   ) => {
@@ -69,10 +75,10 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
     setSponsors(usersToUpdate);
   };
   const columns = [
-    {
-      dataField: "sponsor.id",
-      text: "Id"
-    },
+    // {
+    //   dataField: "sponsor.id",
+    //   text: "Id"
+    // },
     {
       dataField: "sponsor.name",
       text: "Empresa"
@@ -88,23 +94,22 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
         <img className="sponsors-list-img" src={sponsor.sponsor.logoUrl}></img>
       )
     },
-    {
-      dataField: "collaboratedDetail",
-      text: "Colaboró con",
-      style: {
-        textAlign: "center",
-        height: "2px"
-      },
-      formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
-        <textarea
-          className="form-control"
-          disabled={!sponsor.collaborated}
-          value={sponsor.collaboratedDetail}
-          onChange={e => handleOnChangeDescription(e, sponsor)}
-          rows={4}
-        ></textarea>
-      )
-    },
+    // {
+    //   dataField: "collaboratedDetail",
+    //   text: "Colaboró con",
+    //   style: {
+    //     textAlign: "center",
+    //     height: "2px"
+    //   },
+    //   formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
+    //     <textarea
+    //       className="form-control"
+    //       value={sponsor.collaboratedDetail}
+    //       onChange={e => handleOnChangeDescription(e, sponsor)}
+    //       rows={4}
+    //     ></textarea>
+    //   )
+    // },
     {
       dataField: "collaborated",
       text: "Colaboró con",
@@ -114,23 +119,16 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
       },
       formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
         <div className="button-action">
-          {sponsor.collaborated ? (
-            <button
-              onClick={e => handleSponsorColaborate(e, sponsor, false)}
-              type="button"
-              className="btn btn-success"
-            >
-              <i className="fas fa-check"></i>
-            </button>
-          ) : (
-            <button
-              onClick={e => handleSponsorColaborate(e, sponsor, true)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          )}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={sponsor.collaborated}
+                onChange={e =>
+                  handleSponsorColaborate(e, sponsor, !sponsor.collaborated)
+                }
+              />
+            }
+          />
         </div>
       )
     }

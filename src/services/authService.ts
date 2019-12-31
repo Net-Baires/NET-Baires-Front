@@ -25,7 +25,7 @@ export const isAuthenticated = (): boolean => {
 export const login = (token: string) => {
   const decodeToken = JwtDecode<TokenClaims>(token);
   currentUser.email = decodeToken.email;
-  currentUser.id = +decodeToken.unique_name;
+  currentUser.id = +decodeToken.userId;
   currentUser.role = decodeToken.role;
   currentUser.token = token;
   isLoggued = true;
@@ -47,5 +47,5 @@ export const hasPermission = (rol: string): boolean => {
 interface TokenClaims {
   email: string;
   role: string;
-  unique_name: string;
+  userId: string;
 }

@@ -51,7 +51,9 @@ export const BreadcrumbsComponent: React.SFC<
                       <div className="lgx-heading lgx-heading-white">
                         {/* <h2 className="heading">Jonathon Doe</h2> */}
                       </div>
-                      <Breadcrumbs></Breadcrumbs>
+                      <Breadcrumbs
+
+                      ></Breadcrumbs>
                     </div>
                   </div>
                 </div>

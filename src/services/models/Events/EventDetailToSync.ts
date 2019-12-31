@@ -10,12 +10,6 @@ export interface EventDetailToSync {
   attendees: Member[];
 }
 
-export interface EventToReportAttendance {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  status: string;
-  date: Date;
-  token: string;
+export interface CheckAttendanceGeneralResponse {
+  eventId: number;
 }

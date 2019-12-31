@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FormikProps, Field, Form, withFormik } from "formik";
 import * as yup from "yup";
 import { Member } from "../../../../services/models/Member";
-interface FormValues extends Member {}
+interface FormValues extends Member { }
 
 const EditUserComponentForm = (props: FormikProps<FormValues>) => {
   const { touched, errors, isSubmitting } = props;
@@ -42,11 +42,12 @@ const EditUserComponentForm = (props: FormikProps<FormValues>) => {
       </div>
       <div className="form-group">
         <label>Bloqueado</label>
-        <Field disabled type="name" name="enabled" className="form-control" />
+        <Field disabled type="blocked" name="blocked" className="form-control" />
         {touched.blocked && errors.blocked && (
           <div className="form-error alert alert-danger">{errors.blocked}</div>
         )}
       </div>
+
       <div className="form-group">
         <button
           type="submit"

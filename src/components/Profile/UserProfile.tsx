@@ -10,6 +10,7 @@ import Draft from "react-wysiwyg-typescript";
 import { EditorState, ContentState } from "draft-js";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
+import { CardWrapper } from '../Common/CardWrapper';
 interface FormValues extends Member {
   imageData?: File;
   biographyHtml?: EditorState;
@@ -193,7 +194,7 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
     instagram: yup.string()
   }),
   handleSubmit: (values: any, { props }) => {
-    values.biography = values.biographyHtml!.getCurrentContent().getPlainText();
+    // values.biography = values.biographyHtml.getCurrentContent().getPlainText();
     props.saveUser(values, values.imageData!);
   }
 })(UserProfileForm);
@@ -222,14 +223,14 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = () => {
     <>
       {/* <ShareProfile urlToShare={"www.google.com.ar"}></ShareProfile> */}
 
-      <PageFullWidthWrapper>
+      <CardWrapper cardTitle="Editar Perfil">
         {!isEmpty(userDetail) && (
           <EditAllUserFormik
             {...userDetail}
             saveUser={saveUser}
           ></EditAllUserFormik>
         )}
-      </PageFullWidthWrapper>
+      </CardWrapper>
     </>
   );
 };

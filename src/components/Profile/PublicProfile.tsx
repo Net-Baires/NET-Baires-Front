@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 type PublicProfileProps = {
-  urlToShare: string;
+  urlToShare?: string;
 };
 export const PublicProfile: React.SFC<PublicProfileProps> = () => {
   return (

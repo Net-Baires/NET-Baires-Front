@@ -1,13 +1,12 @@
 import { EventDetail, UpdateEvent } from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
-import {
-  EventDetailToSync,
-  EventToReportAttendance
-} from "./models/Events/EventDetailToSync";
+import { EventDetailToSync, CheckAttendanceGeneralResponse } from "./models/Events/EventDetailToSync";
+import { EventToReportAttendance } from "./models/Events/EventToReportAttendance";
 import { Config } from "./config";
 import { getRequest, putRequest } from "./requestServices";
-import { EventsAttendees } from "./models/sponsor";
+import { EventsAttendees } from "./models/EventsAttendees";
+import { EventLiveDetail } from "./models/Events/EventLiveDetail";
 
 export const getNextEvent = (): Promise<EventDetail> => {
   return fetch("http://localhost:3000/events/1").then(x => x.json());
@@ -20,13 +19,15 @@ export const syncEvent = (idEvent: number): Promise<MeEvent[]> => {
   return putRequest(`/events/${idEvent}/sync`);
 };
 export const getEventsToSync = (): Promise<EventToSync[]> =>
-  getRequest("/events/ToSync");
+  getRequest("/events?done=false");
 export const getEvents = (): Promise<EventDetail[]> => getRequest("/events");
 export const getEventLive = (id: number): Promise<EventDetail> =>
   getRequest(`/events/${id}/live`);
+export const GetAdminLiveEventDetail = (id: number): Promise<EventLiveDetail> =>
+  getRequest(`/events/${id}/live/detail`);
 
-export const getEventsLive = (): Promise<EventToSync[]> => {
-  return getRequest("/events/live");
+export const getEventsLive = (): Promise<EventDetail[]> => {
+  return getRequest("/events?live=true");
 };
 
 export const updateEvent = (
@@ -41,19 +42,25 @@ export const getEvent = (id: number): Promise<EventDetail> =>
 
 export const getEventToReportAttendance = (
   id: number
-): Promise<EventToReportAttendance> => getRequest(`/events/${id}/attendances`);
+): Promise<EventToReportAttendance> => getRequest(`/events/${id}/attendance`);
 export const getCheckAttendanceGeneral = (
   id: number
 ): Promise<EventToReportAttendance> =>
   getRequest(`/events/${id}/attendances/general`);
 
-export const reportAttendance = (token: string): Promise<EventToSync> => {
+export const reportAttendance = (token: string): Promise<ReportAttendanceResponse> => {
   return putRequest(`/events/attendances/${token}`);
 };
 export const reportAttendanceGeneral = (
   token: string
-): Promise<EventToSync> => {
+): Promise<CheckAttendanceGeneralResponse> => {
   return putRequest(`/events/attendances/general/${token}`);
+};
+export const reportAttendanceGeneralByCode = (
+  id: number,
+  code: string
+): Promise<CheckAttendanceGeneralResponse> => {
+  return putRequest(`/events/${id}/attendances/general/${code}`);
 };
 
 export const getEventToSync = (
@@ -70,3 +77,7 @@ export const cancelEventsToSync = (
 export const syncEventsToSync = (event: EventToSync): Promise<EventToSync> => {
   return fetch("http://localhost:3000/eventsToSync").then(x => x.json());
 };
+export interface ReportAttendanceResponse {
+  eventId: number;
+  memberId: number;
+}

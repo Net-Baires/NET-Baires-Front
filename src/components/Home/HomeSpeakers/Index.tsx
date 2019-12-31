@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { getSpeakers } from "../../../services/speakersServices";
-import { Speaker } from "../../../services/models/speaker";
+import React from "react";
 import { isEmpty } from "../../../services/objectsservices";
+import { Member } from "../../../services/models/Member";
 
-type HomeSpeakersProps = {};
-const HomeSpeakers: React.SFC<HomeSpeakersProps> = () => {
-  let speakersDefault: Speaker[] = [];
-  const [speakers, setSpeakers] = useState(speakersDefault);
-  useEffect(() => {
-    getSpeakers().then(x => setSpeakers(x));
-  }, []);
+type HomeSpeakersProps = {
+  speakers: Member[];
+};
+const HomeSpeakers: React.SFC<HomeSpeakersProps> = ({ speakers }) => {
   return (
     <>
       {!isEmpty(speakers) && (

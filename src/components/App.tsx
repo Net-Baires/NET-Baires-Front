@@ -1,18 +1,15 @@
-import React from "react";
-import "../styles/index.css";
+import React, { useEffect } from "react";
+// import "../styles/index.css";
 import Login from "./Login";
 import { Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home/Index";
 import historyRouter from "./router/HistoryRouter";
 import Organizers from "./organizers";
-import Header from "./Header";
-import Footer from "./Footer";
 import Sponsor from "./Sponsor";
 import SpeakerDetail from "./SpeakerDetail";
 import OrganizerDetail from "./OrganizerDetail";
-import ControlPanel from "./Admin/controlPanel";
+import ControlPanel from "./Admin/AdminControlPanel";
 import { PrivateRoute } from "./router/PrivateRoute";
-import LoadingOverlay from "react-loading-overlay";
 import { AppState } from "../store";
 import { loading, ready } from "../store/loading/actions";
 import { connect } from "react-redux";
@@ -42,8 +39,15 @@ import { NewBadge } from "./Admin/Badges/NewBadge";
 import { EditBadge } from "./Admin/Badges/EditBadge";
 import { BadgesList } from "./Admin/Badges/BadgesList";
 import NotFoundPage from "./NotFoundPage/Index";
-import { EventLiveDashBoard } from "./EventLive/EventLiveDashBoard";
 import { EditEventPage } from "./Admin/Events/EditEventPage";
+import { AdminWrapper } from "./Admin/Wrapper";
+import { HomeWrapper } from "./Home/HomeWrapper";
+import LogoutComponent from "./Login/LogoutComponent";
+import { AdminEventLivePanel } from "./Admin/Events/EventLive/AdminEventLivePanel";
+import MemberControlPanel from "./MemberLogged/MemberControlPanel";
+import { EventsLivePublicDetail } from "./EventLive/EventsLivePublicDetail";
+import { MemberEventLivePanel } from './MemberLogged/MemberEventLivePanel';
+import { LastLocationProvider } from 'react-router-last-location';
 
 interface AppProps {
   isLoading: boolean;
@@ -51,118 +55,168 @@ interface AppProps {
   ready: () => void;
 }
 
-export const App: React.SFC<AppProps> = props => {
+export const App: React.SFC<AppProps> = () => {
+
   return (
     <>
       <Router history={historyRouter}>
-        <Header></Header>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <LoadingOverlay active={props.isLoading} spinner text="Procesando...">
-            <Route exact path="/organizers" component={Organizers} />
-            <Route exact path="/JoinSlack" component={JoinSlack} />
-            <Route
-              exact
-              path="/organizers/:id(\d+)?"
-              component={OrganizerDetail}
-            />
+        <LastLocationProvider>
+          {/* <Header></Header> */}
+          <Switch>
+            <Route exact path="/">
+              <HomeWrapper>
+                <Home></Home>
+              </HomeWrapper>
+            </Route>
+            <Route exact path="/JoinSlack">
+              <HomeWrapper>
+                <JoinSlack></JoinSlack>
+              </HomeWrapper>
+            </Route>
+            <Route exact path="/login" component={Login}></Route>
+            <Route exact path="/logout" component={LogoutComponent}></Route>
+            <Route exact path="/login/meetup" component={MeetupCallBack}></Route>
+            <Route exact path="/login/eventBrite">
+              <HomeWrapper>
+                <EventBriteCallBack></EventBriteCallBack>
+              </HomeWrapper>
+            </Route>
 
-            <Route exact path="/speaker/:id(\d+)?" component={SpeakerDetail} />
+            <Route exact path="/organizers">
+              <Organizers></Organizers>
+            </Route>
 
-            <Route
-              exact
-              path="/members/:id(\d+)/profile"
-              component={PublicProfile}
-            />
-            <Route exact path="/sponsor/:id(\d+)?" component={Sponsor} />
-            <Route exact path="/login/meetup" component={MeetupCallBack} />
-            <Route
-              exact
-              path="/login/eventBrite"
-              component={EventBriteCallBack}
-            />
-            <Route exact path="/badges/:id(\d+)" component={BadgeShowDetail} />
-            <Route exact path="/badges" component={BadgesListPublic} />
+            <Route exact path="/organizers/:id(\d+)?">
+              <OrganizerDetail></OrganizerDetail>
+            </Route>
 
-            <Route exact path="/events/live" component={EventsInLive} />
-            <Route
-              exact
-              path="/events/:id(\d+)/live"
-              component={EventLiveDashBoard}
-            />
+            <Route exact path="/speaker/:id(\d+)?">
+              <SpeakerDetail></SpeakerDetail>
+            </Route>
 
-            <PrivateRoute
-              exact
-              path="/member/events/:id(\d+)/attendance"
-              component={ReportAttendance}
-            />
+            <Route exact path="/members/:id(\d+)/profile">
+              <PublicProfile></PublicProfile>
+            </Route>
+            <Route exact path="/sponsor/:id(\d+)?">
+              <Sponsor></Sponsor>
+            </Route>
 
-            <PrivateRoute
-              exact
-              path="/admin/eventsToSync"
-              component={EventsToSync}
-            />
-            <PrivateRoute exact path="/admin/events" component={EventsList} />
-            <PrivateRoute
-              exact
-              path="/admin/events/:id(\d+)?/edit"
-              component={EditEventPage}
-            />
-            <PrivateRoute
-              exact
-              path="/admin/eventsToSync/:id/:platform/sync"
-              component={SyncEvent}
-            />
-            <PrivateRoute
-              exact
-              path="/admin/sponsors/new"
-              component={NewSponsor}
-            />
-            <PrivateRoute
-              exact
-              path="/admin/sponsors/:id/edit"
-              component={EditSponsor}
-            />
-            <PrivateRoute
-              exact
-              path="/admin/events/:id/attendances/general"
-              component={CheckAttendancesGeneral}
-            />
+            <Route exact path="/badges/:id(\d+)">
+              <BadgeShowDetail></BadgeShowDetail>
+            </Route>
+            <Route exact path="/badges">
+              <BadgesListPublic></BadgesListPublic>
+            </Route>
 
-            <PrivateRoute
-              exact
-              path="/admin/sponsors"
-              component={SponsorsList}
-            />
-            <PrivateRoute
-              exact
-              path="/admin/events/live"
-              component={EventsInLiveToDo}
-            />
+            <Route exact path="/events/live">
+              <HomeWrapper>
+                <EventsInLive></EventsInLive>
+              </HomeWrapper>
+            </Route>
+            <Route exact path="/events/:id/live">
+              <HomeWrapper>
+                <EventsLivePublicDetail></EventsLivePublicDetail>
+              </HomeWrapper>
+            </Route>
+            {/* <PrivateRoute
+            exact
+            path="/EventLive/:id(\d+)"
+            component={EventLiveAttendances}
+          /> */}
 
-            <PrivateRoute
-              exact
-              path="/admin/EventLive/Attendances"
-              component={EventLiveAttendances}
-            />
-            <PrivateRoute
-              exact
-              path="/EventLive/:id(\d+)"
-              component={EventLiveAttendances}
-            />
+            <AdminWrapper>
+              <PrivateRoute
+                exact
+                path="/member/events/:id(\d+)/attendance"
+                component={ReportAttendance}
+              />
+              <PrivateRoute
+                roles={["Member"]}
+                exact
+                path="/member/panel"
+                component={MemberControlPanel}
+              ></PrivateRoute>
+              <PrivateRoute
+                roles={["Member"]}
+                exact
+                path="/member/events/:id/live/panel"
+                component={MemberEventLivePanel}
+              />
+              <PrivateRoute
+                roles={["Admin"]}
+                exact
+                path="/admin/eventsToSync"
+                component={EventsToSync}
+              />
+              {/* Reportar asistencia */}
+              <PrivateRoute
+                roles={["Admin", "Organizer"]}
+                exact
+                path="/admin/EventLive/Attendances"
+                component={EventLiveAttendances}
+              />
+              <PrivateRoute exact path="/admin/profile" component={UserProfile} />
+              <PrivateRoute
+                roles={["Admin", "Organizer"]}
+                exact
+                path="/admin/events/live"
+                component={EventsInLiveToDo}
+              />
 
-            <PrivateRoute
-              exact
-              path="/member/organizedcode/read"
-              component={ReadOrganizedCode}
-            />
-            <PrivateRoute exact path="/admin/users" component={UsersList} />
-            <PrivateRoute
-              exact
-              path="/admin/users/:id(\d+)/Edit"
-              component={EditUser}
-            />
-            <PrivateRoute exact path="/admin/users/new" component={NewUser} />
+              <PrivateRoute
+                roles={["Admin", "Organizer"]}
+                exact
+                path="/admin/events/:id/attendances/general"
+                component={CheckAttendancesGeneral}
+              />
+              <PrivateRoute
+                roles={["Admin", "Organizer"]}
+                exact
+                path="/admin/events/:id/live/panel"
+                component={AdminEventLivePanel}
+              />
+
+              <PrivateRoute exact path="/admin/events" component={EventsList} />
+              <PrivateRoute
+                exact
+                path="/admin/events/:id(\d+)?/edit"
+                component={EditEventPage}
+              />
+              <PrivateRoute
+                exact
+                path="/admin/eventsToSync/:id/:platform/sync"
+                component={SyncEvent}
+              />
+              <PrivateRoute
+                roles={["Admin"]}
+                exact
+                path="/admin/sponsors/new"
+                component={NewSponsor}
+              />
+              <PrivateRoute
+                roles={["Admin", "Organizer"]}
+                exact
+                path="/admin/panel"
+                component={ControlPanel}
+              ></PrivateRoute>
+              <PrivateRoute
+                roles={["Admin"]}
+                exact
+                path="/admin/sponsors/:id/edit"
+                component={EditSponsor}
+              />
+              <PrivateRoute
+                roles={["Admin"]}
+                exact
+                path="/admin/sponsors"
+                component={SponsorsList}
+              />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/members" component={UsersList} />
+              <PrivateRoute roles={["Admin"]} exact path="/admin/users/:id(\d+)/Edit" component={EditUser} />
+              <PrivateRoute exact path="/admin/users/new" component={NewUser} />
+              <PrivateRoute roles={["Member"]} exact path="/member/organizedcode/read" component={ReadOrganizedCode} />
+            </AdminWrapper>
+
 
             <PrivateRoute exact path="/admin/badges" component={BadgesList} />
             <PrivateRoute
@@ -172,16 +226,15 @@ export const App: React.SFC<AppProps> = props => {
             />
             <PrivateRoute exact path="/admin/badges/new" component={NewBadge} />
 
-            <PrivateRoute exact path="/admin/profile" component={UserProfile} />
 
-            <Route exact path="/login" component={Login} />
-            <PrivateRoute exact path="/admin/panel" component={ControlPanel} />
+
             <Route exact path="/notfound" component={NotFoundPage} />
-          </LoadingOverlay>
-
-          <Route exact path="*" component={NotFoundPage} />
-        </Switch>
-        <Footer></Footer>
+            <Route exact path="*">
+              <NotFoundPage></NotFoundPage>
+            </Route>
+          </Switch>
+          {/* <Footer></Footer> */}
+        </LastLocationProvider>
       </Router>
     </>
   );
@@ -199,7 +252,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const AppConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);

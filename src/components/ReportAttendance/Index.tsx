@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, RouteComponentProps, Route } from "react-router";
-import QRCode from "qrcode.react";
 import { getEventToReportAttendance } from "../../services/eventsServices";
 import { getCurrentUser } from "../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
-import { EventToReportAttendance } from "../../services/models/Events/EventDetailToSync";
+import { EventToReportAttendance } from "../../services/models/Events/EventToReportAttendance";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
-
+import { CardWrapper } from "../Common/CardWrapper";
+import { QRCode } from "react-qr-svg";
+import { isEmpty } from "../../services/objectsservices";
 type ReportAttendanceProps = {
   loading: () => void;
   ready: () => void;
@@ -18,9 +19,10 @@ type ReportAttendanceParams = {
 
 type ReportAttendancePropsAndRouter = ReportAttendanceParams &
   ReportAttendanceProps;
-export const ReportAttendanceComponent: React.SFC<
-  RouteComponentProps<ReportAttendancePropsAndRouter> & ReportAttendanceProps
-> = ({ match, ...props }) => {
+export const ReportAttendanceComponent: React.SFC<RouteComponentProps<
+  ReportAttendancePropsAndRouter
+> &
+  ReportAttendanceProps> = ({ match, ...props }) => {
   const history = useHistory();
   const [qr, setQr] = useState("a");
   const [event, setEvent] = useState({} as EventToReportAttendance);
@@ -36,20 +38,18 @@ export const ReportAttendanceComponent: React.SFC<
   }, []);
   const user = getCurrentUser();
   return (
-    <PageFullWidthWrapper classWrapper="lgx-post-wrapper">
-      <article>
-        <header>
-          <h1>Reportar Asistencia</h1>
-          <h2> {event.title}</h2>
-        </header>
-        <header>
-          <figure>
-            <img
-              className="img-report-assitance"
-              src={event.imageUrl}
-              alt="New"
-            ></img>
-          </figure>
+    <CardWrapper cardTitle="Reportar mi Asistencia">
+      {!isEmpty(event) && (
+        <div className="center-content">
+          <img
+            className="img-report-assitance"
+            src={
+              event.eventDetail.imageUrl != null
+                ? event.eventDetail.imageUrl
+                : "/assets/images/imagenotfound.png"
+            }
+            alt="New"
+          ></img>
           <div className="text-area">
             <div className="speaker-info">
               <h1 className="title">
@@ -58,23 +58,33 @@ export const ReportAttendanceComponent: React.SFC<
               <h4 className="subtitle">Bienvenido {user.email}</h4>
             </div>
           </div>
-        </header>
-        {/* <section>
-          <p>{event.description}</p>
-        </section> */}
-        <section>
+          <div className="text-area">
+            <div className="speaker-info">
+              <h1 className="title">
+                {user.firstName} {user.lastName}
+              </h1>
+              <h3 className="subtitle">Lee mi código por favor.</h3>
+            </div>
+          </div>
           <div className="qr-container">
-            <p>{loaded && <QRCode className="qrcore-wrapper" value={qr} />}</p>
+            <p>
+              {loaded && (
+                <QRCode
+                  bgColor="#FFFFFF"
+                  fgColor="#000000"
+                  level="Q"
+                  style={{ width: 256 }}
+                  value={qr}
+                />
+              )}
+            </p>
             <footer>
               {/* Someone famous in <cite title="Source Title">Source Title</cite> */}
             </footer>
           </div>
-        </section>
-        {/* <section>
-          <p> </p>
-        </section> */}
-      </article>
-    </PageFullWidthWrapper>
+        </div>
+      )}
+    </CardWrapper>
   );
 };
 

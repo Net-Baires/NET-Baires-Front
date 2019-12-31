@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Event } from "../../../services/models/Events/Event";
+import React from "react";
+import { EventDetail } from "../../../services/models/Events/Event";
 
-type LastEventsProps = {};
-const LastEvents: React.SFC<LastEventsProps> = () => {
+type LastEventsProps = {
+  events: EventDetail[];
+};
+const LastEvents: React.SFC<LastEventsProps> = ({ events }) => {
   return (
     <>
       <section>
