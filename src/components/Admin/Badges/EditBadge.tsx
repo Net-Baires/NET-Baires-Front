@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
+import { CardWrapper } from '../../Common/CardWrapper';
 import {
   getBadgeToEdit,
   updateBadge,
@@ -60,7 +61,7 @@ const EditBadgeInternalComponent: React.SFC<
   };
 
   return (
-    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
+    <CardWrapper cardTitle="Editar Badge">
       <MDBContainer className="pepepe">
         <MDBModal isOpen={sureToDelete}>
           <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
@@ -93,7 +94,7 @@ const EditBadgeInternalComponent: React.SFC<
           Eliminar
         </button>
       </div>
-    </PageFullWidthWrapper>
+    </CardWrapper>
   );
 };
 

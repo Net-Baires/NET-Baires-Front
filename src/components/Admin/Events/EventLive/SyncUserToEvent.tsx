@@ -8,12 +8,13 @@ import {
 } from "../../../../services/attendeesServices";
 import { isEmpty } from "../../../../services/objectsservices";
 import { EventsAttendees } from "../../../../services/models/EventsAttendees";
-import { updateEventLive } from '../../../../services/syncCommunicationServices';
+import { updateEventLive, memberNotification } from '../../../../services/syncCommunicationServices';
 
 type NewUserProps = {
   idEvent: number;
+  callbackAction?: () => void;
 };
-export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
+export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackAction }) => {
   const [readySearch, setReadySearch] = useState(false);
   const [memberToSearch, setMemberToSearch] = useState({} as Member);
   const [attendeeDetail, setAttendeeDetail] = useState({} as EventsAttendees);
@@ -45,7 +46,10 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
       setReadySearch(false);
       setValue("");
       updateEventLive(idEvent);
-
+      if (eventAttendee.attended)
+        memberNotification(memberToSearch.id, "Acaba de ser marcado como presente en un evento");
+      if (callbackAction != null)
+        callbackAction();
     });
   };
   const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {
@@ -96,7 +100,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent }) => {
               {/* <span className="d-block mb-4">{memberToSearch.}</span> */}
               <img
                 className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
-                style={{ width: "70px;" }}
+                style={{ width: "70px" }}
                 src={
                   memberToSearch.picture != "" && memberToSearch.picture != null
                     ? memberToSearch.picture

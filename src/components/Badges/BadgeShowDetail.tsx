@@ -57,7 +57,7 @@ export const BadgeShowDetailComponent: React.SFC<
         <header>
           <figure>
             <a href={badge.badgeUrl}>
-              <img src={badge.badgeImageUrl} alt="New" />
+              <img src={badge.imageUrl} alt="New" />
             </a>
           </figure>
           <div className="text-area">

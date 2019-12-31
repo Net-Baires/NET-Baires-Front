@@ -1,124 +1,126 @@
 import React from "react";
 import { EventDetail } from "../../../services/models/Events/Event";
-
+import Carousel from 'react-material-ui-carousel'
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { isEmpty } from '../../../services/objectsservices';
 type LastEventsProps = {
   events: EventDetail[];
 };
 const LastEvents: React.SFC<LastEventsProps> = ({ events }) => {
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
     <>
-      <section>
-        <div id="lgx-news" className="lgx-news">
-          <div className="lgx-inner">
-            <div className="container">
-              <div className="row">
-                <div className="col-xs-12">
-                  <div className="lgx-heading">
-                    <h2 className="heading">Ultimos eventos</h2>
-                    {/* <h3 className="subheading"></h3> */}
-                  </div>
+      {!isEmpty(events) && (
+        <div className="pricing-section feature_huge text-center" id="ultimosEventos">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 ">
+                <div className="pricing-intro">
+                  <h1 className="wow fadeInUp" data-wow-delay="0s">
+                    Ultimos Eventos
+                </h1>
+                  <p className="wow fadeInUp" data-wow-delay="0.2s">
+                   Estos son los ultimos eventos en los que la comunidad de NET-Baires, participó como organizadora o colaboradora.
+                                                                                              
+                </p>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-xs-12 col-sm-6 col-md-4">
-                  <div className="lgx-single-news">
-                    <figure>
-                      <a href="news-single.html">
-                        <img src="http://placehold.it/1144x690" alt=""></img>
-                      </a>
-                    </figure>
-                    <div className="single-news-info">
-                      <div className="meta-wrapper">
-                        <span>April 25, 2018</span>
-                        <span>
-                          by <a href="#">Riazsagar</a>
-                        </span>
-                        <span>
-                          <a href="#">Design</a>
-                        </span>
+                <div className="row">
+                  <Slider previousButton={() => (<></>)} nextButton={() => (<></>)} autoplay={4}>
+                    {events.map((event, index) => (
+                      // <div
+                      //   className="table-left wow fadeInUp"
+                      //   data-wow-delay="0.4s"
+                      // >
+                      //   <div className="icon">
+                      //     <img src={
+                      //       event.imageUrl != null
+                      //         ? event.imageUrl
+                      //         : "/assets/images/imagenotfound.png"
+                      //     } alt="Icon" />
+                      //   </div>
+                      //   <div className="pricing-details">
+                      //     <h2>Beginner Plan</h2>
+                      //     <span>$5.90</span>
+                      //     <p>
+                      //       Pay little enjoy the product
+                      //         <br className="hidden-xs" /> for life time.
+                      //        </p>
+                      //     <ul>
+                      //       <li>First basic feature </li>
+                      //       <li>Second feature goes here</li>
+                      //       <li>Any other third feature</li>
+                      //       <li>And the last one goes here</li>
+                      //     </ul>
+                      //     <button className="btn btn-primary btn-action btn-fill">
+                      //       Get Plan
+                      //        </button>
+                      //   </div>
+                      // </div>
+                      <div key={index} className="img-slider-home" style={{backgroundImage:`url(${
+                        event.imageUrl != null
+                          ? event.imageUrl
+                          : "/assets/images/imagenotfound.png"
+                      }) `}}>
+
                       </div>
-                      <h3 className="title">
-                        <a href="news-single.html">
-                          Brooklyn Beta was the most important conferen best
-                          tristique
-                        </a>
-                      </h3>
-                      <a className="lgx-btn lgx-btn-white lgx-btn-sm" href="#">
-                        <span>Read More</span>
-                      </a>
-                    </div>
-                  </div>
+
+                    ))}
+                  </Slider>
                 </div>
-                <div className="col-xs-12 col-sm-6 col-md-4">
-                  <div className="lgx-single-news">
-                    <figure>
-                      <a href="news-single.html">
-                        <img src="http://placehold.it/1144x690" alt="" />
-                      </a>
-                    </figure>
-                    <div className="single-news-info">
-                      <div className="meta-wrapper">
-                        <span>April 25, 2018</span>
-                        <span>
-                          by <a href="#">Riazsagar</a>
-                        </span>
-                        <span>
-                          <a href="#">Design</a>
-                        </span>
-                      </div>
-                      <h3 className="title">
-                        <a href="news-single.html">
-                          Brooklyn Beta was the most important conferen best
-                          tristique
-                        </a>
-                      </h3>
-                      <a className="lgx-btn lgx-btn-white lgx-btn-sm" href="#">
-                        <span>Read More</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xs-12 col-sm-6 col-md-4">
-                  <div className="lgx-single-news">
-                    <figure>
-                      <a href="news-single.html">
-                        <img src="http://placehold.it/1144x690" alt="" />
-                      </a>
-                    </figure>
-                    <div className="single-news-info">
-                      <div className="meta-wrapper">
-                        <span>April 25, 2018</span>
-                        <span>
-                          by <a href="#">Riazsagar</a>
-                        </span>
-                        <span>
-                          <a href="#">Design</a>
-                        </span>
-                      </div>
-                      <h3 className="title">
-                        <a href="news-single.html">
-                          Brooklyn Beta was the most important conferen best
-                          tristique
-                        </a>
-                      </h3>
-                      <a className="lgx-btn lgx-btn-white lgx-btn-sm" href="#">
-                        <span>Read More</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="section-btn-area">
-                <a className="lgx-btn" href="news.html">
-                  View More Blogs
-                </a>
               </div>
             </div>
           </div>
         </div>
-      </section>
+
+      )}
+
     </>
   );
 };
 
 export default LastEvents;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+    avatar: {
+      backgroundColor: red[500],
+    },
+  }),
+);

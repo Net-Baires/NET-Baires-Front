@@ -14,11 +14,12 @@ import { Config } from "./services/config";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { initCommunication } from './services/communicationServices';
+
 let storeGlobal = createStore(rootReducer);
 // if ("serviceWorker" in navigator) {
 //   window.addEventListener("load", () => {
 //     navigator.serviceWorker
-//       .register("/sw.js")
+//       .register("/workers.js")
 //       .then(registration => {
 //         // tslint:disable:no-console
 //         console.log("SW registered: ", registration);

@@ -13,9 +13,10 @@ import { NavLink } from "react-router-dom";
 import Checkbox from "react-simple-checkbox";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { SearchWrapper } from "../../Common/SearchWrapper";
 import { Member } from "../../../services/models/Member";
+import { CardWrapper } from '../../Common/CardWrapper';
+import { EditOneUserEvent } from './components/EditOneUser';
 
 type UsersListProps = {
   loading: () => void;
@@ -57,6 +58,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
       ready();
     });
   };
+
   const columns = [
     {
       dataField: "id",
@@ -167,33 +169,21 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
   };
 
   return (
-    <>
+    <div className="row">
       {users && (
-        <SearchWrapper title="Usuarios">
-          <ToolkitProvider keyField="id" data={users} columns={columns} search>
-            {(props: any) => (
-              <div>
-                <SearchBar {...props.searchProps} />
-                <hr />
-                <BootstrapTable
-                  className="table-scrolleable"
-                  keyField="id"
-                  {...props.baseProps}
-                  pagination={paginationFactory()}
-                />
-              </div>
-            )}
-          </ToolkitProvider>
-        </SearchWrapper>
+        <EditOneUserEvent></EditOneUserEvent>
+
       )}
-      <NavLink
-        className="btn btn-success"
-        activeClassName="active"
-        to="/admin/users/new"
-      >
-        Nuevo Usuario
+      <CardWrapper colSize={4} cardTitle="Acciones Usuarios">
+        <NavLink
+          className="btn btn-primary"
+          activeClassName="active"
+          to="/admin/users/new"
+        >
+          Nuevo Usuario
       </NavLink>
-    </>
+      </CardWrapper>
+    </div>
   );
 };
 const mapStateToProps = () => ({});

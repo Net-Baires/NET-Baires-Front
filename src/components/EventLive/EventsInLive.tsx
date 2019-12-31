@@ -103,7 +103,7 @@ export const EventsInLive: React.SFC<RouteComponentProps<
                               Panel
                             </button>
                           </div>
-                          <div className="col-sm-12">
+                          {/* <div className="col-sm-12">
                             <button
                               type="button"
                               onClick={e => handleDetailEvent(e, event)}
@@ -111,7 +111,7 @@ export const EventsInLive: React.SFC<RouteComponentProps<
                             >
                               Detalle
                             </button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

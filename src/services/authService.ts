@@ -12,6 +12,9 @@ export const getCurrentUser = (): Member => {
   }
   return currentUser;
 };
+export const setCurrentMember = (memberDetail: Member): void => {
+  currentUser = memberDetail;
+};
 export const getToken = () => currentToken;
 export const isAuthenticated = (): boolean => {
   var value = localStorage.getItem("CurrentUserToken");

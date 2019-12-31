@@ -48,7 +48,7 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
                     <div className="lgx-single-news lgx-single-news-images">
                       <figure>
                         <a href={badge.badgeUrl} target="_blank">
-                          <img src={badge.badgeImageUrl} alt=""></img>
+                          <img src={badge.imageUrl} alt=""></img>
                         </a>
                       </figure>
                       <div className="single-news-info">
@@ -75,8 +75,8 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
                   </div>
                 ))
               ) : (
-                <NotFound title="No hay Badges disponibles actualmente"></NotFound>
-              )}
+                  <NotFound title="No hay Badges disponibles actualmente"></NotFound>
+                )}
             </div>
           </div>
         </section>

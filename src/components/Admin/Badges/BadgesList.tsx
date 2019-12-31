@@ -12,6 +12,7 @@ import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { SearchWrapper } from "../../Common/SearchWrapper";
 import { getBadges } from "../../../services/badgesServices";
 import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
+import { CardWrapper } from '../../Common/CardWrapper';
 
 type BadgesListProps = {
   loading: () => void;
@@ -61,7 +62,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
       formatter: (_cellContent: any, badge: GetBadgeResponse) => (
         <img
           className="img-preview-badge-assign"
-          src={badge.badgeImageUrl}
+          src={badge.imageUrl}
         ></img>
       )
     },
@@ -97,7 +98,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
   };
 
   return (
-    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
+    <CardWrapper cardTitle="Badges">
       {badge && (
         <SearchWrapper title="Usuarios">
           <ToolkitProvider keyField="id" data={badge} columns={columns} search>
@@ -122,7 +123,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
       >
         Nuevo Badge
       </NavLink>
-    </PageFullWidthWrapper>
+    </CardWrapper>
   );
 };
 const mapStateToProps = () => ({});

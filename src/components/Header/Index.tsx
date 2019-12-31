@@ -67,7 +67,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               to="/admin/members"
             >
               <i className="fa fa-fw fa-users"></i>
-              Lista de Usuarios
+              Lista de Miembros
             </NavLink>
             <NavLink
               exact
