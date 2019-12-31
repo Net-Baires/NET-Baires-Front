@@ -13061,7 +13061,9 @@ div.code-toolbar>.toolbar span:hover {
     height: 70px;
 }
 
-.event-live-card-image {}
+.event-live-card-image {
+    width: 100%;
+}
 
 .card-container {
     height: 311px;

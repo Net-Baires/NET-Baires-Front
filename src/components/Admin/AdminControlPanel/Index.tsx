@@ -63,7 +63,6 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
                   <div className="event-live-card-image-container">
                     <img
                       className="event-live-card-image"
-                      style={{ height: "170px" }}
                       src={
                         event.imageUrl != null
                           ? event.imageUrl
