@@ -6,6 +6,7 @@ import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
 import { EditBadgeComponent } from "./components/EditBadgeComponent";
 import { newBadge } from "../../../services/badgesServices";
 import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
+import { CardWrapper } from '../../Common/CardWrapper';
 type NewBadgeProps = {
   loading: () => void;
   ready: () => void;
@@ -23,12 +24,12 @@ const NewBadgeComponent: React.SFC<NewBadgeProps> = ({ loading, ready }) => {
   };
 
   return (
-    <PageFullWidthWrapper classWrapper="lgx-page-wrapper">
+    <CardWrapper cardTitle="Nuevo Badge">
       <EditBadgeComponent
         saveBadge={saveBadge}
         badge={badgeToEdit}
       ></EditBadgeComponent>
-    </PageFullWidthWrapper>
+    </CardWrapper>
   );
 };
 

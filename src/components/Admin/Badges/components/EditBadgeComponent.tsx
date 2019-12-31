@@ -7,7 +7,7 @@ import Draft from "react-wysiwyg-typescript";
 import { EditorState, ContentState } from "draft-js";
 
 interface FormValues extends GetBadgeResponse {
-  imageData?: File;
+  imageFiles?: File;
   imagePreview?: string;
   descriptionHtml?: EditorState;
 }
@@ -15,8 +15,8 @@ interface FormValues extends GetBadgeResponse {
 const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
   const { touched, errors, isSubmitting, setFieldValue } = props;
   useEffect(() => {
-    if (props.values.badgeImageUrl != null)
-      setFieldValue("imagePreview", props.values.badgeImageUrl);
+    if (props.values.imageUrl != null)
+      setFieldValue("imagePreview", props.values.imageUrl);
     if (props.values.description != null)
       setFieldValue(
         "descriptionHtml",
@@ -27,7 +27,8 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
   }, []);
   const changeFile = (event: MouseEvent<HTMLInputElement>, file: any) => {
     event.preventDefault();
-    setFieldValue("imageData", file);
+    setFieldValue("imageFiles", file);
+
     const url = URL.createObjectURL(file);
     setFieldValue("imagePreview", url);
   };
@@ -39,10 +40,17 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
       }}
     >
       <div className="form-group">
-        <img
-          className="image-badge-prview"
-          src={props.values.imagePreview}
-        ></img>
+        <div className="row">
+          <div className="col-md-2"></div>
+          <div className="col-xs-12 col-md-8 image-badge-prview-container">
+            <img
+              className="image-badge-prview"
+              src={props.values.imagePreview}
+            ></img>
+          </div>
+          <div className="col-md-2"></div>
+
+        </div>
       </div>
       <div className="input-group">
         <div className="custom-file">
@@ -59,9 +67,9 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
             aria-describedby="inputGroupFileAddon01"
           ></input>
           <label className="custom-file-label">Choose file</label>
-          {touched.imageData && errors.imageData && (
+          {touched.imageFiles && errors.imageFiles && (
             <div className="form-error alert alert-danger">
-              {errors.imageData}
+              {errors.imageFiles}
             </div>
           )}
         </div>
@@ -105,7 +113,7 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
 
 interface MyFormProps extends GetBadgeResponse {
   saveBadge: (badge: GetBadgeResponse, image: File) => void;
-  imageData?: File;
+  imageFiles?: File;
 }
 const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: props => {
@@ -121,7 +129,7 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
     values.description = values
       .descriptionHtml!.getCurrentContent()
       .getPlainText();
-    props.saveBadge(values, values.imageData!);
+    props.saveBadge(values, values.imageFiles!);
   }
 })(EditBadgeComponentForm);
 

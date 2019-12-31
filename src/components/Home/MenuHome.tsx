@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
+import { SecureElement } from '../Auth/SecureElement';
 const MenuHomeComponent: React.SFC = () => {
   const { isLoggued } = useContext(UserContext);
   return (
@@ -33,8 +34,13 @@ const MenuHomeComponent: React.SFC = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link page-scroll" href="#services">
-                  Próximo Evento
+                <a className="nav-link page-scroll" href="#nuestrosOrganizadores">
+                  Organizadores
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link page-scroll" href="#ultimosEventos">
+                  Últimos Eventos
                 </a>
               </li>
               {/* <li className="nav-item dropdown">
@@ -46,31 +52,34 @@ const MenuHomeComponent: React.SFC = () => {
                                 </div>
                             </li> */}
               <li className="nav-item">
-                <a className="nav-link page-scroll" href="#features">
+                <a className="nav-link page-scroll" href="#speakers">
+                  Speakers
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link page-scroll" href="#sponsors">
                   Sponsors
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link page-scroll" href="#reviews">
-                  Ultimos Eventos
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link page-scroll" href="#pricing">
-                  Organizadores
-                </a>
-              </li>
+
               <li className="nav-item">
                 <NavLink className="nav-link  page-scroll" to="/events/live">
                   Eventos en vivo
                   </NavLink>
               </li>
               <li className="nav-item">
-                {isLoggued && (
-                  <NavLink className="nav-link  page-scroll" to="/admin/panel">
-                    App
+                {isLoggued && (<>
+                  <SecureElement roles={["Admin", "Organizer"]}>
+                    <NavLink className="nav-link  page-scroll" to="/admin/panel">
+                      App
                   </NavLink>
-                )}
+                  </SecureElement>
+                  <SecureElement roles={["Member"]}>
+                    <NavLink className="nav-link  page-scroll" to="/member/panel">
+                      App
+                  </NavLink>
+                  </SecureElement>
+                </>)}
               </li>
               <li className="nav-item">
                 {isLoggued ? (

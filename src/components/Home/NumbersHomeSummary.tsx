@@ -22,7 +22,7 @@ const NumbersHomeSummary: React.SFC<NumbersHomeSummaryProps> = ({
                   <span className="counter">{props.totalMembers}</span>+
                 </h3>
                 <div className="counter-text">
-                  <h4>Miemebros</h4>
+                  <h4>Miembros</h4>
                 </div>
               </div>
             </div>

@@ -83,7 +83,7 @@ const EditSponsorComponentForm = (props: FormikProps<FormValues>) => {
         <div className="form-group">
           <div className="row">
             <div className="col-md-2"></div>
-            <div className="col-xs-12 col-md-8">
+            <div className="col-xs-12 col-md-8 image-badge-prview-container">
               <img
                 className="image-badge-prview"
                 src={props.values.imagePreview}

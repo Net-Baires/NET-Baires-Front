@@ -8,12 +8,12 @@ const FooterHomeComponent: React.SFC = () => {
         <div className="container">
             <div className="col-md-12 text-center">
                 <img className="logo-footer-home" src="assets/images/Logo-Blanco.png" alt="Net-Baires Logo" />
-                <ul className="footer-menu">
+                {/* <ul className="footer-menu">
                     <li><a href="http://demo.com">Site</a></li>
                     <li><a href="#!">Support</a></li>
                     <li><a href="#!">Terms</a></li>
                     <li><a href="#!">Privacy</a></li>
-                </ul>
+                </ul> */}
                 <div className="footer-text">
                     <p>
                         Copyright © 2019 NET-Baires. All Rights Reserved.

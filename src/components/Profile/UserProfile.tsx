@@ -1,16 +1,18 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, useEffect, MouseEvent, useContext } from "react";
 import { FormikProps, Field, Form, withFormik } from "formik";
 import * as yup from "yup";
 import { Member } from "../../services/models/Member";
-import { loading, ready } from "../../store/loading/actions";
 import { connect } from "react-redux";
 import { getMe, updateMe } from "../../services/profileServices";
 import { isEmpty } from "../../services/objectsservices";
 import Draft from "react-wysiwyg-typescript";
 import { EditorState, ContentState } from "draft-js";
-import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
 import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
 import { CardWrapper } from '../Common/CardWrapper';
+import { loading, ready } from '../../store/loading/actions';
+import { successToast } from '../../services/toastServices';
+import { UserContext } from '../../contexts/UserContext';
+import { getCurrentUser } from '../../services/authService';
 interface FormValues extends Member {
   imageData?: File;
   biographyHtml?: EditorState;
@@ -41,9 +43,9 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
   };
   return (
     <>
-      <div className="form-group">
+      <div className="form-group image-profile-prview-container" >
         <img
-          className="image-badge-prview"
+          className="image-profile-prview"
           src={props.values.imagePreview}
         ></img>
       </div>
@@ -53,6 +55,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
 
           <input
             type="file"
+            accept=".jpg,.png"
             onChange={(event: any) => {
               changeFile(event, event.currentTarget.files[0]);
             }}
@@ -61,7 +64,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
             id="inputGroupFile01"
             aria-describedby="inputGroupFileAddon01"
           ></input>
-          <label className="custom-file-label">Choose file</label>
+          <label className="custom-file-label">Elegir Imagen</label>
           {touched.imageData && errors.imageData && (
             <div className="form-error alert alert-danger">
               {errors.imageData}
@@ -203,11 +206,13 @@ type EditAllSponsorProps = {
   loading: () => void;
   ready: () => void;
 };
-const UserProfileComponent: React.SFC<EditAllSponsorProps> = () => {
-  const [userDetail, setUserDetail] = useState({} as Member);
+const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }) => {
+  const [userDetail, setUserDetailState] = useState({} as Member);
+  const { setUserDetail, memberDetail } = useContext(UserContext);
   useEffect(() => {
     loading();
     getMe().then(x => {
+      setUserDetailState(x);
       setUserDetail(x);
       ready();
     });
@@ -217,21 +222,19 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = () => {
     loading();
     updateMe(me, picture).then(() => {
       ready();
+      successToast("Perfil Actualizado");
     });
   };
   return (
-    <>
-      {/* <ShareProfile urlToShare={"www.google.com.ar"}></ShareProfile> */}
-
-      <CardWrapper cardTitle="Editar Perfil">
-        {!isEmpty(userDetail) && (
-          <EditAllUserFormik
-            {...userDetail}
-            saveUser={saveUser}
-          ></EditAllUserFormik>
-        )}
-      </CardWrapper>
-    </>
+    <CardWrapper cardTitle="Editar Perfil" >
+      {!isEmpty(userDetail) && (
+        <EditAllUserFormik
+          {...userDetail}
+          saveUser={saveUser}
+        ></EditAllUserFormik>
+      )
+      }
+    </CardWrapper >
   );
 };
 const mapStateToProps = () => ({});

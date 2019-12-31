@@ -14,6 +14,7 @@ import { CardWrapper } from '../Common/CardWrapper';
 import { QRCode } from 'react-qr-svg';
 import { subscribe, CommunicationMessageType, UpdateEventLive } from '../../services/communicationServices';
 import { TitleHeader } from '../Common/TitleHeader';
+import { subscribupdateEventLive } from '../../services/syncCommunicationServices';
 type MemberEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -42,9 +43,10 @@ const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
     };
     useEffect(() => {
       loading();
-      subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, (data) => {
-        if (+data.eventId === +props.match.params.id)
+      subscribupdateEventLive((data) => {
+        if (+data.eventId === +props.match.params.id) {
           loadEventDetail();
+        }
       });
       loadEventDetail();
     }, []);

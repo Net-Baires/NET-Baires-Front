@@ -1,16 +1,19 @@
 import React, { Context, useState } from "react";
-import { Member } from "../services/models/Member";
+import { Member } from '../services/models/Member';
 import {
   isAuthenticated,
   getCurrentUser,
   logout,
-  login
+  login,
+  setCurrentMember
 } from "../services/authService";
 type UserContext = {
   user: Member;
+  memberDetail: Member;
   isLoggued: boolean;
   login: (token: string) => void;
   logout: () => void;
+  setUserDetail: (data: Member) => void;
 };
 type UserContextProps = {};
 
@@ -26,13 +29,15 @@ const defaultUser = () => {
     id: 0
   };
 };
+let memberDetail: Member = {} as Member;
 const { Provider, Consumer } = (UserContext = React.createContext<UserContext>({
   user: getCurrentUser(),
   isLoggued: isAuthenticated(),
-  login: () => {},
-  logout: () => {}
+  memberDetail: getCurrentUser(),
+  login: () => { },
+  logout: () => { },
+  setUserDetail: () => { }
 }));
-
 const UserProvider: React.SFC<UserContextProps> = props => {
   const [user, setUser] = useState(getCurrentUser());
   const [isLoggued, setLoggued] = useState(isAuthenticated());
@@ -48,13 +53,17 @@ const UserProvider: React.SFC<UserContextProps> = props => {
     setLoggued(false);
     setUser(defaultUser());
   };
+  const setUserDetailHandler = (data: Member) => {
+    setCurrentMember(data);
+  };
   return (
     <Provider
       value={{
         user: user,
         isLoggued: isLoggued,
         login: loginHandler,
-        logout: logoutHandler
+        logout: logoutHandler,
+        setUserDetail: setUserDetailHandler
       }}
     >
       {props.children}

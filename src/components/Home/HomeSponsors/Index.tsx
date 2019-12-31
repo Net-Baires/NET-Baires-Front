@@ -8,7 +8,7 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = ({ sponsors }) => {
   return (
     <>
       {!isEmpty(sponsors) && (
-        <div className="feature_huge text-center">
+        <div className="feature_huge text-center" id="sponsors">
           <div className="container">
             <div className="row">
               <div className="col-md-12 feature_list">
@@ -21,12 +21,14 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = ({ sponsors }) => {
                   {sponsors.map(sponsor => (
                     <div
                       key={sponsor.id}
-                      className="col-sm-3 wow fadeInUp sponsor-home"
+                      className="col-md-3 wow fadeInUp sponsor-home"
                       data-wow-delay="0.2s"
                     >
-                      <img src={sponsor.logoUrl} alt={sponsor.name} />
-                      <h1>{sponsor.name}</h1>
-                      <p>{sponsor.description}</p>
+                      <a href={sponsor.siteUrl}>
+                        <img src={sponsor.logoUrl} alt={sponsor.name} />
+                        <h1>{sponsor.name}</h1>
+                        {/* <p>{sponsor.description}</p> */}
+                      </a>
                     </div>
                   ))}
                 </div>

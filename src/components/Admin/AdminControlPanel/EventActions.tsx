@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { CardWrapper } from "../../Common/CardWrapper";
 import { syncEvents } from "../../../services/eventsServices";
+import { SecureElement } from '../../Auth/SecureElement';
 
 type EventActionsProps = {
   loading: () => void;
@@ -18,11 +19,13 @@ const EventActionsComponent: React.SFC<EventActionsProps> = () => {
     });
   };
   return (
-    <CardWrapper colSize={3} cardTitle="Acciones Generales">
-      <button onClick={handleSyncEvents} className="btn btn-warning shadow-2 text-uppercase btn-block">
-        Sincronizar con Meetup
+    <SecureElement roles={["Admin"]}>
+      <CardWrapper colSize={3} cardTitle="Acciones Generales">
+        <button onClick={handleSyncEvents} className="btn btn-warning shadow-2 text-uppercase btn-block">
+          Sincronizar con Meetup
       </button>
-    </CardWrapper>
+      </CardWrapper>
+    </SecureElement>
   );
 };
 

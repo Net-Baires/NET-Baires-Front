@@ -93,7 +93,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
                             .totalMembersAttended *
                             100) /
                             eventDetail.membersDetails.totalMembersRegistered}%`,
-                          height: "7px;"
+                          height: "7px"
                         }}
                       ></div>
                     )}
@@ -150,11 +150,11 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
                       <form>
                         <div className="form-group row">
                           <label
-                            className="col-sm-3 col-form-label"
+                            className="col-md-3 col-form-label"
                           >
                             Asistencia General
                         </label>
-                          <div className="col-sm-2">
+                          <div className="col-md-6">
                             {eventDetail.generalAttended ? (
                               <button
                                 type="button"
@@ -181,11 +181,11 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
                         {eventDetail.generalAttendance &&
                           <div className="form-group row">
                             <label
-                              className="col-sm-3 col-form-label"
+                              className="col-md-3 col-form-label"
                             >
                               Mostrar Qr para Asistencia General
                         </label>
-                            <div className="col-sm-2">
+                            <div className="col-md-6">
                               <button
                                 type="button"
                                 className="btn btn-success form-control"
