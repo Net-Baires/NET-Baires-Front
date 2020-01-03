@@ -115,7 +115,7 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({ callbackAction }) =>
             {/* <span className="d-block mb-4">{memberToSearch.}</span> */}
             <img
               className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
-              style={{ width: "70px" }}
+              style={{ width: "150px", height: "150px" }}
               src={
                 memberToSearch.picture != "" && memberToSearch.picture != null
                   ? memberToSearch.picture

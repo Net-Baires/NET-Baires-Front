@@ -9,12 +9,13 @@ import { EventLiveDetail } from "../../services/models/Events/EventLiveDetail";
 import { isEmpty } from "../../services/objectsservices";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { EventLiveTime } from '../EventLive/EventLiveTme';
-import { AddCodeToLiveEvent } from './AddCodeToLiveEvent';
+import { AddAttendanceCodeToLiveEvent } from './AddAttendanceCodeToLiveEvent';
 import { CardWrapper } from '../Common/CardWrapper';
 import { QRCode } from 'react-qr-svg';
 import { subscribe, CommunicationMessageType, UpdateEventLive } from '../../services/communicationServices';
 import { TitleHeader } from '../Common/TitleHeader';
 import { subscribupdateEventLive } from '../../services/syncCommunicationServices';
+import { AddGroupCodeToLiveEvent } from './AddGroupCodeToLiveEvent';
 type MemberEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -30,14 +31,14 @@ const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
   MemberEventLivePanelPropsAndRouter
 > &
   MemberEventLivePanelProps> = ({ loading, ready, ...props }) => {
-    const [eventDetail, setEventDetail] = useState<EventLiveDetail>(
+    const [eventLive, setEventLive] = useState<EventLiveDetail>(
       {} as EventLiveDetail);
 
     const history = useHistory();
     const loadEventDetail = () => {
       GetAdminLiveEventDetail(+props.match.params.id).then(s => {
         if (s == null) history.push("/admin/panel");
-        setEventDetail(s);
+        setEventLive(s);
         ready();
       });
     };
@@ -56,22 +57,21 @@ const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
 
     return (
       <div className="row">
-        <TitleHeader title={eventDetail.title}></TitleHeader>
-
+        <TitleHeader title={eventLive.title}></TitleHeader>
         <div className="col-md-2 col-xl-2">
           <div className="card theme-bg2">
             <div className="card-block customer-visitor">
               <h2 className="text-white text-right mt-2 f-w-300">19:23</h2>
               <span className="text-white text-right d-block">
-                {eventDetail.attended ? "Presente" : "Ausente"}
+                {eventLive.attended ? "Presente" : "Ausente"}
               </span>
               <i className="fas fa-globe text-white"></i>
             </div>
           </div>
         </div>
-        {!isEmpty(eventDetail) && (<>
-          <EventLiveTime eventDetail={eventDetail}></EventLiveTime>
-          {!eventDetail.attended &&
+        {!isEmpty(eventLive) && (<>
+          <EventLiveTime eventDetail={eventLive}></EventLiveTime>
+          {!eventLive.attended &&
             <CardWrapper colSize={4} cardTitle="Reportar mi asistencia">
               <div style={{ textAlign: "center" }}>
                 <QRCode
@@ -79,16 +79,17 @@ const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
                   fgColor="#000000"
                   level="Q"
                   style={{ width: 256 }}
-                  value={eventDetail.tokenToReportMyAttendance}
+                  value={eventLive.tokenToReportMyAttendance}
                 />
               </div>
             </CardWrapper>
           }
-
-          {eventDetail.generalAttended && !eventDetail.attended &&
+          {eventLive.hasGroupCodeOpen &&
+            <AddGroupCodeToLiveEvent eventLive={eventLive}></AddGroupCodeToLiveEvent>}
+          {eventLive.generalAttended && !eventLive.attended &&
             <>
               <TitleHeader title="Reportar asistencia general"></TitleHeader>
-              <AddCodeToLiveEvent eventLive={eventDetail}></AddCodeToLiveEvent>
+              <AddAttendanceCodeToLiveEvent eventLive={eventLive}></AddAttendanceCodeToLiveEvent>
               <CardWrapper colSize={3} cardTitle="Acciones Generales">
                 <button onClick={handleReadCode} className="btn btn-warning shadow-2 text-uppercase btn-block">
                   Leer Código de Organizador

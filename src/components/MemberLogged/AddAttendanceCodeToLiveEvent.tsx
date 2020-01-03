@@ -10,7 +10,7 @@ import { updateEventLive } from '../../services/syncCommunicationServices';
 type AddCodeToLiveEventProps = {
   eventLive: EventLiveDetail;
 };
-export const AddCodeToLiveEvent: React.SFC<AddCodeToLiveEventProps> = ({ eventLive }) => {
+export const AddAttendanceCodeToLiveEvent: React.SFC<AddCodeToLiveEventProps> = ({ eventLive }) => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const handleReportCode = (
@@ -34,26 +34,24 @@ export const AddCodeToLiveEvent: React.SFC<AddCodeToLiveEventProps> = ({ eventLi
   return (
     <>
       {eventLive.generalAttended && !eventLive.attended &&
-        <div className="col-xl-4 col-md-6">
-          <CardWrapper cardTitle="Reportar Asistencia">
-            <div className="card-block text-center">
-              {!loading ? <>
-                <h5>Código de Asistencia</h5>
-                <input onChange={e => setCode(e.target.value)} type="text" value={code} className="form-control"></input>
-                <div className="designer m-t-30">
-                  <a
-                    onClick={handleReportCode}
-                    href="#!"
-                    className="btn btn-primary shadow-2 text-uppercase btn-block"
-                  >
-                    Reportar
+        <CardWrapper cardTitle="Reportar Asistencia">
+          <div className="card-block text-center">
+            {!loading ? <>
+              <h5>Código de Asistencia</h5>
+              <input onChange={e => setCode(e.target.value)} type="text" value={code} className="form-control"></input>
+              <div className="designer m-t-30">
+                <a
+                  onClick={handleReportCode}
+                  href="#!"
+                  className="btn btn-primary shadow-2 text-uppercase btn-block"
+                >
+                  Reportar
                   </a>
-                </div>
-              </> :
-                <CircularProgress disableShrink />}
-            </div>
-          </CardWrapper>
-        </div>
+              </div>
+            </> :
+              <CircularProgress disableShrink />}
+          </div>
+        </CardWrapper>
       }
     </>
   );

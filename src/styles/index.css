@@ -116,3 +116,12 @@
 .event-live-card-image-container {
     width: 100%;
 }
+
+.text-field-cotainer-full-width {
+    width: 100%;
+}
+
+.general-small-card-body-size {
+    max-height: 301px;
+    overflow-x: overlay;
+}

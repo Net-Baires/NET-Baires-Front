@@ -1,7 +1,7 @@
 import React, { useState, useEffect, SyntheticEvent } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { loading, ready } from "../../../../store/loading/actions";
+import { loading, ready } from '../../../../store/loading/actions';
 import {
   GetAdminLiveEventDetail,
   updateEvent
@@ -16,6 +16,9 @@ import { CardWrapper } from '../../../Common/CardWrapper';
 import { CommunicationMessageType, subscribe, UpdateEventLive } from '../../../../services/communicationServices';
 import { updateEventLive } from '../../../../services/syncCommunicationServices';
 import { TitleHeader } from '../../../Common/TitleHeader';
+import { LiveConfigucations } from '../Components/LiveConfigucations';
+import { AttendantCount } from '../Components/AttendantCount';
+import { GroupCode } from '../Components/GroupCode';
 type AdminEventLivePanelProps = {
   name: string;
   loading: () => void;
@@ -50,20 +53,11 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
       });
       loadEventDetail();
     }, []);
-    const handleGeneralAttended = (
-      event: SyntheticEvent<HTMLButtonElement>,
-      enable: boolean
-    ) => {
-      event.preventDefault();
-      loading();
-      updateEvent(eventDetail.id, { generalAttended: enable, live: true }).then(
-        () => {
-          loadEventDetail();
-          updateEventLive(eventDetail.id);
-        }
-      );
-    };
 
+    const updateEvent = () => {
+      loadEventDetail();
+      updateEventLive(eventDetail.id);
+    }
 
     return (
       <>
@@ -71,57 +65,17 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
         <div className="col-sm-12">
           <div className="row">
             {!isEmpty(eventDetail) && (
-              <EventLiveTime eventDetail={eventDetail}></EventLiveTime>
-            )}
-            <div className="col-md-6 col-xl-4">
-              <div className="card Active-visitor">
-                <div className="card-block text-center">
-                  <h5 className="mb-4">Asistentes</h5>
-                  <i className="fas fa-user-friends f-30 text-c-green"></i>
-                  <h2 className="f-w-300 mt-3">
-                    {!isEmpty(eventDetail) &&
-                      eventDetail.membersDetails.totalMembersRegistered}
-                  </h2>
-                  <span className="text-muted">Total Usuario Registrados</span>
-                  <div className="progress mt-4 m-b-40">
-                    {!isEmpty(eventDetail) && (
-                      <div
-                        className="progress-bar progress-c-theme"
-                        role="progressbar"
-                        style={{
-                          width: `${(eventDetail.membersDetails
-                            .totalMembersAttended *
-                            100) /
-                            eventDetail.membersDetails.totalMembersRegistered}%`,
-                          height: "7px"
-                        }}
-                      ></div>
-                    )}
-                  </div>
-                  <div className="row card-active">
-                    <div className="col-md-6 col-6">
-                      <h4>
-                        {!isEmpty(eventDetail) &&
-                          eventDetail.membersDetails.totalMembersAttended}
-                      </h4>
-                      <span className="text-muted">Presentes</span>
-                    </div>
-                    <div className="col-md-6 col-6">
-                      <h4>
-                        {!isEmpty(eventDetail) &&
-                          eventDetail.membersDetails.totalMembersRegistered -
-                          eventDetail.membersDetails.totalMembersAttended}
-                      </h4>
-                      <span className="text-muted">Ausentes</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <>
+                <GroupCode updatedEvent={updateEvent} eventLive={eventDetail}></GroupCode>
+                <EventLiveTime eventDetail={eventDetail}></EventLiveTime>
+                <AttendantCount eventLive={eventDetail}></AttendantCount>
+              </>)}
 
             {!isEmpty(eventDetail) && (
               <>
                 <SyncUserToEvent idEvent={eventDetail.id}></SyncUserToEvent>
+                <LiveConfigucations updatedEvent={updateEvent} eventLive={eventDetail}></LiveConfigucations>
+
                 <LastUsersAttended
                   members={eventDetail.membersDetails.membersAttended}
                 ></LastUsersAttended>
@@ -137,73 +91,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
                 }
               </>
             )}
-            <div className="col-sm-12">
-              <div className="card">
-                <div className="card-header">
-                  <h5>Configuraciones evento en Vivo</h5>
-                </div>
-                <div className="card-body">
-                  {/* <h5>Form controls</h5> */}
-                  <hr></hr>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <form>
-                        <div className="form-group row">
-                          <label
-                            className="col-md-3 col-form-label"
-                          >
-                            Asistencia General
-                        </label>
-                          <div className="col-md-6">
-                            {eventDetail.generalAttended ? (
-                              <button
-                                type="button"
-                                className="btn btn-danger form-control"
-                                onClick={e => handleGeneralAttended(e, false)}
-                                data-toggle="tooltip"
-                                data-original-title="btn btn-danger"
-                              >
-                                Desactivar
-                            </button>
-                            ) : (
-                                <button
-                                  type="button"
-                                  className="btn btn-success form-control"
-                                  onClick={e => handleGeneralAttended(e, true)}
-                                  data-toggle="tooltip"
-                                  data-original-title="btn btn-danger"
-                                >
-                                  Activar
-                            </button>
-                              )}
-                          </div>
-                        </div>
-                        {eventDetail.generalAttendance &&
-                          <div className="form-group row">
-                            <label
-                              className="col-md-3 col-form-label"
-                            >
-                              Mostrar Qr para Asistencia General
-                        </label>
-                            <div className="col-md-6">
-                              <button
-                                type="button"
-                                className="btn btn-success form-control"
-                                onClick={e => window.open(`/admin/events/${eventDetail.id}/attendances/general`, '_blank')}
-                                data-toggle="tooltip"
-                                data-original-title="btn btn-danger"
-                              >
-                                Abrir Codigo QR
-                            </button>
-                            </div>
-                          </div>
-                        }
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </>

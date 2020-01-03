@@ -92,7 +92,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackActi
   };
   return (
     <>
-      <div className="col-xl-4 col-md-6">
+      <div className="col-xl-3 col-md-3">
         <div className="card user-designer card-container">
           {readySearch ? (
             <div className="card-block text-center">
@@ -100,7 +100,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackActi
               {/* <span className="d-block mb-4">{memberToSearch.}</span> */}
               <img
                 className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
-                style={{ width: "70px" }}
+                style={{ width: "150px", height: "150px" }}
                 src={
                   memberToSearch.picture != "" && memberToSearch.picture != null
                     ? memberToSearch.picture

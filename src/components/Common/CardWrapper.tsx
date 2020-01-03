@@ -3,12 +3,14 @@ import React from "react";
 type CardWrapperProps = {
   cardTitle?: string;
   colSize?: number;
+  cardBodyClassName?: string;
 };
 
 export const CardWrapper: React.SFC<CardWrapperProps> = ({
   children,
   colSize,
-  cardTitle
+  cardTitle,
+  cardBodyClassName
 }) => {
   if (colSize == null) colSize = 12;
   return (
@@ -63,7 +65,7 @@ export const CardWrapper: React.SFC<CardWrapperProps> = ({
               </div>
             </div>
           </div>
-          <div className="card-block card-container-general">{children}</div>
+          <div className={`${cardBodyClassName != null ? cardBodyClassName : ''} card-block card-container-general`}>{children}</div>
         </div>
       </div>
     </>

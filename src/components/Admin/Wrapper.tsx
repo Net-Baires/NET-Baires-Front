@@ -49,11 +49,6 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
       infoToast(data.notificationMessage)
     })
   }, [])
-  const handleAddToHomescreenClick = () => {
-    alert(`
-    1. Open Share menu
-    2. Tap on "Add to Home Screen" button`);
-  };
   return (
     <>
       {/* 
@@ -110,7 +105,6 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
                     text="Procesando..."
                   // tslint:disable-next-line: indent
                   > */}
-                  <AddToHomescreen onAddToHomescreenClick={handleAddToHomescreenClick} />
 
                   {children}
                   <Backdrop

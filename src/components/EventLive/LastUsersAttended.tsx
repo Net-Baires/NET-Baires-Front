@@ -11,9 +11,16 @@ type NewUserProps = {
 export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
   return (
     <>
-      <CardWrapper colSize={8} cardTitle="Ultimos Usuarios Recibidos">
+      <CardWrapper colSize={4} cardTitle="Ultimos Usuarios Recibidos">
         <div className="table-responsive">
           <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Fecha Registro</th>
+              </tr>
+            </thead>
             <tbody>
               {members.map(member => (
                 <tr key={member.id} className="unread">
@@ -31,7 +38,7 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
                   </td>
                   <td>
                     <h6 className="mb-1">{member.firstName}</h6>
-                    <p className="m-0">{member.username}</p>
+                    <p className="m-0">{member.lastName}</p>
                   </td>
                   <td>
                     <h6 className="text-muted">
@@ -39,14 +46,6 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
                       {formatStringDate(member.attendedTime)} -{" "}
                       {formatStringTime(member.attendedTime)}
                     </h6>
-                  </td>
-                  <td>
-                    <a href="#!" className="label theme-bg2 text-white f-12">
-                      Reject
-                    </a>
-                    <a href="#!" className="label theme-bg text-white f-12">
-                      Approve
-                    </a>
                   </td>
                 </tr>
               ))}

@@ -1,8 +1,21 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WorkboxPlugin, { GenerateSW } = require('workbox-webpack-plugin');
-var WebpackPwaManifest = require('webpack-pwa-manifest')
+const { GenerateSW } = require('workbox-webpack-plugin');
+const workboxPlugin = require('workbox-webpack-plugin');
+var WebpackPwaManifest = require('webpack-pwa-manifest');
+const matchCb = ({ url, event }) => {
+    return (url.pathname === '/special/url');
+};
+const handlerCb = ({ url, event, params }) => {
+    return fetch(event.request)
+        .then((response) => {
+            return response.text();
+        })
+        .then((responseBody) => {
+            return new Response(`${responseBody} <!-- Look Ma. Added Content. -->`);
+        });
+};
 module.exports = function(env) {
     const configPath = path.join(__dirname, `config.${env.APP_ENV}.json`);
     return {
@@ -99,9 +112,66 @@ module.exports = function(env) {
             //     swDest: 'NET-Baires-Workes.js',
             //     include: [/\.html$/, /\.js$/]
             // }),
-            // new WorkboxPlugin.InjectManifest({
-            //     swSrc: 'NET-Baires-Workes.js',
-            //     include: [/\.html$/, /\.js$/]
+            // new workboxPlugin.InjectManifest({
+            //     swSrc: './src/sw.js',
+            //     swDest: 'sw.js'
+            // }),
+            // new workboxPlugin.GenerateSW({
+            //     swDest: 'sw.js',
+            //     clientsClaim: true,
+            //     skipWaiting: true,
+
+            //     runtimeCaching: [{
+            //             urlPattern: new RegExp('http://localhost:8080'),
+            //             handler: 'StaleWhileRevalidate'
+            //         },
+            //         {
+            //             urlPattern: new RegExp('https://netbairesstorage.blob.core.windows.net'),
+            //             handler: 'StaleWhileRevalidate'
+            //         },
+            //         {
+            //             urlPattern: new RegExp('https://secure.meetupstatic.com'),
+            //             handler: 'StaleWhileRevalidate'
+            //         },
+            //         {
+            //             urlPattern: new RegExp('https://cdnjs.cloudflare.com'),
+            //             handler: 'StaleWhileRevalidate'
+            //         },
+            //         {
+            //             // Match any request that ends with .png, .jpg, .jpeg or .svg.
+            //             urlPattern: /\.(?:png|jpg|jpeg|svg|woff2)$/,
+
+            //             // Apply a cache-first strategy.
+            //             handler: 'CacheFirst',
+
+            //             options: {
+            //                 // Use a custom cache name.
+            //                 cacheName: 'images',
+
+            //                 // Only cache 10 images.
+            //                 expiration: {
+            //                     maxEntries: 10,
+            //                 },
+            //             },
+            //         },
+            //         {
+            //             // Match any request that ends with .png, .jpg, .jpeg or .svg.
+            //             urlPattern: /\.(?:css|js)$/,
+
+            //             // Apply a cache-first strategy.
+            //             handler: 'CacheFirst',
+
+            //             options: {
+            //                 // Use a custom cache name.
+            //                 cacheName: 'styles',
+
+            //                 // Only cache 10 images.
+            //                 expiration: {
+            //                     maxEntries: 10,
+            //                 },
+            //             },
+            //         }
+            //     ]
             // }),
             // new WebpackPwaManifest({
             //     name: 'NET-Baires',

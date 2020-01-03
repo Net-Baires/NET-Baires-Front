@@ -56,9 +56,6 @@ File: style.css
 
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600");
 @import url("../plugins/bootstrap/css/bootstrap.min.css");
-@import url("../fonts/feather/css/feather.css");
-@import url("../plugins/jquery-scrollbar/css/perfect-scrollbar.css");
-@import url("../fonts/datta/datta-icon.css");
 
 /**  =====================
       Custom css start
@@ -2005,8 +2002,8 @@ p.text-muted {
 .b-brand .b-bg {
     background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
     border-radius: 10px;
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -6342,27 +6339,27 @@ body.layout-1 .pcoded-navbar[class*="navbar-image"] .header-logo {
 }
 
 .doc-img.navbar-images>a[data-value="navbar-image-1"] {
-    /* background-image: url("../images/nav-bg/navbar-img-1.jpg"); */
+    background-image: url("../images/nav-bg/navbar-img-1.jpg");
 }
 
 .doc-img.navbar-images>a[data-value="navbar-image-2"] {
-    /* background-image: url("../images/nav-bg/navbar-img-2.jpg"); */
+    background-image: url("../images/nav-bg/navbar-img-2.jpg");
 }
 
 .doc-img.navbar-images>a[data-value="navbar-image-3"] {
-    /* background-image: url("../images/nav-bg/navbar-img-3.jpg"); */
+    background-image: url("../images/nav-bg/navbar-img-3.jpg");
 }
 
 .doc-img.navbar-images>a[data-value="navbar-image-4"] {
-    /* background-image: url("../images/nav-bg/navbar-img-4.jpg"); */
+    background-image: url("../images/nav-bg/navbar-img-4.jpg");
 }
 
 .doc-img.navbar-images>a[data-value="navbar-image-5"] {
-    /* background-image: url("../images/nav-bg/navbar-img-5.jpg"); */
+    background-image: url("../images/nav-bg/navbar-img-5.jpg");
 }
 
 .doc-img.navbar-images>a[data-value="navbar-image-6"] {
-    /* background-image: url("../assets/images/nav-bg/navbar-img-6.jpg"); */
+    background-image: url("../images/nav-bg/navbar-img-6.jpg");
 }
 
 .nav-link.active.h-blue {
@@ -9556,10 +9553,9 @@ a.btn-theme.active {
     transition: all 0.3s ease-in-out;
 }
 
-
-/* .btn > i {
-  margin-right: 12px;
-} */
+.btn>i {
+    margin-right: 12px;
+}
 
 .btn.btn-icon,
 .btn.drp-icon {
@@ -13049,6 +13045,9 @@ div.code-toolbar>.toolbar span:hover {
         transform: scale(1);
     }
 }
+
+
+/**====== File Upload css end ======**/
 
 
 /**====== File Upload css end ======**/
