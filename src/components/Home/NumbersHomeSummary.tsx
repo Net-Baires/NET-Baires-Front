@@ -16,7 +16,7 @@ const NumbersHomeSummary: React.SFC<NumbersHomeSummaryProps> = ({
             <div className="col-6 col-md-3">
               <div className="counter-up">
                 <div className="counter-icon">
-                  <i className="ion-ios-people"></i>
+                  <i className="fas fa-users"></i>
                 </div>
                 <h3>
                   <span className="counter">{props.totalMembers}</span>+

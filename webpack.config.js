@@ -1,8 +1,7 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { GenerateSW } = require('workbox-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const WorkboxPlugin, { GenerateSW } = require('workbox-webpack-plugin');
 var WebpackPwaManifest = require('webpack-pwa-manifest')
 module.exports = function(env) {
     const configPath = path.join(__dirname, `config.${env.APP_ENV}.json`);

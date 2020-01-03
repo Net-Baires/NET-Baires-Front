@@ -20,7 +20,7 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
                   <td>
                     <img
                       className="rounded-circle"
-                      style={{ width: "40px" }}
+                      style={{ width: "40px", height: "40px" }}
                       src={
                         member.picture != "" && member.picture != null
                           ? member.picture
