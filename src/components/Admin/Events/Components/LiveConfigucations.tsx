@@ -56,7 +56,7 @@ const LiveConfigucationsComponent: React.SFC<LiveConfigucationsProps> = ({ loadi
                 )}
             </div>
           </div>
-          {eventLive.generalAttendance &&
+          {eventLive.generalAttended &&
             <div className="form-group row">
               <div className="col-md-12">
                 <button

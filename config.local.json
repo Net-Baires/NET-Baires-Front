@@ -1,23 +1,23 @@
 {
-  "api": {
-    "base": "http://localhost:8080/",
-    "baseRemote": "https://localhost:5001"
-  },
-  "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
-  "integrations": {
-    "meetup": {
-      "clientId": "443afqsa6fs1hr6h0u8i8b8sib",
-      "clientSecret": "t2bi61kgksc30sls7e29s04lr1",
-      "accessTokenUri": "https://secure.meetup.com/oauth2/access",
-      "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
-      "redirectUri": "http://localhost:8080/login/meetup",
-      "scopes": [
-        "basic"
-      ]
+    "api": {
+        "base": "http://localhost:8080/",
+        "baseRemote": "https://192.168.0.135:5001"
     },
-    "eventBrite": {
-      "clientId": "",
-      "redirectUri": "http://localhost:8080/login/eventbrite"
+    "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
+    "integrations": {
+        "meetup": {
+            "clientId": "443afqsa6fs1hr6h0u8i8b8sib",
+            "clientSecret": "t2bi61kgksc30sls7e29s04lr1",
+            "accessTokenUri": "https://secure.meetup.com/oauth2/access",
+            "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
+            "redirectUri": "http://localhost:8080/login/meetup",
+            "scopes": [
+                "basic"
+            ]
+        },
+        "eventBrite": {
+            "clientId": "",
+            "redirectUri": "http://localhost:8080/login/eventbrite"
+        }
     }
-  }
 }

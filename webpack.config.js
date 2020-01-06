@@ -20,6 +20,7 @@ module.exports = function(env) {
     const configPath = path.join(__dirname, `config.${env.APP_ENV}.json`);
     return {
         devServer: {
+            https: true,
             historyApiFallback: true
         },
         // webpack will take the files from ./src/index
