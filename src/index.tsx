@@ -14,12 +14,13 @@ import { Config } from "./services/config";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { initCommunication } from './services/communicationServices';
-
+import ATHS from 'add-to-homescreen-control'
+ATHS.enable()
 let storeGlobal = createStore(rootReducer);
 // if ("serviceWorker" in navigator) {
 //   window.addEventListener("load", () => {
 //     navigator.serviceWorker
-//       .register("/workers.js")
+//       .register("/sw.js")
 //       .then(registration => {
 //         // tslint:disable:no-console
 //         console.log("SW registered: ", registration);
@@ -35,6 +36,8 @@ let storeGlobal = createStore(rootReducer);
 //     console.log("activate");
 //   });
 // }
+
+
 
 let appInsights = new ApplicationInsights({
   config: {

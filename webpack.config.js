@@ -20,6 +20,7 @@ module.exports = function(env) {
     const configPath = path.join(__dirname, `config.${env.APP_ENV}.json`);
     return {
         devServer: {
+            // https: true,
             historyApiFallback: true
         },
         // webpack will take the files from ./src/index
@@ -109,13 +110,13 @@ module.exports = function(env) {
                 template: './src/index.html'
             }),
             // new GenerateSW({
-            //     swDest: 'NET-Baires-Workes.js',
+            //     swDest: 'workers.js',
             //     include: [/\.html$/, /\.js$/]
             // }),
-            // new workboxPlugin.InjectManifest({
-            //     swSrc: './src/sw.js',
-            //     swDest: 'sw.js'
-            // }),
+            new workboxPlugin.InjectManifest({
+                swSrc: './src/sw.js',
+                swDest: 'sw.js'
+            }),
             // new workboxPlugin.GenerateSW({
             //     swDest: 'sw.js',
             //     clientsClaim: true,

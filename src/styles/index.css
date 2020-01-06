@@ -125,3 +125,7 @@
     max-height: 301px;
     overflow-x: overlay;
 }
+
+.dialog-container-pwa-install {
+    min-height: 320px;
+}
