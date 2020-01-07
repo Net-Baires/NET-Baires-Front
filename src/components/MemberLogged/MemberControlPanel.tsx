@@ -3,7 +3,7 @@ import { getEventsLive } from "../../services/eventsServices";
 import { isEmpty } from "../../services/objectsservices";
 import { EventDetail } from "../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
-import { EventActions } from "../Admin/AdminControlPanel/EventActions";
+import { EventActions } from "../app/AdminControlPanel/EventActions";
 import ControlPanelEventsLive from '../EventLive/ControlPanelEventsLive';
 import { subscribe, UpdateEventLive, CommunicationMessageType } from '../../services/communicationServices';
 
@@ -24,19 +24,20 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
     <>
       {!isEmpty(eventsLive) && (
         <>
-
-          <div className="col-sm-12">
-            <div className="alert alert-primary" role="alert">
-              <p>
-                Estos son los eventos que se encuentran ocurriendo en este
-                momento.
+          <div className="row aaa">
+            <div className="col-sm-12">
+              <div className="alert alert-primary" role="alert">
+                <p>
+                  Estos son los eventos que se encuentran ocurriendo en este
+                  momento.
               </p>
+              </div>
             </div>
-          </div>
-          <div className="col-sm-12">
-            <div className="card">
-              <div className="card-header">
-                <h5>Eventos en Vivo</h5>
+            <div className="col-sm-12">
+              <div className="card">
+                <div className="card-header">
+                  <h5>Eventos en Vivo</h5>
+                </div>
               </div>
             </div>
           </div>

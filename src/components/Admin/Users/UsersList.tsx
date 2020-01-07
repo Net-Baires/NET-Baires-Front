@@ -165,7 +165,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
   };
   const handleEdit = (event: MouseEvent<HTMLButtonElement>, user: Member) => {
     event.preventDefault();
-    history.push(`/admin/users/${user.id}/Edit`);
+    history.push(`/app/users/${user.id}/Edit`);
   };
 
   return (
@@ -178,7 +178,7 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         <NavLink
           className="btn btn-primary"
           activeClassName="active"
-          to="/admin/users/new"
+          to="/app/users/new"
         >
           Nuevo Usuario
       </NavLink>

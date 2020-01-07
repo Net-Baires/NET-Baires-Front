@@ -1,20 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { UserContext } from '../../../contexts/UserContext';
 import { useHistory } from 'react-router';
-import { getCurrentUser } from '../../../services/authService';
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 type TopBarProps = {
@@ -22,17 +18,7 @@ type TopBarProps = {
 };
 
 export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
-    const { isLoggued, logout } = useContext(UserContext);
     let history = useHistory();
-    const user = getCurrentUser();
-    const handleLogout = () => {
-        logout();
-        history.push("/");
-        history.listen;
-    };
-    const editProfile = () => {
-        history.push("/admin/profile");
-    }
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -69,7 +55,7 @@ export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={(e) => history.push("/admin/profile")}>Profile</MenuItem>
+            <MenuItem onClick={() => history.push("/app/profile")}>Profile</MenuItem>
             {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
         </Menu>
     );

@@ -1,69 +1,58 @@
-import React, { Context, useState } from "react";
+import React, { Context } from "react";
 import { Member } from '../services/models/Member';
+import { UserLogged, hasPermission, Rol } from '../services/authService';
 import {
   isAuthenticated,
   getCurrentUser,
   logout,
-  login,
-  setCurrentMember
+  login
 } from "../services/authService";
 type UserContext = {
-  user: Member;
+  user: UserLogged;
   memberDetail: Member;
-  isLoggued: boolean;
+  isLogged: () => boolean;
   login: (token: string) => void;
   logout: () => void;
   setUserDetail: (data: Member) => void;
+  hasRol: (rol: Rol) => boolean;
 };
 type UserContextProps = {};
-
+var userDetail: Member = {} as Member;
 let UserContext: Context<UserContext>;
 
-const defaultUser = () => {
-  return {
-    email: "",
-    name: "",
-    lastName: "",
-    token: "",
-    role: "",
-    id: 0
-  };
-};
 let memberDetail: Member = {} as Member;
 const { Provider, Consumer } = (UserContext = React.createContext<UserContext>({
   user: getCurrentUser(),
-  isLoggued: isAuthenticated(),
-  memberDetail: getCurrentUser(),
+  isLogged: isAuthenticated,
+  memberDetail: userDetail,
   login: () => { },
   logout: () => { },
-  setUserDetail: () => { }
+  setUserDetail: () => { },
+  hasRol: () => true
 }));
 const UserProvider: React.SFC<UserContextProps> = props => {
-  const [user, setUser] = useState(getCurrentUser());
-  const [isLoggued, setLoggued] = useState(isAuthenticated());
 
   const loginHandler = (token: string) => {
     login(token);
-    setLoggued(true);
-    setUser(user);
   };
 
   const logoutHandler = () => {
     logout();
-    setLoggued(false);
-    setUser(defaultUser());
   };
-  const setUserDetailHandler = (data: Member) => {
-    setCurrentMember(data);
+  const hasRol = (rol: Rol): boolean => {
+    return hasPermission(rol);
   };
+  const setUserDetail = (member: Member) => memberDetail = member;
   return (
     <Provider
       value={{
-        user: user,
-        isLoggued: isLoggued,
+        user: getCurrentUser(),
+        isLogged: isAuthenticated,
         login: loginHandler,
+        setUserDetail: setUserDetail,
         logout: logoutHandler,
-        setUserDetail: setUserDetailHandler
+        memberDetail: memberDetail,
+        hasRol: hasRol
       }}
     >
       {props.children}

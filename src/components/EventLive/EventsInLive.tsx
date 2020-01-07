@@ -33,7 +33,7 @@ export const EventsInLive: React.SFC<RouteComponentProps<
     eventToSync: EventToSync
   ) => {
     event.preventDefault();
-    history.push(`/member/events/${eventToSync.id}/live/panel`);
+    history.push(`/app/events/${eventToSync.id}/live/panel`);
   };
   const handleDetailEvent = (
     event: MouseEvent<HTMLButtonElement>,
@@ -47,7 +47,7 @@ export const EventsInLive: React.SFC<RouteComponentProps<
     eventToSync: EventToSync
   ) => {
     event.preventDefault();
-    history.push(`/member/events/${eventToSync.id}/attendance`);
+    history.push(`/app/events/${eventToSync.id}/attendance`);
   };
   return (
     <div className="pricing-section no-color text-center" id="pricing">

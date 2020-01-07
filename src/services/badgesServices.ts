@@ -42,7 +42,7 @@ export const assignBadgeToMember = (
   badgeId: number,
   memberId: number
 ): Promise<BadgeAssign[]> => {
-  return postRequest(`/badges/${badgeId}/Member/${memberId}`);
+  return postRequest(`/badges/${badgeId}/app/${memberId}`);
 };
 export const updateBadge = (
   badgeId: number,
@@ -55,5 +55,5 @@ export const removeBadgeFromMember = (
   badgeId: number,
   memberId: number
 ): Promise<BadgeAssign[]> => {
-  return deleteRequest(`/badges/${badgeId}/Member/${memberId}`);
+  return deleteRequest(`/badges/${badgeId}/app/${memberId}`);
 };

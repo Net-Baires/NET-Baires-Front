@@ -104,7 +104,7 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({ callbackAction }) =>
 
   const handleEdit = (event: MouseEvent<HTMLAnchorElement>, user: Member) => {
     event.preventDefault();
-    history.push(`/admin/users/${user.id}/Edit`);
+    history.push(`/app/users/${user.id}/Edit`);
   };
   return (
     <>

@@ -45,7 +45,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   });
 
   useEffect(() => {
-    subscribeMemberNotification(user.id, data => {
+    subscribeMemberNotification(user.userId, data => {
       infoToast(data.notificationMessage)
     })
   }, [])

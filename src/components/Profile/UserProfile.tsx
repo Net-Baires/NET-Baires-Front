@@ -208,7 +208,7 @@ type EditAllSponsorProps = {
 };
 const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }) => {
   const [userDetail, setUserDetailState] = useState({} as Member);
-  const { setUserDetail, memberDetail } = useContext(UserContext);
+  const { setUserDetail } = useContext(UserContext);
   useEffect(() => {
     loading();
     getMe().then(x => {

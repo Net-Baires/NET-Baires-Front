@@ -8,46 +8,48 @@ import Organizers from "./organizers";
 import Sponsor from "./Sponsor";
 import SpeakerDetail from "./SpeakerDetail";
 import OrganizerDetail from "./OrganizerDetail";
-import ControlPanel from "./Admin/AdminControlPanel";
 import { PrivateRoute } from "./router/PrivateRoute";
-import { AppState } from "../store";
+import { adminState } from "../store";
 import { loading, ready } from "../store/loading/actions";
 import { connect } from "react-redux";
-import { SyncEvent } from "./Admin/Events/SyncEvent";
-import { EventsList } from "./Admin/Events/EventsList";
-import { EditSponsor } from "./Admin/Sponsors/EditSponsor";
-import { NewSponsor } from "./Admin/Sponsors/NewSponsor";
-import { EventsToSync } from "./Admin/Events/EventsToSync";
-import { SponsorsList } from "./Admin/Sponsors/SponsorsList";
+import { SyncEvent } from "./admin/Events/SyncEvent";
+import { EventsList } from "./admin/Events/EventsList";
+import { EditSponsor } from "./admin/Sponsors/EditSponsor";
+import { NewSponsor } from "./admin/Sponsors/NewSponsor";
+import { EventsToSync } from "./admin/Events/EventsToSync";
+import { SponsorsList } from "./admin/Sponsors/SponsorsList";
 import MeetupCallBack from "./Login/MeetupCallBack";
-import { EventLiveAttendances } from "./Admin/Events/EventLiveAttendances";
-import { UsersList } from "./Admin/Users/UsersList";
-import { EditUser } from "./Admin/Users/EditUser";
-import { NewUser } from "./Admin/Users/NewUser";
+import { EventLiveAttendances } from "./admin/Events/EventLiveAttendances";
+import { UsersList } from "./admin/Users/UsersList";
+import { EditUser } from "./admin/Users/EditUser";
+import { NewUser } from "./admin/Users/NewUser";
 import EventBriteCallBack from "./Login/EventBriteCallBack";
 import { PublicProfile } from "./Profile/PublicProfile";
 import { EventsInLive } from "./EventLive/EventsInLive";
 import { ReportAttendance } from "./ReportAttendance/Index";
 import { JoinSlack } from "./JoinSlack/Index";
 import { UserProfile } from "./Profile/UserProfile";
-import { CheckAttendancesGeneral } from "./Admin/Events/CheckAttendancesGeneral";
-import { EventsInLiveToDo } from "./Admin/Events/EventsInLiveToDo";
+import { CheckAttendancesGeneral } from "./admin/Events/CheckAttendancesGeneral";
+import { EventsInLiveToDo } from "./admin/Events/EventsInLiveToDo";
 import { ReadOrganizedCode } from "./MemberLogged/ReadOrganizedCode";
 import { BadgeShowDetail } from "./Badges/BadgeShowDetail";
 import { BadgesListPublic } from "./Badges/BadgesListPublic";
-import { NewBadge } from "./Admin/Badges/NewBadge";
-import { EditBadge } from "./Admin/Badges/EditBadge";
-import { BadgesList } from "./Admin/Badges/BadgesList";
+import { NewBadge } from "./admin/Badges/NewBadge";
+import { EditBadge } from "./admin/Badges/EditBadge";
+import { BadgesList } from "./admin/Badges/BadgesList";
 import NotFoundPage from "./NotFoundPage/Index";
-import { EditEventPage } from "./Admin/Events/EditEventPage";
-import { AdminWrapper } from "./Admin/Wrapper";
+import { EditEventPage } from "./admin/Events/EditEventPage";
+import { AdminWrapper } from "./admin/Wrapper";
 import { HomeWrapper } from "./Home/HomeWrapper";
 import LogoutComponent from "./Login/LogoutComponent";
-import { AdminEventLivePanel } from "./Admin/Events/EventLive/AdminEventLivePanel";
+import { AdminEventLivePanel } from "./admin/Events/EventLive/AdminEventLivePanel";
 import MemberControlPanel from "./MemberLogged/MemberControlPanel";
 import { EventsLivePublicDetail } from "./EventLive/EventsLivePublicDetail";
 import { MemberEventLivePanel } from './MemberLogged/MemberEventLivePanel';
 import { LastLocationProvider } from 'react-router-last-location';
+import { ControlPanel } from './MemberLogged/ControlPanel';
+import { EventLivePanel } from './Pages/EventLivePanel';
+import { AdminGroupCodes } from './GroupCodes/AdminGroupCodes';
 
 interface AppProps {
   isLoading: boolean;
@@ -98,7 +100,7 @@ export const App: React.SFC<AppProps> = () => {
               </HomeWrapper>
             </Route>
 
-            <Route exact path="/members/:id(\d+)/profile">
+            <Route exact path="/apps/:id(\d+)/profile">
               <PublicProfile></PublicProfile>
             </Route>
             <Route exact path="/sponsor/:id(\d+)?">
@@ -131,82 +133,72 @@ export const App: React.SFC<AppProps> = () => {
             <AdminWrapper>
               <PrivateRoute
                 exact
-                path="/member/events/:id(\d+)/attendance"
+                path="/app/events/:id(\d+)/attendance"
                 component={ReportAttendance}
               />
               <PrivateRoute
-                roles={["Member"]}
                 exact
-                path="/member/panel"
-                component={MemberControlPanel}
-              ></PrivateRoute>
-              <PrivateRoute
-                roles={["Member"]}
-                exact
-                path="/member/events/:id/live/panel"
-                component={MemberEventLivePanel}
+                path="/app/events/:id/live/panel"
+                component={EventLivePanel}
               />
               <PrivateRoute
                 roles={["Admin"]}
                 exact
-                path="/admin/eventsToSync"
+                path="/app/eventsToSync"
                 component={EventsToSync}
               />
               {/* Reportar asistencia */}
               <PrivateRoute
                 roles={["Admin", "Organizer"]}
                 exact
-                path="/admin/EventLive/Attendances"
+                path="/app/EventLive/Attendances"
                 component={EventLiveAttendances}
               />
-              <PrivateRoute exact path="/admin/profile" component={UserProfile} />
+              <PrivateRoute exact path="/app/profile" component={UserProfile} />
               <PrivateRoute
                 roles={["Admin", "Organizer"]}
                 exact
-                path="/admin/events/live"
+                path="/app/events/live"
                 component={EventsInLiveToDo}
               />
 
               <PrivateRoute
                 roles={["Admin", "Organizer"]}
                 exact
-                path="/admin/events/:id/attendances/general"
+                path="/app/events/:id/attendances/general"
                 component={CheckAttendancesGeneral}
               />
-              <PrivateRoute
-                roles={["Admin", "Organizer"]}
-                exact
-                path="/admin/events/:id/live/panel"
-                component={AdminEventLivePanel}
-              />
 
-              <PrivateRoute exact path="/admin/events" component={EventsList} />
+              <PrivateRoute exact path="/app/events" component={EventsList} />
               <PrivateRoute
                 exact
-                path="/admin/events/:id(\d+)?/edit"
+                path="/app/events/:id(\d+)?/edit"
                 component={EditEventPage}
               />
               <PrivateRoute
                 exact
-                path="/admin/eventsToSync/:id/:platform/sync"
+                path="/app/eventsToSync/:id/:platform/sync"
                 component={SyncEvent}
               />
               <PrivateRoute
                 roles={["Admin"]}
                 exact
-                path="/admin/sponsors/new"
+                path="/app/sponsors/new"
                 component={NewSponsor}
               />
-              <PrivateRoute roles={["Admin", "Organizer"]} exact path="/admin/panel" component={ControlPanel}              ></PrivateRoute>
-              <PrivateRoute roles={["Admin"]} exact path="/admin/sponsors/:id/edit" component={EditSponsor} />
-              <PrivateRoute roles={["Admin"]} exact path="/admin/sponsors" component={SponsorsList} />
-              <PrivateRoute roles={["Admin"]} exact path="/admin/members" component={UsersList} />
-              <PrivateRoute roles={["Admin"]} exact path="/admin/users/:id(\d+)/Edit" component={EditUser} />
-              <PrivateRoute roles={["Admin"]} exact path="/admin/users/new" component={NewUser} />
-              <PrivateRoute roles={["Admin"]} exact path="/admin/badges" component={BadgesList} />
-              <PrivateRoute roles={["Admin"]} exact path="/admin/badges/:id(\d+)/Edit" component={EditBadge} />
-              <PrivateRoute roles={["Admin"]} exact path="/admin/badges/new" component={NewBadge} />
-              <PrivateRoute roles={["Member"]} exact path="/member/organizedcode/read" component={ReadOrganizedCode} />
+              <PrivateRoute exact path="/app/panel" component={ControlPanel}></PrivateRoute>
+              <PrivateRoute roles={["Admin"]} exact path="/app/sponsors/:id/edit" component={EditSponsor} />
+              <PrivateRoute roles={["Admin", "Organizer"]} exact path="/app/groupcodes/:id/panel" component={AdminGroupCodes} />
+
+              AdminGroupCodes
+              <PrivateRoute roles={["Admin"]} exact path="/app/sponsors" component={SponsorsList} />
+              <PrivateRoute roles={["Admin"]} exact path="/app/members" component={UsersList} />
+              <PrivateRoute roles={["Admin"]} exact path="/app/users/:id(\d+)/Edit" component={EditUser} />
+              <PrivateRoute roles={["Admin"]} exact path="/app/users/new" component={NewUser} />
+              <PrivateRoute roles={["Admin"]} exact path="/app/badges" component={BadgesList} />
+              <PrivateRoute roles={["Admin"]} exact path="/app/badges/:id(\d+)/Edit" component={EditBadge} />
+              <PrivateRoute roles={["Admin"]} exact path="/app/badges/new" component={NewBadge} />
+              <PrivateRoute roles={["Member"]} exact path="/app/organizedcode/read" component={ReadOrganizedCode} />
             </AdminWrapper>
 
 

@@ -56,7 +56,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           exact
           className="nav-link-slide-bar"
           activeClassName="active"
-          to="/admin/panel"
+          to="/app/panel"
         >
           <ListItem button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
@@ -72,7 +72,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           exact
           className="nav-link-slide-bar"
           activeClassName="active"
-          to="/member/panel"
+          to="/app/panel"
         >
           <ListItem button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
@@ -89,7 +89,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           exact
           className="nav-link-slide-bar"
           activeClassName="active"
-          to="/admin/sponsors"
+          to="/app/sponsors"
         >
           <ListItem button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
@@ -102,7 +102,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           exact
           className="nav-link-slide-bar"
           activeClassName="active"
-          to="/admin/badges"
+          to="/app/badges"
         >
           <ListItem button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
@@ -115,7 +115,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           exact
           className="nav-link-slide-bar"
           activeClassName="active"
-          to="/admin/members"
+          to="/app/members"
         >
           <ListItem button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
@@ -138,7 +138,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             <NavLink
               exact
               activeClassName="active"
-              to="/admin/events"
+              to="/app/events"
             >
               <ListItem button className={classes.menuItem}>
                 <ListItemText inset primary="Mis Eventos" />
@@ -148,7 +148,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
               <NavLink
                 exact
                 activeClassName="active"
-                to="/admin/eventsToSync"
+                to="/app/eventsToSync"
               >
                 <ListItemText inset primary="Eventos para Sincronizar" />
               </NavLink>
@@ -157,7 +157,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
               <NavLink
                 exact
                 activeClassName="active"
-                to="/admin/events/live"
+                to="/app/events/live"
               >
 
                 <ListItemText inset primary="Eventos en vivo" />
@@ -187,7 +187,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             exact
             className="nav-link-slide-bar"
             activeClassName="active"
-            to="/admin/EventLive/Attendances"
+            to="/app/EventLive/Attendances"
           >
             <ListItemText primary="Recibir Miembros" />
           </NavLink>
@@ -217,7 +217,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //           exact
     //           className="b-brand"
     //           activeClassName="active"
-    //           to="/admin/panel"
+    //           to="/app/panel"
     //         >
     //           <div className="b-bg panel-logo">
     //             {/* <i className="feather icon-trending-up"></i> */}
@@ -284,7 +284,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //                     exact
     //                     className="nav-link-slide-bar"
     //                     activeClassName="active"
-    //                     to="/admin/members"
+    //                     to="/app/members"
     //                   >
     //                     Lista
     //                   </NavLink>
@@ -294,7 +294,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //                     exact
     //                     className="nav-link-slide-bar"
     //                     activeClassName="active"
-    //                     to="/admin/users/new"
+    //                     to="/app/users/new"
     //                   >
     //                     Nuevo
     //                   </NavLink>
@@ -324,7 +324,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //                     exact
     //                     className="nav-link-slide-bar"
     //                     activeClassName="active"
-    //                     to="/admin/sponsors/new"
+    //                     to="/app/sponsors/new"
     //                   >
     //                     Nuevo
     //                   </NavLink>
@@ -350,7 +350,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //                     exact
     //                     className="nav-link-slide-bar"
     //                     activeClassName="active"
-    //                     to="/admin/badges"
+    //                     to="/app/badges"
     //                   >
     //                     Lista
     //                   </NavLink>
@@ -360,7 +360,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //                     exact
     //                     className="nav-link-slide-bar"
     //                     activeClassName="active"
-    //                     to="/admin/badges/new"
+    //                     to="/app/badges/new"
     //                   >
     //                     Nuevo
     //                   </NavLink>
@@ -375,7 +375,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     //                 exact
     //                 className="nav-link-slide-bar"
     //                 activeClassName="active"
-    //                 to="/admin/EventLive/Attendances"
+    //                 to="/app/EventLive/Attendances"
     //               >
     //                 <span className="pcoded-micon">
     //                   <i className="fas fa-user-check"></i>

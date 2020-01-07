@@ -11,7 +11,7 @@ import { getCurrentUser } from "../../services/authService";
 type HeaderProps = {};
 
 export const Header: React.SFC<HeaderProps> = () => {
-  const { isLoggued, logout } = useContext(UserContext);
+  const { isLogged, logout } = useContext(UserContext);
   const [open] = useState(false);
   let history = useHistory();
   const user = getCurrentUser();
@@ -36,7 +36,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/events"
+              to="/app/events"
             >
               <i className="fa fa-fw fa-mis-eventos-o"></i>
               Mis Eventos
@@ -45,7 +45,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/eventsToSync"
+              to="/app/eventsToSync"
             >
               <i className="fa fa-fw fa-mis-sync-o"></i>
               Eventos para Syncronizar
@@ -54,7 +54,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/events/live"
+              to="/app/events/live"
             >
               <i className="fa fa-fw fa-tasks"></i>
               Eventos en vivo
@@ -64,7 +64,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/members"
+              to="/app/members"
             >
               <i className="fa fa-fw fa-users"></i>
               Lista de Miembros
@@ -73,7 +73,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/users/new"
+              to="/app/users/new"
             >
               <i className="fa fa-fw fa-user-plus"></i>
               Nuevo Usuario
@@ -83,7 +83,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/sponsors"
+              to="/app/sponsors"
             >
               <i className="fa fa-fw fa-panel-o"></i>
               Sponsors
@@ -92,7 +92,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/sponsors/new"
+              to="/app/sponsors/new"
             >
               <i className="fa fa-fw fa-hubspot"></i>
               Nuevo Sponsor
@@ -106,7 +106,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/badges"
+              to="/app/badges"
             >
               <i className="fa fa-fw fa-ribbon"></i>
               Lista de Badges
@@ -115,7 +115,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/badges/new"
+              to="/app/badges/new"
             >
               <i className="fa fa-fw fa-hubspot"></i>
               Nuevo Badge
@@ -124,7 +124,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/admin/panel"
+              to="/app/panel"
             >
               <i className="fa fa-fw fa-panel-o"></i>
               Panel de Control
@@ -134,7 +134,7 @@ export const Header: React.SFC<HeaderProps> = () => {
             exact
             className="nav-link-slide-bar"
             activeClassName="active"
-            to="/admin/EventLive/Attendances"
+            to="/app/EventLive/Attendances"
           >
             <i className="fa fa-fw fa-mis-eventos-o"></i>
             Recibir Miembros
@@ -161,7 +161,7 @@ export const Header: React.SFC<HeaderProps> = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
-            {!isLoggued ? (
+            {!isLogged() ? (
               <Nav.Item>
                 <NavLink
                   exact
@@ -182,7 +182,7 @@ export const Header: React.SFC<HeaderProps> = () => {
                         isActive={handleIsActive}
                         className="nav-link nav-link-dropdown"
                         activeClassName="active"
-                        to="/admin/profile"
+                        to="/app/profile"
                       >
                         Perfil
                     </NavLink>
@@ -194,7 +194,7 @@ export const Header: React.SFC<HeaderProps> = () => {
                           isActive={handleIsActive}
                           className="nav-link nav-link-dropdown"
                           activeClassName="active"
-                          to="/member/organizedcode/read"
+                          to="/app/organizedcode/read"
                         >
                           Leer Código
                       </NavLink>
@@ -257,7 +257,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               </NavLink>
             </Nav.Item>
           </Nav>
-          {isLoggued && (
+          {isLogged() && (
             <Navbar.Text>
               Bienvenido :{" "}
               <NavLink exact activeClassName="active" to="/">

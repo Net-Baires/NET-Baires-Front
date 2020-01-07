@@ -62,7 +62,7 @@ const LiveConfigucationsComponent: React.SFC<LiveConfigucationsProps> = ({ loadi
                 <button
                   type="button"
                   className="btn btn-success form-control"
-                  onClick={e => window.open(`/admin/events/${eventLive.id}/attendances/general`, '_blank')}
+                  onClick={e => window.open(`/app/events/${eventLive.id}/attendances/general`, '_blank')}
                   data-toggle="tooltip"
                   data-original-title="btn btn-danger"
                 >

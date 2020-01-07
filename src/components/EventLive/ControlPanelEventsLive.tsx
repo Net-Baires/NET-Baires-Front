@@ -50,7 +50,7 @@ const ControlPanelEventsLive: React.SFC<ControlPanelEventsLiveProps> = ({ events
                       exact
                       className="btn btn-primary shadow-2 text-uppercase btn-block"
                       activeClassName="active"
-                      to={`/admin/events/${event.id}/live/panel`}
+                      to={`/app/events/${event.id}/live/panel`}
                     >
                       Panel de Control
           </NavLink>
@@ -60,7 +60,7 @@ const ControlPanelEventsLive: React.SFC<ControlPanelEventsLiveProps> = ({ events
                       exact
                       className="btn btn-primary shadow-2 text-uppercase btn-block"
                       activeClassName="active"
-                      to={`/member/events/${event.id}/live/panel`}
+                      to={`/app/events/${event.id}/live/panel`}
                     >
                       Panel de Control
           </NavLink>

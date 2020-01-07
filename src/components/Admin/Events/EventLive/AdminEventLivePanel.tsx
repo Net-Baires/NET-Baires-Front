@@ -1,15 +1,13 @@
-import React, { useState, useEffect, SyntheticEvent } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { loading, ready } from '../../../../store/loading/actions';
 import {
-  GetAdminLiveEventDetail,
-  updateEvent
+  GetAdminLiveEventDetail
 } from "../../../../services/eventsServices";
 import { EventLiveDetail } from "../../../../services/models/Events/EventLiveDetail";
 import { LastUsersAttended } from "../../../EventLive/LastUsersAttended";
 import { isEmpty } from "../../../../services/objectsservices";
-import { SyncUserToEvent } from "./SyncUserToEvent";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { EventLiveTime } from '../../../EventLive/EventLiveTme';
 import { CardWrapper } from '../../../Common/CardWrapper';
@@ -19,28 +17,23 @@ import { TitleHeader } from '../../../Common/TitleHeader';
 import { LiveConfigucations } from '../Components/LiveConfigucations';
 import { AttendantCount } from '../Components/AttendantCount';
 import { GroupCode } from '../Components/GroupCode';
+import { SyncUserToEvent } from './SyncUserToEvent';
 type AdminEventLivePanelProps = {
-  name: string;
   loading: () => void;
   ready: () => void;
-};
-type AdminEventLivePanelParams = {
-  id: string;
+  eventId: number;
 };
 
-type AdminEventLivePanelPropsAndRouter = AdminEventLivePanelParams &
-  AdminEventLivePanelProps;
-const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
-  AdminEventLivePanelPropsAndRouter
-> &
-  AdminEventLivePanelProps> = ({ loading, ready, ...props }) => {
+const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps>
+  = ({ loading, ready, eventId }) => {
     const [eventDetail, setEventDetail] = useState<EventLiveDetail>(
       {} as EventLiveDetail);
 
+
     const history = useHistory();
     const loadEventDetail = () => {
-      GetAdminLiveEventDetail(+props.match.params.id).then(s => {
-        if (s == null) history.push("/admin/panel");
+      GetAdminLiveEventDetail(eventId).then(s => {
+        if (s == null) history.push("/app/panel");
         setEventDetail(s);
         ready();
       });
@@ -48,7 +41,7 @@ const AdminEventLivePanelComponent: React.SFC<RouteComponentProps<
     useEffect(() => {
       loading();
       subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, (data) => {
-        if (+data.eventId === +props.match.params.id)
+        if (+data.eventId === eventId)
           loadEventDetail();
       });
       loadEventDetail();

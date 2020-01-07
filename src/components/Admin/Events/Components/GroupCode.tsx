@@ -19,7 +19,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { updateGroupCode, deleteGroupCode } from '../../../../services/groupCodesServices';
 import { UpdateGroupCode } from '../../../../services/models/UpdateGroupCode';
 import { DialogQuestion } from '../../../Common/DialogQuestion';
-import { memberNotification } from '../../../../services/syncCommunicationServices';
+import { useHistory } from 'react-router-dom';
 type GroupCodeProps = {
   eventLive: EventLiveDetail;
   updatedEvent: () => void;
@@ -28,6 +28,7 @@ type GroupCodeProps = {
 };
 
 const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, updatedEvent, ready }) => {
+  const history = useHistory();
   const [detail, setDetail] = useState("");
   const [openPopup, setOpenPopup] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -82,6 +83,9 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
       }
     );
   };
+  const handlePanel = (e: any, groupCode: GroupCodeResponse) => {
+    history.push(`/app/groupcodes/${groupCode.id}/panel`);
+  }
   const handleAccept = () => {
   }
   return (
@@ -151,7 +155,7 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
                               </ListItemIcon>
                               <ListItemText primary="Eliminar" />
                             </StyledMenuItem>
-                            <StyledMenuItem>
+                            <StyledMenuItem onClick={e => handlePanel(e, groupCode)}>
                               <ListItemIcon>
                                 <OpenWithIcon fontSize="small" />
                               </ListItemIcon>

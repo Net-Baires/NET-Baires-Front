@@ -3,13 +3,14 @@ import { getEventsLive } from "../../../services/eventsServices";
 import { isEmpty } from "../../../services/objectsservices";
 import { EventDetail } from "../../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
-import { CardWrapper } from "../../Common/CardWrapper";
 import { EventActions } from "./EventActions";
 import { SecureElement } from '../../Auth/SecureElement';
 import { subscribeDisconnectedMember, subscribeConnectedMember } from '../../../services/syncCommunicationServices';
+import { CardHeaderWrapper } from '../../Common/CardHeaderWrapper';
+import { CardHeaderCollapsableWrapper } from '../../Common/CardHeaderCollapsableWrapper';
 
 type ControlPanelProps = {};
-const ControlPanel: React.SFC<ControlPanelProps> = () => {
+export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
   const [eventsLive, setEventsLive] = useState(new Array<EventDetail>());
   const [countUserLoggued, setCountUserLoggued] = useState(0);
   useEffect(() => {
@@ -27,11 +28,12 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
     <>
       {!isEmpty(eventsLive) && (
         <>
-          <div className="col-sm-12">
-            <div className="alert alert-primary" role="alert">
-              <p>
-                Estos son los eventos que se encuentran ocurriendo en este
-                momento.
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="alert alert-primary" role="alert">
+                <p>
+                  Estos son los eventos que se encuentran ocurriendo en este
+                  momento.
                 {/* <a
               href="index-form-package.html"
               target="_blank"
@@ -39,19 +41,14 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
             >
               CHECKOUT
             </a> */}
-              </p>
-            </div>
-          </div>
-          <div className="col-sm-12">
-            <div className="card">
-              <div className="card-header">
-                <h5>Eventos en Vivo</h5>
+                </p>
               </div>
             </div>
           </div>
         </>
-      )}
-      <div className="row">
+      )
+      }
+      <CardHeaderCollapsableWrapper cardTitle="Eventos en vivo">
         {eventsLive &&
           eventsLive.map(event => (
             <div key={event.id} className="col-xl-4 col-md-6">
@@ -91,7 +88,7 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
                         exact
                         className="btn btn-primary shadow-2 text-uppercase btn-block"
                         activeClassName="active"
-                        to={`/admin/events/${event.id}/live/panel`}
+                        to={`/app/events/${event.id}/live/panel`}
                       >
                         Panel de Control
                     </NavLink>
@@ -101,7 +98,7 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
                         exact
                         className="btn btn-primary shadow-2 text-uppercase btn-block"
                         activeClassName="active"
-                        to={`/member/events/${event.id}/live/panel`}
+                        to={`/app/events/${event.id}/live/panel`}
                       >
                         Panel de Control
                     </NavLink>
@@ -111,7 +108,7 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
               </div>
             </div>
           ))}
-      </div>
+      </CardHeaderCollapsableWrapper>
       <div className="row">
         <div className="col-md-3 col-xl-3">
           <div className="card theme-bg assets-value">
@@ -129,4 +126,3 @@ const ControlPanel: React.SFC<ControlPanelProps> = () => {
     </>
   );
 };
-export default ControlPanel;

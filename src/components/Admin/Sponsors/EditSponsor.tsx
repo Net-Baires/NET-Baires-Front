@@ -49,7 +49,7 @@ export const EditSponsorToExport: React.SFC<
     updateSponsor(props.match.params.id, sponsor, logo)
       .then(() => {
         ready();
-        history.push("/admin/sponsors");
+        history.push("/app/sponsors");
       })
       .catch(() => {
         //mostrar error

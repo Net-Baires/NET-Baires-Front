@@ -43,7 +43,7 @@ const EditBadgeInternalComponent: React.SFC<
     loading();
     updateBadge(badge.id, badge, file).then(x => {
       ready();
-      history.push("/admin/badges");
+      history.push("/app/badges");
     });
   };
   const handleDeleteBadge = (event: MouseEvent<HTMLButtonElement>) => {

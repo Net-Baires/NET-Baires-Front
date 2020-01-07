@@ -19,7 +19,7 @@ const NewBadgeComponent: React.SFC<NewBadgeProps> = ({ loading, ready }) => {
     loading();
     newBadge(badge, image).then(x => {
       ready();
-      history.push("/admin/badges");
+      history.push("/app/badges");
     });
   };
 
