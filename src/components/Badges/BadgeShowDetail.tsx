@@ -54,7 +54,7 @@ export const BadgeShowDetailComponent: React.SFC<
 
   const user = getCurrentUser();
   return (
-    <div className="services-section text-center" id="nuestrosOrganizadores">
+    <div className="services-section text-center" >
       <div className="container">
         <div className="row  justify-content-md-center">
           <div className="col-md-8">

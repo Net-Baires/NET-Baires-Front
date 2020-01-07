@@ -20,12 +20,32 @@ const SpeakerDetail: React.SFC<
     getSpeaker(Number(id)).then(s => setSpeaker(s));
   }, []);
   return (
-    <>
-      <h1>Id - {speakerDetail.id}</h1>
-      <h3>Nombre - {speakerDetail.name}</h3>
-      <h3>LastName - {speakerDetail.lastName}</h3>
-      <img src={speakerDetail.picture}></img>
-    </>
+    <div className="services-section text-center" >
+      <div className="container">
+        <div className="row  justify-content-md-center">
+          <div className="col-md-8">
+            <div className="services-content">
+              <h1 className="wow fadeInUp" data-wow-delay="0s">
+                {speakerDetail.firstName} {speakerDetail.lastName}
+              </h1>
+            </div>
+          </div>
+          <div className="col-md-12 text-center">
+            <div className="services">
+              <div className="row">
+                <div className="col-md-12 badge-detail-img">
+                  <img src={speakerDetail.picture} alt="New" />
+                </div>
+                <div className="col-md-12">
+                  {/* <p>{badge.description}</p> */}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   );
 };
 export default SpeakerDetail;
