@@ -17,6 +17,7 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { subscribeMemberNotification } from '../../services/syncCommunicationServices';
 import AddToHomescreen from 'react-add-to-homescreen';
+import { getMe } from '../../services/profileServices';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backdrop: {
@@ -31,7 +32,7 @@ interface AppProps {
   ready: () => void;
 }
 const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
-  const { user } = useContext(UserContext);
+  const { user, setUserDetail } = useContext(UserContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -45,6 +46,9 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   });
 
   useEffect(() => {
+    getMe().then(x => {
+      setUserDetail(x);
+    });
     subscribeMemberNotification(user.userId, data => {
       infoToast(data.notificationMessage)
     })
@@ -60,8 +64,8 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
       {/* <SideMenu></SideMenu>
       <TopBar></TopBar>
       <FriendsMenu></FriendsMenu> */}
-      <TopBar openMenu={() => setOpen(true)}></TopBar>
-      <div className="pcoded-main-container" onClick={() => setOpen(false)}>
+      <TopBar onClick={() => setOpen(false)} openMenu={() => setOpen(true)}></TopBar>
+      <div className="pcoded-main-container" >
         <div className="pcoded-wrapper">
           <div className="pcoded-content">
             <div className="pcoded-inner-content">
@@ -96,7 +100,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
                 <SideMenu closeMenu={() => setOpen(false)}></SideMenu>
               </Drawer>
               <div className="main-body">
-                <div className="page-wrapper">
+                <div className="page-wrapper" onClick={() => setOpen(false)}>
 
                   {/* <LoadingOverlay
                     active={props.isLoading}

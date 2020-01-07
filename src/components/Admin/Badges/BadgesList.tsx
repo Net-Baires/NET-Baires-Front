@@ -100,7 +100,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
   return (
     <CardWrapper cardTitle="Badges">
       {badge && (
-        <SearchWrapper title="Usuarios">
+        <SearchWrapper title="Badges">
           <ToolkitProvider keyField="id" data={badge} columns={columns} search>
             {(props: any) => (
               <div>

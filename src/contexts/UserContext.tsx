@@ -27,7 +27,7 @@ const { Provider, Consumer } = (UserContext = React.createContext<UserContext>({
   memberDetail: userDetail,
   login: () => { },
   logout: () => { },
-  setUserDetail: () => { },
+  setUserDetail: (memberDetail: Member) => { },
   hasRol: () => true
 }));
 const UserProvider: React.SFC<UserContextProps> = props => {

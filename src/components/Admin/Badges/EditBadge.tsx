@@ -17,7 +17,7 @@ type EditBadgeParams = {
   loading: () => void;
   ready: () => void;
 };
-
+import MUIRichTextEditor from 'mui-rte'
 const EditBadgeInternalComponent: React.SFC<
   RouteComponentProps<EditBadgeParams> & EditBadgeParams
 > = ({ loading, ready, ...props }) => {

@@ -130,7 +130,14 @@
     display: block !important;
 }
 
-
-/* .MuiListItem-button:hover {
-    background-color: rgba(4, 169, 245, 0.1) !important;
-} */
+.badge-description-wrapper {
+    min-height: 300px;
+    background: #f4f7fa;
+    padding: 10px 20px;
+    font-size: 14px;
+    height: auto;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    overflow: auto;
+}

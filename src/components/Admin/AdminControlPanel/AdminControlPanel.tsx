@@ -48,7 +48,7 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
         </>
       )
       }
-      <CardHeaderCollapsableWrapper cardTitle="Eventos en vivo">
+      <CardHeaderCollapsableWrapper collapsed={false} cardTitle="Eventos en vivo">
         {eventsLive &&
           eventsLive.map(event => (
             <div key={event.id} className="col-xl-4 col-md-6">

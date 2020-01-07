@@ -77,15 +77,13 @@ export const EditSponsorToExport: React.SFC<
           saveSponsor={handleSaveSponsor}
         ></EditSponsorComponent>
       )}
-      <div className="row">
-        <button
-          type="button"
-          onClick={handleDeleteSponsor}
-          className="btn btn-danger btn-full-width"
-        >
-          Eliminar
+      <button
+        type="button"
+        onClick={handleDeleteSponsor}
+        className="btn btn-danger btn-full-width"
+      >
+        Eliminar
         </button>
-      </div>
     </CardWrapper>
   );
 };

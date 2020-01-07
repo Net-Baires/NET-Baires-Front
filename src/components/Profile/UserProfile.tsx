@@ -6,13 +6,15 @@ import { connect } from "react-redux";
 import { getMe, updateMe } from "../../services/profileServices";
 import { isEmpty } from "../../services/objectsservices";
 import Draft from "react-wysiwyg-typescript";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState } from "draft-js";
 import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
 import { CardWrapper } from '../Common/CardWrapper';
 import { loading, ready } from '../../store/loading/actions';
 import { successToast } from '../../services/toastServices';
 import { UserContext } from '../../contexts/UserContext';
-import { getCurrentUser } from '../../services/authService';
+import { stateFromHTML } from 'draft-js-import-html';
+import { stateToHTML } from 'draft-js-export-html';
+import { useHistory } from 'react-router-dom';
 interface FormValues extends Member {
   imageData?: File;
   biographyHtml?: EditorState;
@@ -29,8 +31,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
     if (props.values.biography != null)
       setFieldValue(
         "biographyHtml",
-        EditorState.createWithContent(
-          ContentState.createFromText(props.values.biography)
+        EditorState.createWithContent(stateFromHTML(props.values.biography)
         )
       );
   }, []);
@@ -170,7 +171,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
           disabled={isSubmitting}
           className="btn btn-primary"
         >
-          Submit
+          Guardar
         </button>
       </Form>
     </>
@@ -198,6 +199,7 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   }),
   handleSubmit: (values: any, { props }) => {
     // values.biography = values.biographyHtml.getCurrentContent().getPlainText();
+    values.biography = stateToHTML(values.biographyHtml!.getCurrentContent());
     props.saveUser(values, values.imageData!);
   }
 })(UserProfileForm);
@@ -207,13 +209,12 @@ type EditAllSponsorProps = {
   ready: () => void;
 };
 const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }) => {
+  const history = useHistory();
   const [userDetail, setUserDetailState] = useState({} as Member);
-  const { setUserDetail } = useContext(UserContext);
   useEffect(() => {
     loading();
     getMe().then(x => {
       setUserDetailState(x);
-      setUserDetail(x);
       ready();
     });
   }, []);
@@ -223,6 +224,8 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }
     updateMe(me, picture).then(() => {
       ready();
       successToast("Perfil Actualizado");
+      history.push("/app/panel");
+
     });
   };
   return (
@@ -230,6 +233,7 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }
       {!isEmpty(userDetail) && (
         <EditAllUserFormik
           {...userDetail}
+
           saveUser={saveUser}
         ></EditAllUserFormik>
       )
