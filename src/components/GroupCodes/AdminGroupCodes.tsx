@@ -12,6 +12,7 @@ import { formatStringDate } from '../../helpers/DateHelpers';
 import { subscribeUpdateGroupCode } from '../../services/syncCommunicationServices';
 import { CardHeaderCollapsableWrapper } from '../Common/CardHeaderCollapsableWrapper';
 import { FormControlLabel, Switch, TextField } from '@material-ui/core';
+import { SelectOneBadge } from '../Admin/Badges/SelectOneBadge';
 type AdminGroupCodesProps = {
   loading: () => void;
   ready: () => void;
@@ -146,8 +147,60 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps>
                 </div>
 
               </CardWrapper>
+
+              <CardWrapper colSize={8} cardTitle="Ganadores del sorteo">
+                <div className="table-responsive">
+                  <table className="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {groupCode.members.map(member => (
+                        <tr key={member.id} className="unread">
+                          <td>
+                            <h6 className="mb-1">{member.id}</h6>
+
+                          </td>
+                          <td>
+                            <img
+                              className="rounded-circle"
+                              style={{ width: "40px", height: "40px" }}
+                              src={
+                                member.picture != "" && member.picture != null
+                                  ? member.picture
+                                  : "assets/images/no-image-profile.png"
+                              }
+                              alt="activity-user"
+                            ></img>
+                          </td>
+                          <td>
+                            <h6 className="mb-1">{member.firstName}</h6>
+                            <p className="m-0">{member.lastName}</p>
+                          </td>
+                          <td>
+                            <h6 className="text-muted">
+                              <i className="fas fa-circle text-c-green f-10 m-r-15"></i>
+
+                            </h6>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardWrapper>
             </CardHeaderCollapsableWrapper>
-            <CardHeaderCollapsableWrapper collapsed={true} cardTitle="Entregar Badge"></CardHeaderCollapsableWrapper>
+            <CardHeaderCollapsableWrapper collapsed={false} cardTitle="Entregar Badge">
+              <SelectOneBadge></SelectOneBadge>
+
+            </CardHeaderCollapsableWrapper>
+
+
           </>
         }
       </>

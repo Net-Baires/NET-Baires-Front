@@ -34,7 +34,6 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
   };
   return (
     <Form
-      className="lgx-contactform"
       onSubmitCapture={(a: any) => {
         console.log(a);
       }}

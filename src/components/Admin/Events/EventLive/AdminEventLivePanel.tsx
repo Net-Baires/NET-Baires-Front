@@ -18,6 +18,7 @@ import { LiveConfigucations } from '../Components/LiveConfigucations';
 import { AttendantCount } from '../Components/AttendantCount';
 import { GroupCode } from '../Components/GroupCode';
 import { SyncUserToEvent } from './SyncUserToEvent';
+import { Draggable, Droppable } from 'react-drag-and-drop'
 type AdminEventLivePanelProps = {
   loading: () => void;
   ready: () => void;

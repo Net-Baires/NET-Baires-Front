@@ -17,6 +17,10 @@ export const getBadge = (id: number): Promise<GetBadgeResponse> => {
   return getRequest(`/badges/${id}`);
 };
 
+export const getBadgeByName = (name: string): Promise<GetBadgeResponse[]> => {
+  return getRequest(`/badges?name=${name}`);
+};
+
 export const getBadgeToEdit = (id: number): Promise<GetBadgeResponse> => {
   return getRequest(`/badges/${id}`);
 };
