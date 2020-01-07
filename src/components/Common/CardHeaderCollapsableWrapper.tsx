@@ -1,18 +1,20 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import useCollapse from 'react-collapsed';
 
 type CardHeaderProps = {
   cardTitle?: string;
   colSize?: number;
+  collapsed?: boolean;
 };
 
 export const CardHeaderCollapsableWrapper: React.SFC<CardHeaderProps> = ({
   colSize,
   cardTitle,
-  children
+  children,
+  collapsed
 }) => {
-  const [isOpen, setOpen] = useState(true);
-  const { getCollapseProps, getToggleProps } = useCollapse({ isOpen });
+  const [isOpen, setOpen] = useState(collapsed != null ? !collapsed : false);
+  const { getCollapseProps } = useCollapse({ isOpen });
   if (colSize == null) colSize = 12;
   return (
     <Fragment>

@@ -189,8 +189,6 @@ export const App: React.SFC<AppProps> = () => {
               <PrivateRoute exact path="/app/panel" component={ControlPanel}></PrivateRoute>
               <PrivateRoute roles={["Admin"]} exact path="/app/sponsors/:id/edit" component={EditSponsor} />
               <PrivateRoute roles={["Admin", "Organizer"]} exact path="/app/groupcodes/:id/panel" component={AdminGroupCodes} />
-
-              AdminGroupCodes
               <PrivateRoute roles={["Admin"]} exact path="/app/sponsors" component={SponsorsList} />
               <PrivateRoute roles={["Admin"]} exact path="/app/members" component={UsersList} />
               <PrivateRoute roles={["Admin"]} exact path="/app/users/:id(\d+)/Edit" component={EditUser} />
