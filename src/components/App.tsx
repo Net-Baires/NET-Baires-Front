@@ -108,10 +108,14 @@ export const App: React.SFC<AppProps> = () => {
             </Route>
 
             <Route exact path="/badges/:id(\d+)">
-              <BadgeShowDetail></BadgeShowDetail>
+              <HomeWrapper>
+                <BadgeShowDetail></BadgeShowDetail>
+              </HomeWrapper>
             </Route>
             <Route exact path="/badges">
-              <BadgesListPublic></BadgesListPublic>
+              <HomeWrapper>
+                <BadgesListPublic></BadgesListPublic>
+              </HomeWrapper>
             </Route>
 
             <Route exact path="/events/live">

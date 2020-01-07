@@ -37,51 +37,51 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
   }, []);
   const user = getCurrentUser();
   return (
-    <main>
-      <div className="lgx-page-wrapper">
-        <section>
-          <div className="container">
-            <div className="row">
-              {!isEmpty(badges) ? (
-                badges.map(badge => (
-                  <div className="col-xs-12 col-sm-6 col-md-4">
-                    <div className="lgx-single-news lgx-single-news-images">
-                      <figure>
-                        <a href={badge.badgeUrl} target="_blank">
-                          <img src={badge.imageUrl} alt=""></img>
-                        </a>
-                      </figure>
-                      <div className="single-news-info">
-                        <div className="meta-wrapper">
-                          <span>{formatStringDate(badge.created)}</span>
-                          <span>
-                            by{" "}
-                            <a href="https://net-baires.com.ar" target="_blank">
-                              NET-Baires
-                            </a>
-                          </span>
-                        </div>
-                        <h3 className="title">
-                          <a href={badge.badgeUrl}>{badge.name}</a>
-                        </h3>
-                        <NavLink
-                          className="lgx-btn lgx-btn-white lgx-btn-sm"
-                          to={`badges/${badge.id}`}
-                        >
-                          Detalle
-                        </NavLink>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                  <NotFound title="No hay Badges disponibles actualmente"></NotFound>
-                )}
+    <div className="services-section text-center" id="nuestrosOrganizadores">
+      <div className="container">
+        <div className="row  justify-content-md-center">
+          <div className="col-md-8">
+            <div className="services-content">
+              <h1 className="wow fadeInUp" data-wow-delay="0s">
+                Nuestros Badges
+           </h1>
+              <p className="wow fadeInUp" data-wow-delay="0.2s">
+                Estos son los badges que hemos entregado como reconocimiento a nuestros miemebros, por las diferentes actividades que llevamos adelante.
+           </p>
             </div>
           </div>
-        </section>
+          <div className="col-md-12 text-center">
+            <div className="services">
+              <div className="row">
+                {!isEmpty(badges) ? (
+                  badges.map(badge => (
+                    <div className="card  card-badge-container  col-sm-3" style={{ width: "18rem;" }}>
+                      <div className="card-badge-img">
+                        <img src={badge.imageUrl} className="card-img-top" alt="..."></img>
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title">{badge.name}</h5>
+                        {/* <p className="card-text">{badge.description}</p> */}
+                        <div className="card-badge-link-container">
+                          <NavLink
+                            className="lgx-btn lgx-btn-white lgx-btn-sm"
+                            to={`badges/${badge.id}`}
+                          >
+                            Detalle
+                        </NavLink>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                    <NotFound title="No hay Badges disponibles actualmente"></NotFound>
+                  )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
   );
 };
 

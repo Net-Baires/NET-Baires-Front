@@ -61,7 +61,11 @@ const MenuHomeComponent: React.SFC = () => {
                   Sponsors
                 </a>
               </li>
-
+              <li className="nav-item">
+                <NavLink className="nav-link  page-scroll" to="/badges">
+                  Badges
+                  </NavLink>
+              </li>
               <li className="nav-item">
                 <NavLink className="nav-link  page-scroll" to="/events/live">
                   Eventos en vivo

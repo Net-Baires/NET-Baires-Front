@@ -2399,3 +2399,48 @@ h1 a {
     background-color: #4E5E30;
     border-color: #4E5E30;
 }
+
+.card-img-top {
+    width: auto !important;
+    height: 200px;
+}
+
+.card-badge-img {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.card-badge-container {
+    margin: 25px;
+    box-shadow: 5px 5px 20px 4px rgba(0, 0, 0, 0.2);
+}
+
+.card-badge-link-container {
+    text-align: center;
+    height: 30px;
+}
+
+p.card-text {
+    height: 70px;
+}
+
+.card-title {
+    margin-bottom: .75rem;
+    height: 30px;
+    text-align: center;
+}
+
+.badge-detail-img {
+    text-align: center;
+}
+
+.badge-detail-img img {
+    max-height: 400px;
+}
+
+@media only screen and (max-width: 769px) {
+    .badge-detail-img img {
+        width: 100%;
+    }
+}

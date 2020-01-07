@@ -12,6 +12,7 @@ import { formatStringDate } from "../../helpers/DateHelpers";
 import { getMembersInBadge } from "../../services/membersServices";
 import { UsersListToShow } from "../Users/UsersListToShow";
 import { NotFound } from "../Common/NotFoun";
+import { useParams } from 'react-router-dom';
 
 type BadgeDetailProps = {
   loading: () => void;
@@ -25,6 +26,7 @@ type BadgeDetailPropsAndRouter = BadgeDetailParams & BadgeDetailProps;
 export const BadgeShowDetailComponent: React.SFC<
   RouteComponentProps<BadgeDetailPropsAndRouter> & BadgeDetailProps
 > = ({ match, loading, ready }) => {
+  const { id } = useParams();
   const history = useHistory();
 
   const [badge, setBadge] = useState({} as GetBadgeResponse);
@@ -32,7 +34,7 @@ export const BadgeShowDetailComponent: React.SFC<
   const [found, setFound] = useState(false);
   useEffect(() => {
     loading();
-    getBadge(+match.params.id)
+    getBadge(+id)
       .then(x => {
         setBadge(x);
         setFound(true);
@@ -44,7 +46,7 @@ export const BadgeShowDetailComponent: React.SFC<
   }, []);
   useEffect(() => {
     loading();
-    getMembersInBadge(+match.params.id).then(x => {
+    getMembersInBadge(+id).then(x => {
       setMembers(x);
       ready();
     });
@@ -52,53 +54,32 @@ export const BadgeShowDetailComponent: React.SFC<
 
   const user = getCurrentUser();
   return (
-    <PageFullWidthWrapper classWrapper="lgx-post-wrapper">
-      <article>
-        <header>
-          <figure>
-            <a href={badge.badgeUrl}>
-              <img src={badge.imageUrl} alt="New" />
-            </a>
-          </figure>
-          <div className="text-area">
-            <div className="hits-area">
-              <div className="date">
-                <a href="https://net-baires.com.ar" target="blank">
-                  <i className="fa fa-user"></i> NET-Baires
-                </a>
-                <a href="#">
-                  <i className="fa fa-calendar"></i>{" "}
-                  {formatStringDate(badge.created)}
-                </a>
-                <a href="#">
-                  <i className="fa fa-folder"></i> News
-                </a>
-                <a href="#">
-                  <i className="fa fa-comment"></i> 0 Comments
-                </a>
-                <a href="#">
-                  <i className="fa fa-heart"></i> Hits: 353
-                </a>
-              </div>
+    <div className="services-section text-center" id="nuestrosOrganizadores">
+      <div className="container">
+        <div className="row  justify-content-md-center">
+          <div className="col-md-8">
+            <div className="services-content">
+              <h1 className="wow fadeInUp" data-wow-delay="0s">
+                {badge.name}
+              </h1>
             </div>
-            <h1 className="title">{badge.name}</h1>
           </div>
-        </header>
-        <section>
-          <p>{badge.description}</p>
-        </section>
-        <footer>
-          <div className="row">
-            <div className="col-xs-12">
-              <h4 className="title">Miembros</h4>
-              <div className="lgx-share">
-                <UsersListToShow members={members}></UsersListToShow>
+          <div className="col-md-12 text-center">
+            <div className="services">
+              <div className="row">
+                <div className="col-md-12 badge-detail-img">
+                  <img src={badge.imageUrl} alt="New" />
+                </div>
+                <div className="col-md-12">
+                  <p>{badge.description}</p>
+                </div>
               </div>
             </div>
           </div>
-        </footer>
-      </article>
-    </PageFullWidthWrapper>
+        </div>
+      </div>
+    </div>
+
   );
 };
 
