@@ -46,7 +46,7 @@ export const assignBadgeToMember = (
   badgeId: number,
   memberId: number
 ): Promise<BadgeAssign[]> => {
-  return postRequest(`/badges/${badgeId}/app/${memberId}`);
+  return postRequest(`/badges/${badgeId}/members/${memberId}`);
 };
 export const updateBadge = (
   badgeId: number,

@@ -8,7 +8,7 @@ export interface EventsAttendees {
   notifiedAbsence?: boolean;
   doNotKnow?: boolean;
   didNotAttend?: boolean;
-  averageAttendance: number;
+  averageAttendance?: number;
   memberDetail?: EventsAttendeesMemberDetail;
   event?: EventToReportAttendanceDetail;
 }

@@ -18,7 +18,7 @@ import { LiveConfigucations } from '../Components/LiveConfigucations';
 import { AttendantCount } from '../Components/AttendantCount';
 import { GroupCode } from '../Components/GroupCode';
 import { SyncUserToEvent } from './SyncUserToEvent';
-import { Draggable, Droppable } from 'react-drag-and-drop'
+import { loadScript } from '../../../../services/helpers/scriptshelpers';
 type AdminEventLivePanelProps = {
   loading: () => void;
   ready: () => void;
@@ -83,6 +83,15 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps>
                     </div>
                   </CardWrapper>
                 }
+                <div className="col-md-2">
+                  <div className="card theme-bg visitor">
+                    <div className="card-block text-center">
+                      <h5 className="text-white m-0">Asistencia Estimada</h5>
+                      <h3 className="text-white m-t-20 f-w-300">{eventDetail.membersDetails.estimatedAttendancePercentage}%</h3>
+                      {/* <span className="text-white">20% More than last Month</span> */}
+                    </div>
+                  </div>
+                </div>
               </>
             )}
 

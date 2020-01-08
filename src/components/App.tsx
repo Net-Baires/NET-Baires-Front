@@ -50,6 +50,7 @@ import { LastLocationProvider } from 'react-router-last-location';
 import { ControlPanel } from './MemberLogged/ControlPanel';
 import { EventLivePanel } from './Pages/EventLivePanel';
 import { AdminGroupCodes } from './GroupCodes/AdminGroupCodes';
+import { AssignBadge } from './Admin/Badges/AssignBadge';
 
 interface AppProps {
   isLoading: boolean;
@@ -143,6 +144,7 @@ export const App: React.SFC<AppProps> = () => {
               <PrivateRoute roles={["Admin", "Organizer"]} exact path="/app/EventLive/Attendances" component={EventLiveAttendances} />
               <PrivateRoute exact path="/app/profile" component={UserProfile} />
               <PrivateRoute roles={["Admin", "Organizer"]} exact path="/app/events/live" component={EventsInLiveToDo} />
+              <PrivateRoute roles={["Admin", "Organizer"]} exact path="/app/badges/assign" component={AssignBadge} />
               <PrivateRoute roles={["Admin", "Organizer"]} exact path="/app/events/:id/attendances/general" component={CheckAttendancesGeneral} />
               <PrivateRoute exact path="/app/events" component={EventsList} />
               <PrivateRoute roles={["Admin"]} exact path="/app/events/:id(\d+)?/edit" component={EditEventPage} />

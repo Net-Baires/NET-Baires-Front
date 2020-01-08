@@ -21,6 +21,7 @@ export interface Members {
   totalMembersRegistered: number;
   totalMembersAttended: number;
   membersAttended: MemberDetail[];
+  estimatedAttendancePercentage: number;
 }
 export interface MemberDetail {
   id: number;

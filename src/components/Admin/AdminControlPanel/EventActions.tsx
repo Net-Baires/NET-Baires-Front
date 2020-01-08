@@ -1,6 +1,6 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { MouseEvent } from "react";
 import { connect } from "react-redux";
-import { loading, ready } from "../../../store/loading/actions";
+import { loading, ready } from '../../../store/loading/actions';
 import { CardWrapper } from "../../Common/CardWrapper";
 import { syncEvents } from "../../../services/eventsServices";
 import { SecureElement } from '../../Auth/SecureElement';
@@ -10,7 +10,7 @@ type EventActionsProps = {
   ready: () => void;
 };
 
-const EventActionsComponent: React.SFC<EventActionsProps> = () => {
+const EventActionsComponent: React.SFC<EventActionsProps> = ({ loading, ready }) => {
   const handleSyncEvents = (eventInput: MouseEvent<HTMLButtonElement>) => {
     eventInput.preventDefault();
     loading();

@@ -4,7 +4,7 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { loading, ready } from '../../store/loading/actions';
 import { isEmpty } from '../../services/objectsservices';
 import { useParams } from 'react-router-dom';
-import { getGroupCodeDetail } from '../../services/groupCodesServices';
+import { getGroupCodeDetail, assignBadgeToAttendancesInGroupCode } from '../../services/groupCodesServices';
 import { GroupCodeFullDetailResponse } from '../../services/models/GroupCodes/GroupCodeFullDetailResponse';
 import { CardWrapper } from '../Common/CardWrapper';
 import { subscribeUpdateGroupCode } from '../../services/syncCommunicationServices';
@@ -12,6 +12,7 @@ import { CardHeaderCollapsableWrapper } from '../Common/CardHeaderCollapsableWra
 import { FormControlLabel, Switch } from '@material-ui/core';
 import { SelectOneBadge } from '../Admin/Badges/SelectOneBadge';
 import { parseDate, formatStringDate, formatStringTime, formatStringDateTime } from '../../helpers/DateHelpers';
+import { BadgeAssignedList } from '../Badges/BadgeAssignedList';
 type AdminGroupCodesProps = {
   loading: () => void;
   ready: () => void;
@@ -53,6 +54,14 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps>
       event.preventDefault();
       setRepeatMember(isChecked);
     };
+    const assignBadge = (badgeId: number) => {
+      loading();
+      assignBadgeToAttendancesInGroupCode(+id!, badgeId).then(() => {
+        ready();
+      }).finally(() => {
+        ready();
+      });
+    }
     return (
       <>
         {!isEmpty(groupCode) &&
@@ -195,49 +204,8 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps>
               </CardWrapper>
             </CardHeaderCollapsableWrapper>
             <CardHeaderCollapsableWrapper collapsed={false} cardTitle="Entregar Badge">
-              <SelectOneBadge callbackAction={getGroupCode} groupCodeId={+id!}></SelectOneBadge>
-              <CardWrapper cardBodyClassName="card-body-md" colSize={8} cardTitle="Badges ya entregados">
-                <div className="table-responsive" style={{ height: "400px" }}>
-                  <table className="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>Id</th>
-                        <th>Imagen</th>
-                        <th>Nombre</th>
-                        <th>Entregado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {groupCode.badges.map(badge => (
-                        <tr key={badge.id} className="unread">
-                          <td>
-                            <h6 className="mb-1">{badge.id}</h6>
-
-                          </td>
-                          <td>
-                            <img
-                              className="rounded-circle"
-                              style={{ height: "50px" }}
-                              src={
-                                badge.imageUrl != "" && badge.imageUrl != null
-                                  ? badge.imageUrl
-                                  : "assets/images/no-image-profile.png"
-                              }
-                              alt="activity-user"
-                            ></img>
-                          </td>
-                          <td>
-                            <h6 className="mb-1">{badge.name}</h6>
-                          </td>
-                          <td>
-                            <h6 className="mb-1">{formatStringDateTime(badge.created)}</h6>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardWrapper>
+              <SelectOneBadge assignBadge={assignBadge} ></SelectOneBadge>
+              <BadgeAssignedList badges={groupCode.badges}></BadgeAssignedList>
             </CardHeaderCollapsableWrapper>
 
 

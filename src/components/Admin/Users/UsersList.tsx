@@ -17,6 +17,13 @@ import { SearchWrapper } from "../../Common/SearchWrapper";
 import { Member } from "../../../services/models/Member";
 import { CardWrapper } from '../../Common/CardWrapper';
 import { EditOneUserEvent } from './components/EditOneUser';
+import { SelectOneBadge } from '../Badges/SelectOneBadge';
+import { assignBadgeToMember } from '../../../services/badgesServices';
+import { errorToast } from '../../../services/toastServices';
+import { CardHeaderCollapsableWrapper } from '../../Common/CardHeaderCollapsableWrapper';
+import { getBdgesFromMeber } from '../../../services/membersServices';
+import { GetBadgeResponse } from '../../../services/models/BadgeDetail';
+import { BadgeAssignedList } from '../../Badges/BadgeAssignedList';
 
 type UsersListProps = {
   loading: () => void;
@@ -24,6 +31,8 @@ type UsersListProps = {
 };
 const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
   const [users, setUsers] = useState(new Array<Member>());
+  const [badges, setBadges] = useState<GetBadgeResponse[]>(new Array<GetBadgeResponse>());
+  const [selectedMember, setSelectedMember] = useState<Member>();
   const history = useHistory();
   useEffect(() => {
     loading();
@@ -167,11 +176,27 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
     event.preventDefault();
     history.push(`/app/users/${user.id}/Edit`);
   };
-
-  return (
+  const selectectMember = (member: Member) => {
+    setSelectedMember(member);
+    getBdgesFromMeber(member.id).then(s => setBadges(s));
+  }
+  const assignBadge = (badgeId: number) => {
+    if (selectedMember != null) {
+      loading();
+      assignBadgeToMember(badgeId, selectedMember.id).then(() => {
+        getBdgesFromMeber(selectedMember.id).then(s => setBadges(s));
+        ready();
+      }).finally(() => {
+        ready();
+      });
+    } else {
+      errorToast("Debe seleccionar un miembro para asignar el Badge");
+    }
+  }
+  return (<>
     <div className="row">
       {users && (
-        <EditOneUserEvent></EditOneUserEvent>
+        <EditOneUserEvent selectectMember={selectectMember}></EditOneUserEvent>
 
       )}
       <CardWrapper colSize={4} cardTitle="Acciones Usuarios">
@@ -184,6 +209,12 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
       </NavLink>
       </CardWrapper>
     </div>
+    <CardHeaderCollapsableWrapper collapsed={false} cardTitle="Badges">
+      <SelectOneBadge assignBadge={assignBadge} ></SelectOneBadge>
+      <BadgeAssignedList badges={badges}></BadgeAssignedList>
+
+    </CardHeaderCollapsableWrapper>
+  </>
   );
 };
 const mapStateToProps = () => ({});

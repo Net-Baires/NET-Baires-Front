@@ -61,7 +61,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       },
       formatter: (_cellContent: any, attende: EventsAttendees) => (
         <><h6 className=" m-b-0">{`${attende.averageAttendance}%`}</h6>
-          <div className="progress m-t-10" style={{ height: "7px;" }}>
+          <div className="progress m-t-10" style={{ height: "7px" }}>
             <div className="progress-bar progress-c-theme" role="progressbar" style={{ width: `${attende.averageAttendance}%` }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
           </div></>)
     },
@@ -236,6 +236,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       ready();
       setEventsAttendees(listOfAttendeesToUpdate);
       updateEventLive(eventInEdition.id);
+      loadAttendees();
       if (messageToMember != null)
         memberNotification(memberId, messageToMember);
     });
@@ -266,10 +267,9 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
             )}
           </ToolkitProvider>
         </SearchWrapper>
-        <SyncUserToEvent idEvent={eventInEdition.id}
-          callbackAction={loadAttendees}></SyncUserToEvent>
-      </>
-      )}
+      </>)}
+      <SyncUserToEvent idEvent={eventInEdition.id}
+        callbackAction={loadAttendees}></SyncUserToEvent>
     </>
   );
 };

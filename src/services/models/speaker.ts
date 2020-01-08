@@ -1,4 +1,5 @@
 import { EventsAttendees } from './EventsAttendees';
+import { EventDetail } from './Events/Event';
 export interface Speaker {
   memberId: number;
   firstName: string;
@@ -12,7 +13,7 @@ export interface Speaker {
   blocked: boolean;
   colaborator: boolean;
   organized: boolean;
-  counEventsAsSpeaker: number;
+  countEventsAsSpeaker: number;
   averageAttendance: number;
-  events: EventsAttendees[];
+  events: EventDetail[];
 }

@@ -46,79 +46,73 @@ const SpeakerDetail: React.SFC<
                 <div className="col-md-12">
                   <p>{ReactHtmlParser(speakerDetail.biography)}</p>
                 </div>
-                <div className="col-md-12">
-                  <div className="services-content">
-                    <h1 className="wow fadeInUp" data-wow-delay="0s">
-                      Badges recibidos por el usuario
+                {!isEmpty(badges) && <>
+
+                  <div className="col-md-12">
+                    <div className="services-content">
+                      <h1 className="wow fadeInUp" data-wow-delay="0s">
+                        Badges recibidos por el usuario
                     </h1>
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-12 row">
-                  <BadgesListGridPublic callbackClick={b => history.push(`/badges/${b.id}`)} badges={badges}></BadgesListGridPublic>
-                </div>
-                <div className="col-md-12">
-                  <div className="services-content">
-                    <h1 className="wow fadeInUp" data-wow-delay="0s">
-                      Eventos en los que participo como Ordaor
+                  <div className="col-md-12 row">
+                    <BadgesListGridPublic callbackClick={b => history.push(`/badges/${b.id}`)} badges={badges}></BadgesListGridPublic>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="services-content">
+                      <h1 className="wow fadeInUp" data-wow-delay="0s">
+                        Eventos en los que participo como Ordaor
                     </h1>
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="row">
-                    {!isEmpty(speakerDetail) &&
-                      speakerDetail.events.map(event => (
-                        <div key={event.event!.id} className="col-sm-4 ">
-                          <div
-                            className="table-left wow fadeInUp"
-                            data-wow-delay="0.4s"
-                          >
-                            <div className="icon icon-live-list-image-container">
-                              <img
-                                className="icon-live-list-image"
-                                src={
-                                  event.event!.imageUrl != null
-                                    ? event.event!.imageUrl
-                                    : "/assets/images/imagenotfound.png"
-                                }
-                                alt="Icon"
-                              />
-                            </div>
-                            <div className="pricing-details">
-                              <h2 className="event-live-list-title">{event.event!.title}</h2>
-                              <div className="row">
-                                <div className="col-sm-12">
-                                  <button
-                                    type="button"
-                                    // onClick={e => handleInfoEvent(e, event.event!)}
-                                    className="btn btn-success  btn-action btn-fill btn-event-live"
-                                  >
-                                    Anunciarme
-                            </button>
-                                </div>
-                                <div className="col-sm-12">
-                                  <button
-                                    type="button"
-                                    // onClick={e => handleLiveEvent(e, event)}
-                                    className="btn btn-primary btn-action btn-fill  btn-event-live"
-                                  >
-                                    Panel
-                            </button>
-                                </div>
-                                {/* <div className="col-sm-12">
-                            <button
-                              type="button"
-                              onClick={e => handleDetailEvent(e, event)}
-                              className="btn btn-success btn-action btn-fill  btn-event-live"
+                </>}
+                {!isEmpty(speakerDetail) &&
+                  <>
+                    <div className="col-md-12">
+                      <div className="services-content">
+                        <h1 className="wow fadeInUp" data-wow-delay="0s">
+                          Eventos como Orador
+                    </h1>
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="row">
+                        {speakerDetail.events.map(event => (
+                          <div key={event!.id} className="col-sm-4 ">
+                            <div
+                              className="table-left wow fadeInUp"
+                              data-wow-delay="0.4s"
                             >
-                              Detalle
-                            </button>
-                          </div> */}
+                              <div className="icon icon-live-list-image-container">
+                                <img
+                                  className="icon-live-list-image"
+                                  src={
+                                    event!.imageUrl != null
+                                      ? event!.imageUrl
+                                      : "/assets/images/imagenotfound.png"
+                                  }
+                                  alt="Icon"
+                                />
+                              </div>
+                              <div className="pricing-details">
+                                <h2 className="event-live-list-title">{event!.title}</h2>
+                                <div className="row">
+                                  <div className="col-sm-12">
+                                    {/* <button
+                                      type="button"
+                                      // onClick={e => handleInfoEvent(e, event.event!)}
+                                      className="btn btn-success  btn-action btn-fill btn-event-live"
+                                    >
+                                      Detalle
+                                    </button> */}
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      ))}</div>
-                </div>
+                          </div>))}
+                      </div>
+                    </div>
+                  </>}
               </div>
             </div>
           </div>

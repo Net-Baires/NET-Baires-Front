@@ -7,7 +7,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getBadgeByName } from '../../../services/badgesServices';
 import { GetBadgeResponse } from '../../../services/models/BadgeDetail';
-import { assignBadgeToAttendancesInGroupCode } from '../../../services/groupCodesServices';
 import { DialogQuestion } from '../../Common/DialogQuestion';
 import { loading, ready } from '../../../store/loading/actions';
 import { connect } from 'react-redux';
@@ -17,12 +16,11 @@ type SelectOneBadgeStateProps = {
   ready: () => void;
 }
 type SelectOneBadgeProps = {
-  callbackAction?: () => void;
-  groupCodeId: number;
+  assignBadge: (badgeId: number) => void;
 };
-const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeStateProps> = ({ groupCodeId, callbackAction, loading, ready }) => {
+const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeStateProps> = ({ loading, assignBadge }) => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [options, setOptions] = useState<GetBadgeResponse[]>([]);
   const [selectedBadge, setSelectedBadge] = useState<GetBadgeResponse>({} as GetBadgeResponse);
@@ -51,13 +49,7 @@ const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeSta
       setOpenDialog(true);
   };
   const handleAccept = () => {
-    loading();
-    assignBadgeToAttendancesInGroupCode(groupCodeId, selectedBadge.id).then(() => {
-      if (callbackAction != null)
-        callbackAction();
-    }).finally(() => {
-      ready();
-    });
+    assignBadge(selectedBadge.id);
   }
 
 

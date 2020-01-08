@@ -111,6 +111,19 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             <ListItemText primary="Badges" />
           </ListItem>
         </NavLink>
+        {/* <NavLink
+          exact
+          className="nav-link-slide-bar"
+          activeClassName="active"
+          to="/app/badges/assign"
+        >
+          <ListItem button className={classes.menuItem}>
+            <ListItemIcon className={classes.menuItemIcon}>
+              <LoyaltyIcon />
+            </ListItemIcon>
+            <ListItemText primary="Asignar Badge" />
+          </ListItem>
+        </NavLink> */}
         <NavLink
           exact
           className="nav-link-slide-bar"
@@ -159,7 +172,6 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
                 activeClassName="active"
                 to="/app/events/live"
               >
-
                 <ListItemText inset primary="Eventos en vivo" />
               </NavLink>
             </ListItem>
