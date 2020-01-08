@@ -1958,6 +1958,12 @@ label {
     padding: 0px !important;
 }
 
+.icon-live-list-wrapper {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #efefef;
+    max-width: 400px;
+}
+
 .icon-live-list-image {
     width: auto !important;
     max-height: 140px !important;

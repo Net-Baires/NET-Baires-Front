@@ -1,4 +1,4 @@
-import { putRequest, deleteRequest, getRequest } from './requestServices';
+import { putRequest, deleteRequest, getRequest, postRequest } from './requestServices';
 import { UpdateGroupCode } from './models/UpdateGroupCode';
 import { GroupCodeFullDetailResponse } from './models/GroupCodes/GroupCodeFullDetailResponse';
 
@@ -11,4 +11,8 @@ export const deleteGroupCode = (groupCodeId: number): Promise<boolean> => {
 
 export const getGroupCodeDetail = (groupCodeId: number): Promise<GroupCodeFullDetailResponse> => {
     return getRequest(`/groupCodes/${groupCodeId}`);
+};
+
+export const assignBadgeToAttendancesInGroupCode = (groupCodeId: number, badgeId: number): Promise<boolean> => {
+    return postRequest(`/groupCodes/${groupCodeId}/badges/${badgeId}`, updateGroupCode);
 };

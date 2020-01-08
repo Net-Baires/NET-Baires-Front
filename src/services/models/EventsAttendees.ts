@@ -1,3 +1,5 @@
+import { EventToReportAttendanceDetail } from './Events/EventToReportAttendance';
+
 export interface EventsAttendees {
   status?: string;
   organizer?: boolean;
@@ -6,7 +8,9 @@ export interface EventsAttendees {
   notifiedAbsence?: boolean;
   doNotKnow?: boolean;
   didNotAttend?: boolean;
+  averageAttendance: number;
   memberDetail?: EventsAttendeesMemberDetail;
+  event?: EventToReportAttendanceDetail;
 }
 export interface EventsAttendeesMemberDetail {
   id?: number;

@@ -10,6 +10,7 @@ export interface Member {
   linkedin: string;
   twitter: string;
   picture: string;
+  averageAttendance: number;
   github: string;
   instagram: string;
   biography: string;

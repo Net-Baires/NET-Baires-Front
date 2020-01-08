@@ -141,3 +141,18 @@
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     overflow: auto;
 }
+
+.img-suggestion-member {
+    height: 40px;
+}
+
+.card-table {}
+
+.card-table-container {
+    height: 120px !important;
+}
+
+.row-card-table-container {
+    overflow: scroll;
+    height: 600px;
+}

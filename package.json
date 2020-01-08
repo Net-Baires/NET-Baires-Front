@@ -94,6 +94,8 @@
         "react-countup": "^4.3.1",
         "react-dom": "^16.10.2",
         "react-draft-wysiwyg": "^1.13.2",
+        "react-html-parser": "^2.0.2",
+        "react-infinite-scroll-component": "^5.0.4",
         "react-load-script": "0.0.6",
         "react-loading-overlay": "^1.0.1",
         "react-material-ui-carousel": "^1.0.0",

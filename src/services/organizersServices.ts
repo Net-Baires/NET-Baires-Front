@@ -6,5 +6,5 @@ export const getOrganizers = (): Promise<Member[]> => {
 };
 
 export const getOrganizer = (id: number): Promise<Member> => {
-  return getRequest(`/organizers/${id}`);
+  return getRequest(`/members/${id}`);
 };

@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, RouteComponentProps } from "react-router";
+import { useHistory } from "react-router";
 import { getCurrentUser } from "../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { getBadges } from "../../services/badgesServices";
-import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 import { GetBadgeResponse } from "../../services/models/BadgeDetail";
-import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
-import { formatStringDate } from "../../helpers/DateHelpers";
-import { NavLink } from "react-router-dom";
-import { NotFound } from "../Common/NotFoun";
 import { isEmpty } from "../../services/objectsservices";
+import { BadgesListGridPublic } from './BadgesListGridPublic';
 
 type BadgesListPublicProps = {
   loading: () => void;
@@ -21,8 +17,9 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
   loading,
   ready
 }) => {
+  const history = useHistory();
   const [badges, setBadges] = useState(new Array<GetBadgeResponse>());
-  const [error, setError] = useState(false);
+  const [, setError] = useState(false);
   useEffect(() => {
     loading();
     getBadges()
@@ -30,12 +27,11 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
         setBadges(x);
         ready();
       })
-      .catch(e => {
+      .catch(() => {
         ready();
         setError(true);
       });
   }, []);
-  const user = getCurrentUser();
   return (
     <div className="services-section text-center" id="nuestrosOrganizadores">
       <div className="container">
@@ -53,29 +49,9 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
           <div className="col-md-12 text-center">
             <div className="services">
               <div className="row">
-                {!isEmpty(badges) ? (
-                  badges.map(badge => (
-                    <div className="card  card-badge-container  col-sm-3" style={{ width: "18rem;" }}>
-                      <div className="card-badge-img">
-                        <img src={badge.imageUrl} className="card-img-top" alt="..."></img>
-                      </div>
-                      <div className="card-body">
-                        <h5 className="card-title">{badge.name}</h5>
-                        {/* <p className="card-text">{badge.description}</p> */}
-                        <div className="card-badge-link-container">
-                          <NavLink
-                            className="lgx-btn lgx-btn-white lgx-btn-sm"
-                            to={`badges/${badge.id}`}
-                          >
-                            Detalle
-                        </NavLink>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                    <NotFound title="No hay Badges disponibles actualmente"></NotFound>
-                  )}
+                {!isEmpty(badges) && (
+                  <BadgesListGridPublic callbackClick={b => history.push(`badges/${b.id}`)} badges={badges}></BadgesListGridPublic>
+                )}
               </div>
             </div>
           </div>

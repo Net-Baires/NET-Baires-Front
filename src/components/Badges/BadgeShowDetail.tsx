@@ -13,6 +13,7 @@ import { getMembersInBadge } from "../../services/membersServices";
 import { UsersListToShow } from "../Users/UsersListToShow";
 import { NotFound } from "../Common/NotFoun";
 import { useParams } from 'react-router-dom';
+import ReactHtmlParser from 'react-html-parser';
 
 type BadgeDetailProps = {
   loading: () => void;
@@ -46,13 +47,12 @@ export const BadgeShowDetailComponent: React.SFC<
   }, []);
   useEffect(() => {
     loading();
-    getMembersInBadge(+id).then(x => {
+    getMembersInBadge(+id!).then(x => {
       setMembers(x);
       ready();
     });
   }, []);
 
-  const user = getCurrentUser();
   return (
     <div className="services-section text-center" >
       <div className="container">
@@ -71,7 +71,7 @@ export const BadgeShowDetailComponent: React.SFC<
                   <img src={badge.imageUrl} alt="New" />
                 </div>
                 <div className="col-md-12">
-                  <p>{badge.description}</p>
+                  <p>{ReactHtmlParser(badge.description)}</p>
                 </div>
               </div>
             </div>

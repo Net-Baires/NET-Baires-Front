@@ -19,13 +19,14 @@ const EventActionsComponent: React.SFC<EventActionsProps> = () => {
     });
   };
   return (
-    <SecureElement roles={["Admin"]}>
-      <CardWrapper colSize={3} cardTitle="Acciones Generales">
+    <CardWrapper colSize={3} cardTitle="Acciones Generales">
+      <SecureElement roles={["Admin"]}>
+
         <button onClick={handleSyncEvents} className="btn btn-warning shadow-2 text-uppercase btn-block">
           Sincronizar con Meetup
       </button>
-      </CardWrapper>
-    </SecureElement>
+      </SecureElement>
+    </CardWrapper>
   );
 };
 

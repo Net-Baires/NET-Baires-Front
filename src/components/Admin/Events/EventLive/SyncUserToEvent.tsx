@@ -25,12 +25,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackActi
     if (!isEmpty(memberToSearch)) {
       getAttendeeDetail(idEvent, memberToSearch.id).then(detail => {
         if (detail == null)
-          setAttendeeDetail({
-            memberDetail: {
-              firstName: memberToSearch.firstName,
-              picture: memberToSearch.picture
-            }
-          });
+          setAttendeeDetail(detail);
         else setAttendeeDetail(detail);
         setReadySearch(true);
       });
@@ -62,16 +57,24 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackActi
   };
   const getSuggestionValue = (suggestion: Member) => suggestion.firstName;
   const renderSuggestion = (suggestion: Member) => {
-    return <div>{suggestion.firstName}</div>;
+    return <div className="row">
+      <div className="col-md-3">
+        <img className="img-suggestion-member" src={suggestion.picture}></img>
+      </div>
+      <div className="col-md-9">
+        {suggestion.firstName} {suggestion.lastName}
+      </div>
+    </div>;
   };
   const onChange = (event: any, { newValue }: any) => {
     setValue(newValue);
   };
 
   const onSuggestionsFetchRequested = ({ value }: any) => {
-    getMemberByQuery(value).then(v => {
-      setSuggestions(v);
-    });
+    if (value != null && value.length > 3)
+      getMemberByQuery(value).then(v => {
+        setSuggestions(v);
+      });
   };
 
   const onSuggestionsClearRequested = () => {
@@ -96,20 +99,25 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackActi
         <div className="card user-designer card-container">
           {readySearch ? (
             <div className="card-block text-center">
-              <h5>{memberToSearch.firstName}</h5>
-              {/* <span className="d-block mb-4">{memberToSearch.}</span> */}
+              <h5>{attendeeDetail.memberDetail.firstName}</h5>
+              {/* <span className="d-block mb-4">{attendeeDetail.memberDetail.}</span> */}
               <img
                 className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
                 style={{ width: "150px", height: "150px" }}
                 src={
-                  memberToSearch.picture != "" && memberToSearch.picture != null
-                    ? memberToSearch.picture
+                  attendeeDetail.memberDetail.picture != "" && attendeeDetail.memberDetail.picture != null
+                    ? attendeeDetail.memberDetail.picture
                     : "assets/images/no-image-profile.png"
                 }
                 alt="dashboard-user"
               ></img>
+              <hr></hr>
+              <h6 className=" m-b-0">{`${attendeeDetail.averageAttendance}%`}</h6>
+              <div className="progress m-t-10" style={{ height: "7px;" }}>
+                <div className="progress-bar progress-c-theme" role="progressbar" style={{ width: `${attendeeDetail.averageAttendance}%` }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
               <div className="row m-t-30">
-                <div className="col-6 p-r-0">
+                <div className="col-md-6 p-r-0">
                   {attendeeDetail.attended == null ? (
                     <a
                       onClick={e =>
@@ -149,7 +157,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackActi
                       )}
                 </div>
 
-                <div className="col-6 p-r">
+                <div className="col-md-6 p-r">
                   <a
                     onClick={handleClose}
                     href="#!"
