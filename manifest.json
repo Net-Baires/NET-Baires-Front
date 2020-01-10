@@ -31,7 +31,7 @@
     ],
     "prefer_related_applications": false,
     "name": "NET-Baires",
-    "start_url": "/login",
+    "start_url": "/app/panel",
     "short_name": "NET-Baires",
     "lang": "es-ES",
     "description": "Somos la comunidad de desarrolladores .NET mas grande",

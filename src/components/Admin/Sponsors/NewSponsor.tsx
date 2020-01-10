@@ -22,7 +22,7 @@ export const NewSponsorComponent: React.SFC<NewSponsorProps> = ({
     newSponsor(sponsor, logo)
       .then(() => {
         ready();
-        history.push("/admin/sponsors");
+        history.push("/app/sponsors");
       })
       .catch(() => {
         //mostrar error

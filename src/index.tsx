@@ -17,26 +17,37 @@ import { initCommunication } from './services/communicationServices';
 import ATHS from 'add-to-homescreen-control'
 ATHS.enable()
 let storeGlobal = createStore(rootReducer);
-// if ("serviceWorker" in navigator) {
-//   window.addEventListener("load", () => {
-//     navigator.serviceWorker
-//       .register("/sw.js")
-//       .then(registration => {
-//         // tslint:disable:no-console
-//         console.log("SW registered: ", registration);
-//       })
-//       .catch(registrationError => {
-//         console.log("SW registration failed: ", registrationError);
-//       });
-//   });
-//   window.addEventListener("install", () => {
-//     console.log("install;");
-//   });
-//   window.addEventListener("activate", () => {
-//     console.log("activate");
-//   });
-// }
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/NET-Baires-Service-Workes.js")
+      .then(reg => {
+        Notification.requestPermission().then(function (permission) {
+          console.log("Notification permission");
+        });
+        reg.installing; // the installing worker, or undefined
+        reg.waiting; // the waiting worker, or undefined
+        reg.active; // the active worker, or undefined
+        reg.addEventListener('updatefound', () => {
+          reg.update().then(x => {
+            setTimeout(() => document.location.reload(true), 5000);
+          });
+        });
+      })
+      .catch(registrationError => {
+        console.log("SW registration failed: ", registrationError);
+      });
+  });
+  window.addEventListener("install", () => {
+
+  });
+  window.addEventListener("activate", () => {
+  });
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+  });
+}
 
 
 let appInsights = new ApplicationInsights({

@@ -33,7 +33,7 @@ export const EventsInLiveToDo: React.SFC<RouteComponentProps<
     eventToSync: EventToSync
   ) => {
     event.preventDefault();
-    history.push(`/admin/events/${eventToSync.id}/attendances/general`);
+    history.push(`/app/events/${eventToSync.id}/attendances/general`);
   };
   return (
     <CardWrapper cardTitle="Eventos en vivo">
@@ -71,7 +71,7 @@ export const EventsInLiveToDo: React.SFC<RouteComponentProps<
                   <NavLink
                     className="btn btn-success"
                     activeClassName="active"
-                    to={`/admin/events/${event.id}/live/panel`}
+                    to={`/app/events/${event.id}/live/panel`}
                   >
                     Panel
                   </NavLink>

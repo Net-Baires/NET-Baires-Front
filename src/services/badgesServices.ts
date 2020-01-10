@@ -17,6 +17,10 @@ export const getBadge = (id: number): Promise<GetBadgeResponse> => {
   return getRequest(`/badges/${id}`);
 };
 
+export const getBadgeByName = (name: string): Promise<GetBadgeResponse[]> => {
+  return getRequest(`/badges?name=${name}`);
+};
+
 export const getBadgeToEdit = (id: number): Promise<GetBadgeResponse> => {
   return getRequest(`/badges/${id}`);
 };
@@ -42,7 +46,7 @@ export const assignBadgeToMember = (
   badgeId: number,
   memberId: number
 ): Promise<BadgeAssign[]> => {
-  return postRequest(`/badges/${badgeId}/Member/${memberId}`);
+  return postRequest(`/badges/${badgeId}/members/${memberId}`);
 };
 export const updateBadge = (
   badgeId: number,
@@ -55,5 +59,5 @@ export const removeBadgeFromMember = (
   badgeId: number,
   memberId: number
 ): Promise<BadgeAssign[]> => {
-  return deleteRequest(`/badges/${badgeId}/Member/${memberId}`);
+  return deleteRequest(`/badges/${badgeId}/app/${memberId}`);
 };

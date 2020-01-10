@@ -56,13 +56,13 @@ const LiveConfigucationsComponent: React.SFC<LiveConfigucationsProps> = ({ loadi
                 )}
             </div>
           </div>
-          {eventLive.generalAttendance &&
+          {eventLive.generalAttended &&
             <div className="form-group row">
               <div className="col-md-12">
                 <button
                   type="button"
                   className="btn btn-success form-control"
-                  onClick={e => window.open(`/admin/events/${eventLive.id}/attendances/general`, '_blank')}
+                  onClick={e => window.open(`/app/events/${eventLive.id}/attendances/general`, '_blank')}
                   data-toggle="tooltip"
                   data-original-title="btn btn-danger"
                 >

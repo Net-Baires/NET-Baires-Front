@@ -4,7 +4,7 @@ import { EventLiveDetail } from '../../services/models/Events/EventLiveDetail';
 import { addCodeToGroupCode } from '../../services/eventsServices';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { successToast, errorToast } from '../../services/toastServices';
-import { updateEventLive } from '../../services/syncCommunicationServices';
+import { updateEventLive, updateGroupCode } from '../../services/syncCommunicationServices';
 
 
 type AddGroupCodeToLiveEventProps = {
@@ -25,6 +25,7 @@ export const AddGroupCodeToLiveEvent: React.SFC<AddGroupCodeToLiveEventProps> = 
         setLoading(false);
         successToast(`Código Reportado a : ${x.detail}`);
         updateEventLive(eventLive.id);
+        updateGroupCode(x.id);
         setCode("");
       })
       .catch(e => {

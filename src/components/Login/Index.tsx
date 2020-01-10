@@ -7,9 +7,9 @@ import { loadScript, loadStyles } from '../../services/helpers/scriptshelpers';
 var ClientOAuth2 = require("client-oauth2");
 type LoginProps = {};
 const Login: React.SFC<LoginProps> = () => {
-  const { isLoggued } = useContext(UserContext);
+  const { isLogged } = useContext(UserContext);
   const history = useHistory();
-  if (isLoggued)
+  if (isLogged())
     history.push("/");
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
@@ -30,7 +30,7 @@ const Login: React.SFC<LoginProps> = () => {
     history.location.search.length
   );
   if (redirectUrl == "")
-    redirectUrl = "/admin/panel";
+    redirectUrl = "/app/panel";
   localStorage.setItem("RedirectUrl", redirectUrl);
 
 
@@ -40,7 +40,7 @@ const Login: React.SFC<LoginProps> = () => {
   };
   return (
     <>
-      {!isLoggued && (
+      {!isLogged() && (
         <div className="auth-wrapper">
           <div className="auth-content">
             <div className="auth-bg">

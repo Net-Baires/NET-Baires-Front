@@ -1,21 +1,21 @@
 {
-  "api": {
-    "base": "${NET-Baires.api.base}$",
-    "baseRemote": "${NET-Baires.api.baseRemote}$"
-  },
-  "instrumentationKey": "${NET-Baires.instrumentationKey}$",
-  "integrations": {
-    "meetup": {
-      "clientId": "${NET-Baires.meetup.clientId}$",
-      "clientSecret": "${NET-Baires.clientSecret.clientSecret}$",
-      "accessTokenUri": "${NET-Baires.clientSecret.accessTokenUri}$",
-      "authorizationUri": "${NET-Baires.clientSecret.authorizationUri}$",
-      "redirectUri": "${NET-Baires.clientSecret.redirectUri}$",
-      "scopes": ["basic"]
+    "api": {
+        "base": "${NET-Baires.api.base}$",
+        "baseRemote": "https://net-baires-api-dev.azurewebsites.net"
     },
-    "eventBrite": {
-      "clientId": "${NET-Baires.eventBrite.clientId}$",
-      "redirectUri": "${NET-Baires.eventBrite.redirectUri}$"
+    "instrumentationKey": "instrumentationKey",
+    "integrations": {
+        "meetup": {
+            "clientId": "443afqsa6fs1hr6h0u8i8b8sib",
+            "clientSecret": "t2bi61kgksc30sls7e29s04lr1",
+            "accessTokenUri": "https://secure.meetup.com/oauth2/access",
+            "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
+            "redirectUri": "https://net-baires-site-dev.azurewebsites.net/login/meetup",
+            "scopes": ["basic"]
+        },
+        "eventBrite": {
+            "clientId": "${NET-Baires.eventBrite.clientId}$",
+            "redirectUri": "https://net-baires-site-dev.azurewebsites.net/login/eventbrite"
+        }
     }
-  }
 }

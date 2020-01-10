@@ -20,11 +20,13 @@ const Transition = React.forwardRef<unknown, TransitionProps>(function Transitio
 });
 
 export const DialogQuestion: React.SFC<DialogQuestionProps> = ({ title, description, openPopup, callbackAccept, callbackCancel }) => {
-    const [open, setOpen] = useState(openPopup);
+    const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
         setOpen(true);
     };
-
+    useEffect(() => {
+        setOpen(openPopup);
+    }, [openPopup])
     const handleClose = () => {
         setOpen(false);
         if (callbackCancel != null)

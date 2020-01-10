@@ -126,6 +126,33 @@
     overflow-x: overlay;
 }
 
-.dialog-container-pwa-install {
-    min-height: 320px;
+.display-block {
+    display: block !important;
+}
+
+.badge-description-wrapper {
+    min-height: 300px;
+    background: #f4f7fa;
+    padding: 10px 20px;
+    font-size: 14px;
+    height: auto;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    overflow: auto;
+}
+
+.img-suggestion-member {
+    height: 40px;
+}
+
+.card-table {}
+
+.card-table-container {
+    height: 120px !important;
+}
+
+.row-card-table-container {
+    overflow: scroll;
+    height: 600px;
 }

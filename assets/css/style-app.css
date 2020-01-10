@@ -250,9 +250,9 @@ p.text-muted {
 }
 
 @media only screen and (max-width: 575px) {
-    .card .card-header .card-header-right {
+    /* .card .card-header .card-header-right {
         display: none;
-    }
+    } */
 }
 
 .card .card-header .card-header-right .dropdown-menu {
@@ -13242,9 +13242,9 @@ img.img-preview-member {
 }
 
 .image-badge-prview {
-    width: 100%;
     margin-top: 20px;
     max-width: 500px;
+    max-height: 250px;
 }
 
 .image-badge-prview-container {

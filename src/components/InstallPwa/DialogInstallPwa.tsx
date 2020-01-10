@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ATHS from 'add-to-homescreen-control'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { errorToast } from '../../services/toastServices';
 var mobile = require('is-mobile');
 
 type DialogInstallPwaProps = {
@@ -20,11 +21,15 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
     const classes = useStyles();
     const [openDialog, setOpenDialog] = React.useState(false);
     const [installing, setInstalling] = React.useState(false);
+    const [installed, setInstalled] = React.useState(false);
 
     useEffect(() => {
         var isInstalled: boolean = window.matchMedia('(display-mode: standalone)').matches;
-        if (mobile() && !isInstalled)
-            setOpenDialog(true);
+        if (!isInstalled)
+            setTimeout(() => {
+                setOpenDialog(true);
+            }, 40000);
+
     }, [])
     const handleClose = () => {
         setOpenDialog(false);
@@ -37,10 +42,13 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
         setInstalling(true);
         ATHS.prompt()
             .then(({ outcome }: any) => {
+                setInstalling(false);
+                setInstalled(true);
                 console.log('user interacted with ATHS banner with outcome of', outcome);
             })
             .catch((err: any) => {
-                console.log(err);
+                errorToast("Se produjo un error al intentar instalar la PWA.")
+                handleClose();
             });
     }
 
@@ -58,10 +66,22 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
                             <DialogContentText>
                                 Instale nuestra PWA, para estar al tanto de todos los eventos y para poder participar en todas nuestras actividades
                             </DialogContentText>
-                        </> : <div style={{ textAlign: "center" }}>
+                        </> : !installed ? <div style={{ textAlign: "center" }}>
                             <CircularProgress />
                             <h5>Instalando, por favor aguarde.</h5>
-                        </div>
+                        </div> :
+                            <div style={{ textAlign: "center" }}>
+                                <CheckIcon style={{ color: "green" }} />
+                                <h5>Aplicación instalada Exitosamente.</h5>
+                                <button
+                                    data-tip="Sincronizar evento"
+                                    type="button"
+                                    onClick={e => handleClose(e)}
+                                    className="btn btn-info events-actions-button"
+                                >
+                                    Cerrar
+        </button>
+                            </div>
                     }
                 </DialogContent>
                 <DialogActions>

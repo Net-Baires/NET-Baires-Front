@@ -16,6 +16,7 @@ import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/sty
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { subscribeMemberNotification } from '../../services/syncCommunicationServices';
+import { getMe } from '../../services/profileServices'
 import { DialogInstallPwa } from '../InstallPwa/DialogInstallPwa';
 interface AppProps {
   isLoading: boolean;
@@ -23,7 +24,7 @@ interface AppProps {
   ready: () => void;
 }
 const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
-  const { user } = useContext(UserContext);
+  const { user, setUserDetail } = useContext(UserContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -37,7 +38,10 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   });
 
   useEffect(() => {
-    subscribeMemberNotification(user.id, data => {
+    getMe().then(x => {
+      setUserDetail(x);
+    });
+    subscribeMemberNotification(user.userId, data => {
       infoToast(data.notificationMessage)
     })
   }, [])
@@ -52,10 +56,9 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
     </div> */}
       {/* <SideMenu></SideMenu>
       <TopBar></TopBar>
-    <FriendsMenu></FriendsMenu> */}
-      {/* <DialogInstallPwa ></DialogInstallPwa> */}
-      <TopBar openMenu={() => setOpen(true)}></TopBar>
-      <div className="pcoded-main-container" onClick={() => setOpen(false)}>
+      <FriendsMenu></FriendsMenu> */}
+      <TopBar onClick={() => setOpen(false)} openMenu={() => setOpen(true)}></TopBar>
+      <div className="pcoded-main-container" >
         <div className="pcoded-wrapper">
           <div className="pcoded-content">
             <div className="pcoded-inner-content">
@@ -90,7 +93,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
                 <SideMenu closeMenu={() => setOpen(false)}></SideMenu>
               </Drawer>
               <div className="main-body">
-                <div className="page-wrapper">
+                <div className="page-wrapper" onClick={() => setOpen(false)}>
 
                   {/* <LoadingOverlay
                     active={props.isLoading}
@@ -118,6 +121,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
           </div>
         </div>
       </div>
+      <DialogInstallPwa></DialogInstallPwa>
     </>
   );
 };

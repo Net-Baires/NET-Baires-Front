@@ -1,38 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { UserContext } from '../../../contexts/UserContext';
 import { useHistory } from 'react-router';
-import { getCurrentUser } from '../../../services/authService';
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { Avatar } from '@material-ui/core';
 type TopBarProps = {
     openMenu: () => void;
 };
 
 export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
-    const { isLoggued, logout } = useContext(UserContext);
     let history = useHistory();
-    const user = getCurrentUser();
-    const handleLogout = () => {
-        logout();
-        history.push("/");
-        history.listen;
-    };
-    const editProfile = () => {
-        history.push("/admin/profile");
-    }
+    const { user, memberDetail } = useContext(UserContext);
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -54,7 +42,6 @@ export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
     };
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        openMenu();
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
@@ -69,7 +56,25 @@ export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={(e) => history.push("/admin/profile")}>Profile</MenuItem>
+            {/* <MenuItem>
+                <IconButton aria-label="show 11 new notifications" color="inherit">
+                    <Badge badgeContent={11} color="secondary">
+                        <NotificationsIcon />
+                    </Badge>
+                </IconButton>
+                <p>Notificationes</p>
+            </MenuItem> */}
+            <MenuItem onClick={() => history.push("/app/profile")}>
+                <IconButton
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>Perfil</p>
+            </MenuItem>
             {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
         </Menu>
     );
@@ -92,15 +97,15 @@ export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
-            </MenuItem> */}
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
+            // </MenuItem> */}
+            {/* // <MenuItem>
+            //     <IconButton aria-label="show 11 new notifications" color="inherit">
+            //         <Badge badgeContent={11} color="secondary">
+            //             <NotificationsIcon />
+            //         </Badge>
+            //     </IconButton>
+            //     <p>Notificationes</p>
+            // </MenuItem> */}
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     aria-label="account of current user"
@@ -110,7 +115,7 @@ export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                <p>Perfil</p>
             </MenuItem>
         </Menu>
     );
@@ -155,16 +160,11 @@ export const TopBar: React.SFC<TopBarProps> = ({ openMenu }) => {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton> */}
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                        <Avatar onClick={handleProfileMenuOpen} alt="Remy Sharp"   src={
+                  memberDetail.picture != "" && memberDetail.picture != null
+                    ? memberDetail.picture
+                    : "assets/images/no-image-profile.png"
+                }></Avatar>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton

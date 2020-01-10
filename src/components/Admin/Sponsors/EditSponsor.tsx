@@ -49,7 +49,7 @@ export const EditSponsorToExport: React.SFC<
     updateSponsor(props.match.params.id, sponsor, logo)
       .then(() => {
         ready();
-        history.push("/admin/sponsors");
+        history.push("/app/sponsors");
       })
       .catch(() => {
         //mostrar error
@@ -77,15 +77,13 @@ export const EditSponsorToExport: React.SFC<
           saveSponsor={handleSaveSponsor}
         ></EditSponsorComponent>
       )}
-      <div className="row">
-        <button
-          type="button"
-          onClick={handleDeleteSponsor}
-          className="btn btn-danger btn-full-width"
-        >
-          Eliminar
+      <button
+        type="button"
+        onClick={handleDeleteSponsor}
+        className="btn btn-danger btn-full-width"
+      >
+        Eliminar
         </button>
-      </div>
     </CardWrapper>
   );
 };

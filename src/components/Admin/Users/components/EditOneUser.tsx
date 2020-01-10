@@ -2,13 +2,7 @@ import React, { useState, SyntheticEvent, MouseEvent, ChangeEvent } from "react"
 import { Member } from "../../../../services/models/Member";
 import Autosuggest from "react-autosuggest";
 import { getMemberByQuery, getMemberDetail } from "../../../../services/membersServices";
-import {
-  updateAttende,
-  getAttendeeDetail
-} from "../../../../services/attendeesServices";
 import { isEmpty } from "../../../../services/objectsservices";
-import { EventsAttendees } from "../../../../services/models/EventsAttendees";
-import { updateEventLive, memberNotification } from '../../../../services/syncCommunicationServices';
 import { useHistory } from 'react-router';
 import { updateUser } from '../../../../services/userServices';
 import { FormControlLabel, Switch } from '@material-ui/core';
@@ -16,9 +10,10 @@ import { CardWrapper } from '../../../Common/CardWrapper';
 
 type NewUserProps = {
   callbackAction?: () => void;
+  selectectMember: (member: Member) => void;
 };
-export const EditOneUserEvent: React.SFC<NewUserProps> = ({ callbackAction }) => {
-  const [users, setUsers] = useState(new Array<Member>());
+export const EditOneUserEvent: React.SFC<NewUserProps> = ({ selectectMember }) => {
+  const [users] = useState(new Array<Member>());
   const [readySearch, setReadySearch] = useState(false);
   const [memberToSearch, setMemberToSearch] = useState({} as Member);
   const [attendeeDetail, setAttendeeDetail] = useState({} as Member);
@@ -28,35 +23,35 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({ callbackAction }) =>
   const handleSearch = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     loadDetail();
+
   };
 
   const loadDetail = () => {
     if (!isEmpty(memberToSearch)) {
       getMemberDetail(memberToSearch.id).then(detail => {
-        if (detail == null)
-          setAttendeeDetail(detail);
-        else setAttendeeDetail(detail);
+        setAttendeeDetail(detail);
+        selectectMember(detail);
         setReadySearch(true);
       });
     }
   }
-  const handleUserEnable = (eventInput: ChangeEvent<HTMLInputElement>, isChecked: boolean, user: Member) => {
+  const handleUserEnable = (eventInput: ChangeEvent<HTMLInputElement>, isChecked: boolean) => {
     eventInput.preventDefault();
     attendeeDetail.blocked = isChecked;
     updateMember(attendeeDetail, users);
   };
-  const handleUserOrganized = (eventInput: ChangeEvent<HTMLInputElement>, isChecked: boolean, user: Member) => {
+  const handleUserOrganized = (eventInput: ChangeEvent<HTMLInputElement>, isChecked: boolean) => {
     eventInput.preventDefault();
 
     attendeeDetail.organized = isChecked;
     updateMember(attendeeDetail, users);
   };
-  const handleUserColaborator = (eventInput: ChangeEvent<HTMLInputElement>, isChecked: boolean, user: Member) => {
+  const handleUserColaborator = (eventInput: ChangeEvent<HTMLInputElement>, isChecked: boolean) => {
     eventInput.preventDefault();
     attendeeDetail.colaborator = isChecked;
     updateMember(attendeeDetail, users);
   };
-  const updateMember = (user: Member, users: Array<Member>) => {
+  const updateMember = (user: Member) => {
     updateUser(user.id, user).then(() => {
       loadDetail();
     });
@@ -73,16 +68,24 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({ callbackAction }) =>
   };
   const getSuggestionValue = (suggestion: Member) => suggestion.firstName;
   const renderSuggestion = (suggestion: Member) => {
-    return <div>{suggestion.firstName}</div>;
+    return <div className="row">
+      <div className="col-md-3">
+        <img className="img-suggestion-member" src={suggestion.picture}></img>
+      </div>
+      <div className="col-md-9">
+        {suggestion.firstName} {suggestion.lastName}
+      </div>
+    </div>;
   };
   const onChange = (event: any, { newValue }: any) => {
     setValue(newValue);
   };
 
   const onSuggestionsFetchRequested = ({ value }: any) => {
-    getMemberByQuery(value).then(v => {
-      setSuggestions(v);
-    });
+    if (value != null && value.length > 3)
+      getMemberByQuery(value).then(v => {
+        setSuggestions(v);
+      });
   };
 
   const onSuggestionsClearRequested = () => {
@@ -104,7 +107,7 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({ callbackAction }) =>
 
   const handleEdit = (event: MouseEvent<HTMLAnchorElement>, user: Member) => {
     event.preventDefault();
-    history.push(`/admin/users/${user.id}/Edit`);
+    history.push(`/app/users/${user.id}/Edit`);
   };
   return (
     <>
@@ -124,51 +127,16 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({ callbackAction }) =>
               alt="dashboard-user"
             ></img>
             <div className="row m-t-30">
-              {/* <div className="col-6 p-r-0">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attendeeDetail.organized}
-                        onChange={(e) => handleUserOrganized(e, !attendeeDetail.organized, attendeeDetail)}
-                      />
-                    }
-                    label="Organizador"
-                  />
-                </div>
-                <div className="col-6 p-r-0">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attendeeDetail.colaborator}
-                        onChange={(e) => handleUserColaborator(e, !attendeeDetail.colaborator, attendeeDetail)}
-                      />
-                    }
-                    label="Colaborador"
-
-                  />
-                </div>
-                <div className="col-6 p-r-0">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attendeeDetail.blocked}
-                        onChange={(e) => handleUserEnable(e, !attendeeDetail.blocked, attendeeDetail)}
-                      />
-                    }
-                    label="Bloqueado"
-                  />
-                </div>
-                <div className="col-6 p-r">
-                  <a
-                    onClick={e => handleEdit(e, attendeeDetail)}
-                    href="#!"
-                    className="btn btn-info shadow-2 text-uppercase btn-block"
-                  >
-                    Editar
-                  </a>
-                </div> */}
+              <hr></hr>
               <form className="col">
                 <div className="form-group row">
+                  <div className="col-md-12">
+                    <h6 className=" m-b-0">{`${attendeeDetail.averageAttendance}%`}</h6>
+                    <div className="progress m-t-10" style={{ height: "7px" }}>
+                      <div className="progress-bar progress-c-theme" role="progressbar" style={{ width: `${attendeeDetail.averageAttendance}%` }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                  <hr></hr>
                   <label className="col-md-6 col-form-label">Organizador</label>
                   <div className="col-md-6">
                     <FormControlLabel

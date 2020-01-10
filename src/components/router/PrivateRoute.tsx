@@ -6,14 +6,14 @@ import {
   RouteProps
 } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import { hasPermission } from '../../services/authService';
+import { hasPermission, Rol } from '../../services/authService';
 
 type IncomingProps = {
-  roles: string[];
+  roles?: Rol[];
 }
 type MergeProps = IncomingProps & RouteProps;
 export const PrivateRoute = ({ component, children, roles, ...rest }: MergeProps) => {
-  const { isLoggued, } = useContext(UserContext);
+  const { isLogged: isLoggued, } = useContext(UserContext);
 
   if (!component && !children) {
     throw Error("component is undefined");

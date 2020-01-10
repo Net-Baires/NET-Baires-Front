@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
 var WebpackPwaManifest = require('webpack-pwa-manifest');
+var fs = require('fs');
 const matchCb = ({ url, event }) => {
     return (url.pathname === '/special/url');
 };
@@ -20,7 +21,8 @@ module.exports = function(env) {
     const configPath = path.join(__dirname, `config.${env.APP_ENV}.json`);
     return {
         devServer: {
-            // https: true,
+            https: true,
+
             historyApiFallback: true
         },
         // webpack will take the files from ./src/index
@@ -113,73 +115,81 @@ module.exports = function(env) {
             //     swDest: 'workers.js',
             //     include: [/\.html$/, /\.js$/]
             // }),
-            new workboxPlugin.InjectManifest({
-                swSrc: './src/sw.js',
-                swDest: 'sw.js'
-            }),
-            // new workboxPlugin.GenerateSW({
-            //     swDest: 'sw.js',
-            //     clientsClaim: true,
-            //     skipWaiting: true,
-
-            //     runtimeCaching: [{
-            //             urlPattern: new RegExp('http://localhost:8080'),
-            //             handler: 'StaleWhileRevalidate'
-            //         },
-            //         {
-            //             urlPattern: new RegExp('https://netbairesstorage.blob.core.windows.net'),
-            //             handler: 'StaleWhileRevalidate'
-            //         },
-            //         {
-            //             urlPattern: new RegExp('https://secure.meetupstatic.com'),
-            //             handler: 'StaleWhileRevalidate'
-            //         },
-            //         {
-            //             urlPattern: new RegExp('https://cdnjs.cloudflare.com'),
-            //             handler: 'StaleWhileRevalidate'
-            //         },
-            //         {
-            //             // Match any request that ends with .png, .jpg, .jpeg or .svg.
-            //             urlPattern: /\.(?:png|jpg|jpeg|svg|woff2)$/,
-
-            //             // Apply a cache-first strategy.
-            //             handler: 'CacheFirst',
-
-            //             options: {
-            //                 // Use a custom cache name.
-            //                 cacheName: 'images',
-
-            //                 // Only cache 10 images.
-            //                 expiration: {
-            //                     maxEntries: 10,
-            //                 },
-            //             },
-            //         },
-            //         {
-            //             // Match any request that ends with .png, .jpg, .jpeg or .svg.
-            //             urlPattern: /\.(?:css|js)$/,
-
-            //             // Apply a cache-first strategy.
-            //             handler: 'CacheFirst',
-
-            //             options: {
-            //                 // Use a custom cache name.
-            //                 cacheName: 'styles',
-
-            //                 // Only cache 10 images.
-            //                 expiration: {
-            //                     maxEntries: 10,
-            //                 },
-            //             },
-            //         }
-            //     ]
+            // new workboxPlugin.InjectManifest({
+            //     swSrc: './src/sw.js',
+            //     swDest: 'sw.js'
             // }),
+
+
+            new workboxPlugin.GenerateSW({
+                swDest: 'NET-Baires-Service-Workes.js',
+                clientsClaim: true,
+                skipWaiting: true,
+                importScripts: ['push-notifications.js'],
+                runtimeCaching: [{
+                        urlPattern: new RegExp('https://localhost:8080'),
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'images',
+                        }
+                    },
+                    {
+                        urlPattern: new RegExp('https://netbairesstorage.blob.core.windows.net'),
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'images',
+                        }
+                    },
+                    {
+                        urlPattern: new RegExp('https://secure.meetupstatic.com'),
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'images',
+                        }
+                    },
+                    {
+                        // Match any request that ends with .png, .jpg, .jpeg or .svg.
+                        urlPattern: /\.(?:png|jpg|jpeg|svg|woff2)$/,
+
+                        // Apply a cache-first strategy.
+                        handler: 'CacheFirst',
+
+                        options: {
+                            // Use a custom cache name.
+                            cacheName: 'images',
+
+                            // Only cache 10 images.
+                            expiration: {
+                                maxEntries: 10,
+                            },
+                        },
+                    },
+                    {
+                        // Match any request that ends with .png, .jpg, .jpeg or .svg.
+                        urlPattern: /\.(?:css|js)$/,
+
+                        // Apply a cache-first strategy.
+                        handler: 'CacheFirst',
+
+                        options: {
+                            // Use a custom cache name.
+                            cacheName: 'images',
+
+                            // Only cache 10 images.
+                            expiration: {
+                                maxEntries: 10,
+                            },
+                        },
+                    }
+                ]
+            }),
             // new WebpackPwaManifest({
             //     name: 'NET-Baires',
             //     short_name: 'NET-Baires',
             //     description: 'Somos la comunidad de desarrolladores .NET mas grande',
             //     display: 'fullscreen',
             //     orientation: 'portrait',
+
             //     background_color: '#ffffff',
             //     crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
             //     icons: [{
@@ -226,8 +236,7 @@ module.exports = function(env) {
             // }),
             new CopyPlugin([
                 { from: 'assets', to: 'assets' },
-                { from: 'web.config', to: 'web.config' },
-                { from: 'NET-Baires-Workes.js', to: 'NET-Baires-Workes.js' }
+                { from: 'web.config', to: 'web.config' }
             ])
         ]
     };

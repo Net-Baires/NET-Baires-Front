@@ -22,11 +22,11 @@ export const SponsorsList: React.SFC<RouteComponentProps> = () => {
     sponsor: Sponsor
   ) => {
     event.preventDefault();
-    history.push(`/admin/sponsors/${sponsor.id}/edit`);
+    history.push(`/app/sponsors/${sponsor.id}/edit`);
   };
   const handleNew = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    history.push(`/admin/sponsors/new`);
+    history.push(`/app/sponsors/new`);
   };
   const columns = [
     {
