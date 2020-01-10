@@ -28,7 +28,7 @@ const EventLivePanelComponent: React.SFC<RouteComponentProps<
           <AdminEventLivePanel eventId={+id!}></AdminEventLivePanel>
         </SecureElement>
         <SecureElement roles={["Member"]}>
-          <MemberEventLivePanel eventId={+id!} ></MemberEventLivePanel>>
+          <MemberEventLivePanel eventId={+id!} ></MemberEventLivePanel>
         </SecureElement>
       </>
     );

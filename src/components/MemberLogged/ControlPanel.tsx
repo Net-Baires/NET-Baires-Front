@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { EventDetail } from "../../services/models/Events/Event";
 import { UserContext } from '../../contexts/UserContext';
-import MemberControlPanel from './MemberControlPanel';
 import { AdminControlPanel } from '../Admin/AdminControlPanel/AdminControlPanel';
+import { MemberControlPanel } from './MemberControlPanel';
 
 export const ControlPanel: React.SFC = () => {
   const [] = useState(new Array<EventDetail>());

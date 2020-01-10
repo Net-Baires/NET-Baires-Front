@@ -78,7 +78,7 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
       <div className="form-group">
         <label>Nombre</label>
         <Field type="name" name="name" className="form-control" />
-        {touched.name && errors.name && (
+        {errors.name && (
           <div className="form-error alert alert-danger">{errors.name}</div>
         )}
       </div>
@@ -92,7 +92,7 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
             setFieldValue("descriptionHtml", state);
           }}
         />
-        {touched.descriptionHtml && errors.descriptionHtml && (
+        {errors.descriptionHtml && (
           <div className="form-error alert alert-danger">
             {errors.descriptionHtml}
           </div>

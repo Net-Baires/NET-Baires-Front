@@ -11,7 +11,6 @@ import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
 import { CardWrapper } from '../Common/CardWrapper';
 import { loading, ready } from '../../store/loading/actions';
 import { successToast } from '../../services/toastServices';
-import { UserContext } from '../../contexts/UserContext';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 import { useHistory } from 'react-router-dom';
@@ -81,7 +80,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
             name="firstName"
             className="form-control lgxname"
           />
-          {touched.firstName && errors.firstName && (
+          {errors.firstName && (
             <div className="form-error alert alert-danger">
               {errors.firstName}
             </div>
@@ -90,7 +89,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
         <div className="form-group">
           <label>Apellido</label>
           <Field type="lastName" name="lastName" className="form-control" />
-          {touched.lastName && errors.lastName && (
+          {errors.lastName && (
             <div className="form-error alert alert-danger">
               {errors.lastName}
             </div>
@@ -190,16 +189,18 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   },
   validationSchema: yup.object<MyFormProps>().shape({
     firstName: yup.string().required("Nombre Requerido"),
-    lastName: yup.string().required("Nombre Requerido"),
+    lastName: yup.string().required("Apellido requerido Requerido"),
     linkedin: yup.string(),
     twitter: yup.string(),
     github: yup.string(),
     biography: yup.string(),
-    instagram: yup.string()
+    instagram: yup.string(),
+    biographyHtml: yup.string()
   }),
   handleSubmit: (values: any, { props }) => {
     // values.biography = values.biographyHtml.getCurrentContent().getPlainText();
-    values.biography = stateToHTML(values.biographyHtml!.getCurrentContent());
+    if (values.biographyHtml != null)
+      values.biography = stateToHTML(values.biographyHtml!.getCurrentContent());
     props.saveUser(values, values.imageData!);
   }
 })(UserProfileForm);

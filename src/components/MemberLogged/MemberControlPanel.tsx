@@ -2,24 +2,32 @@ import React, { useEffect, useState } from "react";
 import { getEventsLive } from "../../services/eventsServices";
 import { isEmpty } from "../../services/objectsservices";
 import { EventDetail } from "../../services/models/Events/Event";
-import { NavLink } from "react-router-dom";
-import { EventActions } from "../app/AdminControlPanel/EventActions";
 import ControlPanelEventsLive from '../EventLive/ControlPanelEventsLive';
 import { subscribe, UpdateEventLive, CommunicationMessageType } from '../../services/communicationServices';
+import { connect } from 'react-redux';
+import { ready, loading } from '../../store/loading/actions';
 
 type MemberControlPanelProps = {};
-const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
+type MemberControlPanelStateProps = {
+  loading: () => void;
+  ready: () => void;
+}
+const MemberControlPanelComponent: React.SFC<MemberControlPanelProps & MemberControlPanelStateProps> = ({ loading, ready }) => {
   const [eventsLive, setEventsLive] = useState(new Array<EventDetail>());
   useEffect(() => {
+    loadEvents();
+    subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, () => {
+      loadEvents();
+    });
+    return () => { unmounted: true };
+  }, []);
+  const loadEvents = () => {
+    loading();
     getEventsLive().then(e => {
       setEventsLive(e);
+      ready();
     });
-    subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, (data) => {
-      getEventsLive().then(e => {
-        setEventsLive(e);
-      });
-    });
-  }, []);
+  }
   return (
     <>
       {!isEmpty(eventsLive) && (
@@ -85,4 +93,17 @@ const MemberControlPanel: React.SFC<MemberControlPanelProps> = () => {
     </>
   );
 };
-export default MemberControlPanel;
+const mapStateToProps = () => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  loading: () => {
+    dispatch(loading());
+  },
+  ready: () => {
+    dispatch(ready());
+  }
+});
+
+export const MemberControlPanel = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MemberControlPanelComponent);

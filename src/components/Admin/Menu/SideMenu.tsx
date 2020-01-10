@@ -38,7 +38,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
   };
   return (
 
-    <List component="nav" className={`${classes.appMenu} side-menu-container`} disablePadding>
+    <List component="nav" className={`${classes.appMenu} side-menu-container`} disablePadding onClick={closeMenu}>
       <ListItem onClick={closeMenu} button className={classes.menuItem}>
 
         <ListItemAvatar>

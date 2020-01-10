@@ -52,7 +52,7 @@ const MemberEventLivePanelComponent: React.SFC<MemberEventLivePanelProps> = ({ l
       <div className="col-md-2 col-xl-2">
         <div className="card theme-bg2">
           <div className="card-block customer-visitor">
-            <h2 className="text-white text-right mt-2 f-w-300">19:23</h2>
+            <h2 className="text-white text-right mt-2 f-w-300">Estado</h2>
             <span className="text-white text-right d-block">
               {eventLive.attended ? "Presente" : "Ausente"}
             </span>

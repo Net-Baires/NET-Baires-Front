@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 // import Script from 'react-load-script'
 import { loading, ready } from "../../store/loading/actions";
 import SideMenu from "./Menu/SideMenu";
-import TopBar from "./Menu/TopBar";
 import { loadScript, loadStyles } from "../../services/helpers/scriptshelpers";
 import { AppState } from "../../store";
 import { ToastContainer } from 'react-toastify';
@@ -18,6 +17,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { subscribeMemberNotification } from '../../services/syncCommunicationServices';
 import { getMe } from '../../services/profileServices'
 import { DialogInstallPwa } from '../InstallPwa/DialogInstallPwa';
+import { TopBar } from './Menu/TopBar';
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
