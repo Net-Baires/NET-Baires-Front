@@ -38,14 +38,14 @@ export const askForPermissioToReceiveNotifications = () => {
 setTimeout(() => askForPermissioToReceiveNotifications(), 3000);
 export const initializeFirebase = () => {
   var firebaseConfig = {
-    apiKey: "AIzaSyCXCowwHV3b-q5sP7w7A8BRLZZ3RKYUTq4",
-    authDomain: "net-baires-dev.firebaseapp.com",
-    databaseURL: "https://net-baires-dev.firebaseio.com",
-    projectId: "net-baires-dev",
-    storageBucket: "net-baires-dev.appspot.com",
-    messagingSenderId: "720103806559",
-    appId: "1:720103806559:web:26d56c9879ee7da539adea",
-    measurementId: "G-ZZC4QG9C96"
+    apiKey: Config.firebase.pushNotifications.apiKey,
+    authDomain: Config.firebase.pushNotifications.authDomain,
+    databaseURL: Config.firebase.pushNotifications.databaseURL,
+    projectId: Config.firebase.pushNotifications.projectId,
+    storageBucket: Config.firebase.pushNotifications.storageBucket,
+    messagingSenderId: Config.firebase.pushNotifications.messagingSenderId,
+    appId: Config.firebase.pushNotifications.appId,
+    measurementId: Config.firebase.pushNotifications.measurementId,
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);

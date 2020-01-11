@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, MouseEvent } from "react";
 import { connect } from "react-redux";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { loading, ready } from '../../store/loading/actions';
@@ -23,8 +23,8 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps>
     const { id } = useParams();
     const [groupCode, setGroupCode] = useState({} as GroupCodeFullDetailResponse);
     const [repeatMember, setRepeatMember] = useState(false);
-    const [setCount] = useState(0);
-    const [setReadyToRaffle] = useState(true);
+    const [count, setCount] = useState(0);
+    const [readyToRaffle, setReadyToRaffle] = useState(true);
     useEffect(() => {
       getGroupCode();
       subscribeUpdateGroupCode(+id!, () => getGroupCode());
@@ -60,6 +60,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps>
         ready();
       }).finally(() => {
         ready();
+        getGroupCode
       });
     }
     return (
@@ -75,7 +76,6 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps>
                         <th>Id</th>
                         <th>Imagen</th>
                         <th>Nombre</th>
-                        <th>Apellido</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -101,12 +101,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps>
                             <h6 className="mb-1">{member.firstName}</h6>
                             <p className="m-0">{member.lastName}</p>
                           </td>
-                          <td>
-                            <h6 className="text-muted">
-                              <i className="fas fa-circle text-c-green f-10 m-r-15"></i>
 
-                            </h6>
-                          </td>
                         </tr>
                       ))}
                     </tbody>

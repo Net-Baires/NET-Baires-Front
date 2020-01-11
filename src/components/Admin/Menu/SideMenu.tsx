@@ -38,7 +38,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
   };
   return (
 
-    <List component="nav" className={`${classes.appMenu} side-menu-container`} disablePadding onClick={closeMenu}>
+    <List component="nav" className={`${classes.appMenu} side-menu-container`} disablePadding>
       <ListItem onClick={closeMenu} button className={classes.menuItem}>
 
         <ListItemAvatar>
@@ -58,7 +58,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           activeClassName="active"
           to="/app/panel"
         >
-          <ListItem button className={classes.menuItem}>
+          <ListItem onClick={closeMenu} button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
               <IconDashboard />
             </ListItemIcon>
@@ -74,7 +74,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           activeClassName="active"
           to="/app/panel"
         >
-          <ListItem button className={classes.menuItem}>
+          <ListItem onClick={closeMenu} button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
               <IconDashboard />
             </ListItemIcon>
@@ -91,7 +91,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           activeClassName="active"
           to="/app/sponsors"
         >
-          <ListItem button className={classes.menuItem}>
+          <ListItem onClick={closeMenu} button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
               <BusinessIcon />
             </ListItemIcon>
@@ -104,7 +104,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           activeClassName="active"
           to="/app/badges"
         >
-          <ListItem button className={classes.menuItem}>
+          <ListItem onClick={closeMenu} button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
               <LoyaltyIcon />
             </ListItemIcon>
@@ -130,7 +130,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           activeClassName="active"
           to="/app/members"
         >
-          <ListItem button className={classes.menuItem}>
+          <ListItem onClick={closeMenu} button className={classes.menuItem}>
             <ListItemIcon className={classes.menuItemIcon}>
               <PeopleAltIcon />
             </ListItemIcon>
@@ -147,7 +147,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
         </ListItem>
         <Collapse in={openEvents} timeout="auto" unmountOnExit>
           <Divider />
-          <List component="div" disablePadding>
+          <List onClick={closeMenu} component="div" disablePadding>
             <NavLink
               exact
               activeClassName="active"
@@ -191,7 +191,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
       </SecureElement>
 
       <SecureElement roles={["Admin", "Organizer"]}>
-        <ListItem button className={classes.menuItem}>
+        <ListItem onClick={closeMenu} button className={classes.menuItem}>
           <ListItemIcon className={classes.menuItemIcon}>
             <CropFreeIcon />
           </ListItemIcon>
@@ -221,199 +221,6 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
     </List>
 
 
-    // <>
-    //   <nav className="pcoded-navbar">
-    //     <div className="navbar-wrapper">
-    //       <div className="navbar-brand header-logo">
-    //         <NavLink
-    //           exact
-    //           className="b-brand"
-    //           activeClassName="active"
-    //           to="/app/panel"
-    //         >
-    //           <div className="b-bg panel-logo">
-    //             {/* <i className="feather icon-trending-up"></i> */}
-    //           </div>
-    //           <span className="b-title">NET-Baires</span>
-    //         </NavLink>
-    //         <a className="mobile-menu" id="mobile-collapse">
-    //           <span></span>
-    //         </a>
-    //       </div>
-    //       <div className="navbar-content scroll-div">
-    //         <ul className="nav pcoded-inner-navbar">
-    //           <li data-username="landing page" className="nav-item">
-
-    //           </li>
-    //           <li className="nav-item pcoded-menu-caption">
-    //             <label>Other</label>
-    //           </li>
-
-    //           <li
-    //             data-username="Menu levels Menu level 2.1 Menu level 2.2"
-    //             className="nav-item pcoded-hasmenu"
-    //           >
-
-    //             <SecureElement roles={["Admin", "Organizer"]}>
-    //               <a className="nav-link">
-    //                 <span className="pcoded-micon">
-    //                   <i className="feather icon-check-square"></i>
-    //                 </span>
-    //                 <span className="pcoded-mtext">Eventos</span>
-    //               </a>
-    //               <ul className="pcoded-submenu">
-    //                 <li className="">
-    //                  
-    //                 </li>
-    //                 <li className="">
-
-    //                 </li>
-    //                 <li className="">
-
-    //                   </NavLink>
-    //                 </li>
-    //                 <li className="">
-
-    //                   </a>
-    //                 </li>
-    //               </ul>
-    //             </SecureElement>
-    //           </li>
-    //           <li
-    //             data-username="Menu levels Menu level 2.1 Menu level 2.2"
-    //             className="nav-item pcoded-hasmenu"
-    //           >
-    //             <SecureElement roles={["Admin"]}>
-    //               <a className="nav-link">
-    //                 <span className="pcoded-micon">
-    //                   <i className="fas fa-user"></i>
-    //                 </span>
-    //                 <span className="pcoded-mtext">Usuarios</span>
-    //               </a>
-    //               <ul className="pcoded-submenu">
-    //                 <li className="">
-    //                   <NavLink
-    //                     exact
-    //                     className="nav-link-slide-bar"
-    //                     activeClassName="active"
-    //                     to="/app/members"
-    //                   >
-    //                     Lista
-    //                   </NavLink>
-    //                 </li>
-    //                 <li className="">
-    //                   <NavLink
-    //                     exact
-    //                     className="nav-link-slide-bar"
-    //                     activeClassName="active"
-    //                     to="/app/users/new"
-    //                   >
-    //                     Nuevo
-    //                   </NavLink>
-    //                 </li>
-    //               </ul>
-    //             </SecureElement>
-    //           </li>
-    //           <li
-    //             data-username="Menu levels Menu level 2.1 Menu level 2.2"
-    //             className="nav-item pcoded-hasmenu"
-    //           >
-    //             <SecureElement roles={["Admin"]}>
-    //               <a className="nav-link">
-    //                 <span className="pcoded-micon">
-    //                   <i className="fas fa-university"></i>
-    //                 </span>
-    //                 <span className="pcoded-mtext">Sponsors</span>
-    //               </a>
-    //               <ul className="pcoded-submenu">
-    //                 <li className="">
-
-    //                     Lista
-    //                   </NavLink>
-    //                 </li>
-    //                 <li className="">
-    //                   <NavLink
-    //                     exact
-    //                     className="nav-link-slide-bar"
-    //                     activeClassName="active"
-    //                     to="/app/sponsors/new"
-    //                   >
-    //                     Nuevo
-    //                   </NavLink>
-    //                 </li>
-    //               </ul>
-    //             </SecureElement>
-    //           </li>
-
-    //           <li
-    //             data-username="Menu levels Menu level 2.1 Menu level 2.2"
-    //             className="nav-item pcoded-hasmenu"
-    //           >
-    //             <SecureElement roles={["Admin"]}>
-    //               <a className="nav-link">
-    //                 <span className="pcoded-micon">
-    //                   <i className="fas fa-money-check"></i>
-    //                 </span>
-    //                 <span className="pcoded-mtext">Badges</span>
-    //               </a>
-    //               <ul className="pcoded-submenu">
-    //                 <li className="">
-    //                   <NavLink
-    //                     exact
-    //                     className="nav-link-slide-bar"
-    //                     activeClassName="active"
-    //                     to="/app/badges"
-    //                   >
-    //                     Lista
-    //                   </NavLink>
-    //                 </li>
-    //                 <li className="">
-    //                   <NavLink
-    //                     exact
-    //                     className="nav-link-slide-bar"
-    //                     activeClassName="active"
-    //                     to="/app/badges/new"
-    //                   >
-    //                     Nuevo
-    //                   </NavLink>
-    //                 </li>
-    //               </ul>
-    //             </SecureElement>
-    //           </li>
-
-    //           <li data-username="Animations" className="nav-item">
-    //             <SecureElement roles={["Admin", "Organizer"]}>
-    //               <NavLink
-    //                 exact
-    //                 className="nav-link-slide-bar"
-    //                 activeClassName="active"
-    //                 to="/app/EventLive/Attendances"
-    //               >
-    //                 <span className="pcoded-micon">
-    //                   <i className="fas fa-user-check"></i>
-    //                 </span>
-    //                 <span className="pcoded-mtext">Recibir Miemebros</span>
-    //               </NavLink>
-    //             </SecureElement>
-    //           </li>
-    //           <li data-username="Animations" className="nav-item">
-    //             <NavLink
-    //               exact
-    //               className="nav-link-slide-bar"
-    //               activeClassName="active"
-    //               to="/logout"
-    //             >
-    //               <span className="pcoded-micon">
-    //                 <i className="fas fa-user-check"></i>
-    //               </span>
-    //               <span className="pcoded-mtext">Desconectarse</span>
-    //             </NavLink>
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     </div>
-    //   </nav>
-    // </>
   );
 };
 export default SideMenu;

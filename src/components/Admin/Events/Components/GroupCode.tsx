@@ -102,29 +102,29 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th className="d-none d-sm-block">Id</th>
                   <th>Código</th>
-                  <th>Detalle</th>
+                  <th className="d-none d-sm-block">Detalle</th>
                   <th>Registrados</th>
-                  <th>Estado</th>
+                  <th className="d-none d-sm-block">Estado</th>
                   <th>Acciones</th>
                 </tr></thead>
               <tbody>
                 {eventLive.groupCodes.map(groupCode =>
                   <tr>
-                    <td>{groupCode.id}</td>
-                    <td>
+                    <td className="d-none d-sm-block">{groupCode.id}</td>
+                    <td >
                       <h6 className="mb-1">{groupCode.code}</h6>
                       {/* <p className="m-0">Apple</p> */}
                     </td>
-                    <td>
+                    <td className="d-none d-sm-block">
                       <h6 className="mb-1">{groupCode.detail}</h6>
                       {/* <p className="text-c-green m-0">+ 84 Daily</p> */}
                     </td>
                     <td>
                       <h6 className="m-b-0">{groupCode.membersCount}</h6>
                     </td>
-                    <td>
+                    <td className="d-none d-sm-block">
                       {groupCode.open ?
                         <a href="#!" className="label theme-bg text-white f-12">Abierto</a> :
                         <a href="#!" className="label theme-bg2 text-white f-12">Cerrado</a>}

@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
-import { loadingReducer } from "./loading/reducers";
+import { loadingReducer, memberDetailReducer } from "./loading/reducers";
 
 import { reducer } from "react-redux-oauth2";
 const rootReducer = combineReducers({
   loading: loadingReducer,
+  memberDetail: memberDetailReducer,
   oauth: reducer
 });
 

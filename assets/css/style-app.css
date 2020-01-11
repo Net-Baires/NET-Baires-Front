@@ -13064,10 +13064,6 @@ div.code-toolbar>.toolbar span:hover {
     width: 100%;
 }
 
-.card-container {
-    height: 311px;
-}
-
 .react-autosuggest__container {
     position: relative;
 }
@@ -13195,7 +13191,7 @@ img.img-preview-member {
 }
 
 .card-container {
-    height: 360px;
+    min-height: 360px;
 }
 
 .rounded-circle-sync-user-to-event {

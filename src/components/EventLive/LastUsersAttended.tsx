@@ -18,7 +18,7 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
               <tr>
                 <th>Imagen</th>
                 <th>Nombre</th>
-                <th>Fecha Registro</th>
+                <th className="d-none d-sm-block">Fecha Registro</th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +40,7 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
                     <h6 className="mb-1">{member.firstName}</h6>
                     <p className="m-0">{member.lastName}</p>
                   </td>
-                  <td>
+                  <td className="d-none d-sm-block">
                     <h6 className="text-muted">
                       <i className="fas fa-circle text-c-green f-10 m-r-15"></i>
                       {formatStringDate(member.attendedTime)} -{" "}

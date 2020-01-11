@@ -1,21 +1,33 @@
 {
     "api": {
         "base": "${NET-Baires.api.base}$",
-        "baseRemote": "https://net-baires-api-dev.azurewebsites.net"
+        "baseRemote": "${NET-Baires.api.baseRemote}$"
     },
-    "instrumentationKey": "instrumentationKey",
+    "instrumentationKey": "${NET-Baires.instrumentationKey}$",
     "integrations": {
         "meetup": {
-            "clientId": "443afqsa6fs1hr6h0u8i8b8sib",
-            "clientSecret": "t2bi61kgksc30sls7e29s04lr1",
-            "accessTokenUri": "https://secure.meetup.com/oauth2/access",
-            "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
-            "redirectUri": "https://net-baires-site-dev.azurewebsites.net/login/meetup",
+            "clientId": "${NET-Baires.meetup.clientId}$",
+            "clientSecret": "${NET-Baires.clientSecret.clientSecret}$",
+            "accessTokenUri": "${NET-Baires.clientSecret.accessTokenUri}$",
+            "authorizationUri": "${NET-Baires.clientSecret.authorizationUri}$",
+            "redirectUri": "${NET-Baires.clientSecret.redirectUri}$",
             "scopes": ["basic"]
         },
         "eventBrite": {
             "clientId": "${NET-Baires.eventBrite.clientId}$",
-            "redirectUri": "https://net-baires-site-dev.azurewebsites.net/login/eventbrite"
+            "redirectUri": "${NET-Baires.eventBrite.redirectUri}$"
+        }
+    },
+    "firebase": {
+        "pushNotifications": {
+            "apiKey": "${NET-Baires.firebase.pushNotification.apiKey}$",
+            "authDomain": "${NET-Baires.firebase.pushNotification.authDomain}$",
+            "databaseURL": "${NET-Baires.firebase.pushNotification.databaseURL}$",
+            "projectId": "${NET-Baires.firebase.pushNotification.projectId}$",
+            "storageBucket": "${NET-Baires.firebase.pushNotification.storageBucket}$",
+            "messagingSenderId": "${NET-Baires.firebase.pushNotification.messagingSenderId}$",
+            "appId": "${NET-Baires.firebase.pushNotification.appId}$",
+            "measurementId": "${NET-Baires.firebase.pushNotification.measurementId}$"
         }
     }
 }

@@ -164,7 +164,7 @@ export const SyncUserToEvent: React.SFC<NewUserProps> = ({ idEvent, callbackActi
                         )}
                   </div>
 
-                  <div className="col-md-6 p-r">
+                  <div className="col-md-6 p-r-0">
                     <a
                       onClick={handleClose}
                       href="#!"

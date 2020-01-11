@@ -11,6 +11,9 @@ export interface Member {
   twitter: string;
   picture: string;
   averageAttendance: number;
+  eventsRegistered: number;
+  eventsAttended: number;
+  eventsNoAttended: number;
   github: string;
   instagram: string;
   biography: string;

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { connect } from "react-redux";
 // import Script from 'react-load-script'
-import { loading, ready } from "../../store/loading/actions";
+import { loading, ready, setMemberDetail } from "../../store/loading/actions";
 import SideMenu from "./Menu/SideMenu";
 import { loadScript, loadStyles } from "../../services/helpers/scriptshelpers";
 import { AppState } from "../../store";
@@ -18,12 +18,14 @@ import { subscribeMemberNotification } from '../../services/syncCommunicationSer
 import { getMe } from '../../services/profileServices'
 import { DialogInstallPwa } from '../InstallPwa/DialogInstallPwa';
 import { TopBar } from './Menu/TopBar';
+import { Member } from '../../services/models/Member';
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
   ready: () => void;
+  setMemberDetail: (member: Member) => void;
 }
-const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
+const AdminWrapperComponent: React.SFC<AppProps> = ({ children, setMemberDetail, ...props }) => {
   const { user, setUserDetail } = useContext(UserContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -40,6 +42,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   useEffect(() => {
     getMe().then(x => {
       setUserDetail(x);
+      setMemberDetail(x);
     });
     subscribeMemberNotification(user.userId, data => {
       infoToast(data.notificationMessage)
@@ -135,6 +138,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
+  },
+  setMemberDetail: (member: Member) => {
+    dispatch(setMemberDetail(member));
   }
 });
 
