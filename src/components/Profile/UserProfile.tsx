@@ -6,13 +6,14 @@ import { connect } from "react-redux";
 import { getMe, updateMe } from "../../services/profileServices";
 import { isEmpty } from "../../services/objectsservices";
 import Draft from "react-wysiwyg-typescript";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState } from "draft-js";
 import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
 import { CardWrapper } from '../Common/CardWrapper';
 import { loading, ready } from '../../store/loading/actions';
 import { successToast } from '../../services/toastServices';
-import { UserContext } from '../../contexts/UserContext';
-import { getCurrentUser } from '../../services/authService';
+import { stateFromHTML } from 'draft-js-import-html';
+import { stateToHTML } from 'draft-js-export-html';
+import { useHistory } from 'react-router-dom';
 interface FormValues extends Member {
   imageData?: File;
   biographyHtml?: EditorState;
@@ -29,8 +30,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
     if (props.values.biography != null)
       setFieldValue(
         "biographyHtml",
-        EditorState.createWithContent(
-          ContentState.createFromText(props.values.biography)
+        EditorState.createWithContent(stateFromHTML(props.values.biography)
         )
       );
   }, []);
@@ -80,7 +80,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
             name="firstName"
             className="form-control lgxname"
           />
-          {touched.firstName && errors.firstName && (
+          {errors.firstName && (
             <div className="form-error alert alert-danger">
               {errors.firstName}
             </div>
@@ -89,7 +89,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
         <div className="form-group">
           <label>Apellido</label>
           <Field type="lastName" name="lastName" className="form-control" />
-          {touched.lastName && errors.lastName && (
+          {errors.lastName && (
             <div className="form-error alert alert-danger">
               {errors.lastName}
             </div>
@@ -170,7 +170,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
           disabled={isSubmitting}
           className="btn btn-primary"
         >
-          Submit
+          Guardar
         </button>
       </Form>
     </>
@@ -189,15 +189,18 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
   },
   validationSchema: yup.object<MyFormProps>().shape({
     firstName: yup.string().required("Nombre Requerido"),
-    lastName: yup.string().required("Nombre Requerido"),
+    lastName: yup.string().required("Apellido requerido Requerido"),
     linkedin: yup.string(),
     twitter: yup.string(),
     github: yup.string(),
     biography: yup.string(),
-    instagram: yup.string()
+    instagram: yup.string(),
+    biographyHtml: yup.string()
   }),
   handleSubmit: (values: any, { props }) => {
     // values.biography = values.biographyHtml.getCurrentContent().getPlainText();
+    if (values.biographyHtml != null)
+      values.biography = stateToHTML(values.biographyHtml!.getCurrentContent());
     props.saveUser(values, values.imageData!);
   }
 })(UserProfileForm);
@@ -207,13 +210,12 @@ type EditAllSponsorProps = {
   ready: () => void;
 };
 const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }) => {
+  const history = useHistory();
   const [userDetail, setUserDetailState] = useState({} as Member);
-  const { setUserDetail, memberDetail } = useContext(UserContext);
   useEffect(() => {
     loading();
     getMe().then(x => {
       setUserDetailState(x);
-      setUserDetail(x);
       ready();
     });
   }, []);
@@ -223,6 +225,8 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }
     updateMe(me, picture).then(() => {
       ready();
       successToast("Perfil Actualizado");
+      history.push("/app/panel");
+
     });
   };
   return (
@@ -230,6 +234,7 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }
       {!isEmpty(userDetail) && (
         <EditAllUserFormik
           {...userDetail}
+
           saveUser={saveUser}
         ></EditAllUserFormik>
       )

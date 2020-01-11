@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import {
@@ -9,99 +9,91 @@ import { EventLiveDetail } from "../../services/models/Events/EventLiveDetail";
 import { isEmpty } from "../../services/objectsservices";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { EventLiveTime } from '../EventLive/EventLiveTme';
-import { AddCodeToLiveEvent } from './AddCodeToLiveEvent';
+import { AddAttendanceCodeToLiveEvent } from './AddAttendanceCodeToLiveEvent';
 import { CardWrapper } from '../Common/CardWrapper';
 import { QRCode } from 'react-qr-svg';
-import { subscribe, CommunicationMessageType, UpdateEventLive } from '../../services/communicationServices';
 import { TitleHeader } from '../Common/TitleHeader';
 import { subscribupdateEventLive } from '../../services/syncCommunicationServices';
+import { AddGroupCodeToLiveEvent } from './AddGroupCodeToLiveEvent';
 type MemberEventLivePanelProps = {
-  name: string;
+  eventId: number;
   loading: () => void;
   ready: () => void;
 };
-type MemberEventLivePanelParams = {
-  id: string;
-};
 
-type MemberEventLivePanelPropsAndRouter = MemberEventLivePanelParams &
-  MemberEventLivePanelProps;
-const MemberEventLivePanelComponent: React.SFC<RouteComponentProps<
-  MemberEventLivePanelPropsAndRouter
-> &
-  MemberEventLivePanelProps> = ({ loading, ready, ...props }) => {
-    const [eventDetail, setEventDetail] = useState<EventLiveDetail>(
-      {} as EventLiveDetail);
+const MemberEventLivePanelComponent: React.SFC<MemberEventLivePanelProps> = ({ loading, ready, eventId }) => {
+  const [eventLive, setEventLive] = useState<EventLiveDetail>(
+    {} as EventLiveDetail);
 
-    const history = useHistory();
-    const loadEventDetail = () => {
-      GetAdminLiveEventDetail(+props.match.params.id).then(s => {
-        if (s == null) history.push("/admin/panel");
-        setEventDetail(s);
-        ready();
-      });
-    };
-    useEffect(() => {
-      loading();
-      subscribupdateEventLive((data) => {
-        if (+data.eventId === +props.match.params.id) {
-          loadEventDetail();
-        }
-      });
-      loadEventDetail();
-    }, []);
-    const handleReadCode = () => {
-      history.push("/member/organizedcode/read");
-    }
+  const history = useHistory();
+  const loadEventDetail = () => {
+    GetAdminLiveEventDetail(eventId).then(s => {
+      if (s == null) history.push("/app/panel");
+      setEventLive(s);
+      ready();
+    });
+  };
+  useEffect(() => {
+    loading();
+    subscribupdateEventLive((data) => {
+      if (+data.eventId === eventId) {
+        loadEventDetail();
+      }
+    });
+    loadEventDetail();
+  }, []);
+  const handleReadCode = () => {
+    history.push("/app/organizedcode/read");
+  }
 
-    return (
-      <div className="row">
-        <TitleHeader title={eventDetail.title}></TitleHeader>
-
-        <div className="col-md-2 col-xl-2">
-          <div className="card theme-bg2">
-            <div className="card-block customer-visitor">
-              <h2 className="text-white text-right mt-2 f-w-300">19:23</h2>
-              <span className="text-white text-right d-block">
-                {eventDetail.attended ? "Presente" : "Ausente"}
-              </span>
-              <i className="fas fa-globe text-white"></i>
-            </div>
+  return (
+    <div className="row">
+      <TitleHeader title={eventLive.title}></TitleHeader>
+      <div className="col-md-2 col-xl-2">
+        <div className="card theme-bg2">
+          <div className="card-block customer-visitor">
+            <h2 className="text-white text-right mt-2 f-w-300">Estado</h2>
+            <span className="text-white text-right d-block">
+              {eventLive.attended ? "Presente" : "Ausente"}
+            </span>
+            <i className="fas fa-globe text-white"></i>
           </div>
         </div>
-        {!isEmpty(eventDetail) && (<>
-          <EventLiveTime eventDetail={eventDetail}></EventLiveTime>
-          {!eventDetail.attended &&
-            <CardWrapper colSize={4} cardTitle="Reportar mi asistencia">
-              <div style={{ textAlign: "center" }}>
-                <QRCode
-                  bgColor="#FFFFFF"
-                  fgColor="#000000"
-                  level="Q"
-                  style={{ width: 256 }}
-                  value={eventDetail.tokenToReportMyAttendance}
-                />
-              </div>
-            </CardWrapper>
-          }
-
-          {eventDetail.generalAttended && !eventDetail.attended &&
-            <>
-              <TitleHeader title="Reportar asistencia general"></TitleHeader>
-              <AddCodeToLiveEvent eventLive={eventDetail}></AddCodeToLiveEvent>
-              <CardWrapper colSize={3} cardTitle="Acciones Generales">
-                <button onClick={handleReadCode} className="btn btn-warning shadow-2 text-uppercase btn-block">
-                  Leer Código de Organizador
-              </button>
-              </CardWrapper>
-            </>
-          }
-
-        </>
-        )}
       </div>
-    );
-  };
+      {!isEmpty(eventLive) && (<>
+        <EventLiveTime eventDetail={eventLive}></EventLiveTime>
+        {!eventLive.attended &&
+          <CardWrapper colSize={4} cardTitle="Reportar mi asistencia">
+            <div style={{ textAlign: "center" }}>
+              <QRCode
+                bgColor="#FFFFFF"
+                fgColor="#000000"
+                level="Q"
+                style={{ width: 256 }}
+                value={eventLive.tokenToReportMyAttendance}
+              />
+            </div>
+          </CardWrapper>
+        }
+        {eventLive.hasGroupCodeOpen &&
+          <AddGroupCodeToLiveEvent eventLive={eventLive}></AddGroupCodeToLiveEvent>}
+        {eventLive.generalAttended && !eventLive.attended &&
+          <>
+            <TitleHeader title="Reportar asistencia general"></TitleHeader>
+            <AddAttendanceCodeToLiveEvent eventLive={eventLive}></AddAttendanceCodeToLiveEvent>
+            <CardWrapper colSize={3} cardTitle="Acciones Generales">
+              <button onClick={handleReadCode} className="btn btn-warning shadow-2 text-uppercase btn-block">
+                Leer Código de Organizador
+              </button>
+            </CardWrapper>
+          </>
+        }
+
+      </>
+      )}
+    </div>
+  );
+};
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {

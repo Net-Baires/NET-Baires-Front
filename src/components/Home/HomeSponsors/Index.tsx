@@ -1,6 +1,7 @@
 import React from "react";
 import { Sponsor } from "../../../services/models/sponsor";
 import { isEmpty } from "../../../services/objectsservices";
+import { NavLink } from 'react-router-dom';
 type HomeSponsorsProps = {
   sponsors: Sponsor[];
 };
@@ -24,11 +25,17 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = ({ sponsors }) => {
                       className="col-md-3 wow fadeInUp sponsor-home"
                       data-wow-delay="0.2s"
                     >
-                      <a href={sponsor.siteUrl}>
+                      <NavLink
+                        exact
+                        data-tip={sponsor.name}
+                        activeClassName="active"
+                        to={`/sponsors/${sponsor.id}`}
+                      >
                         <img src={sponsor.logoUrl} alt={sponsor.name} />
                         <h1>{sponsor.name}</h1>
-                        {/* <p>{sponsor.description}</p> */}
-                      </a>
+                      </NavLink>
+
+                      {/* <p>{sponsor.description}</p> */}
                     </div>
                   ))}
                 </div>

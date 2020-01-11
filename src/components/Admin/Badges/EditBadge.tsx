@@ -1,18 +1,9 @@
-import React, { MouseEvent, useState, useEffect, SyntheticEvent } from "react";
+import React, { MouseEvent, useState, useEffect } from "react";
 import { RouteComponentProps, useHistory } from "react-router";
 import { EditBadgeComponent } from "./components/EditBadgeComponent";
 import { isEmpty } from "../../../services/objectsservices";
-import {
-  MDBContainer,
-  MDBBtn,
-  MDBModal,
-  MDBModalBody,
-  MDBModalHeader,
-  MDBModalFooter
-} from "mdbreact";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
 import { CardWrapper } from '../../Common/CardWrapper';
 import {
@@ -20,18 +11,20 @@ import {
   updateBadge,
   deleteBadge
 } from "../../../services/badgesServices";
+import { DialogQuestion } from '../../Common/DialogQuestion';
 type EditBadgeParams = {
   id: string;
   loading: () => void;
   ready: () => void;
 };
-
+import MUIRichTextEditor from 'mui-rte'
 const EditBadgeInternalComponent: React.SFC<
   RouteComponentProps<EditBadgeParams> & EditBadgeParams
 > = ({ loading, ready, ...props }) => {
   const [badgeToEdit, setBadgeToEdit] = useState({} as GetBadgeResponse);
-  const [loaded, setLoaded] = useState(false);
-  const [sureToDelete, setSureToDelete] = useState(false);
+  const [, setLoaded] = useState(false);
+  const [openPopup] = useState(false);
+  const [, setSureToDelete] = useState(false);
   const history = useHistory();
   useEffect(() => {
     getBadgeToEdit(+props.match.params.id).then(u => {
@@ -41,60 +34,42 @@ const EditBadgeInternalComponent: React.SFC<
   }, []);
   const savebadge = (badge: GetBadgeResponse, file: File) => {
     loading();
-    updateBadge(badge.id, badge, file).then(x => {
+    updateBadge(badge.id, badge, file).then(() => {
       ready();
-      history.push("/admin/badges");
+      history.push("/app/badges");
     });
   };
   const handleDeleteBadge = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSureToDelete(true);
   };
-  const handleConfirmDelete = (event: SyntheticEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    deleteBadge(badgeToEdit.id).then(c => history.goBack());
-  };
-  const handleCancel = (event: SyntheticEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleAccept = () => {
+    deleteBadge(badgeToEdit.id).then(() => history.goBack());
+  }
+  const handleCancel = () => {
     setSureToDelete(false);
-  };
-
-  return (
+  }
+  return (<>
     <CardWrapper cardTitle="Editar Badge">
-      <MDBContainer className="pepepe">
-        <MDBModal isOpen={sureToDelete}>
-          <MDBModalHeader>Eliminar Usuario</MDBModalHeader>
-          <MDBModalBody>
-            ¿Esta seguro que quiere eliminar el badger <b>{badgeToEdit.name}</b>
-            ?
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn onClick={handleCancel} color="secondary">
-              Cancelar
-            </MDBBtn>
-            <MDBBtn onClick={handleConfirmDelete} color="danger">
-              Eliminar
-            </MDBBtn>
-          </MDBModalFooter>
-        </MDBModal>
-      </MDBContainer>
       {!isEmpty(badgeToEdit) && (
         <EditBadgeComponent
           saveBadge={savebadge}
           badge={badgeToEdit}
         ></EditBadgeComponent>
       )}
-      <div className="row">
-        <button
-          type="button"
-          onClick={handleDeleteBadge}
-          className="btn btn-danger btn-full-width"
-        >
-          Eliminar
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={handleDeleteBadge}
+        className="btn btn-danger btn-full-width"
+      >
+        Eliminar
+      </button>
     </CardWrapper>
+    <DialogQuestion
+      title="Eliminar Código de Grupo"
+      description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
+      openPopup={openPopup} callbackAccept={handleAccept} callbackCancel={handleCancel}></DialogQuestion>
+  </>
   );
 };
 

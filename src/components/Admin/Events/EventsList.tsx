@@ -30,7 +30,7 @@ export const EventsList: React.SFC<RouteComponentProps<
     meEvent: EventDetail
   ) => {
     event.preventDefault();
-    history.push(`/admin/events/${meEvent.id}/edit`);
+    history.push(`/app/events/${meEvent.id}/edit`);
   };
   const { SearchBar } = Search;
 

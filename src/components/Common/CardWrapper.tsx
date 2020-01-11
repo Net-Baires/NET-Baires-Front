@@ -1,71 +1,122 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
+import useCollapse from 'react-collapsed';
+import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Menu, { MenuProps } from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import MaximizeIcon from '@material-ui/icons/Maximize';
+import MinimizeIcon from '@material-ui/icons/Minimize';
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
 
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 type CardWrapperProps = {
   cardTitle?: string;
   colSize?: number;
+  cardBodyClassName?: string;
 };
 
 export const CardWrapper: React.SFC<CardWrapperProps> = ({
   children,
   colSize,
-  cardTitle
+  cardTitle,
+  cardBodyClassName
 }) => {
+  const [isOpen, setOpen] = useState(true);
+  const { getCollapseProps, getToggleProps } = useCollapse({ isOpen });
+  const [openMenu, setOpenMenu] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   if (colSize == null) colSize = 12;
   return (
     <>
-      <div className={`col-sm-${colSize}`}>
-        <div className="card">
-          <div className="card-header">
-            <h5>{cardTitle}</h5>
-            <div className="card-header-right">
-              <div className="btn-group card-option">
-                <button
-                  type="button"
-                  className="btn dropdown-toggle btn-icon"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i className="feather icon-more-horizontal"></i>
-                </button>
-                <ul className="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                  <li className="dropdown-item full-card">
-                    <a href="#!">
-                      <span>
-                        <i className="feather icon-maximize"></i> maximize
-                      </span>
-                      <span style={{ display: "none" }}>
-                        <i className="feather icon-minimize"></i> Restore
-                      </span>
-                    </a>
-                  </li>
-                  <li className="dropdown-item minimize-card">
-                    <a href="#!">
-                      <span>
-                        <i className="feather icon-minus"></i> collapse
-                      </span>
-                      <span style={{ display: "none" }}>
-                        <i className="feather icon-plus"></i> expand
-                      </span>
-                    </a>
-                  </li>
-                  <li className="dropdown-item reload-card">
-                    <a href="#!">
-                      <i className="feather icon-refresh-cw"></i> reload
-                    </a>
-                  </li>
-                  <li className="dropdown-item close-card">
-                    <a href="#!">
-                      <i className="feather icon-trash"></i> remove
-                    </a>
-                  </li>
-                </ul>
+      <Fragment>
+
+        <div className={`col-md-${colSize}`}>
+          <div className="card">
+            <div className="card-header">
+              <h5>{cardTitle}</h5>
+              <div className="card-header-right">
+                <div className="btn-group card-option">
+                  <button
+                    onClick={handleClick}
+                    type="button"
+                    className="btn btn-icon"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i className="fas fa-ellipsis-h"></i>
+                  </button>
+                  <StyledMenu
+                    id="customized-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    {!isOpen ?
+                      <StyledMenuItem onClick={() => setOpen(oldOpen => !oldOpen)}>
+                        <ListItemIcon>
+                          <MaximizeIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Expandir" />
+                      </StyledMenuItem>
+                      :
+                      <StyledMenuItem onClick={() => setOpen(oldOpen => !oldOpen)}>
+                        <ListItemIcon>
+                          <MinimizeIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Colapsar" />
+                      </StyledMenuItem>
+                    }
+
+                  </StyledMenu>
+                </div>
               </div>
             </div>
+            <section {...getCollapseProps()} className={`${cardBodyClassName != null ? cardBodyClassName : ''} card-block card-container-general`}>{children}</section>
           </div>
-          <div className="card-block card-container-general">{children}</div>
         </div>
-      </div>
+      </Fragment>
     </>
   );
 };

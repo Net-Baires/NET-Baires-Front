@@ -4,12 +4,14 @@ export interface EventLiveDetail {
   description: string;
   platform: string;
   startLiveTime: any;
+  hasGroupCodeOpen?: boolean;
   imageUrl: string;
   generalAttended: boolean;
   generalAttendance: ReportGeneralAttendance;
   membersDetails: Members;
   attended?: boolean;
   tokenToReportMyAttendance: string;
+  groupCodes: GroupCodeResponse[];
 }
 export interface ReportGeneralAttendance {
   tokenToReportGeneralAttendance: string;
@@ -19,6 +21,7 @@ export interface Members {
   totalMembersRegistered: number;
   totalMembersAttended: number;
   membersAttended: MemberDetail[];
+  estimatedAttendancePercentage: number;
 }
 export interface MemberDetail {
   id: number;
@@ -27,4 +30,12 @@ export interface MemberDetail {
   username: string;
   picture: string;
   attendedTime: string;
+}
+
+export interface GroupCodeResponse {
+  id: number;
+  code: string;
+  detail: string;
+  open: boolean;
+  membersCount: number;
 }

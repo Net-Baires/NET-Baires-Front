@@ -38,7 +38,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
     meEvent: EventToSync
   ) => {
     event.preventDefault();
-    history.push(`/admin/events/${meEvent.id}/edit`);
+    history.push(`/app/events/${meEvent.id}/edit`);
   };
   const handleSyncEvent = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -61,7 +61,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
       ready(eventAction.id)
     );
   };
-  "      to={`/admin/events/${event.id}/live/panel`}"
+  "      to={`/app/events/${event.id}/live/panel`}"
   return (
     <div className="row">
       <div className="col">
@@ -115,7 +115,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
               data-tip="Abrir panel de evento en vivo"
               className="btn btn-info events-actions-button"
               activeClassName="active"
-              to={`/admin/events/${eventAction.id}/live/panel`}
+              to={`/app/events/${eventAction.id}/live/panel`}
             >
               <i className="fab fa-cpanel"></i>
             </NavLink>

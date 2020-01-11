@@ -20,12 +20,31 @@ const SponsorDetail: React.SFC<
   }, []);
 
   return (
-    <>
-      <h1>Id - {sponsorToCheck.id}</h1>
-      <h3>Nombre - {sponsorToCheck.name}</h3>
-      <h3>Descripcion - {sponsorToCheck.description}</h3>
-      <img src={sponsorToCheck.logoUrl}></img>
-    </>
+    <div className="services-section text-center" >
+      <div className="container">
+        <div className="row  justify-content-md-center">
+          <div className="col-md-8">
+            <div className="services-content">
+              <h1 className="wow fadeInUp" data-wow-delay="0s">
+                {sponsorToCheck.name}
+              </h1>
+            </div>
+          </div>
+          <div className="col-md-12 text-center">
+            <div className="services">
+              <div className="row">
+                <div className="col-md-12 badge-detail-img">
+                  <img src={sponsorToCheck.logoUrl} alt="New" />
+                </div>
+                <div className="col-md-12">
+                  <p>{sponsorToCheck.description}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 export default SponsorDetail;

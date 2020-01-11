@@ -1,3 +1,5 @@
+import { EventsAttendees } from './EventsAttendees';
+import { EventDetail } from './Events/Event';
 export interface Speaker {
   memberId: number;
   firstName: string;
@@ -5,7 +7,13 @@ export interface Speaker {
   twitter: string;
   instagram: string;
   linkedin: string;
+  biography: string;
   github: string;
   picture: string;
-  counEventsAsSpeaker: number;
+  blocked: boolean;
+  colaborator: boolean;
+  organized: boolean;
+  countEventsAsSpeaker: number;
+  averageAttendance: number;
+  events: EventDetail[];
 }

@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, RouteComponentProps } from "react-router";
+import { useHistory } from "react-router";
 import { getCurrentUser } from "../../services/authService";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import { getBadges } from "../../services/badgesServices";
-import { PageCenterWrapper } from "../Common/PageCenterWrapper";
 import { GetBadgeResponse } from "../../services/models/BadgeDetail";
-import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
-import { formatStringDate } from "../../helpers/DateHelpers";
-import { NavLink } from "react-router-dom";
-import { NotFound } from "../Common/NotFoun";
 import { isEmpty } from "../../services/objectsservices";
+import { BadgesListGridPublic } from './BadgesListGridPublic';
 
 type BadgesListPublicProps = {
   loading: () => void;
@@ -21,8 +17,9 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
   loading,
   ready
 }) => {
+  const history = useHistory();
   const [badges, setBadges] = useState(new Array<GetBadgeResponse>());
-  const [error, setError] = useState(false);
+  const [, setError] = useState(false);
   useEffect(() => {
     loading();
     getBadges()
@@ -30,58 +27,37 @@ export const BadgesListPublicComponent: React.SFC<BadgesListPublicProps> = ({
         setBadges(x);
         ready();
       })
-      .catch(e => {
+      .catch(() => {
         ready();
         setError(true);
       });
   }, []);
-  const user = getCurrentUser();
   return (
-    <main>
-      <div className="lgx-page-wrapper">
-        <section>
-          <div className="container">
-            <div className="row">
-              {!isEmpty(badges) ? (
-                badges.map(badge => (
-                  <div className="col-xs-12 col-sm-6 col-md-4">
-                    <div className="lgx-single-news lgx-single-news-images">
-                      <figure>
-                        <a href={badge.badgeUrl} target="_blank">
-                          <img src={badge.imageUrl} alt=""></img>
-                        </a>
-                      </figure>
-                      <div className="single-news-info">
-                        <div className="meta-wrapper">
-                          <span>{formatStringDate(badge.created)}</span>
-                          <span>
-                            by{" "}
-                            <a href="https://net-baires.com.ar" target="_blank">
-                              NET-Baires
-                            </a>
-                          </span>
-                        </div>
-                        <h3 className="title">
-                          <a href={badge.badgeUrl}>{badge.name}</a>
-                        </h3>
-                        <NavLink
-                          className="lgx-btn lgx-btn-white lgx-btn-sm"
-                          to={`badges/${badge.id}`}
-                        >
-                          Detalle
-                        </NavLink>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                  <NotFound title="No hay Badges disponibles actualmente"></NotFound>
-                )}
+    <div className="services-section text-center" id="nuestrosOrganizadores">
+      <div className="container">
+        <div className="row  justify-content-md-center">
+          <div className="col-md-8">
+            <div className="services-content">
+              <h1 className="wow fadeInUp" data-wow-delay="0s">
+                Nuestros Badges
+           </h1>
+              <p className="wow fadeInUp" data-wow-delay="0.2s">
+                Estos son los badges que hemos entregado como reconocimiento a nuestros miemebros, por las diferentes actividades que llevamos adelante.
+           </p>
             </div>
           </div>
-        </section>
+          <div className="col-md-12 text-center">
+            <div className="services">
+              <div className="row">
+                {!isEmpty(badges) && (
+                  <BadgesListGridPublic callbackClick={b => history.push(`badges/${b.id}`)} badges={badges}></BadgesListGridPublic>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
   );
 };
 

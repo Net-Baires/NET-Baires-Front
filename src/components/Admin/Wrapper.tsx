@@ -1,9 +1,8 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { connect } from "react-redux";
 // import Script from 'react-load-script'
-import { loading, ready } from "../../store/loading/actions";
+import { loading, ready, setMemberDetail } from "../../store/loading/actions";
 import SideMenu from "./Menu/SideMenu";
-import TopBar from "./Menu/TopBar";
 import { loadScript, loadStyles } from "../../services/helpers/scriptshelpers";
 import { AppState } from "../../store";
 import { ToastContainer } from 'react-toastify';
@@ -16,22 +15,18 @@ import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/sty
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { subscribeMemberNotification } from '../../services/syncCommunicationServices';
-import AddToHomescreen from 'react-add-to-homescreen';
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
-      color: '#fff',
-    },
-  }),
-);
+import { getMe } from '../../services/profileServices'
+import { DialogInstallPwa } from '../InstallPwa/DialogInstallPwa';
+import { TopBar } from './Menu/TopBar';
+import { Member } from '../../services/models/Member';
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
   ready: () => void;
+  setMemberDetail: (member: Member) => void;
 }
-const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
-  const { user } = useContext(UserContext);
+const AdminWrapperComponent: React.SFC<AppProps> = ({ children, setMemberDetail, ...props }) => {
+  const { user, setUserDetail } = useContext(UserContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -45,28 +40,28 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
   });
 
   useEffect(() => {
-    subscribeMemberNotification(user.id, data => {
+    getMe().then(x => {
+      setUserDetail(x);
+      setMemberDetail(x);
+    });
+    subscribeMemberNotification(user.userId, data => {
       infoToast(data.notificationMessage)
     })
   }, [])
-  const handleAddToHomescreenClick = () => {
-    alert(`
-    1. Open Share menu
-    2. Tap on "Add to Home Screen" button`);
-  };
+
   return (
     <>
       {/* 
       <div className="loader-bg">
-        <div className="loader-track">
-          <div className="loader-fill"></div>
-        </div>
-      </div> */}
+      <div className="loader-track">
+      <div className="loader-fill"></div>
+      </div>
+    </div> */}
       {/* <SideMenu></SideMenu>
       <TopBar></TopBar>
       <FriendsMenu></FriendsMenu> */}
-      <TopBar openMenu={() => setOpen(true)}></TopBar>
-      <div className="pcoded-main-container" onClick={() => setOpen(false)}>
+      <TopBar onClick={() => setOpen(false)} openMenu={() => setOpen(true)}></TopBar>
+      <div className="pcoded-main-container" >
         <div className="pcoded-wrapper">
           <div className="pcoded-content">
             <div className="pcoded-inner-content">
@@ -77,11 +72,11 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
                       {/* <BreadcrumbsComponent></BreadcrumbsComponent> */}
                       {/* <div className="page-header-title">
                                             <h5 className="m-b-10">Sample Page</h5>
-                                        </div>
-                                        <ul className="breadcrumb">
+                                            </div>
+                                            <ul className="breadcrumb">
                                             <li className="breadcrumb-item"><a href="index.html"><i className="feather icon-home"></i></a></li>
                                             <li className="breadcrumb-item"><a href="#!">Sample Page</a></li>
-                                        </ul> */}
+                                          </ul> */}
                     </div>
                   </div>
                 </div>
@@ -101,16 +96,15 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
                 <SideMenu closeMenu={() => setOpen(false)}></SideMenu>
               </Drawer>
               <div className="main-body">
-                <div className="page-wrapper">
+                <div className="page-wrapper" onClick={() => setOpen(false)}>
 
                   {/* <LoadingOverlay
                     active={props.isLoading}
                     spinner
                     clasName="row"
                     text="Procesando..."
-                  // tslint:disable-next-line: indent
+                    // tslint:disable-next-line: indent
                   > */}
-                  <AddToHomescreen onAddToHomescreenClick={handleAddToHomescreenClick} />
 
                   {children}
                   <Backdrop
@@ -130,6 +124,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, ...props }) => {
           </div>
         </div>
       </div>
+      <DialogInstallPwa></DialogInstallPwa>
     </>
   );
 };
@@ -143,6 +138,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
+  },
+  setMemberDetail: (member: Member) => {
+    dispatch(setMemberDetail(member));
   }
 });
 
@@ -208,6 +206,14 @@ const useStylesDrawer = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.enteringScreen,
       }),
       marginLeft: 0,
+    },
+  }),
+);
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
     },
   }),
 );

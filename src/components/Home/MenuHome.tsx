@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { SecureElement } from '../Auth/SecureElement';
 const MenuHomeComponent: React.SFC = () => {
-  const { isLoggued } = useContext(UserContext);
+  const { isLogged } = useContext(UserContext);
   return (
     <div className="container">
       <nav
@@ -61,28 +61,32 @@ const MenuHomeComponent: React.SFC = () => {
                   Sponsors
                 </a>
               </li>
-
+              <li className="nav-item">
+                <NavLink className="nav-link  page-scroll" to="/badges">
+                  Badges
+                  </NavLink>
+              </li>
               <li className="nav-item">
                 <NavLink className="nav-link  page-scroll" to="/events/live">
                   Eventos en vivo
                   </NavLink>
               </li>
               <li className="nav-item">
-                {isLoggued && (<>
+                {isLogged() && (<>
                   <SecureElement roles={["Admin", "Organizer"]}>
-                    <NavLink className="nav-link  page-scroll" to="/admin/panel">
+                    <NavLink className="nav-link  page-scroll" to="/app/panel">
                       App
                   </NavLink>
                   </SecureElement>
                   <SecureElement roles={["Member"]}>
-                    <NavLink className="nav-link  page-scroll" to="/member/panel">
+                    <NavLink className="nav-link  page-scroll" to="/app/panel">
                       App
                   </NavLink>
                   </SecureElement>
                 </>)}
               </li>
               <li className="nav-item">
-                {isLoggued ? (
+                {isLogged() ? (
                   <NavLink className="nav-link  page-scroll" to="/logout">
                     Desconectate
                   </NavLink>

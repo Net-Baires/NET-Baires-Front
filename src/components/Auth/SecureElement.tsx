@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { hasPermission } from "../../services/authService";
+import { hasPermission, Rol } from '../../services/authService';
 
 type SecureElementProps = {
-  rol?: string;
-  roles?: string[];
+  rol?: Rol;
+  roles?: Rol[];
 };
 
 export const SecureElement: React.SFC<SecureElementProps> = ({
@@ -12,13 +12,13 @@ export const SecureElement: React.SFC<SecureElementProps> = ({
   rol,
   roles
 }) => {
-  const { isLoggued } = useContext(UserContext);
+  const { isLogged } = useContext(UserContext);
 
   const checkRoles = roles != null && roles.some(r => hasPermission(r));
   const checkHasPermissionResult = rol != null && hasPermission(rol);
 
   if (
-    isLoggued &&
+    isLogged() &&
     children != null &&
     (checkHasPermissionResult || checkRoles)
   ) {

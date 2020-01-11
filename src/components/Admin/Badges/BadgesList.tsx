@@ -76,7 +76,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
         <NavLink
           className="btn btn-primary"
           activeClassName="active"
-          to={`/admin/badges/${badge.id}/edit`}
+          to={`/app/badges/${badge.id}/edit`}
         >
           Editar
         </NavLink>
@@ -94,13 +94,13 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
     user: GetBadgeResponse
   ) => {
     event.preventDefault();
-    history.push(`/admin/badge/${user.id}/Edit`);
+    history.push(`/app/badge/${user.id}/Edit`);
   };
 
   return (
     <CardWrapper cardTitle="Badges">
       {badge && (
-        <SearchWrapper title="Usuarios">
+        <SearchWrapper title="Badges">
           <ToolkitProvider keyField="id" data={badge} columns={columns} search>
             {(props: any) => (
               <div>
@@ -119,7 +119,7 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
       <NavLink
         className="btn btn-success"
         activeClassName="active"
-        to="/admin/badges/new"
+        to="/app/badges/new"
       >
         Nuevo Badge
       </NavLink>

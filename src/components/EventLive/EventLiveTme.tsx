@@ -56,7 +56,7 @@ export const EventLiveTime: React.SFC<EventLiveTimeProps> = ({ eventDetail }) =>
     });
   };
   return (
-    <div className="col-md-6 col-xl-4">
+    <div className="col-md-3 col-xl-3">
       <div className="card theme-bg">
         <div className="card-header borderless">
           <h5 className="text-white">Evento Live</h5>

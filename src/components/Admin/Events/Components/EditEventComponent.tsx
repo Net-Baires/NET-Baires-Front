@@ -5,6 +5,8 @@ import { EventDetail } from "../../../../services/models/Events/Event";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Draft from "react-wysiwyg-typescript";
 import { EditorState, ContentState } from "draft-js";
+import { stateFromHTML } from 'draft-js-import-html';
+import { stateToHTML } from 'draft-js-export-html';
 
 interface FormValues extends EventDetail {
   imageData?: File;
@@ -20,9 +22,7 @@ const EditEventComponentForm = (props: FormikProps<FormValues>) => {
     if (props.values.description != null)
       setFieldValue(
         "descriptionHtml",
-        EditorState.createWithContent(
-          ContentState.createFromText(props.values.description)
-        )
+        EditorState.createWithContent(stateFromHTML(props.values.description))
       );
   }, []);
   return (
@@ -43,6 +43,7 @@ const EditEventComponentForm = (props: FormikProps<FormValues>) => {
           <div className="form-error alert alert-danger">{errors.title}</div>
         )}
       </div>
+
       <div className="form-group">
         <label>Descripción</label>
         <Draft
@@ -113,6 +114,7 @@ const EditAlleventFormik = withFormik<MyFormProps, FormValues>({
     description: yup.string().required("Campo Requerido")
   }),
   handleSubmit: (values: any, { props }) => {
+    values.description = stateToHTML(values.description!.getCurrentContent());
     props.saveEvent(values);
   }
 })(EditEventComponentForm);

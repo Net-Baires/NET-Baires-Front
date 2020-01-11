@@ -1,21 +1,33 @@
 {
-  "api": {
-    "base": "${NET-Baires.api.base}$",
-    "baseRemote": "${NET-Baires.api.baseRemote}$"
-  },
-  "instrumentationKey": "${NET-Baires.instrumentationKey}$",
-  "integrations": {
-    "meetup": {
-      "clientId": "${NET-Baires.meetup.clientId}$",
-      "clientSecret": "${NET-Baires.clientSecret.clientSecret}$",
-      "accessTokenUri": "${NET-Baires.clientSecret.accessTokenUri}$",
-      "authorizationUri": "${NET-Baires.clientSecret.authorizationUri}$",
-      "redirectUri": "${NET-Baires.clientSecret.redirectUri}$",
-      "scopes": ["basic"]
+    "api": {
+        "base": "${NET-Baires.api.base}$",
+        "baseRemote": "${NET-Baires.api.baseRemote}$"
     },
-    "eventBrite": {
-      "clientId": "${NET-Baires.eventBrite.clientId}$",
-      "redirectUri": "${NET-Baires.eventBrite.redirectUri}$"
+    "instrumentationKey": "${NET-Baires.instrumentationKey}$",
+    "integrations": {
+        "meetup": {
+            "clientId": "${NET-Baires.meetup.clientId}$",
+            "clientSecret": "${NET-Baires.clientSecret.clientSecret}$",
+            "accessTokenUri": "${NET-Baires.clientSecret.accessTokenUri}$",
+            "authorizationUri": "${NET-Baires.clientSecret.authorizationUri}$",
+            "redirectUri": "${NET-Baires.clientSecret.redirectUri}$",
+            "scopes": ["basic"]
+        },
+        "eventBrite": {
+            "clientId": "${NET-Baires.eventBrite.clientId}$",
+            "redirectUri": "${NET-Baires.eventBrite.redirectUri}$"
+        }
+    },
+    "firebase": {
+        "pushNotifications": {
+            "apiKey": "${NET-Baires.firebase.pushNotification.apiKey}$",
+            "authDomain": "${NET-Baires.firebase.pushNotification.authDomain}$",
+            "databaseURL": "${NET-Baires.firebase.pushNotification.databaseURL}$",
+            "projectId": "${NET-Baires.firebase.pushNotification.projectId}$",
+            "storageBucket": "${NET-Baires.firebase.pushNotification.storageBucket}$",
+            "messagingSenderId": "${NET-Baires.firebase.pushNotification.messagingSenderId}$",
+            "appId": "${NET-Baires.firebase.pushNotification.appId}$",
+            "measurementId": "${NET-Baires.firebase.pushNotification.measurementId}$"
+        }
     }
-  }
 }

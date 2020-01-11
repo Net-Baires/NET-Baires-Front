@@ -20,7 +20,7 @@ const NewUserComponent: React.SFC<NewUserProps> = ({ loading, ready }) => {
     loading();
     newUser(user).then(() => {
       ready();
-      history.push("/admin/members");
+      history.push("/app/members");
     }).catch(() => {
       errorToast("Error al intentar crear un usuario");
       ready();

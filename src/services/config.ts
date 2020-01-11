@@ -28,4 +28,18 @@ export interface Config {
   api: Api;
   integrations: Integrations;
   instrumentationKey: string;
+  firebase: FirebaseConfig;
+}
+export interface FirebaseConfig {
+  pushNotifications: FirebasePushNotificationsConfig
+}
+export interface FirebasePushNotificationsConfig {
+  apiKey: string;
+  authDomain: string;
+  databaseURL: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+  measurementId: string;
 }

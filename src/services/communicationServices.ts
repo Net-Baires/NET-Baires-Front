@@ -31,6 +31,7 @@ export const subscribeGeneral = <TData>(messageType: string, callback: (data: TD
 export enum CommunicationMessageType {
     UpdateEventLive = "UpdateEventLive",
     MemberNotification = "MemberNotification",
+    UpdateGroupCode = "UpdateGroupCode",
 }
 
 class CommunicationMessage<TData> {
@@ -41,4 +42,7 @@ export interface UpdateEventLive {
 }
 export interface MemberNotification {
     notificationMessage: string;
+}
+export interface UpdateGroupCodeNotification {
+    groupCodeId: number;
 }

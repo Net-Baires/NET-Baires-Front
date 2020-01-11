@@ -5,7 +5,8 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { GetBadgeResponse } from "../../../../services/models/BadgeDetail";
 import Draft from "react-wysiwyg-typescript";
 import { EditorState, ContentState } from "draft-js";
-
+import { stateToHTML } from 'draft-js-export-html'
+import { stateFromHTML } from 'draft-js-import-html'
 interface FormValues extends GetBadgeResponse {
   imageFiles?: File;
   imagePreview?: string;
@@ -14,16 +15,17 @@ interface FormValues extends GetBadgeResponse {
 
 const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
   const { touched, errors, isSubmitting, setFieldValue } = props;
+
   useEffect(() => {
     if (props.values.imageUrl != null)
       setFieldValue("imagePreview", props.values.imageUrl);
-    if (props.values.description != null)
+    if (props.values.description != null) {
+      let contentState = stateFromHTML(props.values.description);
       setFieldValue(
         "descriptionHtml",
-        EditorState.createWithContent(
-          ContentState.createFromText(props.values.description)
-        )
+        EditorState.createWithContent(contentState)
       );
+    }
   }, []);
   const changeFile = (event: MouseEvent<HTMLInputElement>, file: any) => {
     event.preventDefault();
@@ -34,7 +36,6 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
   };
   return (
     <Form
-      className="lgx-contactform"
       onSubmitCapture={(a: any) => {
         console.log(a);
       }}
@@ -77,7 +78,7 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
       <div className="form-group">
         <label>Nombre</label>
         <Field type="name" name="name" className="form-control" />
-        {touched.name && errors.name && (
+        {errors.name && (
           <div className="form-error alert alert-danger">{errors.name}</div>
         )}
       </div>
@@ -91,7 +92,7 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
             setFieldValue("descriptionHtml", state);
           }}
         />
-        {touched.descriptionHtml && errors.descriptionHtml && (
+        {errors.descriptionHtml && (
           <div className="form-error alert alert-danger">
             {errors.descriptionHtml}
           </div>
@@ -126,9 +127,7 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
     descriptionHtml: yup.string().required("Campo Requerido")
   }),
   handleSubmit: (values: FormValues, { props }) => {
-    values.description = values
-      .descriptionHtml!.getCurrentContent()
-      .getPlainText();
+    values.description = stateToHTML(values.descriptionHtml!.getCurrentContent());
     props.saveBadge(values, values.imageFiles!);
   }
 })(EditBadgeComponentForm);
