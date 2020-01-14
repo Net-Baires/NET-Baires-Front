@@ -88,9 +88,8 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({
     history.push(
       `/app/events/${eventLive.id}/live/groupcodes/${groupCode.id}/panel`
     );
-    "/events/:id/live/groupcodes/:id/panel";
-  };
-  const handleAccept = () => {};
+  }
+  const handleAccept = () => { };
   return (
     <>
       <DialogQuestion
@@ -139,13 +138,13 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({
                           Abierto
                         </a>
                       ) : (
-                        <a
-                          href="#!"
-                          className="label theme-bg2 text-white f-12"
-                        >
-                          Cerrado
+                          <a
+                            href="#!"
+                            className="label theme-bg2 text-white f-12"
+                          >
+                            Cerrado
                         </a>
-                      )}
+                        )}
                     </td>
                     <td>
                       <h6 className="m-b-0">
@@ -197,19 +196,19 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({
                                 <ListItemText primary="Cerrar" />
                               </StyledMenuItem>
                             ) : (
-                              <StyledMenuItem
-                                onClick={e =>
-                                  handleUpdateGroupCode(e, groupCode, {
-                                    open: true
-                                  })
-                                }
-                              >
-                                <ListItemIcon>
-                                  <LockOpenIcon fontSize="small" />
-                                </ListItemIcon>
-                                <ListItemText primary="Abrir" />
-                              </StyledMenuItem>
-                            )}
+                                <StyledMenuItem
+                                  onClick={e =>
+                                    handleUpdateGroupCode(e, groupCode, {
+                                      open: true
+                                    })
+                                  }
+                                >
+                                  <ListItemIcon>
+                                    <LockOpenIcon fontSize="small" />
+                                  </ListItemIcon>
+                                  <ListItemText primary="Abrir" />
+                                </StyledMenuItem>
+                              )}
                           </StyledMenu>
                         </div>
                       </h6>

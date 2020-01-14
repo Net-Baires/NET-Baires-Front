@@ -1,33 +1,35 @@
 {
-  "api": {
-    "base": "http://localhost:8080/",
-    "baseRemote": "https://localhost:5001"
-  },
-  "instrumentationKey": "",
-  "integrations": {
-    "meetup": {
-      "clientId": "",
-      "clientSecret": "",
-      "accessTokenUri": "https://secure.meetup.com/oauth2/access",
-      "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
-      "redirectUri": "http://localhost:8080/login/meetup",
-      "scopes": ["basic"]
+    "api": {
+        "base": "http://localhost:8080/",
+        "baseRemote": "https://localhost:5001"
     },
-    "eventBrite": {
-      "clientId": "",
-      "redirectUri": "http://localhost:8080/login/eventbrite"
+    "instrumentationKey": "",
+    "integrations": {
+        "meetup": {
+            "clientId": "",
+            "clientSecret": "",
+            "accessTokenUri": "https://secure.meetup.com/oauth2/access",
+            "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
+            "redirectUri": "http://localhost:8080/login/meetup",
+            "scopes": [
+                "basic"
+            ]
+        },
+        "eventBrite": {
+            "clientId": "",
+            "redirectUri": "http://localhost:8080/login/eventbrite"
+        }
+    },
+    "firebase": {
+        "pushNotifications": {
+            "apiKey": "",
+            "authDomain": "",
+            "databaseURL": "",
+            "projectId": "",
+            "storageBucket": "",
+            "messagingSenderId": "",
+            "appId": "",
+            "measurementId": ""
+        }
     }
-  },
-  "firebase": {
-    "pushNotifications": {
-      "apiKey": "",
-      "authDomain": "",
-      "databaseURL": "",
-      "projectId": "",
-      "storageBucket": "",
-      "messagingSenderId": "",
-      "appId": "",
-      "measurementId": ""
-    }
-  }
 }

@@ -6,7 +6,7 @@ import {
   CheckAttendanceGeneralResponse
 } from "./models/Events/EventDetailToSync";
 import { EventToReportAttendance } from "./models/Events/EventToReportAttendance";
-import { getRequest, putRequest, postRequest } from "./requestServices";
+import { getRequest, putRequest, postRequest, deleteRequest } from './requestServices';
 import { EventLiveDetail } from "./models/Events/EventLiveDetail";
 import {
   CreateGroupCodeResponse,
@@ -82,10 +82,19 @@ export const addCodeToGroupCode = (
   return postRequest(`/events/${eventId}/groupcodes/${code}`);
 };
 export const addMemberToGroupCode = (
+  groupCodeId: number,
   eventId: number,
   memberId: number
-): Promise<AddMemberToGroupCodeResponse> => {
-  return postRequest(`/events/${eventId}/members/${memberId}`);
+): Promise<boolean> => {
+  return postRequest(`/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`);
+};
+
+export const deleteMemberFromGroupCode = (
+  groupCodeId: number,
+  eventId: number,
+  memberId: number
+): Promise<boolean> => {
+  return deleteRequest(`/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`);
 };
 export interface ReportAttendanceResponse {
   eventId: number;

@@ -32,7 +32,7 @@ const HomeSpeakers: React.SFC<HomeSpeakersProps> = ({ speakers }) => {
               <div className="col-md-12 text-center">
                 <div className="services">
                   <div className="row">
-                    {speakers.slice(1).map(speaker => (
+                    {speakers.map(speaker => (
                       <MemberCard key={speaker.id} navigationHandler={navigateToSpeaker} member={speaker}></MemberCard>
                     ))}
                   </div>

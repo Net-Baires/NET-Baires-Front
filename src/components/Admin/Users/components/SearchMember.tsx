@@ -4,10 +4,11 @@ import Autosuggest from "react-autosuggest";
 import { getMemberDetail } from "../../../../services/membersServices";
 import { isEmpty } from "../../../../services/objectsservices";
 import { CardWrapper } from "../../../Common/CardWrapper";
+import { EventsAttendees } from '../../../../services/models/EventsAttendees';
 
 type NewUserProps = {
   selectectMember: (member: Member) => void;
-  searchMembers: (query: string) => Promise<Member[]>;
+  searchMembers: (query: string) => Promise<EventsAttendees[]>;
 };
 export const SearchMember: React.SFC<NewUserProps> = ({
   selectectMember,
@@ -15,14 +16,14 @@ export const SearchMember: React.SFC<NewUserProps> = ({
   children
 }) => {
   const [readySearch, setReadySearch] = useState(false);
-  const [memberToSearch, setMemberToSearch] = useState({} as Member);
+  const [memberToSearch, setMemberToSearch] = useState({} as EventsAttendees);
   const [attendeeDetail, setAttendeeDetail] = useState({} as Member);
-  const [suggestions, setSuggestions] = useState({});
+  const [suggestions, setSuggestions] = useState(new Array<EventsAttendees>());
   const [value, setValue] = useState("");
 
   const loadDetail = () => {
     if (!isEmpty(memberToSearch)) {
-      getMemberDetail(memberToSearch.id).then(detail => {
+      getMemberDetail(+memberToSearch.memberDetail!.id!).then(detail => {
         setAttendeeDetail(detail);
         selectectMember(detail);
         setReadySearch(true);
@@ -42,15 +43,15 @@ export const SearchMember: React.SFC<NewUserProps> = ({
     setValue("");
     setAttendeeDetail({} as Member);
   };
-  const getSuggestionValue = (suggestion: Member) => suggestion.firstName;
-  const renderSuggestion = (suggestion: Member) => {
+  const getSuggestionValue = (suggestion: EventsAttendees) => suggestion.memberDetail!.firstName;
+  const renderSuggestion = (suggestion: EventsAttendees) => {
     return (
       <div className="row">
         <div className="col-md-3">
-          <img className="img-suggestion-member" src={suggestion.picture}></img>
+          <img className="img-suggestion-member" src={suggestion.memberDetail!.picture}></img>
         </div>
         <div className="col-md-9">
-          {suggestion.firstName} {suggestion.lastName}
+          {suggestion.memberDetail!.firstName} {suggestion.memberDetail!.lastName}
         </div>
       </div>
     );
@@ -63,7 +64,10 @@ export const SearchMember: React.SFC<NewUserProps> = ({
     if (value != null && value.length > 3)
       // getMemberByQuery(value).then(v => {
       searchMembers(value).then(v => {
-        setSuggestions(v);
+        if (v == null)
+          setSuggestions(new Array<EventsAttendees>());
+        else
+          setSuggestions(v);
       });
   };
 
@@ -89,14 +93,14 @@ export const SearchMember: React.SFC<NewUserProps> = ({
       <CardWrapper colSize={4} cardTitle="Seleccionar Miembro">
         {readySearch ? (
           <div className="card-block text-center">
-            <h5>{memberToSearch.firstName}</h5>
-            {/* <span className="d-block mb-4">{memberToSearch.}</span> */}
+            <h5>{memberToSearch.memberDetail!.firstName}</h5>
+            {/* <span className="d-block mb-4">{memberToSearch.memberDetail!.}</span> */}
             <img
               className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
               style={{ width: "150px", height: "150px" }}
               src={
-                memberToSearch.picture != "" && memberToSearch.picture != null
-                  ? memberToSearch.picture
+                memberToSearch.memberDetail!.picture != "" && memberToSearch.memberDetail!.picture != null
+                  ? memberToSearch.memberDetail!.picture
                   : "assets/images/no-image-profile.png"
               }
               alt="dashboard-user"
@@ -128,9 +132,9 @@ export const SearchMember: React.SFC<NewUserProps> = ({
                     <a
                       onClick={handleClose}
                       href="#!"
-                      className="btn btn-warning shadow-2 text-uppercase btn-block"
+                      className="btn btn-primary shadow-2 text-uppercase btn-block"
                     >
-                      Limpiar
+                      Buscar
                     </a>
                   </div>
                 </div>
@@ -138,32 +142,32 @@ export const SearchMember: React.SFC<NewUserProps> = ({
             </div>
           </div>
         ) : (
-          <>
-            <div className="card-block text-center">
-              <h5>Buscar Miembro</h5>
-              <Autosuggest
-                onSuggestionSelected={onSuggestionSelected}
-                renderInputComponent={renderInputComponent}
-                suggestions={suggestions}
-                className="aaa"
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-              />
-              <div className="designer m-t-30">
-                <a
-                  onClick={handleSearch}
-                  href="#!"
-                  className="btn btn-primary shadow-2 text-uppercase btn-block"
-                >
-                  Buscar
+            <>
+              <div className="card-block text-center">
+                <h5>Buscar Miembro</h5>
+                <Autosuggest
+                  onSuggestionSelected={onSuggestionSelected}
+                  renderInputComponent={renderInputComponent}
+                  suggestions={suggestions}
+                  className="aaa"
+                  onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={onSuggestionsClearRequested}
+                  getSuggestionValue={getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={inputProps}
+                />
+                <div className="designer m-t-30">
+                  <a
+                    onClick={handleSearch}
+                    href="#!"
+                    className="btn btn-primary shadow-2 text-uppercase btn-block"
+                  >
+                    Buscar
                 </a>
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
       </CardWrapper>
     </>
   );

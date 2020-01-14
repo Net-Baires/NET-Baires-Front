@@ -23,16 +23,16 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
   useEffect(() => {
     var isInstalled: boolean = window.matchMedia("(display-mode: standalone)")
       .matches;
-    // if (!isInstalled)
-    //   setTimeout(() => {
-    //     setOpenDialog(true);
-    //   }, 5000);
+    if (!isInstalled)
+      setTimeout(() => {
+        setOpenDialog(true);
+      }, 10000);
   }, []);
   const handleClose = () => {
     setOpenDialog(false);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   const installHandler = () => {
     setInstalling(true);
     ATHS.prompt()
@@ -81,19 +81,19 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
               <h5>Instalando, por favor aguarde.</h5>
             </div>
           ) : (
-            <div style={{ textAlign: "center" }}>
-              <CheckIcon style={{ color: "green" }} />
-              <h5>Aplicación instalada Exitosamente.</h5>
-              <button
-                data-tip="Sincronizar evento"
-                type="button"
-                onClick={e => handleClose(e)}
-                className="btn btn-info events-actions-button"
-              >
-                Cerrar
+                <div style={{ textAlign: "center" }}>
+                  <CheckIcon style={{ color: "green" }} />
+                  <h5>Aplicación instalada Exitosamente.</h5>
+                  <button
+                    data-tip="Sincronizar evento"
+                    type="button"
+                    onClick={e => handleClose(e)}
+                    className="btn btn-info events-actions-button"
+                  >
+                    Cerrar
               </button>
-            </div>
-          )}
+                </div>
+              )}
         </DialogContent>
         <DialogActions>
           {!installing && (

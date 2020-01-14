@@ -93,6 +93,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = () => {
             ></TitleHeader>
           </div>
           <MembersInGroupCode
+            callbackLoadDetail={getGroupCode}
             groupCodeId={+idGroupCode!}
             eventLiveId={+idEvent!}
             groupCodeMembers={groupCode.members}

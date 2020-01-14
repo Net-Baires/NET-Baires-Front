@@ -44,11 +44,7 @@ export const makeRaffle = (
     countOfWinners: countOfWinners
   } as MakeRaffleCommand);
 };
-export const getMemberIngroupCodeByQuery = (
-  groupCodeId: number
-): ((query: string) => Promise<Member[]>) => {
-  return (query: string) => getRequest(`/groupCodes/${groupCodeId}/${query}`);
-};
+
 interface MakeRaffleCommand {
   repeatWinners: boolean;
   countOfWinners: number;

@@ -15,6 +15,7 @@ export interface EventsAttendees {
 export interface EventsAttendeesMemberDetail {
   id?: number;
   firstName?: string;
+  lastName?: string;
   firstLogin?: string;
   picture?: string;
   blocked?: boolean;
