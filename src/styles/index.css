@@ -108,6 +108,12 @@
     }
 }
 
+@media (max-width: 576px) {
+    .slider {
+        height: 200px !important;
+    }
+}
+
 .img-slider-home {
     width: 100%;
     background-size: 100% 100%;

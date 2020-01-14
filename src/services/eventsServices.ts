@@ -1,11 +1,17 @@
 import { EventDetail, UpdateEvent } from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
-import { EventDetailToSync, CheckAttendanceGeneralResponse } from "./models/Events/EventDetailToSync";
+import {
+  EventDetailToSync,
+  CheckAttendanceGeneralResponse
+} from "./models/Events/EventDetailToSync";
 import { EventToReportAttendance } from "./models/Events/EventToReportAttendance";
-import { getRequest, putRequest, postRequest } from "./requestServices";
+import { getRequest, putRequest, postRequest, deleteRequest } from './requestServices';
 import { EventLiveDetail } from "./models/Events/EventLiveDetail";
-import { CreateGroupCodeResponse, AddMemberToGroupCodeResponse } from './models/Events/CreateGroupCodeResponse';
+import {
+  CreateGroupCodeResponse,
+  AddMemberToGroupCodeResponse
+} from "./models/Events/CreateGroupCodeResponse";
 
 export const getNextEvent = (): Promise<EventDetail> => {
   return fetch("http://localhost:3000/events/1").then(x => x.json());
@@ -47,7 +53,9 @@ export const getCheckAttendanceGeneral = (
 ): Promise<EventToReportAttendance> =>
   getRequest(`/events/${id}/attendances/general`);
 
-export const reportAttendance = (token: string): Promise<ReportAttendanceResponse> => {
+export const reportAttendance = (
+  token: string
+): Promise<ReportAttendanceResponse> => {
   return putRequest(`/events/attendances/${token}`);
 };
 export const reportAttendanceGeneral = (
@@ -61,14 +69,34 @@ export const reportAttendanceGeneralByCode = (
 ): Promise<CheckAttendanceGeneralResponse> => {
   return putRequest(`/events/${id}/attendances/general/${code}`);
 };
-export const createGroupCode = (eventId: number, detail: string): Promise<CreateGroupCodeResponse> =>
+export const createGroupCode = (
+  eventId: number,
+  detail: string
+): Promise<CreateGroupCodeResponse> =>
   postRequest(`/events/${eventId}/groupCodes`, { detail: detail });
 
-export const addCodeToGroupCode = (eventId: number, code: string): Promise<AddMemberToGroupCodeResponse> => {
+export const addCodeToGroupCode = (
+  eventId: number,
+  code: string
+): Promise<AddMemberToGroupCodeResponse> => {
   return postRequest(`/events/${eventId}/groupcodes/${code}`);
+};
+export const addMemberToGroupCode = (
+  groupCodeId: number,
+  eventId: number,
+  memberId: number
+): Promise<boolean> => {
+  return postRequest(`/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`);
+};
+
+export const deleteMemberFromGroupCode = (
+  groupCodeId: number,
+  eventId: number,
+  memberId: number
+): Promise<boolean> => {
+  return deleteRequest(`/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`);
 };
 export interface ReportAttendanceResponse {
   eventId: number;
   memberId: number;
 }
-

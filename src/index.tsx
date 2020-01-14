@@ -13,11 +13,11 @@ import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { Config } from "./services/config";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { initCommunication } from './services/communicationServices';
-import ATHS from 'add-to-homescreen-control'
-import firebase from 'firebase';
-import { updateInformation } from './services/membersServices';
-ATHS.enable()
+import { initCommunication } from "./services/communicationServices";
+import ATHS from "add-to-homescreen-control";
+import firebase from "firebase";
+import { updateInformation } from "./services/membersServices";
+ATHS.enable();
 export const askForPermissioToReceiveNotifications = () => {
   try {
     const messaging = firebase.messaging();
@@ -25,15 +25,14 @@ export const askForPermissioToReceiveNotifications = () => {
       messaging.getToken().then(token => {
         updateInformation({ pushNotificationId: token });
       });
-      messaging.onMessage((payload) => {
-        console.log('Message received. ', payload);
+      messaging.onMessage(payload => {
+        console.log("Message received. ", payload);
       });
     });
-
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 setTimeout(() => askForPermissioToReceiveNotifications(), 3000);
 export const initializeFirebase = () => {
@@ -45,27 +44,30 @@ export const initializeFirebase = () => {
     storageBucket: Config.firebase.pushNotifications.storageBucket,
     messagingSenderId: Config.firebase.pushNotifications.messagingSenderId,
     appId: Config.firebase.pushNotifications.appId,
-    measurementId: Config.firebase.pushNotifications.measurementId,
+    measurementId: Config.firebase.pushNotifications.measurementId
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
-}
-let storeGlobal = createStore(rootReducer);
+};
+let storeGlobal = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/NET-Baires-Service-Workes.js")
       .then(reg => {
-        Notification.requestPermission().then(function () {
+        Notification.requestPermission().then(function() {
           console.log("Notification permission");
         });
         firebase.messaging().useServiceWorker(reg);
         reg.installing; // the installing worker, or undefined
         reg.waiting; // the waiting worker, or undefined
         reg.active; // the active worker, or undefined
-        reg.addEventListener('updatefound', () => {
+        reg.addEventListener("updatefound", () => {
           reg.update().then(() => {
             setTimeout(() => document.location.reload(true), 5000);
           });
@@ -75,16 +77,11 @@ if ("serviceWorker" in navigator) {
         console.log("SW registration failed: ", registrationError);
       });
   });
-  window.addEventListener("install", () => {
+  window.addEventListener("install", () => {});
+  window.addEventListener("activate", () => {});
 
-  });
-  window.addEventListener("activate", () => {
-  });
-
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-  });
+  navigator.serviceWorker.addEventListener("controllerchange", () => {});
 }
-
 
 let appInsights = new ApplicationInsights({
   config: {

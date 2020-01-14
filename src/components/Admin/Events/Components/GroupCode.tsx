@@ -1,25 +1,31 @@
 import React, { SyntheticEvent, useState } from "react";
-import { loading, ready } from '../../../../store/loading/actions';
+import { loading, ready } from "../../../../store/loading/actions";
 import { connect } from "react-redux";
-import { EventLiveDetail, GroupCodeResponse } from '../../../../services/models/Events/EventLiveDetail';
-import { CardWrapper } from '../../../Common/CardWrapper';
-import { TextField } from '@material-ui/core';
-import { createGroupCode } from '../../../../services/eventsServices';
-import { successToast } from '../../../../services/toastServices';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import OpenWithIcon from '@material-ui/icons/OpenWith';
-import CloseIcon from '@material-ui/icons/Close';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { updateGroupCode, deleteGroupCode } from '../../../../services/groupCodesServices';
-import { UpdateGroupCode } from '../../../../services/models/UpdateGroupCode';
-import { DialogQuestion } from '../../../Common/DialogQuestion';
-import { useHistory } from 'react-router-dom';
+import {
+  EventLiveDetail,
+  GroupCodeResponse
+} from "../../../../services/models/Events/EventLiveDetail";
+import { CardWrapper } from "../../../Common/CardWrapper";
+import { TextField } from "@material-ui/core";
+import { createGroupCode } from "../../../../services/eventsServices";
+import { successToast } from "../../../../services/toastServices";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Menu, { MenuProps } from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import OpenWithIcon from "@material-ui/icons/OpenWith";
+import CloseIcon from "@material-ui/icons/Close";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import {
+  updateGroupCode,
+  deleteGroupCode
+} from "../../../../services/groupCodesServices";
+import { UpdateGroupCode } from "../../../../services/models/UpdateGroupCode";
+import { DialogQuestion } from "../../../Common/DialogQuestion";
+import { useHistory } from "react-router-dom";
 type GroupCodeProps = {
   eventLive: EventLiveDetail;
   updatedEvent: () => void;
@@ -27,7 +33,12 @@ type GroupCodeProps = {
   ready: () => void;
 };
 
-const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, updatedEvent, ready }) => {
+const GroupCodeComponent: React.SFC<GroupCodeProps> = ({
+  eventLive,
+  loading,
+  updatedEvent,
+  ready
+}) => {
   const history = useHistory();
   const [detail, setDetail] = useState("");
   const [openPopup, setOpenPopup] = useState(false);
@@ -47,57 +58,53 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
       ready();
       updatedEvent();
       setDetail("");
-      successToast(`Nuevo código creado: ${x.code}`)
-    })
-  }
+      successToast(`Nuevo código creado: ${x.code}`);
+    });
+  };
   const handleUpdateGroupCode = (
     event: any,
     groupCode: GroupCodeResponse,
     groupUpdate: UpdateGroupCode
-
   ) => {
     setAnchorEl(null);
     event.preventDefault();
     loading();
-    updateGroupCode(groupCode.id, groupUpdate).then(
-      () => {
-        ready();
-        if (groupUpdate.open)
-          updatedEvent();
-      }
-    );
+    updateGroupCode(groupCode.id, groupUpdate).then(() => {
+      ready();
+      if (groupUpdate.open) updatedEvent();
+    });
   };
-  const handleDelete = (
-    event: any,
-    groupCode: GroupCodeResponse
-
-  ) => {
+  const handleDelete = (event: any, groupCode: GroupCodeResponse) => {
     setAnchorEl(null);
     event.preventDefault();
     setOpenPopup(true);
     loading();
-    deleteGroupCode(groupCode.id).then(
-      () => {
-        ready();
-        updatedEvent();
-      }
-    );
+    deleteGroupCode(groupCode.id).then(() => {
+      ready();
+      updatedEvent();
+    });
   };
   const handlePanel = (e: any, groupCode: GroupCodeResponse) => {
-    history.push(`/app/groupcodes/${groupCode.id}/panel`);
+    history.push(
+      `/app/events/${eventLive.id}/live/groupcodes/${groupCode.id}/panel`
+    );
   }
-  const handleAccept = () => {
-  }
+  const handleAccept = () => { };
   return (
     <>
       <DialogQuestion
         title="Eliminar Código de Grupo"
         description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
-        openPopup={openPopup} callbackAccept={handleAccept}></DialogQuestion>
+        openPopup={openPopup}
+        callbackAccept={handleAccept}
+      ></DialogQuestion>
 
-      {eventLive.groupCodes &&
-        <CardWrapper cardBodyClassName="general-small-card-body-size" colSize={6} cardTitle="Código para grupos">
-
+      {eventLive.groupCodes && (
+        <CardWrapper
+          cardBodyClassName="general-small-card-body-size"
+          colSize={6}
+          cardTitle="Código para grupos"
+        >
           <div className="table-responsive">
             <table className="table table-hover">
               <thead>
@@ -108,12 +115,13 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
                   <th>Registrados</th>
                   <th className="d-none d-sm-block">Estado</th>
                   <th>Acciones</th>
-                </tr></thead>
+                </tr>
+              </thead>
               <tbody>
-                {eventLive.groupCodes.map(groupCode =>
+                {eventLive.groupCodes.map(groupCode => (
                   <tr>
                     <td className="d-none d-sm-block">{groupCode.id}</td>
-                    <td >
+                    <td>
                       <h6 className="mb-1">{groupCode.code}</h6>
                       {/* <p className="m-0">Apple</p> */}
                     </td>
@@ -125,9 +133,18 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
                       <h6 className="m-b-0">{groupCode.membersCount}</h6>
                     </td>
                     <td className="d-none d-sm-block">
-                      {groupCode.open ?
-                        <a href="#!" className="label theme-bg text-white f-12">Abierto</a> :
-                        <a href="#!" className="label theme-bg2 text-white f-12">Cerrado</a>}
+                      {groupCode.open ? (
+                        <a href="#!" className="label theme-bg text-white f-12">
+                          Abierto
+                        </a>
+                      ) : (
+                          <a
+                            href="#!"
+                            className="label theme-bg2 text-white f-12"
+                          >
+                            Cerrado
+                        </a>
+                        )}
                     </td>
                     <td>
                       <h6 className="m-b-0">
@@ -149,50 +166,69 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                           >
-                            <StyledMenuItem onClick={e => handleDelete(e, groupCode)}>
+                            <StyledMenuItem
+                              onClick={e => handleDelete(e, groupCode)}
+                            >
                               <ListItemIcon>
                                 <HighlightOffIcon fontSize="small" />
                               </ListItemIcon>
                               <ListItemText primary="Eliminar" />
                             </StyledMenuItem>
-                            <StyledMenuItem onClick={e => handlePanel(e, groupCode)}>
+                            <StyledMenuItem
+                              onClick={e => handlePanel(e, groupCode)}
+                            >
                               <ListItemIcon>
                                 <OpenWithIcon fontSize="small" />
                               </ListItemIcon>
                               <ListItemText primary="Abrir Portal" />
                             </StyledMenuItem>
-                            {groupCode.open ?
+                            {groupCode.open ? (
                               <StyledMenuItem
-                                onClick={e => handleUpdateGroupCode(e, groupCode, { open: false })}>
+                                onClick={e =>
+                                  handleUpdateGroupCode(e, groupCode, {
+                                    open: false
+                                  })
+                                }
+                              >
                                 <ListItemIcon>
                                   <CloseIcon fontSize="small" />
                                 </ListItemIcon>
                                 <ListItemText primary="Cerrar" />
                               </StyledMenuItem>
-                              :
-                              <StyledMenuItem
-                                onClick={e => handleUpdateGroupCode(e, groupCode, { open: true })}>
-                                <ListItemIcon>
-                                  <LockOpenIcon fontSize="small" />
-                                </ListItemIcon>
-                                <ListItemText primary="Abrir" />
-                              </StyledMenuItem>}
+                            ) : (
+                                <StyledMenuItem
+                                  onClick={e =>
+                                    handleUpdateGroupCode(e, groupCode, {
+                                      open: true
+                                    })
+                                  }
+                                >
+                                  <ListItemIcon>
+                                    <LockOpenIcon fontSize="small" />
+                                  </ListItemIcon>
+                                  <ListItemText primary="Abrir" />
+                                </StyledMenuItem>
+                              )}
                           </StyledMenu>
                         </div>
                       </h6>
                     </td>
-                  </tr>)}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-
-        </CardWrapper >
-      }
+        </CardWrapper>
+      )}
       <CardWrapper colSize={3} cardTitle="Crear Código para Grupos">
         <TextField
           value={detail}
           onChange={e => setDetail(e.target.value)}
-          className="text-field-cotainer-full-width" id="outlined-basic" label="Descripción" variant="outlined" />
+          className="text-field-cotainer-full-width"
+          id="outlined-basic"
+          label="Descripción"
+          variant="outlined"
+        />
         <div className="designer m-t-30">
           <a
             onClick={handleSearch}
@@ -200,7 +236,7 @@ const GroupCodeComponent: React.SFC<GroupCodeProps> = ({ eventLive, loading, upd
             className="btn btn-primary shadow-2 text-uppercase btn-block"
           >
             Crear Código
-                  </a>
+          </a>
         </div>
       </CardWrapper>
     </>
@@ -224,30 +260,30 @@ export const GroupCode = connect(
 
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #d3d4d5',
-  },
+    border: "1px solid #d3d4d5"
+  }
 })((props: MenuProps) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
+      vertical: "bottom",
+      horizontal: "center"
     }}
     transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
+      vertical: "top",
+      horizontal: "center"
     }}
     {...props}
   />
 ));
 const StyledMenuItem = withStyles(theme => ({
   root: {
-    '&:focus': {
+    "&:focus": {
       backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
-      },
-    },
-  },
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white
+      }
+    }
+  }
 }))(MenuItem);

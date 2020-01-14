@@ -4,7 +4,7 @@ import { getToken } from "./authService";
 export const getRequest = <TResponse>(
   url: string,
   defaultValue: TResponse | null = null
-): Promise<any> => doRequest("GET", url, {}, defaultValue);
+): Promise<TResponse> => doRequest("GET", url, {}, defaultValue);
 
 export const putRequest = <TBody, TResponse>(
   url: string,

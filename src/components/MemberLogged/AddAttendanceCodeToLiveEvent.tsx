@@ -34,7 +34,7 @@ export const AddAttendanceCodeToLiveEvent: React.SFC<AddCodeToLiveEventProps> = 
   return (
     <>
       {eventLive.generalAttended && !eventLive.attended &&
-        <CardWrapper cardTitle="Reportar Asistencia">
+        <CardWrapper colSize={4} cardTitle="Reportar Asistencia">
           <div className="card-block text-center">
             {!loading ? <>
               <h5>Código de Asistencia</h5>

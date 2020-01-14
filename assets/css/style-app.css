@@ -13062,6 +13062,7 @@ div.code-toolbar>.toolbar span:hover {
 
 .event-live-card-image {
     width: 100%;
+    max-height: 245px;
 }
 
 .react-autosuggest__container {
