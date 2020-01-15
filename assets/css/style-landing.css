@@ -2450,3 +2450,24 @@ p.card-text {
         width: 100%;
     }
 }
+
+.text-bold {
+    font-weight: bold !important;
+}
+
+.member-badge-message-sup {
+    font-size: 23px;
+}
+
+.member-badge-message-sup-name {}
+
+.not-found-container {
+    text-align: center;
+}
+
+.not-found-img {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    width: 100%;
+    max-width: 300px;
+}

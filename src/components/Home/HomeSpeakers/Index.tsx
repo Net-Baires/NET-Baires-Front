@@ -10,7 +10,7 @@ type HomeSpeakersProps = {
 const HomeSpeakers: React.SFC<HomeSpeakersProps> = ({ speakers }) => {
   const history = useHistory();
   const navigateToSpeaker = (memberId: number) => {
-    history.push(`/speakers/${memberId}`)
+    history.push(`/members/${memberId}/profile`)
   }
   return (
     <>

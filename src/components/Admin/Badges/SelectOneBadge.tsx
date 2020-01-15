@@ -10,6 +10,7 @@ import { GetBadgeResponse } from '../../../services/models/BadgeDetail';
 import { DialogQuestion } from '../../Common/DialogQuestion';
 import { loading, ready } from '../../../store/loading/actions';
 import { connect } from 'react-redux';
+import { isEmpty } from '../../../services/objectsservices';
 
 type SelectOneBadgeStateProps = {
   loading: () => void;
@@ -45,7 +46,7 @@ const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeSta
 
   const handleSelect = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    if (selectedBadge != null)
+    if (!isEmpty(selectedBadge))
       setOpenDialog(true);
   };
   const handleAccept = () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { loading, ready } from '../../../../store/loading/actions';
 import {
@@ -18,7 +18,6 @@ import { LiveConfigucations } from '../Components/LiveConfigucations';
 import { AttendantCount } from '../Components/AttendantCount';
 import { GroupCode } from '../Components/GroupCode';
 import { SyncUserToEvent } from './SyncUserToEvent';
-import { loadScript } from '../../../../services/helpers/scriptshelpers';
 type AdminEventLivePanelProps = {
   loading: () => void;
   ready: () => void;

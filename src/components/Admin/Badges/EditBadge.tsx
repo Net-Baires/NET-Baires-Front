@@ -17,19 +17,20 @@ type EditBadgeParams = {
   loading: () => void;
   ready: () => void;
 };
-import MUIRichTextEditor from 'mui-rte'
 const EditBadgeInternalComponent: React.SFC<
   RouteComponentProps<EditBadgeParams> & EditBadgeParams
 > = ({ loading, ready, ...props }) => {
   const [badgeToEdit, setBadgeToEdit] = useState({} as GetBadgeResponse);
   const [, setLoaded] = useState(false);
   const [openPopup] = useState(false);
-  const [, setSureToDelete] = useState(false);
+  const [sureToDelete, setSureToDelete] = useState(false);
   const history = useHistory();
   useEffect(() => {
+    loading();
     getBadgeToEdit(+props.match.params.id).then(u => {
       setBadgeToEdit(u);
       setLoaded(true);
+      ready();
     });
   }, []);
   const savebadge = (badge: GetBadgeResponse, file: File) => {
@@ -68,7 +69,7 @@ const EditBadgeInternalComponent: React.SFC<
     <DialogQuestion
       title="Eliminar Código de Grupo"
       description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
-      openPopup={openPopup} callbackAccept={handleAccept} callbackCancel={handleCancel}></DialogQuestion>
+      openPopup={sureToDelete} callbackAccept={handleAccept} callbackCancel={handleCancel}></DialogQuestion>
   </>
   );
 };

@@ -9,7 +9,7 @@ type HomeOrganizersProps = {
 const HomeOrganizers: React.SFC<HomeOrganizersProps> = ({ organizers }) => {
   const history = useHistory();
   const navigateToOrganizerDetail = (memberId: number) => {
-    history.push(`/organizers/${memberId}`)
+    history.push(`/members/${memberId}/profile`)
   }
   return (
     <>

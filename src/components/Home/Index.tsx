@@ -9,11 +9,14 @@ import { Member } from "../../services/models/Member";
 import { Sponsor } from "../../services/models/sponsor";
 import { EventDetail } from "../../services/models/Events/Event";
 import NumbersHomeSummary from "./NumbersHomeSummary";
-import HomeHeaderBanner from "./HomeHeaderBanner/Index";
-import PhotosSummary from './PhotosSummary/Index';
+import { connect } from 'react-redux';
+import { loading, ready } from '../../store/loading/actions';
 
-type LoginProps = {};
-export const Home: React.SFC<LoginProps> = () => {
+type HomeProps = {
+  loading: () => void;
+  ready: () => void;
+};
+const HomeComponent: React.SFC<HomeProps> = ({ loading, ready }) => {
   const [loadReady, setLoadReady] = useState(false);
   const [sponsors, setSponsors] = useState(new Array<Sponsor>());
   const [speakers, setSpeakers] = useState(new Array<Member>());
@@ -25,6 +28,7 @@ export const Home: React.SFC<LoginProps> = () => {
   const [totalMembers, setTotalMembers] = useState(0);
 
   useEffect(() => {
+    loading();
     getCommunitySummary().then(x => {
       setSponsors(x.sponsors);
       setSpeakers(x.speakers);
@@ -35,6 +39,7 @@ export const Home: React.SFC<LoginProps> = () => {
       setTotalMembers(x.totalUsersMeetup);
       setTotalSpeakers(x.totalSpeakers);
       setLoadReady(true);
+      ready();
     });
   }, []);
   return (
@@ -67,5 +72,18 @@ export const Home: React.SFC<LoginProps> = () => {
     </>
   );
 };
+const mapStateToProps = () => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  loading: () => {
+    dispatch(loading());
+  },
+  ready: () => {
+    dispatch(ready());
+  }
+});
 
-export default Home;
+export const Home = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeComponent);
+

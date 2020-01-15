@@ -19,9 +19,11 @@ import { CardWrapper } from "../../../Common/CardWrapper";
 type NewUserProps = {
   callbackAction?: () => void;
   selectectMember: (member: Member) => void;
+  clickSearch: () => void;
 };
 export const EditOneUserEvent: React.SFC<NewUserProps> = ({
-  selectectMember
+  selectectMember,
+  clickSearch
 }) => {
   const [users] = useState(new Array<Member>());
   const [readySearch, setReadySearch] = useState(false);
@@ -75,14 +77,15 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({
     });
   };
 
-  const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    searchScreen();
-  };
   const searchScreen = () => {
     setReadySearch(false);
     setValue("");
     setAttendeeDetail({} as Member);
+  };
+  const handleClose = (event: SyntheticEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    searchScreen();
+    clickSearch();
   };
   const getSuggestionValue = (suggestion: Member) => suggestion.firstName;
   const renderSuggestion = (suggestion: Member) => {
@@ -238,32 +241,32 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({
             </div>
           </div>
         ) : (
-          <>
-            <div className="card-block text-center">
-              <h5>Buscar Miembro</h5>
-              <Autosuggest
-                onSuggestionSelected={onSuggestionSelected}
-                renderInputComponent={renderInputComponent}
-                suggestions={suggestions}
-                className="aaa"
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-              />
-              <div className="designer m-t-30">
-                <a
-                  onClick={handleSearch}
-                  href="#!"
-                  className="btn btn-primary shadow-2 text-uppercase btn-block"
-                >
-                  Buscar
+            <>
+              <div className="card-block text-center">
+                <h5>Buscar Miembro</h5>
+                <Autosuggest
+                  onSuggestionSelected={onSuggestionSelected}
+                  renderInputComponent={renderInputComponent}
+                  suggestions={suggestions}
+                  className="aaa"
+                  onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={onSuggestionsClearRequested}
+                  getSuggestionValue={getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={inputProps}
+                />
+                <div className="designer m-t-30">
+                  <a
+                    onClick={handleSearch}
+                    href="#!"
+                    className="btn btn-primary shadow-2 text-uppercase btn-block"
+                  >
+                    Buscar
                 </a>
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
       </CardWrapper>
     </>
   );
