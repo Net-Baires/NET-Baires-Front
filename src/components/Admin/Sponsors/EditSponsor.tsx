@@ -29,6 +29,7 @@ type EditSponsorParams = {
 };
 import { EditSponsorComponent } from "./components/EditSponsorComponent";
 import { CardWrapper } from '../../Common/CardWrapper';
+import { DialogQuestion } from '../../Common/DialogQuestion';
 
 type EditSponsorPropsAndRouter = EditSponsorParams & EditSponsorProps;
 export const EditSponsorToExport: React.SFC<
@@ -55,12 +56,10 @@ export const EditSponsorToExport: React.SFC<
         //mostrar error
       });
   };
-  const handleDeleteSponsor = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleDeleteSponsor = () => {
     setSureToDelete(true);
   };
-  const handleConfirmDelete = (event: SyntheticEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleConfirmDelete = () => {
 
     deleteSponsor(sponsor.id).then(c => history.goBack());
   };
@@ -68,7 +67,7 @@ export const EditSponsorToExport: React.SFC<
     event.preventDefault();
     setSureToDelete(false);
   };
-  return (
+  return (<>
     <CardWrapper cardTitle="Editar Sponsor">
 
       {!isEmpty(sponsor) && (
@@ -85,6 +84,11 @@ export const EditSponsorToExport: React.SFC<
         Eliminar
         </button>
     </CardWrapper>
+    <DialogQuestion
+      title="Eliminar Código de Grupo"
+      description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
+      openPopup={sureToDelete} callbackAccept={handleConfirmDelete} callbackCancel={handleCancel}></DialogQuestion>
+  </>
   );
 };
 const mapStateToProps = () => ({});
