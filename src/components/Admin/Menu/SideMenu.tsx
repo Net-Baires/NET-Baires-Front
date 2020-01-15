@@ -21,6 +21,7 @@ import { ListItemAvatar } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import EventIcon from '@material-ui/icons/Event';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import { SideMenuOption } from './SideMenuOption';
 type SideMenuProps = {
   closeMenu: () => void;
 };
@@ -67,76 +68,46 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
 
         </NavLink>
       </SecureElement>
-      <SecureElement roles={["Member"]}>
-        <NavLink
-          exact
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/app/panel"
-        >
-          <ListItem onClick={closeMenu} button className={classes.menuItem}>
-            <ListItemIcon className={classes.menuItemIcon}>
-              <IconDashboard />
-            </ListItemIcon>
-            <ListItemText primary="Panel de Control" />
-          </ListItem>
-        </NavLink>
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Member"]}
+        linkTo="/app/panel"
+        text="Dashboard"
+        icon={<IconDashboard />}
+      ></SideMenuOption>
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Member"]}
+        linkTo="/app/earned/badges"
+        text="Mis Badges"
+        icon={<LoyaltyIcon />}
+      ></SideMenuOption>
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Admin"]}
+        linkTo="/app/sponsors"
+        text="Sponsors"
+        icon={<BusinessIcon />}
+      ></SideMenuOption>
 
-      </SecureElement>
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Admin"]}
+        linkTo="/app/badges"
+        text="Badges"
+        icon={<LoyaltyIcon />}
+      ></SideMenuOption>
+
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Admin"]}
+        linkTo="/app/members"
+        text="Miembros"
+        icon={<PeopleAltIcon />}
+      ></SideMenuOption>
+
 
       <SecureElement roles={["Admin"]}>
-        <NavLink
-          exact
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/app/sponsors"
-        >
-          <ListItem onClick={closeMenu} button className={classes.menuItem}>
-            <ListItemIcon className={classes.menuItemIcon}>
-              <BusinessIcon />
-            </ListItemIcon>
-            <ListItemText primary="Sponsors" />
-          </ListItem>
-        </NavLink>
-        <NavLink
-          exact
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/app/badges"
-        >
-          <ListItem onClick={closeMenu} button className={classes.menuItem}>
-            <ListItemIcon className={classes.menuItemIcon}>
-              <LoyaltyIcon />
-            </ListItemIcon>
-            <ListItemText primary="Badges" />
-          </ListItem>
-        </NavLink>
-        {/* <NavLink
-          exact
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/app/badges/assign"
-        >
-          <ListItem button className={classes.menuItem}>
-            <ListItemIcon className={classes.menuItemIcon}>
-              <LoyaltyIcon />
-            </ListItemIcon>
-            <ListItemText primary="Asignar Badge" />
-          </ListItem>
-        </NavLink> */}
-        <NavLink
-          exact
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/app/members"
-        >
-          <ListItem onClick={closeMenu} button className={classes.menuItem}>
-            <ListItemIcon className={classes.menuItemIcon}>
-              <PeopleAltIcon />
-            </ListItemIcon>
-            <ListItemText primary="Miembros" />
-          </ListItem>
-        </NavLink>
 
         <ListItem button onClick={() => setOpenEvents(!openEvents)} className={classes.menuItem}>
           <ListItemIcon className={classes.menuItemIcon}>

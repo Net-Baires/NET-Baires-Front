@@ -4,7 +4,7 @@ import { getSpeaker } from "../../services/speakersServices";
 import { Speaker } from "../../services/models/speaker";
 import ReactHtmlParser from 'react-html-parser';
 import { GetBadgeResponse } from '../../services/models/BadgeDetail';
-import { getBdgesFromMeber } from '../../services/membersServices';
+import { getBadgesFromMeber } from '../../services/membersServices';
 import { BadgesListGridPublic } from '../Badges/BadgesListGridPublic';
 import { isEmpty } from '../../services/objectsservices';
 type SpeakerProps = {
@@ -24,7 +24,7 @@ const SpeakerDetail: React.SFC<
   const [badges, setBadges] = useState<GetBadgeResponse[]>(new Array<GetBadgeResponse>());
   useEffect(() => {
     getSpeaker(Number(id)).then(s => setSpeaker(s));
-    getBdgesFromMeber(Number(id)).then(s => setBadges(s));
+    getBadgesFromMeber(Number(id)).then(s => setBadges(s));
   }, []);
   return (<>
     <div className="services-section text-center" >
@@ -98,13 +98,6 @@ const SpeakerDetail: React.SFC<
                                 <h2 className="event-live-list-title">{event!.title}</h2>
                                 <div className="row">
                                   <div className="col-sm-12">
-                                    {/* <button
-                                      type="button"
-                                      // onClick={e => handleInfoEvent(e, event.event!)}
-                                      className="btn btn-success  btn-action btn-fill btn-event-live"
-                                    >
-                                      Detalle
-                                    </button> */}
                                   </div>
                                 </div>
                               </div>

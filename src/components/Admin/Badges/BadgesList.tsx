@@ -5,10 +5,8 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
-import Checkbox from "react-simple-checkbox";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
 import { SearchWrapper } from "../../Common/SearchWrapper";
 import { getBadges } from "../../../services/badgesServices";
 import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
@@ -33,16 +31,6 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
   }, []);
   const { SearchBar } = Search;
 
-  const updateBadge = (
-    user: GetBadgeResponse,
-    badge: Array<GetBadgeResponse>
-  ) => {
-    // loading();
-    // updateBadge(user.id, user).then(() => {
-    //   setbadge(badge);
-    //   ready();
-    // });
-  };
   const columns = [
     {
       dataField: "id",
@@ -83,19 +71,6 @@ const BadgesListComponent: React.SFC<BadgesListProps> = ({
       )
     }
   ];
-  const handleDelete = (
-    event: MouseEvent<HTMLButtonElement>,
-    user: GetBadgeResponse
-  ) => {
-    event.preventDefault();
-  };
-  const handleEdit = (
-    event: MouseEvent<HTMLButtonElement>,
-    user: GetBadgeResponse
-  ) => {
-    event.preventDefault();
-    history.push(`/app/badge/${user.id}/Edit`);
-  };
 
   return (
     <CardWrapper cardTitle="Badges">

@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { loading, ready } from '../../store/loading/actions';
 import { CardWrapper } from '../Common/CardWrapper';
-import { formatStringDateTime } from '../../helpers/DateHelpers';
-import { GetBadgeResponse } from '../../services/models/BadgeDetail';
+import { formatStringDateTime, formatStringDate } from '../../helpers/DateHelpers';
+import { BadgeMemberViewModel } from '../../services/models/BadgeDetail';
 import { isEmpty } from '../../services/objectsservices';
 type BadgeAssignedListProps = {
   loading: () => void;
   ready: () => void;
-  badges: GetBadgeResponse[];
+  badges: BadgeMemberViewModel[];
 };
 
 const BadgeAssignedListComponent: React.SFC<BadgeAssignedListProps>
@@ -23,17 +23,17 @@ const BadgeAssignedListComponent: React.SFC<BadgeAssignedListProps>
               <table className="table table-hover">
                 <thead>
                   <tr>
-                    <th>Id</th>
+                    <th className="d-none d-sm-block">Id</th>
                     <th>Imagen</th>
-                    <th>Nombre</th>
+                    <th className="d-none d-sm-block">Nombre</th>
                     <th>Entregado</th>
                   </tr>
                 </thead>
                 <tbody>
                   {badges.map(badge => (
-                    <tr key={badge.id} className="unread">
-                      <td>
-                        <h6 className="mb-1">{badge.id}</h6>
+                    <tr key={badge.badge.id} className="unread">
+                      <td className="d-none d-sm-block">
+                        <h6 className="mb-1">{badge.badge.id}</h6>
 
                       </td>
                       <td>
@@ -41,18 +41,18 @@ const BadgeAssignedListComponent: React.SFC<BadgeAssignedListProps>
                           className="rounded-circle"
                           style={{ height: "50px" }}
                           src={
-                            badge.imageUrl != "" && badge.imageUrl != null
-                              ? badge.imageUrl
+                            badge.badge.imageUrl != "" && badge.badge.imageUrl != null
+                              ? badge.badge.imageUrl
                               : "assets/images/no-image-profile.png"
                           }
                           alt="activity-user"
                         ></img>
                       </td>
-                      <td>
-                        <h6 className="mb-1">{badge.name}</h6>
+                      <td className="d-none d-sm-block">
+                        <h6 className="mb-1">{badge.badge.name}</h6>
                       </td>
                       <td>
-                        <h6 className="mb-1">{formatStringDateTime(badge.created)}</h6>
+                        <h6 className="mb-1">{formatStringDate(badge.assignmentDate)}</h6>
                       </td>
                     </tr>
                   ))}

@@ -48,6 +48,9 @@ import { ControlPanel } from "./MemberLogged/ControlPanel";
 import { EventLivePanel } from "./Pages/EventLivePanel";
 import { AssignBadge } from "./Admin/Badges/AssignBadge";
 import { AdminGroupCodes } from "./GroupCodes/AdminGroupCodes";
+import { EarnedBadgeDetail } from './Admin/Badges/EarnedBadgeDetail';
+import { MyBadgesPage } from './Admin/Badges/MyBadgesPage';
+import { MemberBadgeDetail } from './Badges/MemberBadgeDetail';
 
 interface AppProps {
   isLoading: boolean;
@@ -101,8 +104,10 @@ export const App: React.SFC<AppProps> = () => {
               </HomeWrapper>
             </Route>
 
-            <Route exact path="/apps/:id(\d+)/profile">
-              <PublicProfile></PublicProfile>
+            <Route exact path="/members/:id(\d+)/profile">
+              <HomeWrapper>
+                <PublicProfile></PublicProfile>
+              </HomeWrapper>
             </Route>
             <Route exact path="/sponsors/:id(\d+)?">
               <HomeWrapper>
@@ -115,6 +120,17 @@ export const App: React.SFC<AppProps> = () => {
                 <BadgeShowDetail></BadgeShowDetail>
               </HomeWrapper>
             </Route>
+            <Route exact path="/members/:memberId(\d+)/badges/:id(\d+)">
+              <HomeWrapper>
+                <MemberBadgeDetail></MemberBadgeDetail>
+              </HomeWrapper>
+            </Route>
+            <Route exact path="/notfound">
+              <HomeWrapper>
+                <NotFoundPage></NotFoundPage>
+              </HomeWrapper>
+            </Route>
+
             <Route exact path="/badges">
               <HomeWrapper>
                 <BadgesListPublic></BadgesListPublic>
@@ -174,6 +190,20 @@ export const App: React.SFC<AppProps> = () => {
                 path="/app/badges/assign"
                 component={AssignBadge}
               />
+              <PrivateRoute
+                roles={["Member"]}
+                exact
+                path="/app/earned/badges/:id/detail"
+                component={EarnedBadgeDetail}
+              />
+              <PrivateRoute
+                roles={["Member"]}
+                exact
+                path="/app/earned/badges"
+                component={MyBadgesPage}
+              />
+
+
               <PrivateRoute
                 roles={["Admin", "Organizer"]}
                 exact
@@ -266,7 +296,6 @@ export const App: React.SFC<AppProps> = () => {
                 component={ReadOrganizedCode}
               />
             </AdminWrapper>
-            <Route exact path="/notfound" component={NotFoundPage} />
             <Route exact path="*">
               <NotFoundPage></NotFoundPage>
             </Route>

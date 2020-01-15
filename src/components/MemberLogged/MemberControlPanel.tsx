@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, SyntheticEvent } from "react";
 import { getEventsLive } from "../../services/eventsServices";
 import { isEmpty } from "../../services/objectsservices";
 import { EventDetail } from "../../services/models/Events/Event";
@@ -6,16 +6,17 @@ import ControlPanelEventsLive from '../EventLive/ControlPanelEventsLive';
 import { subscribe, UpdateEventLive, CommunicationMessageType } from '../../services/communicationServices';
 import { connect } from 'react-redux';
 import { ready, loading, setMemberDetail } from '../../store/loading/actions';
-import { getMemberDetail, getBdgesFromMeber } from '../../services/membersServices';
+import { getMemberDetail, getBadgesFromMeber } from '../../services/membersServices';
 import { UserContext } from '../../contexts/UserContext';
 import { AppState } from '../../store';
 import { Member } from '../../services/models/Member';
 import { getMe } from '../../services/profileServices';
 import { CardHeaderCollapsableWrapper } from '../Common/CardHeaderCollapsableWrapper';
 import { BadgesListGridPublic } from '../Badges/BadgesListGridPublic';
-import { GetBadgeResponse } from '../../services/models/BadgeDetail';
+import { GetBadgeResponse, BadgeMemberViewModel } from '../../services/models/BadgeDetail';
 import { useHistory } from 'react-router-dom';
 import { formatStringDate } from '../../helpers/DateHelpers';
+import { MyBadgesList } from '../Badges/MyBadgesList';
 
 type MemberControlPanelProps = {};
 type MemberControlPanelStateProps = {
@@ -26,12 +27,9 @@ type MemberControlPanelStateProps = {
 }
 const MemberControlPanelComponent: React.SFC<MemberControlPanelProps & MemberControlPanelStateProps> = ({ loading, ready, memberDetail, setMemberDetail }) => {
   const [eventsLive, setEventsLive] = useState(new Array<EventDetail>());
-  const [badges, setBadges] = useState(new Array<GetBadgeResponse>());
   const history = useHistory();
-  const { user } = useContext(UserContext);
   useEffect(() => {
     loadEvents();
-    loadBadges();
     subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, () => {
       loadEvents();
       getMe().then(e => setMemberDetail(e));
@@ -45,9 +43,6 @@ const MemberControlPanelComponent: React.SFC<MemberControlPanelProps & MemberCon
       ready();
     });
 
-  }
-  const loadBadges = () => {
-    getBdgesFromMeber(user.userId).then(s => setBadges(s));
   }
   return (
     <>
@@ -107,30 +102,11 @@ const MemberControlPanelComponent: React.SFC<MemberControlPanelProps & MemberCon
               </div>
             </div>
           </div>
-          {!isEmpty(badges) &&
-            <CardHeaderCollapsableWrapper cardTitle="Mis Badges">
-              {badges.map(badge => (
-                <div className="col-md-3">
-                  <div className="card">
-                    <div className="card-header borderless">
-                      <h5 className="mb-2">{badge.name}</h5>
-                      <span className="text-muted d-block">{formatStringDate(badge.created)}</span>
-                    </div>
-                    <div className="card-block post-emoticon" style={{ textAlign: "center" }}>
-                      <img className="img-fluid" style={{ maxHeight: "200px" }} src={badge.imageUrl} alt="dashboard-user"></img>
-                      <ul>
-                        <li className="m-r-25"><i className="far fa-smile f-26 text-c-green m-r-10"></i>235</li>
-                        <li className="m-r-25"><i className="far fa-smile f-26 text-c-purple m-r-10"></i>95</li>
-                        <li className="m-r-0"><i className="far fa-smile f-26 text-c-red m-r-10"></i>18</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </CardHeaderCollapsableWrapper>}
+          <CardHeaderCollapsableWrapper collapsed={false} cardTitle="Mis Badges">
+            <MyBadgesList></MyBadgesList>
+          </CardHeaderCollapsableWrapper>
         </>
-      )
-      }
+      )}
     </>
   );
 };
@@ -153,3 +129,4 @@ export const MemberControlPanel = connect(
   mapStateToProps,
   mapDispatchToProps
 )(MemberControlPanelComponent);
+

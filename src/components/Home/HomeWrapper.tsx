@@ -6,11 +6,18 @@ import { MenuHome } from "./MenuHome";
 import { FooterHome } from "./FooterHome";
 import HomeHeaderBanner from "./HomeHeaderBanner/Index";
 import ScrollUpButton from "react-scroll-up-button";
-import { DialogInstallPwa } from '../InstallPwa/DialogInstallPwa';
+import { Backdrop, CircularProgress, makeStyles, createStyles, Theme } from '@material-ui/core';
+import { AppState } from '../../store';
 
-//Add this line Here
-const HomeWrapperComponent: React.SFC = ({ children }) => {
+interface HomeWrapperProps {
+  isLoading: boolean;
+  loading: () => void;
+  ready: () => void;
+}
+const HomeWrapperComponent: React.SFC<HomeWrapperProps> = ({ isLoading, children }) => {
   const [showButton, setShowButton] = useState(false);
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     loadStyles("assets/css/bootstrap.min.css");
     loadStyles("assets/css/style-landing.css");
@@ -25,6 +32,12 @@ const HomeWrapperComponent: React.SFC = ({ children }) => {
 
         <div className="main" id="main">
           <HomeHeaderBanner></HomeHeaderBanner>
+          <Backdrop
+            className={classes.backdrop}
+            open={isLoading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           {children}
           <FooterHome></FooterHome>
           <ScrollUpButton />
@@ -34,7 +47,9 @@ const HomeWrapperComponent: React.SFC = ({ children }) => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state: AppState) => ({
+  isLoading: state.loading.isLoading
+});
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {
     dispatch(loading());
@@ -48,3 +63,12 @@ export const HomeWrapper = connect(
   mapStateToProps,
   mapDispatchToProps
 )(HomeWrapperComponent);
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+  }),
+);

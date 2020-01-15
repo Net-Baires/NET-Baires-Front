@@ -6,3 +6,7 @@ export interface GetBadgeResponse {
   description: string;
   badgeUrl: string;
 }
+export interface BadgeMemberViewModel {
+  assignmentDate: string;
+  badge: GetBadgeResponse;
+}

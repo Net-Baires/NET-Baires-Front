@@ -44,12 +44,13 @@ const TopBarComponent: React.SFC<TopBarProps & TopBarStateProps> = ({
       <AppBar position="static">
         <Toolbar>
           <IconButton
+            onClick={() => openMenu()}
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
-            <MenuIcon onClick={() => openMenu()} />
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             NET-Baires
@@ -58,8 +59,8 @@ const TopBarComponent: React.SFC<TopBarProps & TopBarStateProps> = ({
             {memberDetail && memberDetail.picture ? (
               <Avatar alt="Remy Sharp" src={memberDetail.picture} />
             ) : (
-              <AccountCircle />
-            )}
+                <AccountCircle />
+              )}
           </Button>
         </Toolbar>
       </AppBar>
