@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, MouseEvent } from "react";
 import { connect } from "react-redux";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import { loading, ready } from "../../store/loading/actions";
+import { loading, ready } from '../../store/loading/actions';
 import { isEmpty } from "../../services/objectsservices";
 import { useParams } from "react-router-dom";
 import {
@@ -15,7 +15,6 @@ import { subscribeUpdateGroupCode } from "../../services/syncCommunicationServic
 import { CardHeaderCollapsableWrapper } from "../Common/CardHeaderCollapsableWrapper";
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { SelectOneBadge } from "../admin/Badges/SelectOneBadge";
-import { BadgeAssignedList } from "../Badges/BadgeAssignedList";
 import { Member } from "../../services/models/Member";
 import { MembersInGroupCode } from "./MembersInGroupCode";
 import { TitleHeader } from "../Common/TitleHeader";
@@ -23,12 +22,11 @@ type AdminGroupCodesProps = {
   loading: () => void;
   ready: () => void;
 };
-const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = () => {
+const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, ready }) => {
   const { idEvent, idGroupCode } = useParams();
   const [groupCode, setGroupCode] = useState({} as GroupCodeFullDetailResponse);
   const [repeatMember, setRepeatMember] = useState(false);
   const [count, setCount] = useState(0);
-  const [winners, setWinners] = useState<Member[]>({} as Member[]);
   const [readyToRaffle, setReadyToRaffle] = useState(true);
   useEffect(() => {
     getGroupCode();
@@ -48,7 +46,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = () => {
     event.preventDefault();
     if (
       groupCode.members.length != null &&
-      newValueCount > groupCode.members.length
+      newValueCount <= groupCode.members.length
     ) {
       setCount(newValueCount);
       setReadyToRaffle(true);
@@ -59,8 +57,8 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = () => {
 
   const handleRaffle = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    makeRaffle(groupCode.id, count, repeatMember).then(s =>
-      setWinners(winners.concat(s))
+    makeRaffle(+idGroupCode!, count, repeatMember).then(s =>
+      getGroupCode()
     );
   };
 
@@ -147,22 +145,22 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = () => {
                 </div>
               </div>
             </CardWrapper>
-            {!isEmpty(winners) && (
-              <CardWrapper colSize={8} cardTitle="Ganadores del sorteo">
-                <div className="table-responsive">
-                  <table className="table table-hover">
+            {!isEmpty(groupCode) && !isEmpty(groupCode.members) && !isEmpty(groupCode.members.filter(x => x.winner)) && (
+              <CardWrapper colSize={8} cardTitle={`Ganadores del sorteo : ${groupCode.members.filter(x => x.winner).length}`}>
+                <div className="table-responsive" style={{ height: "450px" }}>
+                  <table className="table table-hover" >
                     <thead>
                       <tr>
-                        <th>Id</th>
+                        <th className="d-none d-sm-block">Id</th>
                         <th>Imagen</th>
                         <th>Nombre</th>
-                        <th>Apellido</th>
+                        <th>Posición</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {winners.map(winner => (
+                      {groupCode.members.filter(x => x.winner).sort((a, b) => (a.winnerPosition > b.winnerPosition) ? 1 : -1).map(winner => (
                         <tr key={winner.id} className="unread">
-                          <td>
+                          <td className="d-none d-sm-block">
                             <h6 className="mb-1">{winner.id}</h6>
                           </td>
                           <td>
@@ -182,9 +180,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = () => {
                             <p className="m-0">{winner.lastName}</p>
                           </td>
                           <td>
-                            <h6 className="text-muted">
-                              <i className="fas fa-circle text-c-green f-10 m-r-15"></i>
-                            </h6>
+                            <p className="m-0">{winner.winnerPosition}</p>
                           </td>
                         </tr>
                       ))}
@@ -199,7 +195,46 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = () => {
             cardTitle="Entregar Badge"
           >
             <SelectOneBadge assignBadge={assignBadge}></SelectOneBadge>
-            <BadgeAssignedList badges={groupCode.badges}></BadgeAssignedList>
+            <CardWrapper cardBodyClassName="card-body-md" colSize={8} cardTitle="Badges ya entregados">
+              <div className="table-responsive" style={{ height: "400px" }}>
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th className="d-none d-sm-block">Id</th>
+                      <th>Imagen</th>
+                      <th className="d-none d-sm-block">Nombre</th>
+                      <th>Entregado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {groupCode.badges.map(badge => (
+                      <tr key={badge.id} className="unread">
+                        <td className="d-none d-sm-block">
+                          <h6 className="mb-1">{badge.id}</h6>
+
+                        </td>
+                        <td>
+                          <img
+                            className="rounded-circle"
+                            style={{ height: "50px" }}
+                            src={
+                              badge.imageUrl != "" && badge.imageUrl != null
+                                ? badge.imageUrl
+                                : "assets/images/no-image-profile.png"
+                            }
+                            alt="activity-user"
+                          ></img>
+                        </td>
+                        <td className="d-none d-sm-block">
+                          <h6 className="mb-1">{badge.name}</h6>
+                        </td>
+
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardWrapper>
           </CardHeaderCollapsableWrapper>
         </>
       )}

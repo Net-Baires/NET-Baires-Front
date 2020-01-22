@@ -85,17 +85,19 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
             </button>
           )}
       </div>
-      <div className="col">
+      {!eventAction.done &&
+        <div className="col">
 
-        <button
-          data-tip="Cerrar evento (Marcar como ya ejecutado)"
-          type="button"
-          onClick={e => handleCloseEvent(e)}
-          className="btn btn-danger events-actions-button"
-        >
-          <i className="fas fa-window-close"></i>
-        </button>
-      </div>
+          <button
+            data-tip="Cerrar evento (Marcar como ya ejecutado)"
+            type="button"
+            onClick={e => handleCloseEvent(e)}
+            className="btn btn-danger events-actions-button"
+          >
+            <i className="fas fa-window-close"></i>
+          </button>
+        </div>
+      }
       <div className="col">
 
         <button
@@ -122,6 +124,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
           </div>
         </SecureElement>
       }
+
       <div className="col">
         <button
           data-tip="Editar Evento"
@@ -132,6 +135,7 @@ export const EventToSyncActions: React.SFC<EventToSyncActionsPropsAndRouter> = (
           <i className="far fa-edit"></i>
         </button>
       </div >
+
       <ReactTooltip />
     </div>
   );

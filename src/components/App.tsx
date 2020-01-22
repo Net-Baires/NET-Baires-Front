@@ -5,7 +5,6 @@ import { Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home/Index";
 import historyRouter from "./router/HistoryRouter";
 import Organizers from "./organizers";
-import Sponsor from "./Sponsor";
 import SpeakerDetail from "./SpeakerDetail";
 import OrganizerDetail from "./OrganizerDetail";
 import { PrivateRoute } from "./router/PrivateRoute";
@@ -51,7 +50,23 @@ import { AdminGroupCodes } from "./GroupCodes/AdminGroupCodes";
 import { EarnedBadgeDetail } from './Admin/Badges/EarnedBadgeDetail';
 import { MyBadgesPage } from './Admin/Badges/MyBadgesPage';
 import { MemberBadgeDetail } from './Badges/MemberBadgeDetail';
-
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { ReactPlugin, withAITracking } from '@microsoft/applicationinsights-react-js';
+import { createBrowserHistory } from 'history';
+import { Config } from '../services/config';
+import { SponsorDetailPublicPage } from './Sponsor/SponsorDetailPublicPage';
+var reactPlugin = new ReactPlugin();
+const browserHistory = createBrowserHistory({ basename: '' });
+var appInsights = new ApplicationInsights({
+  config: {
+    instrumentationKey: Config.instrumentationKey,
+    extensions: [reactPlugin],
+    extensionConfig: {
+      [reactPlugin.identifier]: { history: browserHistory }
+    }
+  }
+});
+appInsights.loadAppInsights();
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
@@ -111,7 +126,7 @@ export const App: React.SFC<AppProps> = () => {
             </Route>
             <Route exact path="/sponsors/:id(\d+)?">
               <HomeWrapper>
-                <Sponsor></Sponsor>
+                <SponsorDetailPublicPage></SponsorDetailPublicPage>
               </HomeWrapper>
             </Route>
 
@@ -168,7 +183,7 @@ export const App: React.SFC<AppProps> = () => {
               <PrivateRoute
                 roles={["Admin"]}
                 exact
-                path="/app/eventsToSync"
+                path="/app/events/sync"
                 component={EventsToSync}
               />
               <PrivateRoute
@@ -319,4 +334,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 });
 
-export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);
+export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(withAITracking(reactPlugin, App));

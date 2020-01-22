@@ -23,7 +23,7 @@ const HomeOrganizers: React.SFC<HomeOrganizersProps> = ({ organizers }) => {
                     Nuestros Organizadores
                  </h1>
                   <p className="wow fadeInUp" data-wow-delay="0.2s">
-                    Estos son los miembros de nuestra comunidad que hacen posible todos y cada uno de nuestros eventos.
+                    Quienes hacen posible todos y cada uno de nuestros eventos.
                  </p>
                 </div>
               </div>

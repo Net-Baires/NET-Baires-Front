@@ -668,6 +668,7 @@ body {
 .app-hero {
     background: url(https://net-baires.azureedge.net/images/header.jpg) top center no-repeat;
     height: 50rem;
+    background-size: cover;
 }
 
 .app-hero-content {

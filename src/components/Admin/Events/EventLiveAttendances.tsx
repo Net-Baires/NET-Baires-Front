@@ -49,11 +49,7 @@ export const EventLiveAttendances: React.SFC<
   return (
     <>
       {showReader && (
-        <CardWrapper cardTitle="Reportar Asistencia">
-          <div className="qr-lector-container">
-            <QrReader delay={2000} onError={handleError} onScan={handleScan} />
-          </div>
-        </CardWrapper>
+        <QrReader delay={2000} onError={handleError} onScan={handleScan} />
       )}
     </>
   );

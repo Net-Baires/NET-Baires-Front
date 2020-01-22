@@ -8,8 +8,6 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "./store";
 import { ThroughProvider } from "react-through";
-import { reactAI } from "react-appinsights";
-import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { Config } from "./services/config";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -17,13 +15,18 @@ import { initCommunication } from "./services/communicationServices";
 import ATHS from "add-to-homescreen-control";
 import firebase from "firebase";
 import { updateInformation } from "./services/membersServices";
+import { infoToast, darkToast } from './services/toastServices';
 ATHS.enable();
 export const askForPermissioToReceiveNotifications = () => {
   try {
     const messaging = firebase.messaging();
     messaging.requestPermission().then(() => {
       messaging.getToken().then(token => {
-        updateInformation({ pushNotificationId: token });
+        updateInformation({ pushNotificationId: token })
+          .catch(e => {
+            console.log("falloo");
+            console.log(e);
+          });
       });
       messaging.onMessage(payload => {
         console.log("Message received. ", payload);
@@ -60,15 +63,24 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("/NET-Baires-Service-Workes.js")
       .then(reg => {
-        Notification.requestPermission().then(function() {
-          console.log("Notification permission");
-        });
+        // Notification.requestPermission().then(function () {
+        //   console.log("Notification permission");
+        // });
+        if (reg.sync) {
+          reg.sync.register('NET-Baires-Background-Requests')
+            .catch(function (err) {
+              return err;
+            });
+        }
+
         firebase.messaging().useServiceWorker(reg);
         reg.installing; // the installing worker, or undefined
         reg.waiting; // the waiting worker, or undefined
         reg.active; // the active worker, or undefined
         reg.addEventListener("updatefound", () => {
+          // caches.delete("NET-Baires-Cache-Get-Request");
           reg.update().then(() => {
+            darkToast("Se encontró una nueva versión de la app. En unos segundos se actualizará.")
             setTimeout(() => document.location.reload(true), 5000);
           });
         });
@@ -77,22 +89,12 @@ if ("serviceWorker" in navigator) {
         console.log("SW registration failed: ", registrationError);
       });
   });
-  window.addEventListener("install", () => {});
-  window.addEventListener("activate", () => {});
+  window.addEventListener("install", () => { });
+  window.addEventListener("activate", () => { });
 
-  navigator.serviceWorker.addEventListener("controllerchange", () => {});
+  navigator.serviceWorker.addEventListener("controllerchange", () => { });
 }
 
-let appInsights = new ApplicationInsights({
-  config: {
-    instrumentationKey: Config.instrumentationKey,
-    extensions: [reactAI],
-    extensionConfig: {
-      [reactAI.extensionId]: { debug: false }
-    }
-  }
-});
-appInsights.loadAppInsights();
 const history = createBrowserHistory();
 initCommunication();
 ReactDOM.render(

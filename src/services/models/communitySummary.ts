@@ -11,4 +11,5 @@ export interface CommunitySummary {
   totalUsersMeetup: number;
   totalSpeakers: number;
   totalUsersSlack: number;
+  eventsLive: boolean;
 }

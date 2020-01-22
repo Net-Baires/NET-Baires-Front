@@ -111,16 +111,6 @@ module.exports = function(env) {
             new HtmlWebpackPlugin({
                 template: './src/index.html'
             }),
-            // new GenerateSW({
-            //     swDest: 'workers.js',
-            //     include: [/\.html$/, /\.js$/]
-            // }),
-            // new workboxPlugin.InjectManifest({
-            //     swSrc: './src/sw.js',
-            //     swDest: 'sw.js'
-            // }),
-
-
             new workboxPlugin.GenerateSW({
                 swDest: 'NET-Baires-Service-Workes.js',
                 clientsClaim: true,
@@ -148,34 +138,20 @@ module.exports = function(env) {
                         }
                     },
                     {
-                        // Match any request that ends with .png, .jpg, .jpeg or .svg.
                         urlPattern: /\.(?:png|jpg|jpeg|svg|woff2)$/,
-
-                        // Apply a cache-first strategy.
                         handler: 'CacheFirst',
-
                         options: {
-                            // Use a custom cache name.
                             cacheName: 'images',
-
-                            // Only cache 10 images.
                             expiration: {
                                 maxEntries: 10,
                             },
                         },
                     },
                     {
-                        // Match any request that ends with .png, .jpg, .jpeg or .svg.
                         urlPattern: /\.(?:css|js)$/,
-
-                        // Apply a cache-first strategy.
                         handler: 'CacheFirst',
-
                         options: {
-                            // Use a custom cache name.
                             cacheName: 'images',
-
-                            // Only cache 10 images.
                             expiration: {
                                 maxEntries: 10,
                             },
@@ -183,60 +159,63 @@ module.exports = function(env) {
                     }
                 ]
             }),
-            // new WebpackPwaManifest({
-            //     name: 'NET-Baires',
-            //     short_name: 'NET-Baires',
-            //     description: 'Somos la comunidad de desarrolladores .NET mas grande',
-            //     display: 'fullscreen',
-            //     orientation: 'portrait',
-
-            //     background_color: '#ffffff',
-            //     crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
-            //     icons: [{
-            //             'src': path.resolve('assets/images/icons/icon-72x72.png'),
-            //             'sizes': '72x72',
-            //             'type': 'image/png'
-            //         },
-            //         {
-            //             'src': path.resolve('assets/images/icons/icon-96x96.png'),
-            //             'sizes': '96x96',
-            //             'type': 'image/png'
-            //         },
-            //         {
-            //             'src': path.resolve('assets/images/icons/icon-128x128.png'),
-            //             'sizes': '128x128',
-            //             'type': 'image/png'
-            //         },
-            //         {
-            //             'src': path.resolve('assets/images/icons/icon-144x144.png'),
-            //             'sizes': '144x144',
-            //             'type': 'image/png'
-            //         },
-            //         {
-            //             'src': path.resolve('assets/images/icons/icon-152x152.png'),
-            //             'sizes': '152x152',
-            //             'type': 'image/png'
-            //         },
-            //         {
-            //             'src': path.resolve('assets/images/icons/icon-192x192.png'),
-            //             'sizes': '192x192',
-            //             'type': 'image/png'
-            //         },
-            //         {
-            //             'src': path.resolve('assets/images/icons/icon-384x384.png'),
-            //             'sizes': '384x384',
-            //             'type': 'image/png'
-            //         },
-            //         {
-            //             'src': path.resolve('assets/images/icons/icon-512x512.png'),
-            //             'sizes': '512x512',
-            //             'type': 'image/png'
-            //         }
-            //     ]
-            // }),
+            new WebpackPwaManifest({
+                name: 'NET-Baires',
+                short_name: 'NET-Baires',
+                description: 'Somos la comunidad de desarrolladores .NET mas grande',
+                display: 'standalone',
+                orientation: 'portrait',
+                lang: 'es-es',
+                prefer_related_applications: false,
+                start_url: "/app/panel",
+                background_color: '#ffffff',
+                crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+                icons: [{
+                        'src': path.resolve('assets/images/icons/icon-72x72.png'),
+                        'sizes': '72x72',
+                        'type': 'image/png'
+                    },
+                    {
+                        'src': path.resolve('assets/images/icons/icon-96x96.png'),
+                        'sizes': '96x96',
+                        'type': 'image/png'
+                    },
+                    {
+                        'src': path.resolve('assets/images/icons/icon-128x128.png'),
+                        'sizes': '128x128',
+                        'type': 'image/png'
+                    },
+                    {
+                        'src': path.resolve('assets/images/icons/icon-144x144.png'),
+                        'sizes': '144x144',
+                        'type': 'image/png'
+                    },
+                    {
+                        'src': path.resolve('assets/images/icons/icon-152x152.png'),
+                        'sizes': '152x152',
+                        'type': 'image/png'
+                    },
+                    {
+                        'src': path.resolve('assets/images/icons/icon-192x192.png'),
+                        'sizes': '192x192',
+                        'type': 'image/png'
+                    },
+                    {
+                        'src': path.resolve('assets/images/icons/icon-384x384.png'),
+                        'sizes': '384x384',
+                        'type': 'image/png'
+                    },
+                    {
+                        'src': path.resolve('assets/images/icons/icon-512x512.png'),
+                        'sizes': '512x512',
+                        'type': 'image/png'
+                    }
+                ]
+            }),
             new CopyPlugin([
                 { from: 'assets', to: 'assets' },
-                { from: 'web.config', to: 'web.config' }
+                { from: 'web.config', to: 'web.config' },
+                { from: 'push-notifications.js', to: 'push-notifications.js' }
             ])
         ]
     };

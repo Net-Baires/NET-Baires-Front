@@ -89,11 +89,11 @@ const MembersInGroupCodeComponent: React.SFC<MembersInGroupCodeProps> = ({
         openPopup={openPopup} callbackAccept={handleAccept} callbackCancel={handleCancel}></DialogQuestion>
       <CardHeaderCollapsableWrapper
         collapsed={true}
-        cardTitle={`Usuarios registrados `}
+        cardTitle={`Usuarios registrados (${groupCodeMembers.length}) `}
       >
         <CardWrapper
           colSize={8}
-          cardTitle="Miembros Registrados para este código"
+          cardTitle={`Miembros Registrados para este código`}
         >
           <div className="table-responsive" style={{ height: "450px" }}>
             <table className="table table-hover">

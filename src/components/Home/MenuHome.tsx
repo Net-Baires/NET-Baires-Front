@@ -4,7 +4,11 @@ import { loading, ready } from "../../store/loading/actions";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { SecureElement } from '../Auth/SecureElement';
-const MenuHomeComponent: React.SFC = () => {
+import { AppState } from '../../store';
+type MenuHomeStateProps = {
+  eventsLive: boolean;
+}
+const MenuHomeComponent: React.SFC<MenuHomeStateProps> = ({ eventsLive }) => {
   const { isLogged } = useContext(UserContext);
   return (
     <div className="container">
@@ -13,7 +17,7 @@ const MenuHomeComponent: React.SFC = () => {
         role="navigation"
       >
         <div className="container">
-          {/* <a className="navbar-brand page-scroll" href="#main"><img src="assets/images/Logo-Blanco.png" alt="adminity Logo" /></a> */}
+          {/* <a className="navbar-brand page-scroll" href="#main"><img src="https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png" alt="adminity Logo" /></a> */}
           <button
             className="navbar-toggler"
             type="button"
@@ -43,14 +47,6 @@ const MenuHomeComponent: React.SFC = () => {
                   Últimos Eventos
                 </a>
               </li>
-              {/* <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#!" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="#!">Level 1</a>
-                                    <a className="dropdown-item" href="#!">Level 2</a>
-                                    <a className="dropdown-item" href="#!">Level 3</a>
-                                </div>
-                            </li> */}
               <li className="nav-item">
                 <a className="nav-link page-scroll" href="#speakers">
                   Speakers
@@ -66,11 +62,13 @@ const MenuHomeComponent: React.SFC = () => {
                   Badges
                   </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link  page-scroll" to="/events/live">
-                  Eventos en vivo
+              {eventsLive &&
+                <li className="nav-item">
+                  <NavLink className="nav-link  page-scroll" to="/events/live">
+                    Eventos en vivo
                   </NavLink>
-              </li>
+                </li>
+              }
               <li className="nav-item">
                 {isLogged() && (<>
                   <SecureElement roles={["Admin", "Organizer"]}>
@@ -104,7 +102,9 @@ const MenuHomeComponent: React.SFC = () => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state: AppState) => ({
+  eventsLive: state.home.eventsLive
+});
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {
     dispatch(loading());

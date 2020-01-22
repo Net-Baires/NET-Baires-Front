@@ -22,3 +22,7 @@ export const warningToast = (message: string) => toast.info(message, {
     position: toast.POSITION.BOTTOM_RIGHT,
     className: 'alert alert-warning'
 });
+export const darkToast = (message: string) => toast.info(message, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    className: 'alert alert-dark'
+});

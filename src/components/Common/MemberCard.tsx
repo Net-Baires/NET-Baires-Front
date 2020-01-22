@@ -14,12 +14,12 @@ export const MemberCard: React.SFC<NotFoundProps> = ({ member, navigationHandler
       navigationHandler(member.id);
   }
   return (
-    <div className="col-md-4">
+    <div className="col-md-4" style={{ cursor: "pointer" }} >
       <div className="card profile-card-3">
-        <div className="background-block">
+        <div className="background-block" onClick={navigationLocalHandler}>
           <img src="assets/images/user-card-header.jpg" alt={member.firstName} className="background" />
         </div>
-        <div className="profile-thumb-block">
+        <div onClick={navigationLocalHandler} className="profile-thumb-block">
           <img src={
             member.picture != "" && member.picture != null
               ? member.picture
@@ -28,10 +28,10 @@ export const MemberCard: React.SFC<NotFoundProps> = ({ member, navigationHandler
         </div>
         <div className="card-content">
 
-          <h2>
+          <h2 onClick={navigationLocalHandler}>
             <a
               style={{ color: "black", cursor: "pointer" }}
-              onClick={navigationLocalHandler}
+
             >
               {member.firstName} {member.lastName && member.lastName}<small>{member.workPosition && member.workPosition}   </small>
             </a>
@@ -40,6 +40,7 @@ export const MemberCard: React.SFC<NotFoundProps> = ({ member, navigationHandler
             {member.twitter && (
               <a
                 className="sp-tw"
+                target="_blank"
                 href={
                   "https://twitter.com/" + member.twitter
                 }
@@ -50,6 +51,7 @@ export const MemberCard: React.SFC<NotFoundProps> = ({ member, navigationHandler
             {member.github && (
               <a
                 className="sp-insta"
+                target="_blank"
                 href={
                   "https://github.com/" + member.github
                 }
@@ -60,6 +62,7 @@ export const MemberCard: React.SFC<NotFoundProps> = ({ member, navigationHandler
             {member.instagram && (
               <a
                 className="sp-insta"
+                target="_blank"
                 href={
                   "https://www.instagram.com/" +
                   member.instagram
@@ -71,6 +74,7 @@ export const MemberCard: React.SFC<NotFoundProps> = ({ member, navigationHandler
             {member.linkedin && (
               <a
                 className="sp-in"
+                target="_blank"
                 href={"linkedin.com/in/" + member.linkedin}
               >
                 <i className="fab fa-linkedin-in"></i>

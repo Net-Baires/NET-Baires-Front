@@ -1,9 +1,10 @@
-import { LOADING, READY, LoadingState, LoadingActionTypes, memberDetailActionTypes, SET_MEMBER_DETAIL } from './types';
+import { LOADING, READY, LoadingState, LoadingActionTypes, memberDetailActionTypes, SET_MEMBER_DETAIL, homeActionsTypes, SET_EVENTS_LIVE } from './types';
 import { Member } from '../../services/models/Member';
 
 const initialState: LoadingState = {
   isLoading: false,
-  memberDetail: {} as Member
+  memberDetail: {} as Member,
+  eventsLive: false
 };
 
 export function loadingReducer(
@@ -36,6 +37,22 @@ export function memberDetailReducer(
       return {
         ...state,
         memberDetail: action.payload
+      };
+    default:
+      return state;
+  }
+}
+export function homeReducer(
+  state = initialState,
+  action: homeActionsTypes
+): LoadingState {
+
+  switch (action.type) {
+
+    case SET_EVENTS_LIVE:
+      return {
+        ...state,
+        eventsLive: action.payload
       };
     default:
       return state;

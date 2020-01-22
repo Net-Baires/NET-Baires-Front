@@ -52,8 +52,7 @@ const MemberControlPanelComponent: React.SFC<MemberControlPanelProps & MemberCon
             <div className="col-sm-12">
               <div className="alert alert-primary" role="alert">
                 <p>
-                  Estos son los eventos que se encuentran ocurriendo en este
-                  momento.
+                  Eventos en proceso.
               </p>
               </div>
             </div>

@@ -5,6 +5,8 @@ import { loading, ready } from "../../store/loading/actions";
 import { getBadge } from "../../services/badgesServices";
 import { GetBadgeResponse } from "../../services/models/BadgeDetail";
 import ReactHtmlParser from 'react-html-parser';
+import MetaTags from 'react-meta-tags';
+import { isEmpty } from '../../services/objectsservices';
 
 type BadgeDetailProps = {
   loading: () => void;
@@ -28,33 +30,43 @@ export const BadgeShowDetailContainerComponent: React.SFC<BadgeDetailProps> = ({
       });
   }, []);
 
-  return (
-    <div className="services-section text-center" >
-      <div className="container">
-        <div className="row  justify-content-md-center">
-          <div className="col-md-8">
-            <div className="services-content">
-              <h1 className="wow fadeInUp" data-wow-delay="0s">
-                {badge.name}
-              </h1>
+  return (<>
+    {!isEmpty(badge) && <>
+      <MetaTags>
+        <title>{`NET-Baires - Badge : ${badge.name}`}</title>
+        <meta name="description" content={badge.description} />
+        <meta property="og:title" content={`NET-Baires - Badge :${badge.name}`} />
+        <meta property="og:image" content={badge.imageUrl} />
+        <meta property="image" content={badge.imageUrl} />
+      </MetaTags>
+      <div className="services-section text-center" >
+        <div className="container">
+          <div className="row  justify-content-md-center">
+            <div className="col-md-8">
+              <div className="services-content">
+                <h1 className="wow fadeInUp" data-wow-delay="0s">
+                  {badge.name}
+                </h1>
+              </div>
             </div>
-          </div>
-          <div className="col-md-12 text-center">
-            <div className="services">
-              <div className="row">
-                <div className="col-md-12 badge-detail-img">
-                  <img src={badge.imageUrl} alt="New" />
-                </div>
-                <div className="col-md-12">
-                  <p>{ReactHtmlParser(badge.description)}</p>
+            <div className="col-md-12 text-center">
+              <div className="services">
+                <div className="row">
+                  <div className="col-md-12 badge-detail-img">
+                    <img src={badge.imageUrl} alt="New" />
+                  </div>
+                  <div className="col-md-12">
+                    <p>{ReactHtmlParser(badge.description)}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
+    </>
+    }
+  </>
   );
 };
 
