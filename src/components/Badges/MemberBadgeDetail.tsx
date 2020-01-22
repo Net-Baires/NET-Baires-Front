@@ -5,12 +5,10 @@ import { loading, ready } from "../../store/loading/actions";
 import { BadgeMemberViewModel } from "../../services/models/BadgeDetail";
 import { getBadgeFromMeber, getMemberDetail } from '../../services/membersServices';
 import { useParams } from 'react-router-dom';
-import ReactHtmlParser from 'react-html-parser';
 import { Member } from '../../services/models/Member';
 import { isEmpty } from '../../services/objectsservices';
 import { BadgeShowDetailContainer } from './BadgeShowDetailContainer';
 import { formatStringDate } from '../../helpers/DateHelpers';
-
 type BadgeDetailProps = {
   loading: () => void;
   ready: () => void;
@@ -30,16 +28,21 @@ export const MemberBadgeDetailComponent: React.SFC<
   const [badgeMemberDetail, setBadgeMemberDetail] = useState<BadgeMemberViewModel>({} as BadgeMemberViewModel);
   useEffect(() => {
     loading();
-    getMemberDetail(+memberId!).then(m => {
-      setMemberDetail(m);
-      ready();
-    });
     getBadgeFromMeber(+memberId!, +id!).then(d => {
       setBadgeMemberDetail(d);
+      getMemberDetail(+memberId!).then(m => {
+        setMemberDetail(m);
+        ready();
+      });
+    }).catch(x => {
+      ready();
+      history.push("/notfound");
     })
   }, []);
 
   return (<>
+
+
     <div className="client-section">
       <div className="container text-center">
         <div className="clients owl-carousel owl-theme" style={{ opacity: "1", "display": "block" }}>

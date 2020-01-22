@@ -67,7 +67,7 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
               >
                 <img
                   className={classes.imageTitle}
-                  src="assets/images/Logo-Blanco.png"
+                  src="https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png"
                 />
               </div>
               <DialogContentText>

@@ -10,6 +10,8 @@ export interface GroupCodeFullDetailResponse {
 export interface MemberSmallDetail {
     id: number;
     firstName: string;
+    winner: boolean;
+    winnerPosition: number;
     lastName: string;
     username: string;
     picture: string;

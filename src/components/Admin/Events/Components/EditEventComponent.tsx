@@ -37,6 +37,13 @@ const EditEventComponentForm = (props: FormikProps<FormValues>) => {
         </div>
       )}
       <div className="form-group">
+        <img
+          className="image-event-edit-prview"
+          src={props.values.imageUrl}
+        ></img>
+      </div>
+
+      <div className="form-group">
         <label>Nombre</label>
         <Field type="title" name="title" className="form-control" />
         {touched.title && errors.title && (
@@ -114,7 +121,7 @@ const EditAlleventFormik = withFormik<MyFormProps, FormValues>({
     description: yup.string().required("Campo Requerido")
   }),
   handleSubmit: (values: any, { props }) => {
-    values.description = stateToHTML(values.description!.getCurrentContent());
+    values.description = stateToHTML(values.descriptionHtml!.getCurrentContent());
     props.saveEvent(values);
   }
 })(EditEventComponentForm);

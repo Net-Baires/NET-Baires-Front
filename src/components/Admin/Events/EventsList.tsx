@@ -1,5 +1,5 @@
 import React, { useState, useEffect, MouseEvent } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { getEvents } from "../../../services/eventsServices";
 import { EventDetail } from "../../../services/models/Events/Event";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
@@ -7,21 +7,22 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { CardWrapper } from "../../Common/CardWrapper";
-import { parseDate, formatStringDate } from '../../../helpers/DateHelpers';
+import { formatStringDate } from '../../../helpers/DateHelpers';
+import { loading, ready } from '../../../store/loading/actions';
+import { connect } from 'react-redux';
 type EventsProps = {
   name: string;
-};
-type EventsParams = {
+  loading: () => void;
+  ready: () => void;
   id: number;
 };
-type EventsPropsAndRouter = EventsParams & EventsProps;
-export const EventsList: React.SFC<RouteComponentProps<
-  EventsPropsAndRouter
->> = () => {
+const EventsListComponent: React.SFC<EventsProps> = ({ loading, ready }) => {
   const [events, setEvents] = useState(new Array<EventDetail>());
   useEffect(() => {
+    loading();
     getEvents().then(s => {
       setEvents(s);
+      ready();
     });
   }, []);
   let history = useHistory();
@@ -123,3 +124,17 @@ export const EventsList: React.SFC<RouteComponentProps<
     </CardWrapper>
   );
 };
+const mapStateToProps = () => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  loading: () => {
+    dispatch(loading());
+  },
+  ready: () => {
+    dispatch(ready());
+  }
+});
+
+export const EventsList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EventsListComponent);

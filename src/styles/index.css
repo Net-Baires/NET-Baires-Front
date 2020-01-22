@@ -1,5 +1,5 @@
 .panel-logo {
-    background-image: url("../../assets/images/Logo-Blanco.png") !important;
+    background-image: url(https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png) !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
 }
@@ -161,4 +161,9 @@
 .row-card-table-container {
     overflow: scroll;
     height: 600px;
+}
+
+.react-autosuggest__input {
+    width: 100% !important;
+    max-width: 240px;
 }

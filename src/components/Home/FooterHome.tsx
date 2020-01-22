@@ -7,7 +7,7 @@ const FooterHomeComponent: React.SFC = () => {
     return (<div className="footer">
         <div className="container">
             <div className="col-md-12 text-center">
-                <img className="logo-footer-home" src="assets/images/Logo-Blanco.png" alt="Net-Baires Logo" />
+                <img className="logo-footer-home" src="https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png" alt="Net-Baires Logo" />
                 {/* <ul className="footer-menu">
                     <li><a href="http://demo.com">Site</a></li>
                     <li><a href="#!">Support</a></li>

@@ -24,7 +24,6 @@ const HomeSpeakers: React.SFC<HomeSpeakersProps> = ({ speakers }) => {
                     Algunos de nuestros speakers
                 </h1>
                   <p className="wow fadeInUp" data-wow-delay="0.2s">
-                    Estos son algunos de los oradores que pasarón por nuestros eventos.
                     Gracias a ellos y a todos los demas por hacer posible esta comunidad!!
                 </p>
                 </div>

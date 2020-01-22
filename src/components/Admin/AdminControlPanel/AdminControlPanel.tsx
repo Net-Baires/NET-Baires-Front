@@ -32,8 +32,7 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
             <div className="col-sm-12">
               <div className="alert alert-primary" role="alert">
                 <p>
-                  Estos son los eventos que se encuentran ocurriendo en este
-                  momento.
+                  Eventos en proceso.
                 {/* <a
               href="index-form-package.html"
               target="_blank"

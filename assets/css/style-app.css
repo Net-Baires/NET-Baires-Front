@@ -13244,6 +13244,13 @@ img.img-preview-member {
     max-height: 250px;
 }
 
+.image-event-edit-prview {
+    margin-top: 20px;
+    max-width: 500px;
+    max-height: 250px;
+    width: 100%;
+}
+
 .image-badge-prview-container {
     text-align: center;
 }

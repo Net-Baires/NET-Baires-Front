@@ -15,6 +15,7 @@ import { useHistory } from "react-router";
 import { updateUser } from "../../../../services/userServices";
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { CardWrapper } from "../../../Common/CardWrapper";
+import { successToast } from '../../../../services/toastServices';
 
 type NewUserProps = {
   callbackAction?: () => void;
@@ -87,7 +88,9 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({
     searchScreen();
     clickSearch();
   };
-  const getSuggestionValue = (suggestion: Member) => suggestion.firstName;
+  const getSuggestionValue = (suggestion: Member) => suggestion.firstName != null ?
+    suggestion.firstName : suggestion.lastName != null ? suggestion.lastName
+      ? suggestion.email != null ? suggestion.email : suggestion.id : suggestion.id : suggestion.id;
   const renderSuggestion = (suggestion: Member) => {
     return (
       <div className="row">
@@ -95,7 +98,9 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({
           <img className="img-suggestion-member" src={suggestion.picture}></img>
         </div>
         <div className="col-md-9">
-          {suggestion.firstName} {suggestion.lastName}
+          {suggestion.firstName != null || suggestion.lastName != null ?
+            (`${suggestion.firstName} ${suggestion.lastName}`)
+            : suggestion.email}
         </div>
       </div>
     );
@@ -137,7 +142,7 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({
       <CardWrapper colSize={4} cardTitle="Editar Miembro">
         {readySearch ? (
           <div className="card-block text-center">
-            <h5>{memberToSearch.firstName}</h5>
+            <h5>{memberToSearch.firstName && memberToSearch.firstName}</h5>
             {/* <span className="d-block mb-4">{memberToSearch.}</span> */}
             <img
               className="img-fluid rounded-circle rounded-circle-sync-user-to-event"
@@ -248,7 +253,7 @@ export const EditOneUserEvent: React.SFC<NewUserProps> = ({
                   onSuggestionSelected={onSuggestionSelected}
                   renderInputComponent={renderInputComponent}
                   suggestions={suggestions}
-                  className="aaa"
+                  className="members-search-input"
                   onSuggestionsFetchRequested={onSuggestionsFetchRequested}
                   onSuggestionsClearRequested={onSuggestionsClearRequested}
                   getSuggestionValue={getSuggestionValue}

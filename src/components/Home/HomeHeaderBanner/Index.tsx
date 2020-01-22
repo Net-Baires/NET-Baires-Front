@@ -13,7 +13,7 @@ const HomeHeaderBanner: React.SFC<HomeHeaderBannerProps> = () => {
                 NET-Baires
               </h1>
               <p className="wow fadeInUp main-subttitle" data-wow-delay="0.2s">
-                Somor la comunidad de .NET mas grande de la Argentina.
+                Somos la comunidad de .NET mas grande de la Argentina.
               </p>
               <NavLink
                 className="btn btn-primary btn-action"

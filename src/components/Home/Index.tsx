@@ -10,13 +10,14 @@ import { Sponsor } from "../../services/models/sponsor";
 import { EventDetail } from "../../services/models/Events/Event";
 import NumbersHomeSummary from "./NumbersHomeSummary";
 import { connect } from 'react-redux';
-import { loading, ready } from '../../store/loading/actions';
+import { loading, ready, setEventsLive } from '../../store/loading/actions';
 
 type HomeProps = {
   loading: () => void;
   ready: () => void;
+  setEventsLive: (eventsLive: boolean) => void;
 };
-const HomeComponent: React.SFC<HomeProps> = ({ loading, ready }) => {
+const HomeComponent: React.SFC<HomeProps> = ({ loading, ready, setEventsLive }) => {
   const [loadReady, setLoadReady] = useState(false);
   const [sponsors, setSponsors] = useState(new Array<Sponsor>());
   const [speakers, setSpeakers] = useState(new Array<Member>());
@@ -38,6 +39,7 @@ const HomeComponent: React.SFC<HomeProps> = ({ loading, ready }) => {
       setTotalSlackMembers(x.totalUsersSlack);
       setTotalMembers(x.totalUsersMeetup);
       setTotalSpeakers(x.totalSpeakers);
+      setEventsLive(x.eventsLive);
       setLoadReady(true);
       ready();
     });
@@ -79,6 +81,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
+  },
+  setEventsLive: (eventsLive: boolean) => {
+    dispatch(setEventsLive(eventsLive));
   }
 });
 

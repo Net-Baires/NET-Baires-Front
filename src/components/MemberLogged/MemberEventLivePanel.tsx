@@ -27,6 +27,7 @@ const MemberEventLivePanelComponent: React.SFC<MemberEventLivePanelProps> = ({ l
 
   const history = useHistory();
   const loadEventDetail = () => {
+    loading();
     GetAdminLiveEventDetail(eventId).then(s => {
       if (s == null) history.push("/app/panel");
       setEventLive(s);
@@ -34,7 +35,6 @@ const MemberEventLivePanelComponent: React.SFC<MemberEventLivePanelProps> = ({ l
     });
   };
   useEffect(() => {
-    loading();
     subscribupdateEventLive((data) => {
       if (+data.eventId === eventId) {
         loadEventDetail();

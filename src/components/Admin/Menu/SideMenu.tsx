@@ -43,7 +43,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
       <ListItem onClick={closeMenu} button className={classes.menuItem}>
 
         <ListItemAvatar>
-          <img src="assets/images/Logo-Blanco.png" className="side-menu-logo" alt="NET-Baires" />
+          <img src="https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png" className="side-menu-logo" alt="NET-Baires" />
         </ListItemAvatar>
         <ListItemText primary="NET-Baires" />
         <ListItemIcon className={`${classes.menuItemIcon} side-menu-close`}>
@@ -132,7 +132,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
               <NavLink
                 exact
                 activeClassName="active"
-                to="/app/eventsToSync"
+                to="/app/events/sync"
               >
                 <ListItemText inset primary="Eventos para Sincronizar" />
               </NavLink>

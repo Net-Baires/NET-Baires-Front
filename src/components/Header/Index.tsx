@@ -45,7 +45,7 @@ export const Header: React.SFC<HeaderProps> = () => {
               exact
               className="nav-link-slide-bar"
               activeClassName="active"
-              to="/app/eventsToSync"
+              to="/app/events/sync"
             >
               <i className="fa fa-fw fa-mis-sync-o"></i>
               Eventos para Syncronizar

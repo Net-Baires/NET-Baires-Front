@@ -39,7 +39,7 @@ export const AttendantCount: React.SFC<AttendantCountProps> = ({
                         ></div>
                     )}
                 </div>
-                <div className="row card-active">
+                <div className="row">
                     <div className="col-md-6 col-6">
                         <h4>
                             {!isEmpty(eventLive) &&

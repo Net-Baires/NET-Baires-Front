@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { RouteComponentProps, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getSponsor } from "../../services/sponsorsServices";
 import { Sponsor } from "../../services/models/sponsor";
+import { connect } from 'react-redux';
+import { loading, ready } from '../../store/loading/actions';
 type SponsorProps = {
   name: string;
+  ready: () => void;
+  loading: () => void;
 };
 type SponsorParams = {
   id: number;
 };
 
 type SponsorPropsAndRouter = SponsorParams & SponsorProps;
-const SponsorDetail: React.SFC<
-  RouteComponentProps<SponsorPropsAndRouter>
-> = props => {
+const SponsorDetailPublicPageComponent: React.SFC<SponsorPropsAndRouter> = ({ ready, loading }) => {
   const { id } = useParams();
   const [sponsorToCheck, setSponsorToCheck] = useState({} as Sponsor);
   useEffect(() => {
-    getSponsor(Number(id)).then(s => setSponsorToCheck(s));
+    loading();
+    getSponsor(Number(id)).then(s => {
+      setSponsorToCheck(s);
+      ready();
+    });
   }, []);
 
   return (
@@ -47,4 +53,17 @@ const SponsorDetail: React.SFC<
     </div>
   );
 };
-export default SponsorDetail;
+const mapStateToProps = () => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  loading: () => {
+    dispatch(loading());
+  },
+  ready: () => {
+    dispatch(ready());
+  }
+});
+
+export const SponsorDetailPublicPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SponsorDetailPublicPageComponent);

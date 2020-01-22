@@ -16,7 +16,7 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = ({ sponsors }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <h1 className="home-section-title">
-                      Las empresas que nos apoyan
+                      Gracias por apoyarnos !!!
                     </h1>
                   </div>
                   {sponsors.map(sponsor => (
@@ -32,7 +32,7 @@ const HomeSponsors: React.SFC<HomeSponsorsProps> = ({ sponsors }) => {
                         to={`/sponsors/${sponsor.id}`}
                       >
                         <img src={sponsor.logoUrl} alt={sponsor.name} />
-                        <h1>{sponsor.name}</h1>
+                        {/* <h1>{sponsor.name}</h1> */}
                       </NavLink>
 
                       {/* <p>{sponsor.description}</p> */}

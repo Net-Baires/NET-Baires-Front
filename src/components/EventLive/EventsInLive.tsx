@@ -1,46 +1,37 @@
 import React, { useState, useEffect, MouseEvent } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { EventToSync } from "../../services/models/Events/EventToSync";
 import { getEventsLive } from "../../services/eventsServices";
-import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
-import { NotFound } from "../Common/NotFoun";
 import { isEmpty } from "../../services/objectsservices";
-import { formatStringDate } from "../../helpers/DateHelpers";
-type EventsInLiveToSyncProps = {
-  name: string;
-};
-type EventsInLiveToSyncParams = {
-  id: number;
+import { AppState } from '../../store';
+import { ready, loading } from '../../store/loading/actions';
+import { connect } from 'react-redux';
+type EventsInLiveStateProps = {
+  eventsLive: boolean;
 };
 
-type EventsInLiveToSyncPropsAndRouter = EventsInLiveToSyncParams &
-  EventsInLiveToSyncProps;
-export const EventsInLive: React.SFC<RouteComponentProps<
-  EventsInLiveToSyncPropsAndRouter
->> = () => {
+const EventsInLiveComponent: React.SFC<EventsInLiveStateProps> = ({ eventsLive }) => {
   let history = useHistory();
 
   const defaultEventsInLiveToSync = new Array<EventToSync>();
   const [EventsInLiveToSync, setEventoToSync] = useState(
     defaultEventsInLiveToSync
   );
+
   useEffect(() => {
     getEventsLive().then(s => setEventoToSync(s));
   }, []);
 
+  useEffect(() => {
+    if (!eventsLive)
+      history.push("/notfound");
+  })
   const handleLiveEvent = (
     event: MouseEvent<HTMLButtonElement>,
     eventToSync: EventToSync
   ) => {
     event.preventDefault();
     history.push(`/app/events/${eventToSync.id}/live/panel`);
-  };
-  const handleDetailEvent = (
-    event: MouseEvent<HTMLButtonElement>,
-    eventToSync: EventToSync
-  ) => {
-    event.preventDefault();
-    history.push(`/events/${eventToSync.id}/live`);
   };
   const handleInfoEvent = (
     event: MouseEvent<HTMLButtonElement>,
@@ -59,8 +50,7 @@ export const EventsInLive: React.SFC<RouteComponentProps<
                 Eventos en vivo
               </h1>
               <p className="wow fadeInUp" data-wow-delay="0.2s">
-                Estos son los eventos que se encuentran ocurriendo en este
-                momento.
+                Eventos en proceso.
               </p>
             </div>
             <div className="row">
@@ -103,15 +93,6 @@ export const EventsInLive: React.SFC<RouteComponentProps<
                               Panel
                             </button>
                           </div>
-                          {/* <div className="col-sm-12">
-                            <button
-                              type="button"
-                              onClick={e => handleDetailEvent(e, event)}
-                              className="btn btn-success btn-action btn-fill  btn-event-live"
-                            >
-                              Detalle
-                            </button>
-                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -124,3 +105,20 @@ export const EventsInLive: React.SFC<RouteComponentProps<
     </div>
   );
 };
+
+const mapStateToProps = (state: AppState) => ({
+  eventsLive: state.home.eventsLive
+});
+const mapDispatchToProps = (dispatch: any) => ({
+  loading: () => {
+    dispatch(loading());
+  },
+  ready: () => {
+    dispatch(ready());
+  }
+});
+
+export const EventsInLive = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EventsInLiveComponent);

@@ -1,4 +1,4 @@
-import { LOADING, READY, LoadingActionTypes, SET_MEMBER_DETAIL, memberDetailActionTypes } from "./types";
+import { LOADING, READY, LoadingActionTypes, SET_MEMBER_DETAIL, memberDetailActionTypes, SET_EVENTS_LIVE, homeActionsTypes } from "./types";
 import { Member } from '../../services/models/Member';
 
 export function loading(): LoadingActionTypes {
@@ -11,6 +11,12 @@ export function setMemberDetail(member: Member): memberDetailActionTypes {
   return {
     type: SET_MEMBER_DETAIL,
     payload: member
+  };
+}
+export function setEventsLive(eventsLive: boolean): homeActionsTypes {
+  return {
+    type: SET_EVENTS_LIVE,
+    payload: eventsLive
   };
 }
 
