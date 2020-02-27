@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -10,6 +9,8 @@ import ATHS from "add-to-homescreen-control";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { errorToast } from "../../services/toastServices";
+import { isAppInstalled } from '../../services/helpers/apphelpers';
+import { askForPermissioToReceiveNotifications } from '../../index';
 var mobile = require("is-mobile");
 
 type DialogInstallPwaProps = {};
@@ -21,12 +22,12 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
   const [installed, setInstalled] = React.useState(false);
 
   useEffect(() => {
-    var isInstalled: boolean = window.matchMedia("(display-mode: standalone)")
-      .matches;
-    if (!isInstalled)
+    if (!isAppInstalled()) {
       setTimeout(() => {
         setOpenDialog(true);
       }, 10000);
+      setTimeout(() => askForPermissioToReceiveNotifications(), 3000);
+    }
   }, []);
   const handleClose = () => {
     setOpenDialog(false);
