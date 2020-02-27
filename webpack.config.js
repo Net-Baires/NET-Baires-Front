@@ -22,7 +22,6 @@ module.exports = function(env) {
     return {
         devServer: {
             https: true,
-
             historyApiFallback: true
         },
         // webpack will take the files from ./src/index

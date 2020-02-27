@@ -15,7 +15,7 @@ import { initCommunication } from "./services/communicationServices";
 import ATHS from "add-to-homescreen-control";
 import firebase from "firebase";
 import { updateInformation } from "./services/membersServices";
-import { infoToast, darkToast } from './services/toastServices';
+import { darkToast } from './services/toastServices';
 ATHS.enable();
 export const askForPermissioToReceiveNotifications = () => {
   try {
@@ -37,7 +37,7 @@ export const askForPermissioToReceiveNotifications = () => {
   }
 };
 
-setTimeout(() => askForPermissioToReceiveNotifications(), 3000);
+
 export const initializeFirebase = () => {
   var firebaseConfig = {
     apiKey: Config.firebase.pushNotifications.apiKey,
