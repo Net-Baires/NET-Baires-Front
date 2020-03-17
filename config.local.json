@@ -1,13 +1,13 @@
 {
     "api": {
         "base": "http://localhost:8080/",
-        "baseRemote": "https://localhost:5001"
+        "baseRemote": "http://localhost:5000"
     },
-    "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
+    "instrumentationKey": "",
     "integrations": {
         "meetup": {
-            "clientId": "pc0kad3lh1i3ujtp4m8om7d689",
-            "clientSecret": "m8kup619unc4iav2ht8hmvnhq7",
+            "clientId": "",
+            "clientSecret": "",
             "accessTokenUri": "https://secure.meetup.com/oauth2/access",
             "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
             "redirectUri": "https://localhost:8080/login/meetup",
@@ -22,14 +22,14 @@
     },
     "firebase": {
         "pushNotifications": {
-            "apiKey": "AIzaSyCXCowwHV3b-q5sP7w7A8BRLZZ3RKYUTq4",
+            "apiKey": "",
             "authDomain": "net-baires-dev.firebaseapp.com",
             "databaseURL": "https://net-baires-dev.firebaseio.com",
             "projectId": "net-baires-dev",
             "storageBucket": "net-baires-dev.appspot.com",
             "messagingSenderId": "720103806559",
-            "appId": "1:720103806559:web:26d56c9879ee7da539adea",
-            "measurementId": "G-ZZC4QG9C96"
+            "appId": "",
+            "measurementId": ""
         }
     }
 }
