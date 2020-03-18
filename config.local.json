@@ -1,7 +1,7 @@
 {
     "api": {
-        "base": "http://localhost:8080/",
-        "baseRemote": "http://localhost:5000"
+        "base": "https://localhost:8080/",
+        "baseRemote": "https://localhost:5001"
     },
     "instrumentationKey": "",
     "integrations": {
@@ -23,11 +23,11 @@
     "firebase": {
         "pushNotifications": {
             "apiKey": "",
-            "authDomain": "net-baires-dev.firebaseapp.com",
-            "databaseURL": "https://net-baires-dev.firebaseio.com",
-            "projectId": "net-baires-dev",
-            "storageBucket": "net-baires-dev.appspot.com",
-            "messagingSenderId": "720103806559",
+            "authDomain": "",
+            "databaseURL": "",
+            "projectId": "",
+            "storageBucket": "",
+            "messagingSenderId": "",
             "appId": "",
             "measurementId": ""
         }
