@@ -158,7 +158,7 @@ export const App: React.SFC<AppProps> = () => {
                 <EventsInLive></EventsInLive>
               </HomeWrapper>
             </Route>
-            <Route exact path="/events/:id/live/broadcasting">
+            <Route exact path="/live">
               <HomeWrapper>
                 <EventsLivePublickBroadcasting></EventsLivePublickBroadcasting>
               </HomeWrapper>

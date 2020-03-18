@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { RouteComponentProps, useParams } from 'react-router-dom';
-import { getEventLive, getLiveEventDetail } from "../../services/eventsServices";
+import { getEventLive, getLiveEventDetail, getEventsLive } from "../../services/eventsServices";
 type EventsLivePublickBroadcasting = {
   name: string;
 };
@@ -13,15 +13,20 @@ type EventsLivePublickBroadcastingAndRouter = EventsLivePublickBroadcastingParam
 export const EventsLivePublickBroadcasting: React.SFC<RouteComponentProps<
   EventsLivePublickBroadcastingAndRouter
 >> = () => {
-  const { id } = useParams();
   useEffect(() => {
-    getLiveEventDetail(+id!).then(s => {
-      if (s.online)
-        setTimeout(() => {
-          document.location.href = s.onlineLink;
-        }, 2000);
+    getEventsLive().then(eventsLive => {
+      if (eventsLive == null || eventsLive.length == 0)
+        alert("No hay eventos en vivo")
       else
-        alert("Este no es un evento online")
+        getLiveEventDetail(+eventsLive[0].id!).then(s => {
+          if (s.online)
+            setTimeout(() => {
+              document.location.href = s.onlineLink;
+            }, 2000);
+          else
+            alert("No hay eventos en vivo")
+
+        });
     });
   }, []);
 
