@@ -3,7 +3,7 @@
         "base": "https://localhost:8080/",
         "baseRemote": "https://localhost:5001"
     },
-    "instrumentationKey": "",
+    "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
     "integrations": {
         "meetup": {
             "clientId": "",
@@ -23,10 +23,10 @@
     "firebase": {
         "pushNotifications": {
             "apiKey": "",
-            "authDomain": "",
-            "databaseURL": "",
-            "projectId": "",
-            "storageBucket": "",
+            "authDomain": "net-baires-dev.firebaseapp.com",
+            "databaseURL": "https://net-baires-dev.firebaseio.com",
+            "projectId": "net-baires-dev",
+            "storageBucket": "net-baires-dev.appspot.com",
             "messagingSenderId": "",
             "appId": "",
             "measurementId": ""

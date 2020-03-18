@@ -2,7 +2,6 @@ import { EventDetail, UpdateEvent } from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
 import {
-  EventDetailToSync,
   CheckAttendanceGeneralResponse
 } from "./models/Events/EventDetailToSync";
 import { EventToReportAttendance } from "./models/Events/EventToReportAttendance";
@@ -28,7 +27,7 @@ export const getEventsToSync = (): Promise<EventToSync[]> =>
 export const getEvents = (): Promise<EventDetail[]> => getRequest("/events");
 export const getEventLive = (id: number): Promise<EventDetail> =>
   getRequest(`/events/${id}/live`);
-export const GetAdminLiveEventDetail = (id: number): Promise<EventLiveDetail> =>
+export const getLiveEventDetail = (id: number): Promise<EventLiveDetail> =>
   getRequest(`/events/${id}/live/detail`);
 
 export const getEventsLive = (): Promise<EventDetail[]> => {

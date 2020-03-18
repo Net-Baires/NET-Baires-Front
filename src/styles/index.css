@@ -188,3 +188,16 @@
     font-size: 25px;
     padding: 5px;
 }
+
+.broadcasting-live {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.img-broadcasting {
+    max-width: 300px;
+}
+
+.home-install-pwa {
+    margin-left: 0px !important;
+}

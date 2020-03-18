@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import {
-  GetAdminLiveEventDetail
+  getLiveEventDetail
 } from "../../services/eventsServices";
 import { EventLiveDetail } from "../../services/models/Events/EventLiveDetail";
 import { isEmpty } from "../../services/objectsservices";
@@ -28,7 +28,7 @@ const MemberEventLivePanelComponent: React.SFC<MemberEventLivePanelProps> = ({ l
   const history = useHistory();
   const loadEventDetail = () => {
     loading();
-    GetAdminLiveEventDetail(eventId).then(s => {
+    getLiveEventDetail(eventId).then(s => {
       if (s == null) history.push("/app/panel");
       setEventLive(s);
       ready();

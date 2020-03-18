@@ -52,7 +52,7 @@ const HomeWrapperComponent: React.SFC<HomeWrapperProps> = ({ isLoading, children
           <ScrollUpButton />
         </div>
       </div>
-      <InstallPwaHome></InstallPwaHome>
+      {/* <InstallPwaHome></InstallPwaHome> */}
     </>
   );
 };
