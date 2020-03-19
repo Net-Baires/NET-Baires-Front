@@ -26,7 +26,6 @@ export const EventsLivePublickBroadcasting: React.SFC<RouteComponentProps<
               document.location.href = s.onlineLink;
             }, 2000);
           else {
-            alert("No hay eventos en vivo")
             setLiveEvent(false);
           }
         });
@@ -44,7 +43,7 @@ export const EventsLivePublickBroadcasting: React.SFC<RouteComponentProps<
     </div>
     <div className="col-1">
     </div>
-    <div className="col-10">
+    <div className="col-10 broadcasting-message">
       {liveEvent ?
         <p>Aguarde mientras es redirigido a la transmisión en vivo</p>
         : <p>No hay transmisiones en vivo en este momento.</p>}
