@@ -1,11 +1,11 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 import { useHistory } from "react-router-dom";
-import { EventToSync } from "../../services/models/Events/EventToSync";
 import { getEventsLive } from "../../services/eventsServices";
 import { isEmpty } from "../../services/objectsservices";
 import { AppState } from '../../store';
 import { ready, loading } from '../../store/loading/actions';
 import { connect } from 'react-redux';
+import { EventDetail } from '../../services/models/Events/Event';
 type EventsInLiveStateProps = {
   eventsLive: boolean;
 };
@@ -13,7 +13,7 @@ type EventsInLiveStateProps = {
 const EventsInLiveComponent: React.SFC<EventsInLiveStateProps> = ({ eventsLive }) => {
   let history = useHistory();
 
-  const defaultEventsInLiveToSync = new Array<EventToSync>();
+  const defaultEventsInLiveToSync = new Array<EventDetail>();
   const [EventsInLiveToSync, setEventoToSync] = useState(
     defaultEventsInLiveToSync
   );
@@ -28,14 +28,21 @@ const EventsInLiveComponent: React.SFC<EventsInLiveStateProps> = ({ eventsLive }
   })
   const handleLiveEvent = (
     event: MouseEvent<HTMLButtonElement>,
-    eventToSync: EventToSync
+    eventToSync: EventDetail
   ) => {
     event.preventDefault();
     history.push(`/app/events/${eventToSync.id}/live/panel`);
   };
+  const handleBroadcasting = (
+    event: MouseEvent<HTMLButtonElement>,
+    eventToSync: EventDetail
+  ) => {
+    event.preventDefault();
+    document.location.href = eventToSync.onlineLink;
+  };
   const handleInfoEvent = (
     event: MouseEvent<HTMLButtonElement>,
-    eventToSync: EventToSync
+    eventToSync: EventDetail
   ) => {
     event.preventDefault();
     history.push(`/app/events/${eventToSync.id}/attendance`);
@@ -72,7 +79,7 @@ const EventsInLiveComponent: React.SFC<EventsInLiveStateProps> = ({ eventsLive }
                           alt="Icon"
                         />
                       </div>
-                      <div className="pricing-details">
+                      <div className="event-live-actions-wrapper">
                         <h2 className="event-live-list-title">{event.title}</h2>
                         <div className="row">
                           <div className="col-sm-12">
@@ -93,6 +100,16 @@ const EventsInLiveComponent: React.SFC<EventsInLiveStateProps> = ({ eventsLive }
                               Panel
                             </button>
                           </div>
+                          {event.online &&
+                            <div className="col-sm-12">
+                              <button
+                                type="button"
+                                onClick={e => handleBroadcasting(e, event)}
+                                className="btn btn-danger btn-danger btn-fill  btn-event-live"
+                              >
+                                Transmisión en vivo
+                            </button>
+                            </div>}
                         </div>
                       </div>
                     </div>

@@ -201,3 +201,7 @@
 .home-install-pwa {
     margin-left: 0px !important;
 }
+
+.event-live-actions-wrapper {
+    height: 250px;
+}

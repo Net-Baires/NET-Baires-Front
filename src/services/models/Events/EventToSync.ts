@@ -10,5 +10,6 @@ export interface EventToSync {
   eventId: string;
   done: boolean;
   date: string;
+  online: boolean;
   live: boolean;
 }

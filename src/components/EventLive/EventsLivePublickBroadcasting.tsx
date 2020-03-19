@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { RouteComponentProps, useParams } from 'react-router-dom';
 import { getEventLive, getLiveEventDetail, getEventsLive } from "../../services/eventsServices";
 type EventsLivePublickBroadcasting = {
@@ -13,20 +13,24 @@ type EventsLivePublickBroadcastingAndRouter = EventsLivePublickBroadcastingParam
 export const EventsLivePublickBroadcasting: React.SFC<RouteComponentProps<
   EventsLivePublickBroadcastingAndRouter
 >> = () => {
+  const [liveEvent, setLiveEvent] = useState(true);
   useEffect(() => {
     getEventsLive().then(eventsLive => {
-      if (eventsLive == null || eventsLive.length == 0)
-        alert("No hay eventos en vivo")
-      else
+      if (eventsLive == null || eventsLive.length == 0) {
+        setLiveEvent(false);
+      }
+      else {
         getLiveEventDetail(+eventsLive[0].id!).then(s => {
           if (s.online)
             setTimeout(() => {
               document.location.href = s.onlineLink;
             }, 2000);
-          else
+          else {
             alert("No hay eventos en vivo")
-
+            setLiveEvent(false);
+          }
         });
+      }
     });
   }, []);
 
@@ -41,7 +45,9 @@ export const EventsLivePublickBroadcasting: React.SFC<RouteComponentProps<
     <div className="col-1">
     </div>
     <div className="col-10">
-      <p>Aguarde mientras es redirigido a la transmisión en vivo</p>
+      {liveEvent ?
+        <p>Aguarde mientras es redirigido a la transmisión en vivo</p>
+        : <p>No hay transmisiones en vivo en este momento.</p>}
     </div>
     <div className="col-1">
     </div>
