@@ -8,6 +8,8 @@ export interface EventDetail {
   url: string;
   done: boolean;
   live: boolean;
+  online: boolean;
+  onlineLink: string;
   platform: string;
   sponsors: SponsorEvent[];
   attended: number;

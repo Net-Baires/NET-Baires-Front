@@ -20,7 +20,7 @@
     "jsx": "react",
     "exclude": [
       "node_modules"
-    ]
+    ],
     // "baseUrl": "./src",
     "lib": [
       "es2015",

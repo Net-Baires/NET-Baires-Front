@@ -8,7 +8,6 @@ import HomeHeaderBanner from "./HomeHeaderBanner/Index";
 import ScrollUpButton from "react-scroll-up-button";
 import { Backdrop, CircularProgress, makeStyles, createStyles, Theme } from '@material-ui/core';
 import { AppState } from '../../store';
-import { Offline, Online } from "react-detect-offline";
 interface HomeWrapperProps {
   isLoading: boolean;
   loading: () => void;
@@ -16,7 +15,6 @@ interface HomeWrapperProps {
 }
 const HomeWrapperComponent: React.SFC<HomeWrapperProps> = ({ isLoading, children }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   useEffect(() => {
     loadStyles("assets/css/bootstrap.min.css");
     loadStyles("assets/css/style-landing.css");
@@ -51,6 +49,7 @@ const HomeWrapperComponent: React.SFC<HomeWrapperProps> = ({ isLoading, children
           <ScrollUpButton />
         </div>
       </div>
+      {/* <InstallPwaHome></InstallPwaHome> */}
     </>
   );
 };

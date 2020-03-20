@@ -1,6 +1,6 @@
 {
     "api": {
-        "base": "http://localhost:8080/",
+        "base": "https://localhost:8080/",
         "baseRemote": "https://localhost:5001"
     },
     "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
@@ -10,7 +10,7 @@
             "clientSecret": "",
             "accessTokenUri": "https://secure.meetup.com/oauth2/access",
             "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
-            "redirectUri": "http://localhost:8080/login/meetup",
+            "redirectUri": "https://localhost:8080/login/meetup",
             "scopes": [
                 "basic"
             ]

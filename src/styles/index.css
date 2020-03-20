@@ -167,3 +167,24 @@
     width: 100% !important;
     max-width: 240px;
 }
+
+.home-install-pwa {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 999999;
+    background-color: white;
+}
+
+.home-install-pwa .btn-install-container {
+    text-align: center;
+}
+
+.home-install-pwa .btn-install-container button {
+    margin-top: 15px;
+}
+
+.home-install-pwa .col-sm-6 {
+    font-size: 25px;
+    padding: 5px;
+}

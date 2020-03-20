@@ -1,5 +1,5 @@
 {
-    "name": "react-typescript-boilerplate",
+    "name": "net-baires-site",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -7,7 +7,7 @@
         "bundle": "webpack",
         "test": "echo \"Error: no test specified\" && exit 1",
         "mock": "json-server db.json",
-        "start": "concurrently  \"webpack-dev-server  --mode development  --env.APP_ENV=local --open --hot\"",
+        "start": "concurrently  \"webpack-dev-server -d --mode development  --env.APP_ENV=local --open --hot\"",
         "build:prod": "webpack --mode production --env.APP_ENV=prod",
         "check-types": "tsc"
     },

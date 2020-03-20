@@ -80,6 +80,35 @@ const EditEventComponentForm = (props: FormikProps<FormValues>) => {
         )}
       </div>
       <div className="form-group">
+        <label>Online</label>
+        <Field
+          name="online"
+          render={({ field, form }: any) => {
+            return (
+              <input
+                type="checkbox"
+                checked={field.online}
+                {...field}
+              />
+            );
+          }}
+        />
+        {touched.online && errors.online && (
+          <div className="form-error alert alert-danger">{errors.online}</div>
+        )}
+      </div>
+      <div className="form-group">
+        <label>Online Link</label>
+        <Field
+          type="onlineLink"
+          name="onlineLink"
+          className="form-control"
+        />
+        {touched.onlineLink && errors.onlineLink && (
+          <div className="form-error alert alert-danger">{errors.onlineLink}</div>
+        )}
+      </div>
+      <div className="form-group">
         <label>Done</label>
         <Field type="done" name="done" disabled className="form-control" />
         {touched.done && errors.done && (
