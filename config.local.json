@@ -3,7 +3,7 @@
         "base": "https://localhost:8080/",
         "baseRemote": "https://localhost:5001"
     },
-    "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
+    "instrumentationKey": "",
     "integrations": {
         "meetup": {
             "clientId": "",
