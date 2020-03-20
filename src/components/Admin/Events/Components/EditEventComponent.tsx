@@ -80,19 +80,19 @@ const EditEventComponentForm = (props: FormikProps<FormValues>) => {
         )}
       </div>
       <div className="form-group">
-        <label>Online</label>
         <Field
           name="online"
-          render={({ field, form }: any) => {
+          render={({ field }: any) => {
             return (
               <input
                 type="checkbox"
-                checked={field.online}
+                checked={field.value}
                 {...field}
               />
             );
           }}
         />
+        <label>Online</label>
         {touched.online && errors.online && (
           <div className="form-error alert alert-danger">{errors.online}</div>
         )}
@@ -109,24 +109,44 @@ const EditEventComponentForm = (props: FormikProps<FormValues>) => {
         )}
       </div>
       <div className="form-group">
+        <Field
+          name="done"
+          render={({ field }: any) => {
+            return (
+              <input
+                type="checkbox"
+                checked={field.value}
+                {...field}
+              />
+            );
+          }}
+        />
         <label>Done</label>
-        <Field type="done" name="done" disabled className="form-control" />
         {touched.done && errors.done && (
           <div className="form-error alert alert-danger">{errors.done}</div>
         )}
       </div>
       <div className="form-group">
+        <Field
+          name="live"
+          render={({ field }: any) => {
+            return (
+              <input
+                type="checkbox"
+                checked={field.value}
+                {...field}
+              />
+            );
+          }}
+        />
         <label>Live</label>
-        <Field type="live" name="live" disabled className="form-control" />
         {touched.live && errors.live && (
           <div className="form-error alert alert-danger">{errors.live}</div>
         )}
       </div>
-
       <div className="form-group">
         <button
           type="submit"
-          disabled={isSubmitting}
           className="btn btn-primary btn-full-width"
         >
           Guardar

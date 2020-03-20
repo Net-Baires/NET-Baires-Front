@@ -10,14 +10,14 @@ import { Sponsor } from "../../services/models/sponsor";
 import { EventDetail } from "../../services/models/Events/Event";
 import NumbersHomeSummary from "./NumbersHomeSummary";
 import { connect } from 'react-redux';
-import { loading, ready, setEventsLive } from '../../store/loading/actions';
+import { loading, ready, setEventsLive, setOnlineEvent } from '../../store/loading/actions';
 
 type HomeProps = {
   loading: () => void;
   ready: () => void;
   setEventsLive: (eventsLive: boolean) => void;
 };
-const HomeComponent: React.SFC<HomeProps> = ({ loading, ready, setEventsLive }) => {
+const HomeComponent: React.SFC<HomeProps> = ({ loading, ready, setEventsLive, setOnlineEvent }) => {
   const [loadReady, setLoadReady] = useState(false);
   const [sponsors, setSponsors] = useState(new Array<Sponsor>());
   const [speakers, setSpeakers] = useState(new Array<Member>());
@@ -40,6 +40,7 @@ const HomeComponent: React.SFC<HomeProps> = ({ loading, ready, setEventsLive }) 
       setTotalMembers(x.totalUsersMeetup);
       setTotalSpeakers(x.totalSpeakers);
       setEventsLive(x.eventsLive);
+      setOnlineEvent(x.onlineEvent);
       setLoadReady(true);
       ready();
     });
@@ -84,7 +85,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   setEventsLive: (eventsLive: boolean) => {
     dispatch(setEventsLive(eventsLive));
-  }
+  },
+  setOnlineEvent: (onlineEvent: boolean) => {
+    dispatch(setOnlineEvent(onlineEvent));
+  },
 });
 
 export const Home = connect(

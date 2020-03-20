@@ -157,6 +157,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       )
     },
     {
+      dataField: "Imagen",
       text: "Imagen",
       style: {
         textAlign: "center",
@@ -165,7 +166,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       formatter: (_cellContent: any, attende: EventsAttendees) => (
         <img
           className="img-preview-member"
-          src={attende.memberDetail.picture}
+          src={attende!.memberDetail!.picture}
         ></img>
       )
     }
@@ -188,10 +189,10 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       usersToUpdate[updateIndex].attended = false;
     }
     updateAttendeLocal(
-      member.memberDetail.id,
+      member!.memberDetail!.id!,
       usersToUpdate[updateIndex],
       usersToUpdate,
-      isChecked ? `Acaba de ser registrado en el evento: ${eventInEdition.title} ` : null
+      isChecked ? `Acaba de ser registrado en el evento: ${eventInEdition.title} ` : undefined
     );
   };
   const handleUserSpeaker = (
@@ -204,7 +205,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     const usersToUpdate = eventsAttendees.slice();
     usersToUpdate[updateIndex].speaker = isChecked;
     updateAttendeLocal(
-      member.memberDetail.id,
+      member!.memberDetail!.id!,
       usersToUpdate[updateIndex],
       usersToUpdate
     );
@@ -219,7 +220,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
     const usersToUpdate = eventsAttendees.slice();
     usersToUpdate[updateIndex].organizer = isChecked;
     updateAttendeLocal(
-      member.memberDetail.id,
+      member!.memberDetail!.id!,
       usersToUpdate[updateIndex],
       usersToUpdate
     );
@@ -248,7 +249,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
       {eventsAttendees && (<>
         <SearchWrapper title="Usuarios">
           <ToolkitProvider
-            keyField="id"
+            keyField="memberDetail.id"
             data={eventsAttendees}
             columns={columns}
             search
@@ -259,7 +260,7 @@ const AttendeesListToEditComponent: React.SFC<AttendeesListToEditProps> = ({
                 <hr />
                 <BootstrapTable
                   className="table-responsive"
-                  keyField="id"
+                  keyField="memberDetail.id"
                   {...props.baseProps}
                   pagination={paginationFactory()}
                 />

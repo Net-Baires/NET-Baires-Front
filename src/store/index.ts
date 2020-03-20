@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
-import { loadingReducer, memberDetailReducer, homeReducer } from './loading/reducers';
+import { loadingReducer } from "./loading/loadingReducer";
+import { homeReducer } from "./loading/homeReducer";
+import { memberDetailReducer } from "./loading/memberDetailReducer";
 
 import { reducer } from "react-redux-oauth2";
 const rootReducer = combineReducers({

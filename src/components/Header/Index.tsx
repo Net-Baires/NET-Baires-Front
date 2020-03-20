@@ -256,6 +256,7 @@ export const Header: React.SFC<HeaderProps> = () => {
                 Eventos en Vivo
               </NavLink>
             </Nav.Item>
+
           </Nav>
           {isLogged() && (
             <Navbar.Text>
