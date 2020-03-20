@@ -17,7 +17,6 @@ interface HomeWrapperProps {
 }
 const HomeWrapperComponent: React.SFC<HomeWrapperProps> = ({ isLoading, children }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   useEffect(() => {
     loadStyles("assets/css/bootstrap.min.css");
     loadStyles("assets/css/style-landing.css");
@@ -52,7 +51,7 @@ const HomeWrapperComponent: React.SFC<HomeWrapperProps> = ({ isLoading, children
           <ScrollUpButton />
         </div>
       </div>
-      <InstallPwaHome></InstallPwaHome>
+      {/* <InstallPwaHome></InstallPwaHome> */}
     </>
   );
 };
