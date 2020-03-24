@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
 import {
   getEventLive,
-  GetAdminLiveEventDetail
+  getLiveEventDetail
 } from "../../services/eventsServices";
 import { EventDetail } from "../../services/models/Events/Event";
 import { PageFullWidthWrapper } from "../Common/PageFullWidthWrapper";
@@ -31,7 +31,7 @@ const EventLiveDashBoardComponent: React.SFC<RouteComponentProps<
   const [error, setError] = useState(false);
   useEffect(() => {
     loading();
-    GetAdminLiveEventDetail(+props.match.params.id)
+    getLiveEventDetail(+props.match.params.id)
       .then(x => {
         setEvent(x);
         ready();
@@ -46,11 +46,11 @@ const EventLiveDashBoardComponent: React.SFC<RouteComponentProps<
       {!error ? (
         <CardWrapper titl></CardWrapper>
       ) : (
-        <NotFound
-          title="No hay eventos en LIVE"
-          message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
-        ></NotFound>
-      )}
+          <NotFound
+            title="No hay eventos en LIVE"
+            message="En este momento no estamos realizando ningún evento. Te invitamos a visitar nuestro sitio de meetup."
+          ></NotFound>
+        )}
     </>
   );
 };

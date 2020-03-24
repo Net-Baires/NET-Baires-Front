@@ -3,6 +3,8 @@ export interface EventLiveDetail {
   title: string;
   description: string;
   platform: string;
+  online: boolean;
+  onlineLink: string;
   startLiveTime: any;
   hasGroupCodeOpen?: boolean;
   imageUrl: string;

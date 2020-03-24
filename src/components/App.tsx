@@ -55,6 +55,7 @@ import { ReactPlugin, withAITracking } from '@microsoft/applicationinsights-reac
 import { createBrowserHistory } from 'history';
 import { Config } from '../services/config';
 import { SponsorDetailPublicPage } from './Sponsor/SponsorDetailPublicPage';
+import { EventsLivePublickBroadcasting } from './EventLive/EventsLivePublickBroadcasting';
 var reactPlugin = new ReactPlugin();
 const browserHistory = createBrowserHistory({ basename: '' });
 var appInsights = new ApplicationInsights({
@@ -157,6 +158,13 @@ export const App: React.SFC<AppProps> = () => {
                 <EventsInLive></EventsInLive>
               </HomeWrapper>
             </Route>
+            <Route exact path="/live">
+              <HomeWrapper>
+                <EventsLivePublickBroadcasting></EventsLivePublickBroadcasting>
+              </HomeWrapper>
+            </Route>
+
+
             <Route exact path="/events/:id/live">
               <HomeWrapper>
                 <EventsLivePublicDetail></EventsLivePublicDetail>

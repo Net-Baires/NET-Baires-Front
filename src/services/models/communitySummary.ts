@@ -12,4 +12,5 @@ export interface CommunitySummary {
   totalSpeakers: number;
   totalUsersSlack: number;
   eventsLive: boolean;
+  onlineEvent: boolean;
 }

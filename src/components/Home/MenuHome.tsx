@@ -7,8 +7,9 @@ import { SecureElement } from '../Auth/SecureElement';
 import { AppState } from '../../store';
 type MenuHomeStateProps = {
   eventsLive: boolean;
+  onlineEvent: boolean;
 }
-const MenuHomeComponent: React.SFC<MenuHomeStateProps> = ({ eventsLive }) => {
+const MenuHomeComponent: React.SFC<MenuHomeStateProps> = ({ eventsLive, onlineEvent }) => {
   const { isLogged } = useContext(UserContext);
   return (
     <div className="container">
@@ -69,6 +70,13 @@ const MenuHomeComponent: React.SFC<MenuHomeStateProps> = ({ eventsLive }) => {
                   </NavLink>
                 </li>
               }
+              {onlineEvent &&
+                <li className="nav-item">
+                  <NavLink className="nav-link  page-scroll" to="/live">
+                    Miranos en vivo
+                  </NavLink>
+                </li>
+              }
               <li className="nav-item">
                 {isLogged() && (<>
                   <SecureElement roles={["Admin", "Organizer"]}>
@@ -103,7 +111,8 @@ const MenuHomeComponent: React.SFC<MenuHomeStateProps> = ({ eventsLive }) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  eventsLive: state.home.eventsLive
+  eventsLive: state.home.eventsLive,
+  onlineEvent: state.home.onlineEvent
 });
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {
