@@ -1,28 +1,38 @@
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 toast.configure({
-    autoClose: 4000,
-    draggable: false,
-    //etc you get the idea
+  autoClose: 4000,
+  draggable: false,
+  //etc you get the idea
 });
-export const errorToast = (message: string) => toast.error(message, {
+export const errorToast = (message: string, onClick: () => void = () => {}) =>
+  toast.error(message, {
     position: toast.POSITION.BOTTOM_RIGHT,
-    className: 'alert alert-danger'
-});
-export const successToast = (message: string) => toast.success(message, {
+    className: "alert alert-danger",
+    onClick: onClick,
+  });
+export const successToast = (message: string, onClick: () => void = () => {}) =>
+  toast.success(message, {
     position: toast.POSITION.BOTTOM_RIGHT,
-    className: 'alert alert-success'
-});
-export const infoToast = (message: string) => toast.info(message, {
+    className: "alert alert-success",
+    onClick: onClick,
+  });
+export const infoToast = (message: string, onClick: () => void = () => {}) =>
+  toast.info(message, {
     position: toast.POSITION.BOTTOM_RIGHT,
-    className: 'alert alert-primary'
-});
-export const warningToast = (message: string) => toast.info(message, {
+    className: "alert alert-primary",
+    onClick: onClick,
+  });
+export const warningToast = (message: string, onClick: () => void = () => {}) =>
+  toast.info(message, {
     position: toast.POSITION.BOTTOM_RIGHT,
-    className: 'alert alert-warning'
-});
-export const darkToast = (message: string) => toast.info(message, {
+    className: "alert alert-warning",
+    onClick: onClick,
+  });
+export const darkToast = (message: string, onClick: () => void = () => {}) =>
+  toast.info(message, {
     position: toast.POSITION.BOTTOM_RIGHT,
-    className: 'alert alert-dark'
-});
+    className: "alert alert-dark",
+    onClick: onClick,
+  });

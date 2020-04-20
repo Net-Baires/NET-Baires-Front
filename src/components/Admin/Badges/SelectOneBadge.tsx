@@ -1,40 +1,43 @@
-import { SyntheticEvent, useState, useEffect } from 'react';
-import React from 'react';
-import { CardWrapper } from '../../Common/CardWrapper';
-import 'isomorphic-fetch';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { getBadgeByName } from '../../../services/badgesServices';
-import { GetBadgeResponse } from '../../../services/models/BadgeDetail';
-import { DialogQuestion } from '../../Common/DialogQuestion';
-import { loading, ready } from '../../../store/loading/actions';
-import { connect } from 'react-redux';
-import { isEmpty } from '../../../services/objectsservices';
+import { SyntheticEvent, useState, useEffect } from "react";
+import React from "react";
+import { CardWrapper } from "../../Common/CardWrapper";
+import "isomorphic-fetch";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { getBadgeByName } from "../../../services/badgesServices";
+import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
+import { DialogQuestion } from "../../Common/DialogQuestion";
+import { loading, ready } from "../../../store/loading/actions";
+import { connect } from "react-redux";
+import { isEmpty } from "../../../services/objectsservices";
 
 type SelectOneBadgeStateProps = {
   loading: () => void;
   ready: () => void;
-}
-type SelectOneBadgeProps = {
-  assignBadge: (badgeId: number) => void;
 };
-const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeStateProps> = ({ loading, assignBadge }) => {
+type SelectOneBadgeProps = {
+  assignBadge: (badgeId: number, name: string) => void;
+};
+const SelectOneBadgeComponent: React.SFC<
+  SelectOneBadgeProps & SelectOneBadgeStateProps
+> = ({ loading, assignBadge }) => {
   const [open, setOpen] = useState(false);
   const [isLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [options, setOptions] = useState<GetBadgeResponse[]>([]);
-  const [selectedBadge, setSelectedBadge] = useState<GetBadgeResponse>({} as GetBadgeResponse);
+  const [selectedBadge, setSelectedBadge] = useState<GetBadgeResponse>(
+    {} as GetBadgeResponse
+  );
 
   useEffect(() => {
     if (!loading) {
       return undefined;
     }
-    getBadgeByName("").then(x => {
+    getBadgeByName("").then((x) => {
       setOptions(x);
     });
-    return () => {
-    };
+    return () => {};
   }, [loading]);
 
   useEffect(() => {
@@ -43,32 +46,38 @@ const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeSta
     }
   }, [open]);
 
-
   const handleSelect = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    if (!isEmpty(selectedBadge))
-      setOpenDialog(true);
+    if (!isEmpty(selectedBadge)) setOpenDialog(true);
   };
   const handleAccept = () => {
-    assignBadge(selectedBadge.id);
-  }
-
+    assignBadge(selectedBadge.id, selectedBadge.name);
+  };
 
   return (
     <>
-      {selectedBadge &&
+      {selectedBadge && (
         <DialogQuestion
           title="Esta por asignar un Badge"
           description={`Se encuentra por asignar el badge ${selectedBadge.name} al código de grupo correspondiente. Una vez hecho esto no puedo eliminar ni volver para atras esta acción. Esta seguro que desea continuar?`}
-          openPopup={openDialog} callbackAccept={handleAccept}></DialogQuestion>}
-      <CardWrapper cardBodyClassName="card-body-md" colSize={4} cardTitle="Seleccionar Badge">
+          openPopup={openDialog}
+          callbackAccept={handleAccept}
+        ></DialogQuestion>
+      )}
+      <CardWrapper
+        cardBodyClassName="card-body-md"
+        colSize={4}
+        cardTitle="Seleccionar Badge"
+      >
         <div className="card-block text-center">
           <form>
             <div className="form-group">
               <img
                 style={{ maxHeight: "150px", maxWidth: "100%" }}
                 src={
-                  selectedBadge != null && selectedBadge.imageUrl != "" && selectedBadge.imageUrl != null
+                  selectedBadge != null &&
+                  selectedBadge.imageUrl != "" &&
+                  selectedBadge.imageUrl != null
                     ? selectedBadge.imageUrl
                     : "assets/images/NotFound.png"
                 }
@@ -88,11 +97,13 @@ const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeSta
                 onClose={() => {
                   setOpen(false);
                 }}
-                getOptionSelected={(option, value) => option.name === value.name}
-                getOptionLabel={option => option.name}
+                getOptionSelected={(option, value) =>
+                  option.name === value.name
+                }
+                getOptionLabel={(option) => option.name}
                 options={options}
                 loading={isLoading}
-                renderInput={params => (
+                renderInput={(params) => (
                   <TextField
                     {...params}
                     fullWidth
@@ -101,7 +112,9 @@ const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeSta
                       ...params.InputProps,
                       endAdornment: (
                         <React.Fragment>
-                          {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
+                          {isLoading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
                           {params.InputProps.endAdornment}
                         </React.Fragment>
                       ),
@@ -119,11 +132,10 @@ const SelectOneBadgeComponent: React.SFC<SelectOneBadgeProps & SelectOneBadgeSta
               className="btn btn-primary shadow-2 text-uppercase btn-block"
             >
               Asignar
-                  </a>
+            </a>
           </div>
         </div>
       </CardWrapper>
-
     </>
   );
 };
@@ -134,7 +146,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const SelectOneBadge = connect(

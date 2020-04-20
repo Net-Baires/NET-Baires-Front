@@ -4,25 +4,29 @@ import { isEmpty } from "../../../services/objectsservices";
 import { EventDetail } from "../../../services/models/Events/Event";
 import { NavLink } from "react-router-dom";
 import { EventActions } from "./EventActions";
-import { SecureElement } from '../../Auth/SecureElement';
-import { subscribeDisconnectedMember, subscribeConnectedMember } from '../../../services/syncCommunicationServices';
-import { CardHeaderWrapper } from '../../Common/CardHeaderWrapper';
-import { CardHeaderCollapsableWrapper } from '../../Common/CardHeaderCollapsableWrapper';
+import { SecureElement } from "../../Auth/SecureElement";
+import {
+  subscribeDisconnectedMember,
+  subscribeConnectedMember,
+} from "../../../services/syncCommunicationServices";
+import { CardHeaderWrapper } from "../../Common/CardHeaderWrapper";
+import { CardHeaderCollapsableWrapper } from "../../Common/CardHeaderCollapsableWrapper";
+import { ShareProfile } from "../../Profile/ShareProfile";
 
 type ControlPanelProps = {};
 export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
   const [eventsLive, setEventsLive] = useState(new Array<EventDetail>());
   const [countUserLoggued, setCountUserLoggued] = useState(0);
   useEffect(() => {
-    getEventsLive().then(e => {
+    getEventsLive().then((e) => {
       setEventsLive(e);
     });
-    subscribeDisconnectedMember(e => {
+    subscribeDisconnectedMember((e) => {
       setCountUserLoggued(e.totalConnected);
-    })
-    subscribeConnectedMember(e => {
+    });
+    subscribeConnectedMember((e) => {
       setCountUserLoggued(e.totalConnected);
-    })
+    });
   }, []);
   return (
     <>
@@ -33,7 +37,7 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
               <div className="alert alert-primary" role="alert">
                 <p>
                   Eventos en proceso.
-                {/* <a
+                  {/* <a
               href="index-form-package.html"
               target="_blank"
               className="alert-link"
@@ -45,11 +49,13 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
             </div>
           </div>
         </>
-      )
-      }
-      <CardHeaderCollapsableWrapper collapsed={false} cardTitle="Eventos en vivo">
+      )}
+      <CardHeaderCollapsableWrapper
+        collapsed={false}
+        cardTitle="Eventos en vivo"
+      >
         {eventsLive &&
-          eventsLive.map(event => (
+          eventsLive.map((event) => (
             <div key={event.id} className="col-xl-4 col-md-6">
               <div className="card user-designer">
                 <div className="card-block text-center">
@@ -90,7 +96,7 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
                         to={`/app/events/${event.id}/live/panel`}
                       >
                         Panel de Control
-                    </NavLink>
+                      </NavLink>
                     </SecureElement>
                     <SecureElement roles={["Member"]}>
                       <NavLink
@@ -100,7 +106,7 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
                         to={`/app/events/${event.id}/live/panel`}
                       >
                         Panel de Control
-                    </NavLink>
+                      </NavLink>
                     </SecureElement>
                   </div>
                 </div>
@@ -121,6 +127,9 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
           </div>
         </div>
         <EventActions></EventActions>
+      </div>
+      <div className="row">
+        <ShareProfile urlToShare="http://google.com.ar"></ShareProfile>
       </div>
     </>
   );

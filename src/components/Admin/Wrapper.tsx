@@ -5,33 +5,37 @@ import { loading, ready, setMemberDetail } from "../../store/loading/actions";
 import SideMenu from "./Menu/SideMenu";
 import { loadScript, loadStyles } from "../../services/helpers/scriptshelpers";
 import { AppState } from "../../store";
-import { ToastContainer } from 'react-toastify';
-import { UserContext } from '../../contexts/UserContext';
-import { infoToast } from '../../services/toastServices';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { ToastContainer } from "react-toastify";
+import { UserContext } from "../../contexts/UserContext";
+import { infoToast } from "../../services/toastServices";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { subscribeMemberNotification } from '../../services/syncCommunicationServices';
-import { getMe } from '../../services/profileServices'
-import { DialogInstallPwa } from '../InstallPwa/DialogInstallPwa';
-import { TopBar } from './Menu/TopBar';
-import { Member } from '../../services/models/Member';
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { subscribeMemberNotification } from "../../services/syncCommunicationServices";
+import { getMe } from "../../services/profileServices";
+import { DialogInstallPwa } from "../InstallPwa/DialogInstallPwa";
+import { TopBar } from "./Menu/TopBar";
+import { Member } from "../../services/models/Member";
+import { useHistory } from "react-router-dom";
 interface AppProps {
   isLoading: boolean;
   loading: () => void;
   ready: () => void;
   setMemberDetail: (member: Member) => void;
 }
-const AdminWrapperComponent: React.SFC<AppProps> = ({ children, setMemberDetail, ...props }) => {
+const AdminWrapperComponent: React.SFC<AppProps> = ({
+  children,
+  setMemberDetail,
+  ...props
+}) => {
   const { user, setUserDetail } = useContext(UserContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-
-
+  const history = useHistory();
 
   useEffect(() => {
     loadScript("assets/js/vendor-all.min.js");
@@ -41,14 +45,16 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, setMemberDetail,
   });
 
   useEffect(() => {
-    getMe().then(x => {
+    getMe().then((x) => {
       setUserDetail(x);
       setMemberDetail(x);
     });
-    subscribeMemberNotification(user.userId, data => {
-      infoToast(data.notificationMessage)
-    })
-  }, [])
+    subscribeMemberNotification(user.userId, (data) => {
+      infoToast(data.notificationMessage, () => {
+        if (data.url != null) history.push(data.url);
+      });
+    });
+  }, []);
 
   return (
     <>
@@ -61,8 +67,11 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, setMemberDetail,
       {/* <SideMenu></SideMenu>
       <TopBar></TopBar>
       <FriendsMenu></FriendsMenu> */}
-      <TopBar onClick={() => setOpen(false)} openMenu={() => setOpen(true)}></TopBar>
-      <div className="pcoded-main-container" >
+      <TopBar
+        onClick={() => setOpen(false)}
+        openMenu={() => setOpen(true)}
+      ></TopBar>
+      <div className="pcoded-main-container">
         <div className="pcoded-wrapper">
           <div className="pcoded-content">
             <div className="pcoded-inner-content">
@@ -93,12 +102,10 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, setMemberDetail,
                   paper: classes.drawerPaper,
                 }}
               >
-
                 <SideMenu closeMenu={() => setOpen(false)}></SideMenu>
               </Drawer>
               <div className="main-body">
                 <div className="page-wrapper" onClick={() => setOpen(false)}>
-
                   {/* <LoadingOverlay
                     active={props.isLoading}
                     spinner
@@ -131,7 +138,7 @@ const AdminWrapperComponent: React.SFC<AppProps> = ({ children, setMemberDetail,
 };
 
 const mapStateToProps = (state: AppState) => ({
-  isLoading: state.loading.isLoading
+  isLoading: state.loading.isLoading,
 });
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {
@@ -142,7 +149,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   setMemberDetail: (member: Member) => {
     dispatch(setMemberDetail(member));
-  }
+  },
 });
 
 export const AdminWrapper = connect(
@@ -150,14 +157,13 @@ export const AdminWrapper = connect(
   mapDispatchToProps
 )(AdminWrapperComponent);
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
-      color: '#fff',
+      color: "#fff",
     },
-  }),
+  })
 );

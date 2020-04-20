@@ -47,25 +47,29 @@ import { ControlPanel } from "./MemberLogged/ControlPanel";
 import { EventLivePanel } from "./Pages/EventLivePanel";
 import { AssignBadge } from "./Admin/Badges/AssignBadge";
 import { AdminGroupCodes } from "./GroupCodes/AdminGroupCodes";
-import { EarnedBadgeDetail } from './Admin/Badges/EarnedBadgeDetail';
-import { MyBadgesPage } from './Admin/Badges/MyBadgesPage';
-import { MemberBadgeDetail } from './Badges/MemberBadgeDetail';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { ReactPlugin, withAITracking } from '@microsoft/applicationinsights-react-js';
-import { createBrowserHistory } from 'history';
-import { Config } from '../services/config';
-import { SponsorDetailPublicPage } from './Sponsor/SponsorDetailPublicPage';
-import { EventsLivePublickBroadcasting } from './EventLive/EventsLivePublickBroadcasting';
+import { EarnedBadgeDetail } from "./Admin/Badges/EarnedBadgeDetail";
+import { MyBadgesPage } from "./Admin/Badges/MyBadgesPage";
+import { MemberBadgeDetail } from "./Badges/MemberBadgeDetail";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
+import {
+  ReactPlugin,
+  withAITracking,
+} from "@microsoft/applicationinsights-react-js";
+import { createBrowserHistory } from "history";
+import { Config } from "../services/config";
+import { SponsorDetailPublicPage } from "./Sponsor/SponsorDetailPublicPage";
+import { EventsLivePublickBroadcasting } from "./EventLive/EventsLivePublickBroadcasting";
+import { EventsLivePublicVideo } from "./EventLive/EventsLivePublicVideo";
 var reactPlugin = new ReactPlugin();
-const browserHistory = createBrowserHistory({ basename: '' });
+const browserHistory = createBrowserHistory({ basename: "" });
 var appInsights = new ApplicationInsights({
   config: {
     instrumentationKey: Config.instrumentationKey,
     extensions: [reactPlugin],
     extensionConfig: {
-      [reactPlugin.identifier]: { history: browserHistory }
-    }
-  }
+      [reactPlugin.identifier]: { history: browserHistory },
+    },
+  },
 });
 appInsights.loadAppInsights();
 interface AppProps {
@@ -158,12 +162,16 @@ export const App: React.SFC<AppProps> = () => {
                 <EventsInLive></EventsInLive>
               </HomeWrapper>
             </Route>
+            <Route exact path="/live/video">
+              <HomeWrapper>
+                <EventsLivePublicVideo></EventsLivePublicVideo>
+              </HomeWrapper>
+            </Route>
             <Route exact path="/live">
               <HomeWrapper>
                 <EventsLivePublickBroadcasting></EventsLivePublickBroadcasting>
               </HomeWrapper>
             </Route>
-
 
             <Route exact path="/events/:id/live">
               <HomeWrapper>
@@ -225,7 +233,6 @@ export const App: React.SFC<AppProps> = () => {
                 path="/app/earned/badges"
                 component={MyBadgesPage}
               />
-
 
               <PrivateRoute
                 roles={["Admin", "Organizer"]}
@@ -331,7 +338,7 @@ export const App: React.SFC<AppProps> = () => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  isLoading: state.loading.isLoading
+  isLoading: state.loading.isLoading,
 });
 const mapDispatchToProps = (dispatch: any) => ({
   loading: () => {
@@ -339,7 +346,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
-export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(withAITracking(reactPlugin, App));
+export const AppConnected = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withAITracking(reactPlugin, App));

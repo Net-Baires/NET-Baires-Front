@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { UserDetail } from "../../services/models/UserDetail";
 import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
   TelegramShareButton,
   WhatsappShareButton,
-  FacebookShareCount,
   EmailShareButton,
-  EmailIcon
+  EmailIcon,
 } from "react-share";
 import {
   FacebookIcon,
   TwitterIcon,
   TelegramIcon,
   WhatsappIcon,
-  LinkedinIcon
+  LinkedinIcon,
 } from "react-share";
 import {
   MDBContainer,
@@ -24,13 +22,10 @@ import {
   MDBNav,
   MDBNavItem,
   MDBNavLink,
-  MDBIcon,
   MDBCard,
   MDBCardHeader,
-  MDBCardTitle,
   MDBCardBody,
-  MDBBtn,
-  MDBCardText
+  MDBCardText,
 } from "mdbreact";
 
 type ShareProfileProps = {
@@ -45,7 +40,7 @@ export const ShareProfile: React.SFC<ShareProfileProps> = ({ urlToShare }) => {
     }
   };
 
-  const setTab = (tab: number): boolean => {
+  const setTab = (): boolean => {
     return true;
   };
   return (
