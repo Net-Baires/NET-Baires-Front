@@ -2,20 +2,16 @@ import React, { useContext, useEffect, MouseEvent } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { useHistory, NavLink } from "react-router-dom";
 import { Config } from "../../services/config";
-import { loadScript, loadStyles } from '../../services/helpers/scriptshelpers';
+import { loadStyles } from "../../services/helpers/scriptshelpers";
 
 var ClientOAuth2 = require("client-oauth2");
 type LoginProps = {};
 const Login: React.SFC<LoginProps> = () => {
   const { isLogged } = useContext(UserContext);
   const history = useHistory();
-  if (isLogged())
-    history.push("/");
+  if (isLogged()) history.push("/");
   useEffect(() => {
-    loadScript("assets/js/vendor-all.min.js");
-    loadScript("assets/js/bootstrap.min.js");
-    loadScript('assets/js/pcoded.js')
-    loadStyles('assets/css/style-login.css');
+    loadStyles("assets/css/style-login.css");
   });
   var meetupAuth = new ClientOAuth2({
     clientId: Config.integrations.meetup.clientId,
@@ -23,16 +19,14 @@ const Login: React.SFC<LoginProps> = () => {
     accessTokenUri: Config.integrations.meetup.accessTokenUri,
     authorizationUri: Config.integrations.meetup.authorizationUri,
     redirectUri: Config.integrations.meetup.redirectUri,
-    scopes: Config.integrations.meetup.scopes
+    scopes: Config.integrations.meetup.scopes,
   });
   let redirectUrl = history.location.search.slice(
     1,
     history.location.search.length
   );
-  if (redirectUrl == "")
-    redirectUrl = "/app/panel";
+  if (redirectUrl == "") redirectUrl = "/app/panel";
   localStorage.setItem("RedirectUrl", redirectUrl);
-
 
   const handleLoginMeetup = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -67,7 +61,12 @@ const Login: React.SFC<LoginProps> = () => {
                     <label className="cr"> Save credentials</label>
                   </div>
                 </div> */}
-                <button onClick={handleLoginMeetup} className="btn btn-primary shadow-2 mb-4">Autenticate con Meetup</button>
+                <button
+                  onClick={handleLoginMeetup}
+                  className="btn btn-primary shadow-2 mb-4"
+                >
+                  Autenticate con Meetup
+                </button>
                 <p className="mb-2 text-muted">
                   <NavLink
                     exact
