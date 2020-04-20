@@ -29,9 +29,13 @@ export interface Config {
   integrations: Integrations;
   instrumentationKey: string;
   firebase: FirebaseConfig;
+  pwa: PwaConfig;
+}
+export interface PwaConfig {
+  showPopup: boolean;
 }
 export interface FirebaseConfig {
-  pushNotifications: FirebasePushNotificationsConfig
+  pushNotifications: FirebasePushNotificationsConfig;
 }
 export interface FirebasePushNotificationsConfig {
   apiKey: string;

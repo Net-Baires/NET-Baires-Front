@@ -1,49 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { syncEvents } from "../../../services/eventsServices";
-import { SecureElement } from '../../Auth/SecureElement';
-import { makeStyles, createStyles } from '@material-ui/core/styles'
+import { SecureElement } from "../../Auth/SecureElement";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Divider from '@material-ui/core/Divider'
-import Collapse from '@material-ui/core/Collapse'
-import CropFreeIcon from '@material-ui/icons/CropFree';
-import IconExpandLess from '@material-ui/icons/ExpandLess'
-import IconExpandMore from '@material-ui/icons/ExpandMore'
-import IconDashboard from '@material-ui/icons/Dashboard'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import { ListItemAvatar } from '@material-ui/core';
-import BusinessIcon from '@material-ui/icons/Business';
-import EventIcon from '@material-ui/icons/Event';
-import LoyaltyIcon from '@material-ui/icons/Loyalty';
-import { SideMenuOption } from './SideMenuOption';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import Collapse from "@material-ui/core/Collapse";
+import CropFreeIcon from "@material-ui/icons/CropFree";
+import IconExpandLess from "@material-ui/icons/ExpandLess";
+import IconExpandMore from "@material-ui/icons/ExpandMore";
+import IconDashboard from "@material-ui/icons/Dashboard";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
+import { ListItemAvatar } from "@material-ui/core";
+import BusinessIcon from "@material-ui/icons/Business";
+import EventIcon from "@material-ui/icons/Event";
+import LoyaltyIcon from "@material-ui/icons/Loyalty";
+import { SideMenuOption } from "./SideMenuOption";
+import { trackEvent, EventName } from "../../../services/loggerServices";
 type SideMenuProps = {
   closeMenu: () => void;
 };
 
 export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
   const [] = useState(false);
-  const classes = useStyles()
-  const [openEvents, setOpenEvents] = React.useState(false)
+  const classes = useStyles();
+  const [openEvents, setOpenEvents] = React.useState(false);
   // useEffect(() => {
   //   if (lastLocation != null && location.pathname != lastLocation.pathname)
   //     closeMenu();
   // });
   const handleSyncEvents = () => {
-    syncEvents().then(() => { });
+    syncEvents().then(() => {});
   };
   return (
-
-    <List component="nav" className={`${classes.appMenu} side-menu-container`} disablePadding>
+    <List
+      component="nav"
+      className={`${classes.appMenu} side-menu-container`}
+      disablePadding
+    >
       <ListItem onClick={closeMenu} button className={classes.menuItem}>
-
         <ListItemAvatar>
-          <img src="https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png" className="side-menu-logo" alt="NET-Baires" />
+          <img
+            src="https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png"
+            className="side-menu-logo"
+            alt="NET-Baires"
+          />
         </ListItemAvatar>
         <ListItemText primary="NET-Baires" />
         <ListItemIcon className={`${classes.menuItemIcon} side-menu-close`}>
@@ -52,7 +59,6 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
       </ListItem>
       <Divider component="li" />
       <SecureElement roles={["Admin", "Organizer"]}>
-
         <NavLink
           exact
           className="nav-link-slide-bar"
@@ -65,19 +71,20 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             </ListItemIcon>
             <span className="pcoded-mtext">Panel de Control</span>
           </ListItem>
-
         </NavLink>
       </SecureElement>
       <SideMenuOption
         closeMenu={closeMenu}
         roles={["Member"]}
         linkTo="/app/panel"
+        onClick={() => trackEvent(EventName.LateralMenuDashboard)}
         text="Dashboard"
         icon={<IconDashboard />}
       ></SideMenuOption>
       <SideMenuOption
         closeMenu={closeMenu}
         roles={["Member"]}
+        onClick={() => trackEvent(EventName.LateralMenuMyBadges)}
         linkTo="/app/earned/badges"
         text="Mis Badges"
         icon={<LoyaltyIcon />}
@@ -106,10 +113,12 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
         icon={<PeopleAltIcon />}
       ></SideMenuOption>
 
-
       <SecureElement roles={["Admin"]}>
-
-        <ListItem button onClick={() => setOpenEvents(!openEvents)} className={classes.menuItem}>
+        <ListItem
+          button
+          onClick={() => setOpenEvents(!openEvents)}
+          className={classes.menuItem}
+        >
           <ListItemIcon className={classes.menuItemIcon}>
             <EventIcon />
           </ListItemIcon>
@@ -119,46 +128,28 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
         <Collapse in={openEvents} timeout="auto" unmountOnExit>
           <Divider />
           <List onClick={closeMenu} component="div" disablePadding>
-            <NavLink
-              exact
-              activeClassName="active"
-              to="/app/events"
-            >
+            <NavLink exact activeClassName="active" to="/app/events">
               <ListItem button className={classes.menuItem}>
                 <ListItemText inset primary="Mis Eventos" />
               </ListItem>
             </NavLink>
             <ListItem button className={classes.menuItem}>
-              <NavLink
-                exact
-                activeClassName="active"
-                to="/app/events/sync"
-              >
+              <NavLink exact activeClassName="active" to="/app/events/sync">
                 <ListItemText inset primary="Eventos para Sincronizar" />
               </NavLink>
             </ListItem>
             <ListItem button className={classes.menuItem}>
-              <NavLink
-                exact
-                activeClassName="active"
-                to="/app/events/live"
-              >
+              <NavLink exact activeClassName="active" to="/app/events/live">
                 <ListItemText inset primary="Eventos en vivo" />
               </NavLink>
             </ListItem>
             <ListItem button className={classes.menuItem}>
-              <a
-                className="nav-link-slide-bar"
-                onClick={handleSyncEvents}
-              >
-
+              <a className="nav-link-slide-bar" onClick={handleSyncEvents}>
                 <ListItemText inset primary="Sync Eventos" />
               </a>
             </ListItem>
-
           </List>
         </Collapse>
-
       </SecureElement>
 
       <SecureElement roles={["Admin", "Organizer"]}>
@@ -182,6 +173,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
         </ListItemIcon>
         <NavLink
           exact
+          onClick={() => trackEvent(EventName.LateralMenuDisconnect)}
           className="nav-link-slide-bar"
           activeClassName="active"
           to="/logout"
@@ -190,18 +182,16 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
         </NavLink>
       </ListItem>
     </List>
-
-
   );
 };
 export default SideMenu;
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
 const useStyles = makeStyles(() =>
   createStyles({
     appMenu: {
-      width: '100%',
+      width: "100%",
     },
     navList: {
       width: drawerWidth,
@@ -210,7 +200,7 @@ const useStyles = makeStyles(() =>
       width: drawerWidth,
     },
     menuItemIcon: {
-      color: '#97c05c',
+      color: "#97c05c",
     },
-  }),
-)
+  })
+);

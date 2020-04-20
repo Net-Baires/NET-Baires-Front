@@ -9,8 +9,9 @@ import ATHS from "add-to-homescreen-control";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { errorToast } from "../../services/toastServices";
-import { isAppInstalled } from '../../services/helpers/apphelpers';
-import { askForPermissioToReceiveNotifications } from '../../index';
+import { isAppInstalled } from "../../services/helpers/apphelpers";
+import { askForPermissioToReceiveNotifications } from "../../index";
+import { Config } from "../../services/config";
 var mobile = require("is-mobile");
 
 type DialogInstallPwaProps = {};
@@ -22,18 +23,20 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
   const [installed, setInstalled] = React.useState(false);
 
   useEffect(() => {
-    if (!isAppInstalled()) {
-      setTimeout(() => {
-        setOpenDialog(true);
-      }, 10000);
-      setTimeout(() => askForPermissioToReceiveNotifications(), 3000);
+    if (Config.pwa.showPopup) {
+      if (!isAppInstalled()) {
+        setTimeout(() => {
+          setOpenDialog(true);
+        }, 10000);
+        setTimeout(() => askForPermissioToReceiveNotifications(), 3000);
+      }
     }
   }, []);
   const handleClose = () => {
     setOpenDialog(false);
   };
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   const installHandler = () => {
     setInstalling(true);
     ATHS.prompt()
@@ -82,19 +85,19 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
               <h5>Instalando, por favor aguarde.</h5>
             </div>
           ) : (
-                <div style={{ textAlign: "center" }}>
-                  <CheckIcon style={{ color: "green" }} />
-                  <h5>Aplicación instalada Exitosamente.</h5>
-                  <button
-                    data-tip="Sincronizar evento"
-                    type="button"
-                    onClick={e => handleClose(e)}
-                    className="btn btn-info events-actions-button"
-                  >
-                    Cerrar
+            <div style={{ textAlign: "center" }}>
+              <CheckIcon style={{ color: "green" }} />
+              <h5>Aplicación instalada Exitosamente.</h5>
+              <button
+                data-tip="Sincronizar evento"
+                type="button"
+                onClick={(e) => handleClose(e)}
+                className="btn btn-info events-actions-button"
+              >
+                Cerrar
               </button>
-                </div>
-              )}
+            </div>
+          )}
         </DialogContent>
         <DialogActions>
           {!installing && (
@@ -115,11 +118,11 @@ export const DialogInstallPwa: React.SFC<DialogInstallPwaProps> = () => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     imageTitleContainer: {
-      textAlign: "center"
+      textAlign: "center",
     },
     imageTitle: {
       height: "80px",
-      marginBottom: "0px"
-    }
+      marginBottom: "0px",
+    },
   })
 );

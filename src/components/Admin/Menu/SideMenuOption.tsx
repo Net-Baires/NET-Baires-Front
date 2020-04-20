@@ -1,36 +1,43 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { SecureElement } from '../../Auth/SecureElement';
-import { makeStyles, createStyles } from '@material-ui/core/styles'
+import { SecureElement } from "../../Auth/SecureElement";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import IconDashboard from '@material-ui/icons/Dashboard'
-import { Rol } from '../../../services/authService';
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import IconDashboard from "@material-ui/icons/Dashboard";
+import { Rol } from "../../../services/authService";
 type SideMenuProps = {
   closeMenu: () => void;
   roles: Rol[];
   linkTo: string;
   text: string;
   icon: JSX.Element;
+  onClick?: () => void;
 };
 
-export const SideMenuOption: React.SFC<SideMenuProps> = ({ closeMenu, roles, linkTo, text, icon }) => {
-  const classes = useStyles()
+export const SideMenuOption: React.SFC<SideMenuProps> = ({
+  closeMenu,
+  roles,
+  linkTo,
+  text,
+  icon,
+  onClick,
+}) => {
+  const classes = useStyles();
+  if (onClick == null) onClick = () => {};
   return (
-
     <SecureElement roles={roles}>
       <NavLink
         exact
         className="nav-link-slide-bar"
         activeClassName="active"
+        onClick={onClick}
         to={linkTo}
       >
         <ListItem onClick={closeMenu} button className={classes.menuItem}>
-          <ListItemIcon className={classes.menuItemIcon}>
-            {icon}
-          </ListItemIcon>
+          <ListItemIcon className={classes.menuItemIcon}>{icon}</ListItemIcon>
           <ListItemText primary={text} />
         </ListItem>
       </NavLink>
@@ -38,12 +45,12 @@ export const SideMenuOption: React.SFC<SideMenuProps> = ({ closeMenu, roles, lin
   );
 };
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
 const useStyles = makeStyles(() =>
   createStyles({
     appMenu: {
-      width: '100%',
+      width: "100%",
     },
     navList: {
       width: drawerWidth,
@@ -52,7 +59,7 @@ const useStyles = makeStyles(() =>
       width: drawerWidth,
     },
     menuItemIcon: {
-      color: '#97c05c',
+      color: "#97c05c",
     },
-  }),
-)
+  })
+);

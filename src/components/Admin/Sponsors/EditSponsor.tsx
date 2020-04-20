@@ -4,7 +4,7 @@ import { Sponsor } from "../../../services/models/sponsor";
 import {
   updateSponsor,
   getSponsor,
-  deleteSponsor
+  deleteSponsor,
 } from "../../../services/sponsorsServices";
 import { isEmpty } from "../../../services/objectsservices";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
-  MDBBtn
+  MDBBtn,
 } from "mdbreact";
 
 type EditSponsorProps = {
@@ -28,8 +28,8 @@ type EditSponsorParams = {
   id: number;
 };
 import { EditSponsorComponent } from "./components/EditSponsorComponent";
-import { CardWrapper } from '../../Common/CardWrapper';
-import { DialogQuestion } from '../../Common/DialogQuestion';
+import { CardWrapper } from "../../Common/CardWrapper";
+import { DialogQuestion } from "../../Common/DialogQuestion";
 
 type EditSponsorPropsAndRouter = EditSponsorParams & EditSponsorProps;
 export const EditSponsorToExport: React.SFC<
@@ -40,7 +40,7 @@ export const EditSponsorToExport: React.SFC<
   const [sureToDelete, setSureToDelete] = useState(false);
   useEffect(() => {
     loading();
-    getSponsor(props.match.params.id).then(s => {
+    getSponsor(props.match.params.id).then((s) => {
       setSponsor(s);
       ready();
     });
@@ -60,35 +60,38 @@ export const EditSponsorToExport: React.SFC<
     setSureToDelete(true);
   };
   const handleConfirmDelete = () => {
-
-    deleteSponsor(sponsor.id).then(c => history.goBack());
+    deleteSponsor(sponsor.id).then((c) => history.goBack());
   };
-  const handleCancel = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleCancel = () => {
     event.preventDefault();
     setSureToDelete(false);
   };
-  return (<>
-    <CardWrapper cardTitle="Editar Sponsor">
-
-      {!isEmpty(sponsor) && (
-        <EditSponsorComponent
-          {...sponsor}
-          saveSponsor={handleSaveSponsor}
-        ></EditSponsorComponent>
-      )}
-      <button
-        type="button"
-        onClick={handleDeleteSponsor}
-        className="btn btn-danger btn-full-width"
-      >
-        Eliminar
+  return (
+    <>
+      <CardWrapper cardTitle="Editar Sponsor">
+        {!isEmpty(sponsor) && (
+          <EditSponsorComponent
+            {...sponsor}
+            saveSponsor={handleSaveSponsor}
+          ></EditSponsorComponent>
+        )}
+        <button
+          type="button"
+          onClick={handleDeleteSponsor}
+          className="btn btn-danger btn-full-width"
+        >
+          Eliminar
         </button>
-    </CardWrapper>
-    <DialogQuestion
-      title="Eliminar Código de Grupo"
-      description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
-      openPopup={sureToDelete} callbackAccept={handleConfirmDelete} callbackCancel={handleCancel}></DialogQuestion>
-  </>
+      </CardWrapper>
+      <DialogQuestion
+        callbackClose={() => setSureToDelete(false)}
+        title="Eliminar Código de Grupo"
+        description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
+        openPopup={sureToDelete}
+        callbackAccept={handleConfirmDelete}
+        callbackCancel={handleCancel}
+      ></DialogQuestion>
+    </>
   );
 };
 const mapStateToProps = () => ({});
@@ -98,7 +101,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const EditSponsor = connect(

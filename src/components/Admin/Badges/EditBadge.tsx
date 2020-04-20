@@ -5,13 +5,13 @@ import { isEmpty } from "../../../services/objectsservices";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
 import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
-import { CardWrapper } from '../../Common/CardWrapper';
+import { CardWrapper } from "../../Common/CardWrapper";
 import {
   getBadgeToEdit,
   updateBadge,
-  deleteBadge
+  deleteBadge,
 } from "../../../services/badgesServices";
-import { DialogQuestion } from '../../Common/DialogQuestion';
+import { DialogQuestion } from "../../Common/DialogQuestion";
 type EditBadgeParams = {
   id: string;
   loading: () => void;
@@ -27,7 +27,7 @@ const EditBadgeInternalComponent: React.SFC<
   const history = useHistory();
   useEffect(() => {
     loading();
-    getBadgeToEdit(+props.match.params.id).then(u => {
+    getBadgeToEdit(+props.match.params.id).then((u) => {
       setBadgeToEdit(u);
       setLoaded(true);
       ready();
@@ -46,31 +46,36 @@ const EditBadgeInternalComponent: React.SFC<
   };
   const handleAccept = () => {
     deleteBadge(badgeToEdit.id).then(() => history.goBack());
-  }
+  };
   const handleCancel = () => {
     setSureToDelete(false);
-  }
-  return (<>
-    <CardWrapper cardTitle="Editar Badge">
-      {!isEmpty(badgeToEdit) && (
-        <EditBadgeComponent
-          saveBadge={savebadge}
-          badge={badgeToEdit}
-        ></EditBadgeComponent>
-      )}
-      <button
-        type="button"
-        onClick={handleDeleteBadge}
-        className="btn btn-danger btn-full-width"
-      >
-        Eliminar
-      </button>
-    </CardWrapper>
-    <DialogQuestion
-      title="Eliminar Código de Grupo"
-      description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
-      openPopup={sureToDelete} callbackAccept={handleAccept} callbackCancel={handleCancel}></DialogQuestion>
-  </>
+  };
+  return (
+    <>
+      <CardWrapper cardTitle="Editar Badge">
+        {!isEmpty(badgeToEdit) && (
+          <EditBadgeComponent
+            saveBadge={savebadge}
+            badge={badgeToEdit}
+          ></EditBadgeComponent>
+        )}
+        <button
+          type="button"
+          onClick={handleDeleteBadge}
+          className="btn btn-danger btn-full-width"
+        >
+          Eliminar
+        </button>
+      </CardWrapper>
+      <DialogQuestion
+        callbackClose={() => setSureToDelete(false)}
+        title="Eliminar Código de Grupo"
+        description={`El código que intenga eliminar tiene miembros registrados. Esta seguro que desea eliminarlo de todas formas?`}
+        openPopup={sureToDelete}
+        callbackAccept={handleAccept}
+        callbackCancel={handleCancel}
+      ></DialogQuestion>
+    </>
   );
 };
 
@@ -81,7 +86,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const EditBadge = connect(

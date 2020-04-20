@@ -18,10 +18,11 @@ type SelectOneBadgeStateProps = {
 };
 type SelectOneBadgeProps = {
   assignBadge: (badgeId: number, name: string) => void;
+  readyToAssign?: boolean;
 };
 const SelectOneBadgeComponent: React.SFC<
   SelectOneBadgeProps & SelectOneBadgeStateProps
-> = ({ loading, assignBadge }) => {
+> = ({ loading, assignBadge, readyToAssign = true }) => {
   const [open, setOpen] = useState(false);
   const [isLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -48,7 +49,11 @@ const SelectOneBadgeComponent: React.SFC<
 
   const handleSelect = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    if (!isEmpty(selectedBadge)) setOpenDialog(true);
+    var aa = openDialog;
+    setOpenDialog(false);
+    var aa = openDialog;
+
+    if (readyToAssign && !isEmpty(selectedBadge)) setOpenDialog(true);
   };
   const handleAccept = () => {
     assignBadge(selectedBadge.id, selectedBadge.name);
@@ -61,6 +66,7 @@ const SelectOneBadgeComponent: React.SFC<
           title="Esta por asignar un Badge"
           description={`Se encuentra por asignar el badge ${selectedBadge.name} al código de grupo correspondiente. Una vez hecho esto no puedo eliminar ni volver para atras esta acción. Esta seguro que desea continuar?`}
           openPopup={openDialog}
+          callbackClose={() => setOpenDialog(false)}
           callbackAccept={handleAccept}
         ></DialogQuestion>
       )}
@@ -88,37 +94,15 @@ const SelectOneBadgeComponent: React.SFC<
               <label>Buscar Badge</label>
 
               <Autocomplete
-                id="asynchronous-demo"
-                open={open}
-                onChange={(event, value) => setSelectedBadge(value)}
-                onOpen={() => {
-                  setOpen(true);
-                }}
-                onClose={() => {
-                  setOpen(false);
-                }}
-                getOptionSelected={(option, value) =>
-                  option.name === value.name
-                }
                 getOptionLabel={(option) => option.name}
+                className="badges-autocomplete"
+                onChange={(e, value) => setSelectedBadge(value)}
                 options={options}
-                loading={isLoading}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    fullWidth
+                    label="Seleccionar Badge"
                     variant="outlined"
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <React.Fragment>
-                          {isLoading ? (
-                            <CircularProgress color="inherit" size={20} />
-                          ) : null}
-                          {params.InputProps.endAdornment}
-                        </React.Fragment>
-                      ),
-                    }}
                   />
                 )}
               />

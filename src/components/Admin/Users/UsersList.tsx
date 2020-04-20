@@ -85,7 +85,10 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
         </CardWrapper>
       </div>
       <CardHeaderCollapsableWrapper collapsed={false} cardTitle="Badges">
-        <SelectOneBadge assignBadge={assignBadge}></SelectOneBadge>
+        <SelectOneBadge
+          readyToAssign={selectedMember != null}
+          assignBadge={assignBadge}
+        ></SelectOneBadge>
         <BadgeAssignedList badges={badges}></BadgeAssignedList>
       </CardHeaderCollapsableWrapper>
     </>

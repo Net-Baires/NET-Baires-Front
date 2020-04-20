@@ -72,6 +72,8 @@ var appInsights = new ApplicationInsights({
   },
 });
 appInsights.loadAppInsights();
+appInsights.trackPageView();
+(window as any).appInsights = appInsights;
 interface AppProps {
   isLoading: boolean;
   loading: () => void;

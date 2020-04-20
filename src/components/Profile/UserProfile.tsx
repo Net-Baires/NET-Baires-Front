@@ -14,6 +14,7 @@ import { successToast } from "../../services/toastServices";
 import { stateFromHTML } from "draft-js-import-html";
 import { stateToHTML } from "draft-js-export-html";
 import { useHistory } from "react-router-dom";
+import { trackEvent, EventName } from "../../services/loggerServices";
 interface FormValues extends Member {
   imageData?: File;
   biographyHtml?: EditorState;
@@ -223,6 +224,7 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({
   }, []);
 
   const saveUser = (me: Member, picture: File) => {
+    trackEvent(EventName.ProfileSaveChanges);
     loading();
     updateMe(me, picture).then(() => {
       ready();

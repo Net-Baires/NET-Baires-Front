@@ -1,211 +1,213 @@
 .panel-logo {
-    background-image: url(https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png) !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
+  background-image: url(https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png) !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
 }
-
 
 /* Arreglar diseño origina */
 
 @media (min-width: 576px) {
-    .profile-notification {
-        margin-left: -260px !important;
-    }
+  .profile-notification {
+    margin-left: -260px !important;
+  }
 }
 
 .table-bordered {
-    margin: auto;
-    border-collapse: collapse;
-    overflow-x: auto;
-    /* width: fit-content; */
-    max-width: 100%;
+  margin: auto;
+  border-collapse: collapse;
+  overflow-x: auto;
+  /* width: fit-content; */
+  max-width: 100%;
 }
 
 .table-bordered {
-    @media (max-width: 576px) {
-        display: block;
-    }
+  @media (max-width: 576px) {
+    display: block;
+  }
 }
 
 .sponsors-list-img {
-    max-width: 120px;
+  max-width: 120px;
 }
-
 
 /* .page-wrapper {
     display: flex;
 } */
 
 .flex-class {
-    display: flex;
+  display: flex;
 }
 
 .bar-nav-container {
-    min-height: 70px;
+  min-height: 70px;
 }
 
 .pcoded-main-container {
-    margin-left: auto !important;
+  margin-left: auto !important;
 }
 
 .main-body {
-    width: 100%;
+  width: 100%;
 }
 
 .MuiAppBar-colorPrimary {
-    background-color: transparent !important;
-    box-shadow: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 
 .MuiSvgIcon-root {
-    color: black !important;
+  color: black !important;
 }
 
 .MuiInputBase-root {
-    color: black !important;
+  color: black !important;
 }
 
 .MuiDrawer-paperAnchorDockedLeft {
-    box-shadow: 10px 0px 30px grey !important;
+  box-shadow: 10px 0px 30px grey !important;
 }
 
 .side-menu-logo {
-    height: 50px !important;
+  height: 50px !important;
 }
 
 .side-menu-close {
-    margin-right: -29px;
+  margin-right: -29px;
 }
 
 .side-menu-container .nav-link-slide-bar {
-    display: block;
+  display: block;
 }
 
 .side-menu-container .active {
-    background-color: #EBEBEB;
+  background-color: #ebebeb;
 }
 
 .events-actions-button {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .mis-eventos-container table tr td:nth-child(2) {
-    overflow: hidden;
-    line-height: 1.5em;
-    height: 3em;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.5em;
+  height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .img-platform-events-list {
-    width: 40px !important;
-    height: 40px !important;
+  width: 40px !important;
+  height: 40px !important;
 }
 
 @media (min-width: 992px) {
-    .slider {
-        height: 650px !important;
-    }
+  .slider {
+    height: 650px !important;
+  }
 }
 
 @media (max-width: 576px) {
-    .slider {
-        height: 200px !important;
-    }
+  .slider {
+    height: 200px !important;
+  }
 }
 
 .img-slider-home {
-    width: 100%;
-    background-size: 100% 100%;
+  width: 100%;
+  background-size: 100% 100%;
 }
 
 .event-live-card-image-container {
-    width: 100%;
+  width: 100%;
 }
 
 .text-field-cotainer-full-width {
-    width: 100%;
+  width: 100%;
 }
 
 .general-small-card-body-size {
-    max-height: 301px;
-    overflow-x: overlay;
+  max-height: 301px;
+  overflow-x: overlay;
 }
 
 .display-block {
-    display: block !important;
+  display: block !important;
 }
 
 .badge-description-wrapper {
-    min-height: 300px;
-    background: #f4f7fa;
-    padding: 10px 20px;
-    font-size: 14px;
-    height: auto;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    overflow: auto;
+  min-height: 300px;
+  background: #f4f7fa;
+  padding: 10px 20px;
+  font-size: 14px;
+  height: auto;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  overflow: auto;
 }
 
 .img-suggestion-member {
-    height: 40px;
+  height: 40px;
 }
 
-.card-table {}
+.card-table {
+}
 
 .card-table-container {
-    height: 120px !important;
+  height: 120px !important;
 }
 
 .row-card-table-container {
-    overflow: scroll;
-    height: 600px;
+  overflow: scroll;
+  height: 600px;
 }
 
 .react-autosuggest__input {
-    width: 100% !important;
-    max-width: 240px;
+  width: 100% !important;
+  max-width: 240px;
 }
 
 .home-install-pwa {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-    z-index: 999999;
-    background-color: white;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  z-index: 999999;
+  background-color: white;
 }
 
 .home-install-pwa .btn-install-container {
-    text-align: center;
+  text-align: center;
 }
 
 .home-install-pwa .btn-install-container button {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 .home-install-pwa .col-sm-6 {
-    font-size: 25px;
-    padding: 5px;
+  font-size: 25px;
+  padding: 5px;
 }
 
 .broadcasting-live {
-    text-align: center;
-    margin-bottom: 50px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .img-broadcasting {
-    max-width: 300px;
+  max-width: 300px;
 }
 
 .home-install-pwa {
-    margin-left: 0px !important;
+  margin-left: 0px !important;
 }
 
 .event-live-actions-wrapper {
-    height: 250px;
+  height: 250px;
 }
 
 .broadcasting-message p {
-    font-size: 25px;
+  font-size: 25px;
+}
+.badges-autocomplete > div {
+  width: 100%;
 }

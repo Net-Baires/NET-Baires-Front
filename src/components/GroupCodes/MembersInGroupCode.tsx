@@ -2,19 +2,22 @@ import React, { useState, MouseEvent } from "react";
 import { connect } from "react-redux";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { loading, ready } from "../../store/loading/actions";
-import {
-  MemberSmallDetail
-} from "../../services/models/GroupCodes/GroupCodeFullDetailResponse";
+import { MemberSmallDetail } from "../../services/models/GroupCodes/GroupCodeFullDetailResponse";
 import { CardWrapper } from "../Common/CardWrapper";
 import { CardHeaderCollapsableWrapper } from "../Common/CardHeaderCollapsableWrapper";
 import { Member } from "../../services/models/Member";
 import { SearchMember } from "../Admin/Users/components/SearchMember";
 import {
-  addMemberToGroupCode, deleteMemberFromGroupCode
+  addMemberToGroupCode,
+  deleteMemberFromGroupCode,
 } from "../../services/eventsServices";
-import { getAttendeesByQuery } from '../../services/attendeesServices';
-import { successToast, errorToast, warningToast } from '../../services/toastServices';
-import { DialogQuestion } from '../Common/DialogQuestion';
+import { getAttendeesByQuery } from "../../services/attendeesServices";
+import {
+  successToast,
+  errorToast,
+  warningToast,
+} from "../../services/toastServices";
+import { DialogQuestion } from "../Common/DialogQuestion";
 type MembersInGroupCodeProps = {
   loading: () => void;
   eventLiveId: number;
@@ -30,13 +33,13 @@ const MembersInGroupCodeComponent: React.SFC<MembersInGroupCodeProps> = ({
   groupCodeId,
   callbackLoadDetail,
   loading,
-  ready
+  ready,
 }) => {
   const [selectedMember, setSelectedMember] = useState<Member>({} as Member);
   const [memberExistInGroupCode, setMemberExistInGroupCode] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
   const selectMember = (member: Member) => {
-    if (groupCodeMembers && groupCodeMembers.some(x => x.id == member.id)) {
+    if (groupCodeMembers && groupCodeMembers.some((x) => x.id == member.id)) {
       setMemberExistInGroupCode(true);
     } else {
       setMemberExistInGroupCode(false);
@@ -57,7 +60,9 @@ const MembersInGroupCodeComponent: React.SFC<MembersInGroupCodeProps> = ({
         setMemberExistInGroupCode(false);
         ready();
         callbackLoadDetail();
-        warningToast(`El miembro : ${selectedMember.firstName} fue eliminado al código.`)
+        warningToast(
+          `El miembro : ${selectedMember.firstName} fue eliminado al código.`
+        );
       })
       .catch(() => {
         ready();
@@ -71,22 +76,28 @@ const MembersInGroupCodeComponent: React.SFC<MembersInGroupCodeProps> = ({
         setMemberExistInGroupCode(true);
         ready();
         callbackLoadDetail();
-        successToast(`El miembro : ${selectedMember.firstName} fue agregado al código.`)
+        successToast(
+          `El miembro : ${selectedMember.firstName} fue agregado al código.`
+        );
       })
       .catch(() => {
         ready();
         errorToast("Error al agregar al miembro al código.");
       });
-  }
+  };
   const handleCancel = () => {
     setOpenPopup(false);
-  }
+  };
   return (
     <>
       <DialogQuestion
+        callbackClose={() => setOpenPopup(false)}
         title="Agregar miembro al Grupo de Código"
         description={`Esta intentando agregar un miemebro al Grupo de Código, si continua, no solo agrega al miembro si no que lo marcara como que asistio al evento. Esta seguro que este miembro se encuentra en el evento?`}
-        openPopup={openPopup} callbackAccept={handleAccept} callbackCancel={handleCancel}></DialogQuestion>
+        openPopup={openPopup}
+        callbackAccept={handleAccept}
+        callbackCancel={handleCancel}
+      ></DialogQuestion>
       <CardHeaderCollapsableWrapper
         collapsed={true}
         cardTitle={`Usuarios registrados (${groupCodeMembers.length}) `}
@@ -105,7 +116,7 @@ const MembersInGroupCodeComponent: React.SFC<MembersInGroupCodeProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {groupCodeMembers.map(member => (
+                {groupCodeMembers.map((member) => (
                   <tr key={member.id} className="unread">
                     <td>
                       <h6 className="mb-1">{member.id}</h6>
@@ -174,7 +185,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const MembersInGroupCode = connect(
