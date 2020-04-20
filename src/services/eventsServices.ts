@@ -1,11 +1,18 @@
-import { EventDetail, UpdateEvent } from "./models/Events/Event";
+import {
+  EventDetail,
+  UpdateEvent,
+  GetLinkEventLiveLink
+} from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
-import {
-  CheckAttendanceGeneralResponse
-} from "./models/Events/EventDetailToSync";
+import { CheckAttendanceGeneralResponse } from "./models/Events/EventDetailToSync";
 import { EventToReportAttendance } from "./models/Events/EventToReportAttendance";
-import { getRequest, putRequest, postRequest, deleteRequest } from './requestServices';
+import {
+  getRequest,
+  putRequest,
+  postRequest,
+  deleteRequest
+} from "./requestServices";
 import { EventLiveDetail } from "./models/Events/EventLiveDetail";
 import {
   CreateGroupCodeResponse,
@@ -25,8 +32,13 @@ export const syncEvent = (idEvent: number): Promise<MeEvent[]> => {
 export const getEventsToSync = (): Promise<EventToSync[]> =>
   getRequest("/events?done=false");
 export const getEvents = (): Promise<EventDetail[]> => getRequest("/events");
+
 export const getEventLive = (id: number): Promise<EventDetail> =>
   getRequest(`/events/${id}/live`);
+
+export const getEventLiveOnlineLink = (): Promise<GetLinkEventLiveLink> =>
+  getRequest(`/events/live/link`);
+
 export const getLiveEventDetail = (id: number): Promise<EventLiveDetail> =>
   getRequest(`/events/${id}/live/detail`);
 
@@ -47,6 +59,7 @@ export const getEvent = (id: number): Promise<EventDetail> =>
 export const getEventToReportAttendance = (
   id: number
 ): Promise<EventToReportAttendance> => getRequest(`/events/${id}/attendance`);
+
 export const getCheckAttendanceGeneral = (
   id: number
 ): Promise<EventToReportAttendance> =>
@@ -57,17 +70,20 @@ export const reportAttendance = (
 ): Promise<ReportAttendanceResponse> => {
   return putRequest(`/events/attendances/${token}`);
 };
+
 export const reportAttendanceGeneral = (
   token: string
 ): Promise<CheckAttendanceGeneralResponse> => {
   return putRequest(`/events/attendances/general/${token}`);
 };
+
 export const reportAttendanceGeneralByCode = (
   id: number,
   code: string
 ): Promise<CheckAttendanceGeneralResponse> => {
   return putRequest(`/events/${id}/attendances/general/${code}`);
 };
+
 export const createGroupCode = (
   eventId: number,
   detail: string
@@ -80,12 +96,15 @@ export const addCodeToGroupCode = (
 ): Promise<AddMemberToGroupCodeResponse> => {
   return postRequest(`/events/${eventId}/groupcodes/${code}`);
 };
+
 export const addMemberToGroupCode = (
   groupCodeId: number,
   eventId: number,
   memberId: number
 ): Promise<boolean> => {
-  return postRequest(`/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`);
+  return postRequest(
+    `/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`
+  );
 };
 
 export const deleteMemberFromGroupCode = (
@@ -93,7 +112,9 @@ export const deleteMemberFromGroupCode = (
   eventId: number,
   memberId: number
 ): Promise<boolean> => {
-  return deleteRequest(`/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`);
+  return deleteRequest(
+    `/events/${eventId}/groupcodes/${groupCodeId}/members/${memberId}`
+  );
 };
 export interface ReportAttendanceResponse {
   eventId: number;

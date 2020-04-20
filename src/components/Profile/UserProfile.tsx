@@ -8,12 +8,12 @@ import { isEmpty } from "../../services/objectsservices";
 import Draft from "react-wysiwyg-typescript";
 import { EditorState } from "draft-js";
 import { fillAllFieldWithDefaultValue } from "../../helpers/objectHelper";
-import { CardWrapper } from '../Common/CardWrapper';
-import { loading, ready } from '../../store/loading/actions';
-import { successToast } from '../../services/toastServices';
-import { stateFromHTML } from 'draft-js-import-html';
-import { stateToHTML } from 'draft-js-export-html';
-import { useHistory } from 'react-router-dom';
+import { CardWrapper } from "../Common/CardWrapper";
+import { loading, ready } from "../../store/loading/actions";
+import { successToast } from "../../services/toastServices";
+import { stateFromHTML } from "draft-js-import-html";
+import { stateToHTML } from "draft-js-export-html";
+import { useHistory } from "react-router-dom";
 interface FormValues extends Member {
   imageData?: File;
   biographyHtml?: EditorState;
@@ -30,8 +30,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
     if (props.values.biography != null)
       setFieldValue(
         "biographyHtml",
-        EditorState.createWithContent(stateFromHTML(props.values.biography)
-        )
+        EditorState.createWithContent(stateFromHTML(props.values.biography))
       );
   }, []);
 
@@ -43,7 +42,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
   };
   return (
     <>
-      <div className="form-group image-profile-prview-container" >
+      <div className="form-group image-profile-prview-container">
         <img
           className="image-profile-prview"
           src={props.values.imagePreview}
@@ -155,7 +154,7 @@ const UserProfileForm = (props: FormikProps<FormValues>) => {
             wrapperClassName="badge-description-wrapper"
             editorClassName="badge-description-editor"
             editorState={props.values.biographyHtml}
-            onEditorStateChange={state => {
+            onEditorStateChange={(state) => {
               setFieldValue("biographyHtml", state);
             }}
           />
@@ -182,9 +181,9 @@ interface MyFormProps extends Member {
   imageData?: File;
 }
 const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
-  mapPropsToValues: props => {
+  mapPropsToValues: (props) => {
     return {
-      ...props
+      ...props,
     };
   },
   validationSchema: yup.object<MyFormProps>().shape({
@@ -195,26 +194,29 @@ const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
     github: yup.string(),
     biography: yup.string(),
     instagram: yup.string(),
-    biographyHtml: yup.string()
+    biographyHtml: yup.string(),
   }),
   handleSubmit: (values: any, { props }) => {
     // values.biography = values.biographyHtml.getCurrentContent().getPlainText();
     if (values.biographyHtml != null)
       values.biography = stateToHTML(values.biographyHtml!.getCurrentContent());
     props.saveUser(values, values.imageData!);
-  }
+  },
 })(UserProfileForm);
 
 type EditAllSponsorProps = {
   loading: () => void;
   ready: () => void;
 };
-const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }) => {
+const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({
+  loading,
+  ready,
+}) => {
   const history = useHistory();
   const [userDetail, setUserDetailState] = useState({} as Member);
   useEffect(() => {
     loading();
-    getMe().then(x => {
+    getMe().then((x) => {
       setUserDetailState(x);
       ready();
     });
@@ -226,20 +228,17 @@ const UserProfileComponent: React.SFC<EditAllSponsorProps> = ({ loading, ready }
       ready();
       successToast("Perfil Actualizado");
       history.push("/app/panel");
-
     });
   };
   return (
-    <CardWrapper cardTitle="Editar Perfil" >
+    <CardWrapper cardTitle="Editar Perfil">
       {!isEmpty(userDetail) && (
         <EditAllUserFormik
           {...userDetail}
-
           saveUser={saveUser}
         ></EditAllUserFormik>
-      )
-      }
-    </CardWrapper >
+      )}
+    </CardWrapper>
   );
 };
 const mapStateToProps = () => ({});
@@ -249,7 +248,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const UserProfile = connect(

@@ -1,35 +1,33 @@
 {
-    "api": {
-        "base": "https://localhost:8080/",
-        "baseRemote": "https://localhost:5001"
+  "api": {
+    "base": "http://localhost:8080/",
+    "baseRemote": "http://localhost:5000"
+  },
+  "instrumentationKey": "d2dbc0f0-4f49-41fc-a4f5-ae901108507e",
+  "integrations": {
+    "meetup": {
+      "clientId": "ifq9b9kt5n5gt138l86h8f9mec",
+      "clientSecret": "782d06kv33pjtpg9ripsncqcrb",
+      "accessTokenUri": "https://secure.meetup.com/oauth2/access",
+      "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
+      "redirectUri": "http://localhost:8080/login/meetup",
+      "scopes": ["basic"]
     },
-    "instrumentationKey": "",
-    "integrations": {
-        "meetup": {
-            "clientId": "",
-            "clientSecret": "",
-            "accessTokenUri": "https://secure.meetup.com/oauth2/access",
-            "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
-            "redirectUri": "https://localhost:8080/login/meetup",
-            "scopes": [
-                "basic"
-            ]
-        },
-        "eventBrite": {
-            "clientId": "",
-            "redirectUri": "http://localhost:8080/login/eventbrite"
-        }
-    },
-    "firebase": {
-        "pushNotifications": {
-            "apiKey": "",
-            "authDomain": "",
-            "databaseURL": "",
-            "projectId": "",
-            "storageBucket": "",
-            "messagingSenderId": "",
-            "appId": "",
-            "measurementId": ""
-        }
+    "eventBrite": {
+      "clientId": "",
+      "redirectUri": "http://localhost:8080/login/eventbrite"
     }
+  },
+  "firebase": {
+    "pushNotifications": {
+      "apiKey": "AIzaSyCXCowwHV3b-q5sP7w7A8BRLZZ3RKYUTq4",
+      "authDomain": "net-baires-dev.firebaseapp.com",
+      "databaseURL": "https://net-baires-dev.firebaseio.com",
+      "projectId": "net-baires-dev",
+      "storageBucket": "net-baires-dev.appspot.com",
+      "messagingSenderId": "720103806559",
+      "appId": "1:720103806559:web:26d56c9879ee7da539adea",
+      "measurementId": "G-ZZC4QG9C96"
+    }
+  }
 }

@@ -31,3 +31,7 @@ export interface UpdateEvent {
   done?: boolean;
   live?: boolean;
 }
+
+export interface GetLinkEventLiveLink {
+  onlineLink: string;
+}

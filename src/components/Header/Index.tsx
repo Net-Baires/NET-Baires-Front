@@ -18,10 +18,9 @@ export const Header: React.SFC<HeaderProps> = () => {
   const handleLogout = () => {
     logout();
     history.push("/");
-    history.listen;
   };
   const handleSyncEvents = () => {
-    syncEvents().then(() => { });
+    syncEvents().then(() => {});
   };
 
   const handleIsActive = (match: match<any>): boolean => {
@@ -174,47 +173,47 @@ export const Header: React.SFC<HeaderProps> = () => {
                 </NavLink>
               </Nav.Item>
             ) : (
-                <>
-                  <NavDropdown title="Acciones" id="basic-nav-dropdown">
-                    <NavDropdown.Item>
+              <>
+                <NavDropdown title="Acciones" id="basic-nav-dropdown">
+                  <NavDropdown.Item>
+                    <NavLink
+                      exact
+                      isActive={handleIsActive}
+                      className="nav-link nav-link-dropdown"
+                      activeClassName="active"
+                      to="/app/profile"
+                    >
+                      Perfil
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <SecureElement rol="Member">
+                    <NavDropdown.Item href="#">
                       <NavLink
                         exact
                         isActive={handleIsActive}
                         className="nav-link nav-link-dropdown"
                         activeClassName="active"
-                        to="/app/profile"
+                        to="/app/organizedcode/read"
                       >
-                        Perfil
-                    </NavLink>
-                    </NavDropdown.Item>
-                    <SecureElement rol="Member">
-                      <NavDropdown.Item href="#">
-                        <NavLink
-                          exact
-                          isActive={handleIsActive}
-                          className="nav-link nav-link-dropdown"
-                          activeClassName="active"
-                          to="/app/organizedcode/read"
-                        >
-                          Leer Código
+                        Leer Código
                       </NavLink>
-                      </NavDropdown.Item>
-                    </SecureElement>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item>
-                      <Nav.Item>
-                        <a
-                          onClick={handleLogout}
-                          className="nav-link nav-link-dropdown"
-                          href="#"
-                        >
-                          Desconectarse
-                      </a>
-                      </Nav.Item>
                     </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              )}
+                  </SecureElement>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Nav.Item>
+                      <a
+                        onClick={handleLogout}
+                        className="nav-link nav-link-dropdown"
+                        href="#"
+                      >
+                        Desconectarse
+                      </a>
+                    </Nav.Item>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
             <Nav.Item>
               <NavLink
                 exact
@@ -256,7 +255,6 @@ export const Header: React.SFC<HeaderProps> = () => {
                 Eventos en Vivo
               </NavLink>
             </Nav.Item>
-
           </Nav>
           {isLogged() && (
             <Navbar.Text>
@@ -268,7 +266,6 @@ export const Header: React.SFC<HeaderProps> = () => {
           )}
         </Navbar.Collapse>
       </Navbar>
-
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from "../../contexts/UserContext";
 
 type LoginProps = {};
 const LogoutComponent: React.SFC<LoginProps> = () => {
@@ -8,13 +8,9 @@ const LogoutComponent: React.SFC<LoginProps> = () => {
   const { logout } = useContext(UserContext);
   useEffect(() => {
     logout();
-    history.push('/login');
-  })
-  return (
-    <>
-
-    </>
-  );
+    history.push("/");
+  });
+  return <></>;
 };
 
 export default LogoutComponent;

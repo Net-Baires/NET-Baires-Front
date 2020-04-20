@@ -33,10 +33,10 @@ const doRequest = <TBody, TResponse>(
   return fetch(
     `${Config.api.baseRemote}${url}`,
     generateOptions<TBody>(method, body)
-  ).then(response => {
+  ).then((response) => {
     if (response.status === 204) return defaultValue;
-    // if (response.status.toString() == "404")
-    //   window.history.pushState({}, null as any, "/NotFound");
+    if (response.status.toString() == "401")
+      window.history.pushState({}, null as any, "/logout");
     if (response.status.toString().indexOf("40") >= 0)
       return Promise.reject(response.status);
     return response.json();
@@ -51,8 +51,8 @@ export const generateOptions = <TBody>(
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    }
+      Authorization: `Bearer ${getToken()}`,
+    },
   };
   if (method != "GET") {
     options.body = JSON.stringify(body);
@@ -87,9 +87,9 @@ const WithFileequest = <TBody>(
     method: action,
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${getToken()}`
+      Authorization: `Bearer ${getToken()}`,
     },
-    body: formData
+    body: formData,
   };
   return fetch(`${Config.api.baseRemote}${url}`, options).then((x: any) => {
     var contentType = x.headers.get("content-type");
