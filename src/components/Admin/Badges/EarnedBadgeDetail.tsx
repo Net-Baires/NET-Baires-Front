@@ -65,12 +65,12 @@ const EarnedBadgeDetailComponent: React.SFC<AssignBadgeProps> = ({
                 </div>
               </div>
             </CardWrapper>
-            <div className="row">
-              <ShareProfile
-                urlToShare={`/members/${user.user.userId}/badges/${id}`}
-                title="Compartí este badge en tus redes."
-              ></ShareProfile>
-            </div>
+          </div>
+          <div className="row">
+            <ShareProfile
+              urlToShare={`/members/${user.user.userId}/badges/${id}`}
+              title="Compartí este badge en tus redes."
+            ></ShareProfile>
           </div>
         </>
       )}

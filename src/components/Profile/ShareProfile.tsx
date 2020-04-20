@@ -59,9 +59,7 @@ export const ShareProfile: React.SFC<ShareProfileProps> = ({
           <TwitterShareButton
             disabled={false}
             url={urlToShare}
-            title={"Titulo"}
-            via="aaa"
-            hashtags={["aaaa"]}
+            hashtags={["NETBaires"]}
           >
             <TwitterIcon size={32} round={true} />
           </TwitterShareButton>
@@ -90,10 +88,7 @@ export const ShareProfile: React.SFC<ShareProfileProps> = ({
         <TabPanel>
           <h3>{title}</h3>
           <p>{description}</p>
-          <EmailShareButton
-            body="Queremos compartir nuestro perfil desde el mail. "
-            url={urlToShare}
-          >
+          <EmailShareButton url={urlToShare}>
             <EmailIcon size={32} round={true} />
           </EmailShareButton>
         </TabPanel>
