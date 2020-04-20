@@ -128,9 +128,6 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
         </div>
         <EventActions></EventActions>
       </div>
-      <div className="row">
-        <ShareProfile urlToShare="http://google.com.ar"></ShareProfile>
-      </div>
     </>
   );
 };

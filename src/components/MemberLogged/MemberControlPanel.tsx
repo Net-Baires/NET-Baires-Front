@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { getEventsLive } from "../../services/eventsServices";
 import { isEmpty } from "../../services/objectsservices";
 import { EventDetail } from "../../services/models/Events/Event";
@@ -17,6 +17,7 @@ import { CardHeaderCollapsableWrapper } from "../Common/CardHeaderCollapsableWra
 import { useHistory } from "react-router-dom";
 import { MyBadgesList } from "../Badges/MyBadgesList";
 import { ShareProfile } from "../Profile/ShareProfile";
+import { UserContext } from "../../contexts/UserContext";
 
 type MemberControlPanelProps = {};
 type MemberControlPanelStateProps = {
@@ -29,6 +30,7 @@ const MemberControlPanelComponent: React.SFC<
   MemberControlPanelProps & MemberControlPanelStateProps
 > = ({ loading, ready, memberDetail, setMemberDetail }) => {
   const [eventsLive, setEventsLive] = useState(new Array<EventDetail>());
+  const { user } = useContext(UserContext);
   useEffect(() => {
     loadEvents();
     subscribe<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, () => {
@@ -143,6 +145,13 @@ const MemberControlPanelComponent: React.SFC<
           >
             <MyBadgesList></MyBadgesList>
           </CardHeaderCollapsableWrapper>
+          <div className="row">
+            <ShareProfile
+              urlToShare={`${window.location.origin}/members/${user.userId}/profile`}
+              title="Compartí tu perfil en tus redes"
+              description="Compartí todos tus badges y la información de tu perfil con tus contactos"
+            ></ShareProfile>
+          </div>
         </>
       )}
     </>

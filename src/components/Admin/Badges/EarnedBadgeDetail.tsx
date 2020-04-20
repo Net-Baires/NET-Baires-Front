@@ -2,34 +2,38 @@ import React, { useEffect, useContext, useState } from "react";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { CardHeaderWrapper } from '../../Common/CardHeaderWrapper';
-import { CardWrapper } from '../../Common/CardWrapper';
-import { getBadgeFromMeber } from '../../../services/membersServices';
-import { UserContext } from '../../../contexts/UserContext';
-import { useParams } from 'react-router-dom';
-import { BadgeMemberViewModel } from '../../../services/models/BadgeDetail';
-import { isEmpty } from '../../../services/objectsservices';
-import { formatStringDate } from '../../../helpers/DateHelpers';
-import { makeStyles, createStyles } from '@material-ui/core';
-import ReactHtmlParser from 'react-html-parser';
-import { ShareInSocialNetwork } from '../components/ShareInSocialNetwork';
+import { CardHeaderWrapper } from "../../Common/CardHeaderWrapper";
+import { CardWrapper } from "../../Common/CardWrapper";
+import { getBadgeFromMeber } from "../../../services/membersServices";
+import { UserContext } from "../../../contexts/UserContext";
+import { useParams } from "react-router-dom";
+import { BadgeMemberViewModel } from "../../../services/models/BadgeDetail";
+import { isEmpty } from "../../../services/objectsservices";
+import { formatStringDate } from "../../../helpers/DateHelpers";
+import { makeStyles, createStyles } from "@material-ui/core";
+import ReactHtmlParser from "react-html-parser";
+import { ShareInSocialNetwork } from "../components/ShareInSocialNetwork";
+import { ShareProfile } from "../../Profile/ShareProfile";
 
 type AssignBadgeProps = {
   loading: () => void;
   ready: () => void;
 };
-const EarnedBadgeDetailComponent: React.SFC<AssignBadgeProps> = ({ ready, loading }) => {
+const EarnedBadgeDetailComponent: React.SFC<AssignBadgeProps> = ({
+  ready,
+  loading,
+}) => {
   const classes = useStyles();
   const [badgeDetail, setBadgeDetai] = useState({} as BadgeMemberViewModel);
   const user = useContext(UserContext);
   const { id } = useParams();
   useEffect(() => {
     loading();
-    getBadgeFromMeber(user.user.userId, +id!).then(b => {
+    getBadgeFromMeber(user.user.userId, +id!).then((b) => {
       setBadgeDetai(b);
       ready();
-    })
-  }, [])
+    });
+  }, []);
   return (
     <>
       {!isEmpty(badgeDetail) && (
@@ -40,7 +44,10 @@ const EarnedBadgeDetailComponent: React.SFC<AssignBadgeProps> = ({ ready, loadin
           <div className="row">
             <CardWrapper colSize={4} cardTitle="Badge">
               <div className={classes.imageBadgeContainer}>
-                <img className={classes.imageBadge} src={badgeDetail.badge.imageUrl}></img>
+                <img
+                  className={classes.imageBadge}
+                  src={badgeDetail.badge.imageUrl}
+                ></img>
               </div>
             </CardWrapper>
             <CardWrapper colSize={8} cardTitle="Detalle">
@@ -58,14 +65,17 @@ const EarnedBadgeDetailComponent: React.SFC<AssignBadgeProps> = ({ ready, loadin
                 </div>
               </div>
             </CardWrapper>
-            <CardWrapper colSize={4} cardTitle="Compartir en mis redes sociales">
-              <ShareInSocialNetwork link={`/members/${user.user.userId}/badges/${id}`}></ShareInSocialNetwork>
-            </CardWrapper>
+            <div className="row">
+              <ShareProfile
+                urlToShare={`/members/${user.user.userId}/badges/${id}`}
+                title="Compartí este badge en tus redes."
+              ></ShareProfile>
+            </div>
           </div>
-        </>)
-      }
+        </>
+      )}
     </>
-  )
+  );
 };
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: any) => ({
@@ -74,7 +84,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const EarnedBadgeDetail = connect(
@@ -85,11 +95,11 @@ export const EarnedBadgeDetail = connect(
 const useStyles = makeStyles(() =>
   createStyles({
     imageBadgeContainer: {
-      textAlign: "center"
+      textAlign: "center",
     },
     imageBadge: {
       maxWidth: "200px",
-      textAlign: "center"
-    }
+      textAlign: "center",
+    },
   })
 );
