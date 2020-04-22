@@ -49,10 +49,6 @@ const SelectOneBadgeComponent: React.SFC<
 
   const handleSelect = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    var aa = openDialog;
-    setOpenDialog(false);
-    var aa = openDialog;
-
     if (readyToAssign && !isEmpty(selectedBadge)) setOpenDialog(true);
   };
   const handleAccept = () => {

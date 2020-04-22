@@ -6,8 +6,10 @@ type NotFoundProps = {
 
 export const InformationHeader: React.SFC<NotFoundProps> = ({ text }) => {
   return (
-    <p className="wow fadeInUp" data-wow-delay="0.2s">
-      {text}
-    </p>
+    <div className="col-sm-12">
+      <div className="alert alert-primary" role="alert">
+        <p> {text}</p>
+      </div>
+    </div>
   );
 };

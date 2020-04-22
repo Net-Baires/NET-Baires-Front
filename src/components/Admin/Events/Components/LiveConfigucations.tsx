@@ -1,17 +1,22 @@
 import React, { SyntheticEvent } from "react";
 import { loading, ready } from "../../../../store/loading/actions";
 import { connect } from "react-redux";
-import { updateEvent } from '../../../../services/eventsServices';
-import { EventLiveDetail } from '../../../../services/models/Events/EventLiveDetail';
-import { CardWrapper } from '../../../Common/CardWrapper';
-type LiveConfigucationsProps = {
+import { updateEvent } from "../../../../services/eventsServices";
+import { EventLiveDetail } from "../../../../services/models/Events/EventLiveDetail";
+import { CardWrapper } from "../../../Common/CardWrapper";
+type LiveConfigurationsProps = {
   eventLive: EventLiveDetail;
   updatedEvent: () => void;
   loading: () => void;
   ready: () => void;
 };
 
-const LiveConfigucationsComponent: React.SFC<LiveConfigucationsProps> = ({ loading, ready, eventLive, updatedEvent }) => {
+const LiveConfigurationsComponent: React.SFC<LiveConfigurationsProps> = ({
+  loading,
+  ready,
+  eventLive,
+  updatedEvent,
+}) => {
   const handleGeneralAttended = (
     event: SyntheticEvent<HTMLButtonElement>,
     enable: boolean
@@ -26,9 +31,7 @@ const LiveConfigucationsComponent: React.SFC<LiveConfigucationsProps> = ({ loadi
     );
   };
   return (
-
     <CardWrapper colSize={3} cardTitle="Configuraciones evento en Vivo">
-
       <div className="col-md-12">
         <form>
           <div className="form-group row">
@@ -37,32 +40,37 @@ const LiveConfigucationsComponent: React.SFC<LiveConfigucationsProps> = ({ loadi
                 <button
                   type="button"
                   className="btn btn-danger form-control"
-                  onClick={e => handleGeneralAttended(e, false)}
+                  onClick={(e) => handleGeneralAttended(e, false)}
                   data-toggle="tooltip"
                   data-original-title="btn btn-danger"
                 >
                   Asistencia General
                 </button>
               ) : (
-                  <button
-                    type="button"
-                    className="btn btn-success form-control"
-                    onClick={e => handleGeneralAttended(e, true)}
-                    data-toggle="tooltip"
-                    data-original-title="btn btn-danger"
-                  >
-                    Asistencia General
+                <button
+                  type="button"
+                  className="btn btn-success form-control"
+                  onClick={(e) => handleGeneralAttended(e, true)}
+                  data-toggle="tooltip"
+                  data-original-title="btn btn-danger"
+                >
+                  Asistencia General
                 </button>
-                )}
+              )}
             </div>
           </div>
-          {eventLive.generalAttended &&
+          {eventLive.generalAttended && (
             <div className="form-group row">
               <div className="col-md-12">
                 <button
                   type="button"
                   className="btn btn-success form-control"
-                  onClick={e => window.open(`/app/events/${eventLive.id}/attendances/general`, '_blank')}
+                  onClick={(e) =>
+                    window.open(
+                      `/app/events/${eventLive.id}/attendances/general`,
+                      "_blank"
+                    )
+                  }
                   data-toggle="tooltip"
                   data-original-title="btn btn-danger"
                 >
@@ -70,7 +78,7 @@ const LiveConfigucationsComponent: React.SFC<LiveConfigucationsProps> = ({ loadi
                 </button>
               </div>
             </div>
-          }
+          )}
         </form>
       </div>
     </CardWrapper>
@@ -84,10 +92,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
-export const LiveConfigucations = connect(
+export const LiveConfigurations = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LiveConfigucationsComponent);
+)(LiveConfigurationsComponent);

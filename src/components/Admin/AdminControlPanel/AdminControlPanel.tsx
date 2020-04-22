@@ -35,16 +35,7 @@ export const AdminControlPanel: React.SFC<ControlPanelProps> = () => {
           <div className="row">
             <div className="col-sm-12">
               <div className="alert alert-primary" role="alert">
-                <p>
-                  Eventos en proceso.
-                  {/* <a
-              href="index-form-package.html"
-              target="_blank"
-              className="alert-link"
-            >
-              CHECKOUT
-            </a> */}
-                </p>
+                <p>Eventos en proceso.</p>
               </div>
             </div>
           </div>

@@ -1,17 +1,20 @@
 import React, { useState, useEffect, ChangeEvent, MouseEvent } from "react";
 import { connect } from "react-redux";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import { loading, ready } from '../../store/loading/actions';
+import { loading, ready } from "../../store/loading/actions";
 import { isEmpty } from "../../services/objectsservices";
 import { useParams } from "react-router-dom";
 import {
   getGroupCodeDetail,
   assignBadgeToAttendancesInGroupCode,
-  makeRaffle
+  makeRaffle,
 } from "../../services/groupCodesServices";
 import { GroupCodeFullDetailResponse } from "../../services/models/GroupCodes/GroupCodeFullDetailResponse";
 import { CardWrapper } from "../Common/CardWrapper";
-import { subscribeUpdateGroupCode } from "../../services/syncCommunicationServices";
+import {
+  subscribeUpdateGroupCode,
+  memberNotification,
+} from "../../services/syncCommunicationServices";
 import { CardHeaderCollapsableWrapper } from "../Common/CardHeaderCollapsableWrapper";
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { SelectOneBadge } from "../admin/Badges/SelectOneBadge";
@@ -22,7 +25,10 @@ type AdminGroupCodesProps = {
   loading: () => void;
   ready: () => void;
 };
-const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, ready }) => {
+const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({
+  loading,
+  ready,
+}) => {
   const { idEvent, idGroupCode } = useParams();
   const [groupCode, setGroupCode] = useState({} as GroupCodeFullDetailResponse);
   const [repeatMember, setRepeatMember] = useState(false);
@@ -34,7 +40,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
   }, []);
   const getGroupCode = () => {
     loading();
-    getGroupCodeDetail(+idGroupCode!).then(x => {
+    getGroupCodeDetail(+idGroupCode!).then((x) => {
       setGroupCode(x);
       ready();
     });
@@ -57,9 +63,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
 
   const handleRaffle = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    makeRaffle(+idGroupCode!, count, repeatMember).then(s =>
-      getGroupCode()
-    );
+    makeRaffle(+idGroupCode!, count, repeatMember).then((s) => getGroupCode());
   };
 
   const handleRepeatMember = (
@@ -69,10 +73,17 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
     event.preventDefault();
     setRepeatMember(isChecked);
   };
-  const assignBadge = (badgeId: number) => {
+  const assignBadge = (badgeId: number, name: string) => {
     loading();
     assignBadgeToAttendancesInGroupCode(+idGroupCode!, badgeId)
       .then(() => {
+        groupCode.members.forEach((member) =>
+          memberNotification(
+            member.id,
+            `Acaba de recibir el badge ${name}`,
+            `/app/earned/badges/${badgeId}/detail`
+          )
+        );
         ready();
       })
       .finally(() => {
@@ -107,7 +118,9 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
                       </label>
                       <div className="col-md-6">
                         <input
-                          onChange={e => handleChangeCount(e, +e.target.value)}
+                          onChange={(e) =>
+                            handleChangeCount(e, +e.target.value)
+                          }
                           type="number"
                           className="form-control"
                         ></input>
@@ -135,7 +148,7 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
                 <div className="form-group row">
                   <div className="col-sm-12">
                     <a
-                      onClick={e => handleRaffle(e)}
+                      onClick={(e) => handleRaffle(e)}
                       href="#!"
                       className="btn btn-primary shadow-2 text-uppercase btn-block"
                     >
@@ -145,57 +158,74 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
                 </div>
               </div>
             </CardWrapper>
-            {!isEmpty(groupCode) && !isEmpty(groupCode.members) && !isEmpty(groupCode.members.filter(x => x.winner)) && (
-              <CardWrapper colSize={8} cardTitle={`Ganadores del sorteo : ${groupCode.members.filter(x => x.winner).length}`}>
-                <div className="table-responsive" style={{ height: "450px" }}>
-                  <table className="table table-hover" >
-                    <thead>
-                      <tr>
-                        <th className="d-none d-sm-block">Id</th>
-                        <th>Imagen</th>
-                        <th>Nombre</th>
-                        <th>Posición</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {groupCode.members.filter(x => x.winner).sort((a, b) => (a.winnerPosition > b.winnerPosition) ? 1 : -1).map(winner => (
-                        <tr key={winner.id} className="unread">
-                          <td className="d-none d-sm-block">
-                            <h6 className="mb-1">{winner.id}</h6>
-                          </td>
-                          <td>
-                            <img
-                              className="rounded-circle"
-                              style={{ width: "40px", height: "40px" }}
-                              src={
-                                winner.picture != "" && winner.picture != null
-                                  ? winner.picture
-                                  : "assets/images/no-image-profile.png"
-                              }
-                              alt="activity-user"
-                            ></img>
-                          </td>
-                          <td>
-                            <h6 className="mb-1">{winner.firstName}</h6>
-                            <p className="m-0">{winner.lastName}</p>
-                          </td>
-                          <td>
-                            <p className="m-0">{winner.winnerPosition}</p>
-                          </td>
+            {!isEmpty(groupCode) &&
+              !isEmpty(groupCode.members) &&
+              !isEmpty(groupCode.members.filter((x) => x.winner)) && (
+                <CardWrapper
+                  colSize={8}
+                  cardTitle={`Ganadores del sorteo : ${
+                    groupCode.members.filter((x) => x.winner).length
+                  }`}
+                >
+                  <div className="table-responsive" style={{ height: "450px" }}>
+                    <table className="table table-hover">
+                      <thead>
+                        <tr>
+                          <th className="d-none d-sm-block">Id</th>
+                          <th>Imagen</th>
+                          <th>Nombre</th>
+                          <th>Posición</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardWrapper>
-            )}
+                      </thead>
+                      <tbody>
+                        {groupCode.members
+                          .filter((x) => x.winner)
+                          .sort((a, b) =>
+                            a.winnerPosition > b.winnerPosition ? 1 : -1
+                          )
+                          .map((winner) => (
+                            <tr key={winner.id} className="unread">
+                              <td className="d-none d-sm-block">
+                                <h6 className="mb-1">{winner.id}</h6>
+                              </td>
+                              <td>
+                                <img
+                                  className="rounded-circle"
+                                  style={{ width: "40px", height: "40px" }}
+                                  src={
+                                    winner.picture != "" &&
+                                    winner.picture != null
+                                      ? winner.picture
+                                      : "assets/images/no-image-profile.png"
+                                  }
+                                  alt="activity-user"
+                                ></img>
+                              </td>
+                              <td>
+                                <h6 className="mb-1">{winner.firstName}</h6>
+                                <p className="m-0">{winner.lastName}</p>
+                              </td>
+                              <td>
+                                <p className="m-0">{winner.winnerPosition}</p>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardWrapper>
+              )}
           </CardHeaderCollapsableWrapper>
           <CardHeaderCollapsableWrapper
             collapsed={false}
             cardTitle="Entregar Badge"
           >
             <SelectOneBadge assignBadge={assignBadge}></SelectOneBadge>
-            <CardWrapper cardBodyClassName="card-body-md" colSize={8} cardTitle="Badges ya entregados">
+            <CardWrapper
+              cardBodyClassName="card-body-md"
+              colSize={8}
+              cardTitle="Badges ya entregados"
+            >
               <div className="table-responsive" style={{ height: "400px" }}>
                 <table className="table table-hover">
                   <thead>
@@ -207,11 +237,10 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
                     </tr>
                   </thead>
                   <tbody>
-                    {groupCode.badges.map(badge => (
+                    {groupCode.badges.map((badge) => (
                       <tr key={badge.id} className="unread">
                         <td className="d-none d-sm-block">
                           <h6 className="mb-1">{badge.id}</h6>
-
                         </td>
                         <td>
                           <img
@@ -228,7 +257,6 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({ loading, re
                         <td className="d-none d-sm-block">
                           <h6 className="mb-1">{badge.name}</h6>
                         </td>
-
                       </tr>
                     ))}
                   </tbody>
@@ -248,7 +276,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const AdminGroupCodes = connect(
