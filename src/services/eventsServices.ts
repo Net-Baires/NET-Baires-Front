@@ -1,7 +1,7 @@
 import {
   EventDetail,
   UpdateEvent,
-  GetLinkEventLiveLink
+  GetLinkEventLiveLink,
 } from "./models/Events/Event";
 import { MeEvent } from "./models/Events/MeEvent";
 import { EventToSync } from "./models/Events/EventToSync";
@@ -11,16 +11,17 @@ import {
   getRequest,
   putRequest,
   postRequest,
-  deleteRequest
+  deleteRequest,
 } from "./requestServices";
 import { EventLiveDetail } from "./models/Events/EventLiveDetail";
 import {
   CreateGroupCodeResponse,
-  AddMemberToGroupCodeResponse
+  AddMemberToGroupCodeResponse,
 } from "./models/Events/CreateGroupCodeResponse";
+import { CompleteEventRequest } from "./models/Member";
 
 export const getNextEvent = (): Promise<EventDetail> => {
-  return fetch("http://localhost:3000/events/1").then(x => x.json());
+  return fetch("http://localhost:3000/events/1").then((x) => x.json());
 };
 
 export const syncEvents = (): Promise<MeEvent[]> => {
@@ -51,6 +52,13 @@ export const updateEvent = (
   event: UpdateEvent
 ): Promise<UpdateEvent> => {
   return putRequest(`/events/${id}`, event);
+};
+
+export const closeEvent = (
+  id: number,
+  completeEventRequest: CompleteEventRequest
+): Promise<UpdateEvent> => {
+  return putRequest(`/events/${id}/done`, completeEventRequest);
 };
 
 export const getEvent = (id: number): Promise<EventDetail> =>

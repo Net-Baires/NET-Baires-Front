@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { syncEvents } from "../../../services/eventsServices";
 import { SecureElement } from "../../Auth/SecureElement";
@@ -22,13 +22,17 @@ import BusinessIcon from "@material-ui/icons/Business";
 import EventIcon from "@material-ui/icons/Event";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import { SideMenuOption } from "./SideMenuOption";
+import FaceIcon from "@material-ui/icons/Face";
 import { trackEvent, EventName } from "../../../services/loggerServices";
+import a from "../../../../dist/assets/js/jquery-2.1.1.min";
+import { UserContext } from "../../../contexts/UserContext";
 type SideMenuProps = {
   closeMenu: () => void;
 };
 
 export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
   const [] = useState(false);
+  const { user } = useContext(UserContext);
   const classes = useStyles();
   const [openEvents, setOpenEvents] = React.useState(false);
   // useEffect(() => {
@@ -167,6 +171,17 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           </NavLink>
         </ListItem>
       </SecureElement>
+      <ListItem button className={classes.menuItem}>
+        <ListItemIcon className={classes.menuItemIcon}>
+          <FaceIcon />
+        </ListItemIcon>
+        <a
+          href={`${window.location.origin}/members/${user.userId}/profile`}
+          target="_blank"
+        >
+          <ListItemText primary="Perfil Publico" />
+        </a>
+      </ListItem>
       <ListItem button className={classes.menuItem}>
         <ListItemIcon className={classes.menuItemIcon}>
           <ExitToAppIcon />

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { getEvent, updateEvent } from "../../../services/eventsServices";
 import {
   EventDetail,
-  SponsorEvent
+  SponsorEvent,
 } from "../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
@@ -11,7 +11,10 @@ import { isEmpty } from "../../../services/objectsservices";
 import { EditEventComponent } from "./Components/EditEventComponent";
 import { AttendeesListToEdit } from "./Components/AttendeesListToEdit";
 import { SponsorsListToEdit } from "./Components/SponsorsListToEdit";
-import { EventToSyncActions } from './EventToSyncActions';
+import { EventToSyncActions } from "./EventToSyncActions";
+import { InformationHeader } from "../../Common/InformationHeader";
+import { LiveEndEventOptions } from "./Components/LiveEndEventOptions";
+import { AdminMaterials } from "../components/adminMaterials";
 type EditEventPageProps = {
   name: string;
   loading: () => void;
@@ -22,7 +25,10 @@ type EditEventPageParams = {
 };
 
 type EditEventPagePropsAndRouter = EditEventPageParams & EditEventPageProps;
-const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({ loading, ready }) => {
+const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({
+  loading,
+  ready,
+}) => {
   const { id } = useParams();
   const handlerReadyAction = () => {
     ready();
@@ -31,7 +37,7 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({ loadin
   const [event, setEvent] = useState({} as EventDetail);
   const loadEvent = () => {
     loading();
-    getEvent(+id!).then(event => {
+    getEvent(+id!).then((event) => {
       setEvent(event);
       ready();
     });
@@ -54,10 +60,7 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({ loadin
     <>
       {!isEmpty(event) && (
         <>
-          <div className="col-sm-12">
-            <h5 className="mt-4">Editar Evento</h5>
-            <hr></hr>
-          </div>
+          <InformationHeader text="Editar Evento"></InformationHeader>
           <div className="col-sm-12">
             <div className="card">
               <div className="card-header">
@@ -109,6 +112,19 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({ loadin
               <li className="nav-item">
                 <a
                   className="nav-link"
+                  id="pills-material-tab"
+                  data-toggle="pill"
+                  href="#pills-material"
+                  role="tab"
+                  aria-controls="pills-material"
+                  aria-selected="true"
+                >
+                  Material
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
                   id="pills-actions-tab"
                   data-toggle="pill"
                   href="#pills-actions"
@@ -142,7 +158,6 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({ loadin
                   <AttendeesListToEdit
                     eventInEdition={event}
                   ></AttendeesListToEdit>
-
                 )}
               </div>
               <div
@@ -155,6 +170,16 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({ loadin
                   updateSponsors={updateSponsors}
                   eventInEdition={event}
                 ></SponsorsListToEdit>
+              </div>
+              <div
+                className="tab-pane fade"
+                id="pills-material"
+                role="tabpanel"
+                aria-labelledby="pills-material-tab"
+              >
+                {!isEmpty(event) && (
+                  <AdminMaterials eventId={event.id}></AdminMaterials>
+                )}
               </div>
               <div
                 className="tab-pane fade"
@@ -183,7 +208,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const EditEventPage = connect(

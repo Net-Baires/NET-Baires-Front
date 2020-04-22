@@ -21,3 +21,16 @@ export interface Member {
   speaker: boolean;
   organizer: boolean;
 }
+
+export interface Material {
+  id: number;
+  title: string;
+  link: string;
+}
+
+export interface CompleteEventRequest {
+  thanksSponsors: boolean;
+  thanksSpeakers: boolean;
+  thanksAttendees: boolean;
+  sendMaterialToAttendees: boolean;
+}
