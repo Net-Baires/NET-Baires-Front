@@ -1,5 +1,6 @@
-import { EventsAttendees } from './EventsAttendees';
-import { EventDetail } from './Events/Event';
+import { EventsAttendees } from "./EventsAttendees";
+import { EventDetail } from "./Events/Event";
+import { Member } from "./Member";
 export interface Speaker {
   memberId: number;
   firstName: string;
@@ -16,4 +17,7 @@ export interface Speaker {
   countEventsAsSpeaker: number;
   averageAttendance: number;
   events: EventDetail[];
+}
+export interface SpeakerEvent {
+  member: Member;
 }

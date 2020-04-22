@@ -27,6 +27,12 @@ export interface Material {
   title: string;
   link: string;
 }
+export interface EventInformation {
+  id: number;
+  title: string;
+  description: string;
+  visible: boolean;
+}
 
 export interface CompleteEventRequest {
   thanksSponsors: boolean;

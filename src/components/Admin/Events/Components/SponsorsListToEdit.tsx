@@ -1,8 +1,8 @@
-import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { getSponsors } from "../../../../services/sponsorsServices";
 import {
   EventDetail,
-  SponsorEvent
+  SponsorEvent,
 } from "../../../../services/models/Events/Event";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../../store/loading/actions";
@@ -11,11 +11,7 @@ import { EventsAttendees } from "../../../../services/models/EventsAttendees";
 import { SearchWrapper } from "../../../Common/SearchWrapper";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import Switch from "@material-ui/core/Switch";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
@@ -28,7 +24,7 @@ type SponsorsListToEditProps = {
 
 const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
   eventInEdition,
-  updateSponsors
+  updateSponsors,
 }) => {
   const [] = useState({} as EventDetail);
   const [sponsors, setSponsors] = useState(new Array<SponsorToEvent>());
@@ -36,11 +32,13 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
   const { SearchBar } = Search;
 
   useEffect(() => {
-    getSponsors().then(sponsors => {
-      var spon = sponsors.map(x => {
+    getSponsors().then((sponsors) => {
+      var spon = sponsors.map((x) => {
         var colaboration = null;
         if (eventInEdition.sponsors != null)
-          colaboration = eventInEdition.sponsors.find(s => s.sponsorId == x.id);
+          colaboration = eventInEdition.sponsors.find(
+            (s) => s.sponsorId == x.id
+          );
         return new SponsorToEvent(
           x,
           colaboration != null,
@@ -66,7 +64,7 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
         if (item.collaborated) {
           acc.push({
             sponsorId: item.sponsor.id,
-            detail: item.collaboratedDetail
+            detail: item.collaboratedDetail,
           });
         }
         return acc;
@@ -81,18 +79,18 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
     // },
     {
       dataField: "sponsor.name",
-      text: "Empresa"
+      text: "Empresa",
     },
     {
       dataField: "logoUrl",
       text: "Logo",
       style: {
         textAlign: "center",
-        height: "2px"
+        height: "2px",
       },
       formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
         <img className="sponsors-list-img" src={sponsor.sponsor.logoUrl}></img>
-      )
+      ),
     },
     // {
     //   dataField: "collaboratedDetail",
@@ -115,7 +113,7 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
       text: "Colaboró con",
       style: {
         textAlign: "center",
-        height: "2px"
+        height: "2px",
       },
       formatter: (_cellContent: any, sponsor: SponsorToEvent) => (
         <div className="button-action">
@@ -123,39 +121,17 @@ const SponsorsListToEditComponent: React.SFC<SponsorsListToEditProps> = ({
             control={
               <Switch
                 checked={sponsor.collaborated}
-                onChange={e =>
+                onChange={(e) =>
                   handleSponsorColaborate(e, sponsor, !sponsor.collaborated)
                 }
               />
             }
           />
         </div>
-      )
-    }
+      ),
+    },
   ];
 
-  const handleOnChangeDescription = (
-    eventInput: ChangeEvent<HTMLTextAreaElement>,
-    sponsor: SponsorToEvent
-  ) => {
-    eventInput.preventDefault();
-    const updateIndex = sponsors.indexOf(sponsor);
-    const usersToUpdate = sponsors.slice();
-    usersToUpdate[updateIndex].collaboratedDetail = eventInput.target.value;
-
-    updateSponsors(
-      usersToUpdate.reduce((acc, item) => {
-        if (item.collaborated) {
-          acc.push({
-            sponsorId: item.sponsor.id,
-            detail: item.collaboratedDetail
-          });
-        }
-        return acc;
-      }, new Array<SponsorEvent>())
-    );
-    setSponsors(usersToUpdate);
-  };
   return (
     <>
       {sponsors && (
@@ -200,7 +176,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const SponsorsListToEdit = connect(

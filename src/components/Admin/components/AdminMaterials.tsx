@@ -7,6 +7,7 @@ import {
   removeMaterial,
 } from "../../../services/materialServices";
 import { isEmpty } from "../../../services/objectsservices";
+import { Backdrop, CircularProgress } from "@material-ui/core";
 type AdminMaterialsProps = {
   eventId: number;
 };
@@ -14,13 +15,16 @@ type AdminMaterialsProps = {
 export const AdminMaterials: React.SFC<AdminMaterialsProps> = ({ eventId }) => {
   const [materials, setMaterials] = useState(new Array<Material>());
   const [newMaterial, setNewMaterial] = useState({} as Material);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     loadMaterial();
   }, []);
   const loadMaterial = () => {
+    setLoading(true);
     clean();
     getMaterials(eventId).then((x) => {
       setMaterials(x);
+      setLoading(false);
     });
   };
   const addMaterialHandler = (eventInput: MouseEvent<HTMLButtonElement>) => {
@@ -36,7 +40,7 @@ export const AdminMaterials: React.SFC<AdminMaterialsProps> = ({ eventId }) => {
   };
   const clean = () => setNewMaterial({ link: "", title: "" } as Material);
   return (
-    <>
+    <div>
       <table className="table">
         <thead>
           <tr>
@@ -97,6 +101,9 @@ export const AdminMaterials: React.SFC<AdminMaterialsProps> = ({ eventId }) => {
           </tr>
         </tbody>
       </table>
-    </>
+      <Backdrop style={{ zIndex: 99999, position: "absolute" }} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
   );
 };

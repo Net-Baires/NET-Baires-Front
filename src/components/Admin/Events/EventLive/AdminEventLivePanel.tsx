@@ -14,7 +14,10 @@ import {
   subscribe,
   UpdateEventLive,
 } from "../../../../services/communicationServices";
-import { updateEventLive } from "../../../../services/syncCommunicationServices";
+import {
+  updateEventLive,
+  memberNotification,
+} from "../../../../services/syncCommunicationServices";
 import { TitleHeader } from "../../../Common/TitleHeader";
 
 import { AttendantCount } from "../Components/AttendantCount";
@@ -24,6 +27,8 @@ import { AdminMaterials } from "../../components/adminMaterials";
 import { LiveConfigurations } from "../Components/LiveConfigucations";
 import { LiveEndEventOptions } from "../Components/LiveEndEventOptions";
 import { CardHeaderWrapper } from "../../../Common/CardHeaderWrapper";
+import { SpeakersList } from "../../../EventLive/SpeakersList";
+import { EventInformationAdmin } from "../../components/EventInformationAdmin";
 type AdminEventLivePanelProps = {
   loading: () => void;
   ready: () => void;
@@ -70,6 +75,15 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
   const closeEvent = () => {
     loadEventDetail();
   };
+  const updateEventInformationCallback = () => {
+    eventDetail.membersDetails.membersAttended.forEach((member) => {
+      memberNotification(
+        member.id,
+        `Se acaba de agregar información al evento ${eventDetail.title}`,
+        `/app/events/${eventDetail.id}/live/panel`
+      );
+    });
+  };
   return (
     <>
       <TitleHeader title={eventDetail.title}></TitleHeader>
@@ -109,9 +123,19 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
               <LastUsersAttended
                 members={eventDetail.membersDetails.membersAttended}
               ></LastUsersAttended>
-              <CardWrapper cardTitle="Material del evento" colSize={6}>
-                <AdminMaterials eventId={eventDetail.id}></AdminMaterials>
+              <CardWrapper
+                cardBodyClassName="general-small-card-body-size"
+                cardTitle="Información del Evento"
+                colSize={7}
+              >
+                <EventInformationAdmin
+                  updateEventInformationCallback={
+                    updateEventInformationCallback
+                  }
+                  eventId={eventDetail.id}
+                ></EventInformationAdmin>
               </CardWrapper>
+
               <div className="col-md-2">
                 <div className="card theme-bg visitor">
                   <div className="card-block text-center">
@@ -129,15 +153,43 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
         </div>
       </div>
       <div className="row">
+        <CardHeaderWrapper cardTitle="Speakers"></CardHeaderWrapper>
+      </div>
+      <div className="col-sm-12">
+        <div className="row">
+          {!isEmpty(eventDetail) && (
+            <>
+              <CardWrapper
+                cardBodyClassName="general-small-card-body-size"
+                cardTitle="Material del evento"
+                colSize={7}
+              >
+                <AdminMaterials eventId={eventDetail.id}></AdminMaterials>
+              </CardWrapper>
+              {}
+              <CardWrapper
+                colSize={5}
+                cardBodyClassName="general-small-card-body-size"
+                cardTitle="Speakers"
+              >
+                <SpeakersList eventId={eventDetail.id}></SpeakersList>
+              </CardWrapper>
+            </>
+          )}
+        </div>
+      </div>
+      <div className="row">
         <CardHeaderWrapper cardTitle="Finalizar Evento"></CardHeaderWrapper>
       </div>
       <div className="col-sm-12">
         <div className="row">
           {!isEmpty(eventDetail) && (
-            <LiveEndEventOptions
-              eventId={eventDetail.id}
-              closeEvent={closeEvent}
-            ></LiveEndEventOptions>
+            <>
+              <LiveEndEventOptions
+                eventId={eventDetail.id}
+                closeEvent={closeEvent}
+              ></LiveEndEventOptions>
+            </>
           )}
         </div>
       </div>
