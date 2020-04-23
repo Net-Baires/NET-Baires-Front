@@ -1,5 +1,5 @@
 export interface Sponsor {
-  id: number;
+  id?: number;
   name?: string;
   description?: string;
   siteUrl?: string;

@@ -60,6 +60,9 @@ import { Config } from "../services/config";
 import { SponsorDetailPublicPage } from "./Sponsor/SponsorDetailPublicPage";
 import { EventsLivePublickBroadcasting } from "./EventLive/EventsLivePublickBroadcasting";
 import { EventsLivePublicVideo } from "./EventLive/EventsLivePublicVideo";
+import { TemplatesList } from "./Admin/Templates/TemplatesList";
+import { EditTemplate } from "./Admin/Templates/EditTemplate";
+import { NewTemplate } from "./Admin/Templates/NewTemplate";
 var reactPlugin = new ReactPlugin();
 const browserHistory = createBrowserHistory({ basename: "" });
 var appInsights = new ApplicationInsights({
@@ -262,22 +265,10 @@ export const App: React.SFC<AppProps> = () => {
                 component={NewSponsor}
               />
               <PrivateRoute
-                roles={["Admin", "Organizer", "Member"]}
-                exact
-                path="/app/panel"
-                component={ControlPanel}
-              ></PrivateRoute>
-              <PrivateRoute
                 roles={["Admin"]}
                 exact
                 path="/app/sponsors/:id/edit"
                 component={EditSponsor}
-              />
-              <PrivateRoute
-                roles={["Admin", "Organizer"]}
-                exact
-                path="/app/events/:idEvent/live/groupcodes/:idGroupCode/panel"
-                component={AdminGroupCodes}
               />
               <PrivateRoute
                 roles={["Admin"]}
@@ -285,6 +276,37 @@ export const App: React.SFC<AppProps> = () => {
                 path="/app/sponsors"
                 component={SponsorsList}
               />
+              <PrivateRoute
+                roles={["Admin"]}
+                exact
+                path="/app/templates"
+                component={TemplatesList}
+              />
+              <PrivateRoute
+                roles={["Admin"]}
+                exact
+                path="/app/templates/:id/edit"
+                component={EditTemplate}
+              />
+              <PrivateRoute
+                roles={["Admin"]}
+                exact
+                path="/app/templates/new"
+                component={NewTemplate}
+              />
+              <PrivateRoute
+                roles={["Admin", "Organizer", "Member"]}
+                exact
+                path="/app/panel"
+                component={ControlPanel}
+              ></PrivateRoute>
+              <PrivateRoute
+                roles={["Admin", "Organizer"]}
+                exact
+                path="/app/events/:idEvent/live/groupcodes/:idGroupCode/panel"
+                component={AdminGroupCodes}
+              />
+
               <PrivateRoute
                 roles={["Admin"]}
                 exact
