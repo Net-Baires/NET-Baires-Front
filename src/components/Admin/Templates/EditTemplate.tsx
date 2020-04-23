@@ -13,14 +13,14 @@ type EditTemplateParams = {
   ready: () => void;
   id: number;
 };
-import { EditTemplateComponent } from "./components/EditTemplateComponent";
 import { CardWrapper } from "../../Common/CardWrapper";
 import { DialogQuestion } from "../../Common/DialogQuestion";
 import { Template } from "../../../services/models/Template";
+import { EditTemplateComponentHook } from "./components/EditTemplateComponentHook";
+import { deleteTemplate } from "../../../services/templatesServices";
 import {
   getTemplate,
   updateTemplate,
-  deleteTemplate,
 } from "../../../services/templatesServices";
 
 type EditTemplatePropsAndRouter = EditTemplateParams & EditTemplateProps;
@@ -28,7 +28,7 @@ export const EditTemplateToExport: React.SFC<
   RouteComponentProps<EditTemplatePropsAndRouter> & EditTemplateParams
 > = ({ loading, ready, ...props }) => {
   const history = useHistory();
-  const [template, setTemplate] = useState({} as Template);
+  const [template, setTemplate] = useState<Template>({} as Template);
   const [sureToDelete, setSureToDelete] = useState(false);
   useEffect(() => {
     loading();
@@ -61,18 +61,13 @@ export const EditTemplateToExport: React.SFC<
     <>
       <CardWrapper cardTitle="Editar Template">
         {!isEmpty(template) && (
-          <EditTemplateComponent
-            {...template}
+          <EditTemplateComponentHook
+            template={template}
             saveTemplate={handleSaveTemplate}
-          ></EditTemplateComponent>
+            editMode={true}
+            deleteTemplate={handleDeleteTemplate}
+          ></EditTemplateComponentHook>
         )}
-        <button
-          type="button"
-          onClick={handleDeleteTemplate}
-          className="btn btn-danger btn-full-width"
-        >
-          Eliminar
-        </button>
       </CardWrapper>
       <DialogQuestion
         callbackClose={() => setSureToDelete(false)}

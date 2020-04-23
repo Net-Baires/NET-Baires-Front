@@ -7,6 +7,9 @@ import { SearchWrapper } from "../../Common/SearchWrapper";
 import { CardWrapper } from "../../Common/CardWrapper";
 import { getTemplates } from "../../../services/templatesServices";
 import { Template } from "../../../services/models/Template";
+import { EditTemplateComponentHook } from "./components/EditTemplateComponentHook";
+import { template } from "@babel/core";
+import { isEmpty } from "../../../services/objectsservices";
 export const TemplatesList: React.SFC<RouteComponentProps> = () => {
   let history = useHistory();
 
