@@ -187,7 +187,7 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
             <>
               <LiveEndEventOptions
                 eventId={eventDetail.id}
-                closeEvent={closeEvent}
+                completeEvent={closeEvent}
               ></LiveEndEventOptions>
             </>
           )}

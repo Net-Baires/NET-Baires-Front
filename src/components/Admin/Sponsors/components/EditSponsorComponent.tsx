@@ -21,8 +21,7 @@ const EditSponsorComponentForm = (props: FormikProps<FormValues>) => {
   };
   return (
     <>
-
-      <Form >
+      <Form>
         <div className="form-group">
           <label>Nombre</label>
           <Field type="name" name="name" className="form-control" />
@@ -54,7 +53,21 @@ const EditSponsorComponentForm = (props: FormikProps<FormValues>) => {
             className="form-control"
           />
           {touched.siteUrl && errors.siteUrl && (
-            <div className="form-error alert alert-danger">{errors.siteUrl}</div>
+            <div className="form-error alert alert-danger">
+              {errors.siteUrl}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Email </label>
+          <Field
+            component="input"
+            type="email"
+            name="email"
+            className="form-control"
+          />
+          {touched.email && errors.email && (
+            <div className="form-error alert alert-danger">{errors.email}</div>
           )}
         </div>
 
@@ -90,7 +103,6 @@ const EditSponsorComponentForm = (props: FormikProps<FormValues>) => {
               ></img>
             </div>
             <div className="col-md-2"></div>
-
           </div>
         </div>
         <button
@@ -99,7 +111,7 @@ const EditSponsorComponentForm = (props: FormikProps<FormValues>) => {
           className="btn btn-primary btn-full-width"
         >
           Guardar
-      </button>
+        </button>
       </Form>
     </>
   );
@@ -110,27 +122,28 @@ interface MyFormProps extends Sponsor {
   imageData?: File;
 }
 const EditAllSponsorFormik = withFormik<MyFormProps, FormValues>({
-  mapPropsToValues: props => {
+  mapPropsToValues: (props) => {
     return {
-      ...props
+      ...props,
     };
   },
   validationSchema: yup.object<MyFormProps>().shape({
     name: yup.string().required("Campo Requerido"),
     description: yup.string().required("Campo Requerido"),
     siteUrl: yup.string().required("Campo Requerido"),
-    imagePreview: yup.string().required("Campo Requerido")
+    email: yup.string().required("Campo Requerido"),
+    imagePreview: yup.string().required("Campo Requerido"),
   }),
 
   handleSubmit: (values: any, { props }) => {
     props.saveSponsor(values, values.imageData!);
-  }
+  },
 })(EditSponsorComponentForm);
 
 interface EditAllSponsorProps extends Sponsor {
   saveSponsor: (sponsor: Sponsor, logo: File) => void;
 }
-export const EditSponsorComponent: React.SFC<EditAllSponsorProps> = props => {
+export const EditSponsorComponent: React.SFC<EditAllSponsorProps> = (props) => {
   return (
     <>
       <h1>{props.name}</h1>

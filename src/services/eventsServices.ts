@@ -55,7 +55,7 @@ export const updateEvent = (
   return putRequest(`/events/${id}`, event);
 };
 
-export const closeEvent = (
+export const completeEvent = (
   id: number,
   completeEventRequest: CompleteEventRequest
 ): Promise<UpdateEvent> => {

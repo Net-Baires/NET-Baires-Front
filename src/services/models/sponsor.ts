@@ -4,5 +4,6 @@ export interface Sponsor {
   description?: string;
   siteUrl?: string;
   logoUrl?: string;
+  email?: string;
   selected?: boolean;
 }
