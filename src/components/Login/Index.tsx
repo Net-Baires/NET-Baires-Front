@@ -32,6 +32,12 @@ const Login: React.SFC<LoginProps> = () => {
     event.preventDefault();
     window.location.replace(meetupAuth.token.getUri());
   };
+  const handleLoginEventBrite = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    window.location.replace(
+      `https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=${Config.integrations.eventBrite.clientId}&redirect_uri=${Config.integrations.eventBrite.redirectUri}`
+    );
+  };
   return (
     <>
       {!isLogged() && (
@@ -62,10 +68,26 @@ const Login: React.SFC<LoginProps> = () => {
                   </div>
                 </div> */}
                 <button
+                  style={{
+                    width: 250,
+                    backgroundColor: "#F64060",
+                    borderColor: "#F64060",
+                  }}
                   onClick={handleLoginMeetup}
                   className="btn btn-primary shadow-2 mb-4"
                 >
                   Autenticate con Meetup
+                </button>
+                <button
+                  style={{
+                    width: 250,
+                    backgroundColor: "#F05537",
+                    borderColor: "#F05537",
+                  }}
+                  onClick={handleLoginEventBrite}
+                  className="btn btn-primary shadow-2 mb-4"
+                >
+                  Autenticate con Eventbrite
                 </button>
                 <p className="mb-2 text-muted">
                   <NavLink

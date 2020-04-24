@@ -1,4 +1,4 @@
-export interface EventDetail {
+export interface EventDetail extends WithTemplates {
   id: number;
   title: string;
   address: string;
@@ -17,12 +17,17 @@ export interface EventDetail {
   didNotAttend: number;
   eventId: string;
 }
+export interface WithTemplates {
+  emailTemplateThanksSponsorsId?: number;
+  emailTemplateThanksSpeakersId?: number;
+  emailTemplateThanksAttendedId?: number;
+}
 export interface SponsorEvent {
   sponsorId: number;
   detail: string;
 }
 
-export interface UpdateEvent {
+export interface UpdateEvent extends WithTemplates {
   title?: string;
   description?: string;
   generalAttended?: boolean;

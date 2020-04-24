@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useFormik, Form, Field } from "formik";
+import { useFormik, Form, Field, FormikErrors } from "formik";
 import * as Yup from "yup";
 import { Template } from "../../../../services/models/Template";
 
@@ -17,12 +17,18 @@ export const EditTemplateComponentHook: React.SFC<EditTemplateComponentHookIncom
   editMode = true,
   deleteTemplate,
 }) => {
-  const { handleSubmit, handleChange, values, errors } = useFormik<Template>({
+  const {
+    handleSubmit,
+    handleChange,
+    values,
+    errors,
+    setFieldValue,
+  } = useFormik<Template>({
     initialValues: {
       name: template ? template.name : "",
       description: template ? template.description : "",
       templateContent: template ? template.templateContent : "",
-      type: template ? template.type : "EmailTemplateThanksSponsors",
+      type: template ? template.type : "EmailTemplateThanksSpeakers",
     },
     validationSchema,
     onSubmit: (values) => {
@@ -71,22 +77,53 @@ export const EditTemplateComponentHook: React.SFC<EditTemplateComponentHookIncom
       ) : null}
     </div>
   );
-
+  // interface Dictionary {
+  //   [key: string]: string;
+  // }
+  // const inputTextGeneric = <TData extends Dictionary>(
+  //   errors: FormikErrors<TData>,
+  //   label: string,
+  //   name: keyof TData,
+  //   values: TData
+  // ) => (
+  //   <div className="form-group">
+  //     <label>{label}</label>
+  //     <input
+  //       name={name as string}
+  //       className={errors[name] ? "form-control is-invalid" : "form-control"}
+  //       value={values[name]}
+  //       onChange={handleChange}
+  //     ></input>
+  //     {errors[name] ? (
+  //       <label className="error jquery-validation-error small form-text invalid-feedback">
+  //         {errors[name]}
+  //       </label>
+  //     ) : null}
+  //   </div>
+  // );
   const inputSelect = (
     label: string,
     name: "name" | "description" | "templateContent" | "type",
-    options: Array<{ value: string; text: string }>
+    options: Array<{ value: string; text: string }>,
+    disabled: boolean = false
   ) => (
     <div className="form-group">
       <label>{label}</label>
       <select
+        disabled={disabled}
         name={label}
         className={errors[name] ? "form-control is-invalid" : "form-control"}
         value={values[name]}
-        onChange={handleChange}
+        onChange={(e) => {
+          setFieldValue(name, e.target.value);
+        }}
       >
         {options &&
-          options.map((x) => <option value={x.value}>{x.text}</option>)}
+          options.map((x) => (
+            <option key={x.value} value={x.value}>
+              {x.text}
+            </option>
+          ))}
       </select>
       {errors[name] ? (
         <label className="error jquery-validation-error small form-text invalid-feedback">
@@ -98,8 +135,10 @@ export const EditTemplateComponentHook: React.SFC<EditTemplateComponentHookIncom
   return (
     <form onSubmit={handleSubmit}>
       {inputText("Nombre", "name")}
-      {!editMode &&
-        inputSelect("Tipo", "type", [
+      {inputSelect(
+        "Tipo",
+        "type",
+        [
           {
             value: "EmailTemplateThanksSponsors",
             text: "Agradecimiento a sponsors",
@@ -112,7 +151,13 @@ export const EditTemplateComponentHook: React.SFC<EditTemplateComponentHookIncom
             value: "EmailTemplateThanksAttended",
             text: "Agradecimiento a asistenes al evento",
           },
-        ])}
+          {
+            value: "EmailTemplateAssignedBadgeToMember",
+            text: "Notificación de nuevo badge (Solo se utilizará 1)",
+          },
+        ],
+        editMode
+      )}
       {inputText("Descripción", "description")}
       {inputTextArea("Template", "templateContent", 20)}
       <button className="btn btn-primary mb-2" type="submit">

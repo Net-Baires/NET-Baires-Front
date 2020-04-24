@@ -1,4 +1,6 @@
-export interface EventLiveDetail {
+import { WithTemplates } from "./Event";
+
+export interface EventLiveDetail extends WithTemplates {
   id: number;
   title: string;
   description: string;

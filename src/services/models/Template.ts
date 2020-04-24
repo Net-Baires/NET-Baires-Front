@@ -3,7 +3,7 @@ export interface Template {
   type?:
     | "EmailTemplateThanksSponsors"
     | "EmailTemplateThanksSpeakers"
-    | "EmailTemplateThanksSponsors";
+    | "EmailTemplateThanksAttended";
   name?: string;
   description?: string;
   templateContent?: string;

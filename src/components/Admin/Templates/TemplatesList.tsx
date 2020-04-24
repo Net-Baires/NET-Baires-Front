@@ -7,12 +7,9 @@ import { SearchWrapper } from "../../Common/SearchWrapper";
 import { CardWrapper } from "../../Common/CardWrapper";
 import { getTemplates } from "../../../services/templatesServices";
 import { Template } from "../../../services/models/Template";
-import { EditTemplateComponentHook } from "./components/EditTemplateComponentHook";
-import { template } from "@babel/core";
-import { isEmpty } from "../../../services/objectsservices";
+
 export const TemplatesList: React.SFC<RouteComponentProps> = () => {
   let history = useHistory();
-
   const [templates, setTemplates] = useState(new Array<Template>());
   const { SearchBar } = Search;
   useEffect(() => {
@@ -42,6 +39,11 @@ export const TemplatesList: React.SFC<RouteComponentProps> = () => {
     {
       dataField: "description",
       text: "Descripción",
+    },
+    ,
+    {
+      dataField: "type",
+      text: "Tipo",
     },
     {
       text: "Acción",

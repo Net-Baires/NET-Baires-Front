@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../../store/loading/actions";
-import { getLiveEventDetail } from "../../../../services/eventsServices";
+import {
+  getLiveEventDetail,
+  updateEvent,
+} from "../../../../services/eventsServices";
 import { EventLiveDetail } from "../../../../services/models/Events/EventLiveDetail";
 import { LastUsersAttended } from "../../../EventLive/LastUsersAttended";
 import { isEmpty } from "../../../../services/objectsservices";
@@ -29,6 +32,8 @@ import { LiveEndEventOptions } from "../Components/LiveEndEventOptions";
 import { CardHeaderWrapper } from "../../../Common/CardHeaderWrapper";
 import { SpeakersList } from "../../../EventLive/SpeakersList";
 import { EventInformationAdmin } from "../../components/EventInformationAdmin";
+import { SelectTemplates } from "../../Templates/components/SelectTemplates";
+import { Backdrop, CircularProgress } from "@material-ui/core";
 type AdminEventLivePanelProps = {
   loading: () => void;
   ready: () => void;
@@ -43,7 +48,7 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
   const [eventDetail, setEventDetail] = useState<EventLiveDetail>(
     {} as EventLiveDetail
   );
-
+  const [templatesLoading, setTemplatesLoading] = useState(false);
   const history = useHistory();
   const loadEventDetail = () => {
     getLiveEventDetail(eventId)
@@ -68,7 +73,7 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
     loadEventDetail();
   }, []);
 
-  const updateEvent = () => {
+  const updateEventHandler = () => {
     loadEventDetail();
     updateEventLive(eventDetail.id);
   };
@@ -92,7 +97,7 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
           {!isEmpty(eventDetail) && (
             <>
               <GroupCode
-                updatedEvent={updateEvent}
+                updatedEvent={updateEventHandler}
                 eventLive={eventDetail}
               ></GroupCode>
               <EventLiveTime eventDetail={eventDetail}></EventLiveTime>
@@ -104,7 +109,7 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
             <>
               <SyncUserToEvent idEvent={eventDetail.id}></SyncUserToEvent>
               <LiveConfigurations
-                updatedEvent={updateEvent}
+                updatedEvent={updateEventHandler}
                 eventLive={eventDetail}
               ></LiveConfigurations>
 
@@ -189,6 +194,23 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
                 eventId={eventDetail.id}
                 completeEvent={closeEvent}
               ></LiveEndEventOptions>
+              <CardWrapper colSize={8} cardTitle="Templates de Email">
+                <SelectTemplates
+                  updateWithTemplate={(w) => {
+                    setTemplatesLoading(true);
+                    updateEvent(eventDetail.id, w).then(() => {
+                      setTemplatesLoading(false);
+                    });
+                  }}
+                  withTemplates={eventDetail}
+                ></SelectTemplates>
+                <Backdrop
+                  style={{ zIndex: 99999, position: "absolute" }}
+                  open={templatesLoading}
+                >
+                  <CircularProgress color="inherit" />
+                </Backdrop>
+              </CardWrapper>
             </>
           )}
         </div>
