@@ -211,3 +211,7 @@
 .badges-autocomplete > div {
   width: 100%;
 }
+
+td {
+  overflow: hidden;
+}

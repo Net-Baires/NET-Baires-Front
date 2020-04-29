@@ -19,6 +19,7 @@ import {
   AddMemberToGroupCodeResponse,
 } from "./models/Events/CreateGroupCodeResponse";
 import { CompleteEventRequest } from "./models/Member";
+import { SpeakerEvent } from "./models/speaker";
 
 export const getNextEvent = (): Promise<EventDetail> => {
   return fetch("http://localhost:3000/events/1").then((x) => x.json());
@@ -54,7 +55,7 @@ export const updateEvent = (
   return putRequest(`/events/${id}`, event);
 };
 
-export const closeEvent = (
+export const completeEvent = (
   id: number,
   completeEventRequest: CompleteEventRequest
 ): Promise<UpdateEvent> => {
@@ -72,6 +73,9 @@ export const getCheckAttendanceGeneral = (
   id: number
 ): Promise<EventToReportAttendance> =>
   getRequest(`/events/${id}/attendances/general`);
+
+export const getSpeakersFromEvent = (id: number): Promise<SpeakerEvent[]> =>
+  getRequest(`/events/${id}/speakers`);
 
 export const reportAttendance = (
   token: string

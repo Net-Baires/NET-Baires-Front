@@ -1,17 +1,18 @@
 import React from "react";
 import { MemberDetail } from "../../services/models/Events/EventLiveDetail";
 import { CardWrapper } from "../Common/CardWrapper";
-import {
-  formatStringDate,
-  formatStringTime
-} from "../../helpers/DateHelpers";
+import { formatStringDate, formatStringTime } from "../../helpers/DateHelpers";
 type NewUserProps = {
   members: MemberDetail[];
 };
 export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
   return (
     <>
-      <CardWrapper colSize={4} cardTitle="Ultimos Usuarios Recibidos">
+      <CardWrapper
+        colSize={5}
+        cardBodyClassName="general-small-card-body-size"
+        cardTitle="Ultimos Usuarios Recibidos"
+      >
         <div className="table-responsive">
           <table className="table table-hover">
             <thead>
@@ -22,7 +23,7 @@ export const LastUsersAttended: React.SFC<NewUserProps> = ({ members }) => {
               </tr>
             </thead>
             <tbody>
-              {members.map(member => (
+              {members.map((member) => (
                 <tr key={member.id} className="unread">
                   <td>
                     <img

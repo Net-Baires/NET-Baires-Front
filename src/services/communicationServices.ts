@@ -47,6 +47,7 @@ export const subscribeGeneral = <TData>(
 
 export enum CommunicationMessageType {
   UpdateEventLive = "UpdateEventLive",
+  UpdateEventInformation = "UpdateEventInformation",
   MemberNotification = "MemberNotification",
   UpdateGroupCode = "UpdateGroupCode",
 }

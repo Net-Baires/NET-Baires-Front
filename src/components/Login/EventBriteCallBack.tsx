@@ -2,7 +2,7 @@ import { RouteComponentProps, useLocation, useHistory } from "react-router";
 import React, { useEffect, useContext } from "react";
 import { loginWithEventBriteToken } from "../../services/loginServices";
 import { UserContext } from "../../contexts/UserContext";
-import { User } from "services/models/User";
+import Loading from "./Loading";
 type EventBriteCallBackProps = {
   name: string;
 };
@@ -11,9 +11,9 @@ type EventBriteCallBackParams = {
 };
 type EventBriteCallBackPropsAndRouter = EventBriteCallBackParams &
   EventBriteCallBackProps;
-export const EventBriteCallBack: React.SFC<
-  RouteComponentProps<EventBriteCallBackPropsAndRouter>
-> = props => {
+export const EventBriteCallBack: React.SFC<RouteComponentProps<
+  EventBriteCallBackPropsAndRouter
+>> = () => {
   const { login } = useContext(UserContext);
   let history = useHistory();
   let search = useLocation().search;
@@ -21,14 +21,18 @@ export const EventBriteCallBack: React.SFC<
   useEffect(() => {
     loginWithEventBriteToken(token)
       .then((response: any) => {
-        login(response.result.token);
+        login(response.token);
         const redirectUrl = localStorage.getItem("RedirectUrl") as string;
         localStorage.setItem("RedirectUrl", "/");
         history.push(redirectUrl);
       })
       .catch(() => {});
   }, []);
-  return <div></div>;
+  return (
+    <div>
+      <Loading></Loading>
+    </div>
+  );
 };
 
 export default EventBriteCallBack;

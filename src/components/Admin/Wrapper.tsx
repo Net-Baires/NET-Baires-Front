@@ -14,7 +14,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { subscribeMemberNotification } from "../../services/syncCommunicationServices";
+import {
+  subscribeMemberNotification,
+  subscribeUpdateEventInformationSync,
+} from "../../services/syncCommunicationServices";
 import { getMe } from "../../services/profileServices";
 import { DialogInstallPwa } from "../InstallPwa/DialogInstallPwa";
 import { TopBar } from "./Menu/TopBar";

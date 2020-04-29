@@ -21,6 +21,7 @@ import { ListItemAvatar } from "@material-ui/core";
 import BusinessIcon from "@material-ui/icons/Business";
 import EventIcon from "@material-ui/icons/Event";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
+import CodeIcon from "@material-ui/icons/Code";
 import { SideMenuOption } from "./SideMenuOption";
 import FaceIcon from "@material-ui/icons/Face";
 import { trackEvent, EventName } from "../../../services/loggerServices";
@@ -100,7 +101,13 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
         text="Sponsors"
         icon={<BusinessIcon />}
       ></SideMenuOption>
-
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Admin"]}
+        linkTo="/app/templates"
+        text="Templates"
+        icon={<CodeIcon />}
+      ></SideMenuOption>
       <SideMenuOption
         closeMenu={closeMenu}
         roles={["Admin"]}

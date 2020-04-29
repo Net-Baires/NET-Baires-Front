@@ -1,10 +1,10 @@
-import { Sponsor } from "./models/sponsor";
 import {
   getRequest,
   postWithFileRequest,
   putWithFileRequest,
-  deleteRequest
+  deleteRequest,
 } from "./requestServices";
+import { Sponsor } from "./models/sponsor";
 
 export const getSponsors = (): Promise<Sponsor[]> =>
   getRequest(`/sponsors`, new Array<Sponsor>());

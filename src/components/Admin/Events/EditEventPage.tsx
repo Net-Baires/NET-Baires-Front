@@ -15,6 +15,9 @@ import { EventToSyncActions } from "./EventToSyncActions";
 import { InformationHeader } from "../../Common/InformationHeader";
 import { LiveEndEventOptions } from "./Components/LiveEndEventOptions";
 import { AdminMaterials } from "../components/adminMaterials";
+import { SelectTemplates } from "../Templates/components/SelectTemplates";
+import { updateTemplate } from "../../../services/templatesServices";
+import { WithTemplates } from "../../../services/models/Events/Event";
 type EditEventPageProps = {
   name: string;
   loading: () => void;
@@ -35,6 +38,7 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({
   };
 
   const [event, setEvent] = useState({} as EventDetail);
+  const [withTemplate, setWithTemplate] = useState({} as WithTemplates);
   const loadEvent = () => {
     loading();
     getEvent(+id!).then((event) => {
@@ -125,6 +129,19 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({
               <li className="nav-item">
                 <a
                   className="nav-link"
+                  id="pills-template-tab"
+                  data-toggle="pill"
+                  href="#pills-template"
+                  role="tab"
+                  aria-controls="pills-template"
+                  aria-selected="true"
+                >
+                  Templates Notificaciones
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
                   id="pills-actions-tab"
                   data-toggle="pill"
                   href="#pills-actions"
@@ -179,6 +196,35 @@ const EditEventPageComponent: React.SFC<EditEventPagePropsAndRouter> = ({
               >
                 {!isEmpty(event) && (
                   <AdminMaterials eventId={event.id}></AdminMaterials>
+                )}
+              </div>
+              <div
+                className="tab-pane fade"
+                id="pills-template"
+                role="tabpanel"
+                aria-labelledby="pills-template-tab"
+              >
+                {!isEmpty(event) && (
+                  <>
+                    <SelectTemplates
+                      updateWithTemplate={(w) => {
+                        setWithTemplate(w);
+                        console.log(w);
+                      }}
+                      withTemplates={event}
+                    ></SelectTemplates>
+                    <div className="form-group">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSave({ ...event, ...withTemplate });
+                        }}
+                        className="btn btn-primary btn-full-width"
+                      >
+                        Guardar
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
               <div

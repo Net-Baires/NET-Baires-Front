@@ -13,9 +13,24 @@ export const updateEventLive = (eventId: number) =>
   sendMessage<UpdateEventLive>(CommunicationMessageType.UpdateEventLive, {
     eventId: eventId,
   });
-export const subscribupdateEventLive = (
+export const subscribeUpdateEventLive = (
   callBack: (data: UpdateEventLive) => void
 ) => subscribeGeneral(`${CommunicationMessageType.UpdateEventLive}`, callBack);
+
+export const updateEventInformationSync = (eventId: number) =>
+  sendMessage<UpdateEventLive>(
+    CommunicationMessageType.UpdateEventInformation,
+    {
+      eventId: eventId,
+    }
+  );
+export const subscribeUpdateEventInformationSync = (
+  callBack: (data: UpdateEventLive) => void
+) =>
+  subscribeGeneral(
+    `${CommunicationMessageType.UpdateEventInformation}`,
+    callBack
+  );
 
 export const memberNotification = (
   memberId: number,
