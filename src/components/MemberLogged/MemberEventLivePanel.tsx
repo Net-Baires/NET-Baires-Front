@@ -11,10 +11,7 @@ import { AddAttendanceCodeToLiveEvent } from "./AddAttendanceCodeToLiveEvent";
 import { CardWrapper } from "../Common/CardWrapper";
 import { QRCode } from "react-qr-svg";
 import { TitleHeader } from "../Common/TitleHeader";
-import {
-  subscribeUpdateEventLive,
-  subscribeUpdateEventInformationSync,
-} from "../../services/syncCommunicationServices";
+import { subscribeUpdateEventLive } from "../../services/syncCommunicationServices";
 import { AddGroupCodeToLiveEvent } from "./AddGroupCodeToLiveEvent";
 import { EventInformationListMember } from "./EventInformationListMember";
 type MemberEventLivePanelProps = {
@@ -35,13 +32,14 @@ const MemberEventLivePanelComponent: React.SFC<MemberEventLivePanelProps> = ({
   const history = useHistory();
   const loadEventDetail = () => {
     loading();
-    getLiveEventDetail(eventId).then((s) => {
-      if (s == null) history.push("/app/panel");
-      setEventLive(s);
-      ready();
-    });
+    getLiveEventDetail(eventId)
+      .then((s) => {
+        if (s == null) history.push("/app/panel");
+        setEventLive(s);
+        ready();
+      })
+      .catch(() => history.push("/app/panel"));
   };
-  const loadEventInformation = () => {};
   useEffect(() => {
     subscribeUpdateEventLive((data) => {
       if (+data.eventId === eventId) {
