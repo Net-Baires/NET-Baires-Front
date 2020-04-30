@@ -16,7 +16,7 @@ type EditTemplateParams = {
 import { CardWrapper } from "../../Common/CardWrapper";
 import { DialogQuestion } from "../../Common/DialogQuestion";
 import { Template } from "../../../services/models/Template";
-import { EditTemplateComponentHook } from "./components/EditTemplateComponentHook";
+import { EditTemplateComponentHook } from "./components/EditTemplateComponent";
 import { deleteTemplate } from "../../../services/templatesServices";
 import {
   getTemplate,

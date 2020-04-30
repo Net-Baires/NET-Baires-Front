@@ -6,11 +6,10 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import IconDashboard from "@material-ui/icons/Dashboard";
 import { Rol } from "../../../services/authService";
 type SideMenuProps = {
   closeMenu: () => void;
-  roles: Rol[];
+  roles?: Rol[];
   linkTo: string;
   text: string;
   icon: JSX.Element;
@@ -58,8 +57,6 @@ const useStyles = makeStyles(() =>
     menuItem: {
       width: drawerWidth,
     },
-    menuItemIcon: {
-      color: "#97c05c",
-    },
+    menuItemIcon: {},
   })
 );

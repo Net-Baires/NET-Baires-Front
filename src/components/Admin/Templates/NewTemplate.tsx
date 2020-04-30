@@ -5,7 +5,7 @@ import { loading, ready } from "../../../store/loading/actions";
 import { CardWrapper } from "../../Common/CardWrapper";
 import { Template } from "../../../services/models/Template";
 import { newTemplate } from "../../../services/templatesServices";
-import { EditTemplateComponentHook } from "./components/EditTemplateComponentHook";
+import { EditTemplateComponentHook } from "./components/EditTemplateComponent";
 type NewTemplateProps = {
   loading: () => void;
   ready: () => void;
