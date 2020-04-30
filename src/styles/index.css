@@ -233,6 +233,9 @@ td {
 .MuiPaper-root a {
   color: #a9b7d0 !important;
 }
+.MuiPaper-root .MuiButtonBase-root {
+  color: #a9b7d0;
+}
 .top-side-menu {
   color: #a9b7d0 !important;
 }

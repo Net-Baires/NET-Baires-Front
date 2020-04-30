@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { syncEvents } from "../../../services/eventsServices";
 import { SecureElement } from "../../Auth/SecureElement";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -22,11 +21,10 @@ import BusinessIcon from "@material-ui/icons/Business";
 import EventIcon from "@material-ui/icons/Event";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import CodeIcon from "@material-ui/icons/Code";
-import { SideMenuOption } from "./SideMenuOption";
 import FaceIcon from "@material-ui/icons/Face";
 import { trackEvent, EventName } from "../../../services/loggerServices";
-import a from "../../../../dist/assets/js/jquery-2.1.1.min";
 import { UserContext } from "../../../contexts/UserContext";
+import { SideMenuOption } from "./SideMenuOption";
 type SideMenuProps = {
   closeMenu: () => void;
 };
@@ -149,20 +147,22 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
                 <ListItemText inset primary="Mis Eventos" />
               </ListItem>
             </NavLink>
-            <ListItem button className={classes.menuItem}>
-              <NavLink exact activeClassName="active" to="/app/events/sync">
+            <NavLink exact activeClassName="active" to="/app/events/sync">
+              <ListItem button className={classes.menuItem}>
                 <ListItemText inset primary="Eventos para Sincronizar" />
-              </NavLink>
-            </ListItem>
-            <ListItem button className={classes.menuItem}>
-              <NavLink exact activeClassName="active" to="/app/events/live">
+              </ListItem>
+            </NavLink>
+            <NavLink exact activeClassName="active" to="/app/events/live">
+              <ListItem button className={classes.menuItem}>
                 <ListItemText inset primary="Eventos en vivo" />
-              </NavLink>
-            </ListItem>
-            <ListItem button className={classes.menuItem}>
-              <a className="nav-link-slide-bar" onClick={handleSyncEvents}>
-                <ListItemText inset primary="Sync Eventos" />
-              </a>
+              </ListItem>
+            </NavLink>
+            <ListItem
+              button
+              className={classes.menuItem}
+              onClick={handleSyncEvents}
+            >
+              <ListItemText inset primary="Sync Eventos" />
             </ListItem>
           </List>
         </Collapse>
@@ -183,31 +183,26 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           </NavLink>
         </ListItem>
       </SecureElement>
-      <ListItem button className={classes.menuItem}>
-        <ListItemIcon className={classes.menuItemIcon}>
-          <FaceIcon />
-        </ListItemIcon>
-        <a
-          href={`${window.location.origin}/members/${user.userId}/profile`}
-          target="_blank"
-        >
-          <ListItemText primary="Perfil Publico" />
-        </a>
-      </ListItem>
-      <ListItem button className={classes.menuItem}>
-        <ListItemIcon className={classes.menuItemIcon}>
-          <ExitToAppIcon />
-        </ListItemIcon>
-        <NavLink
-          exact
-          onClick={() => trackEvent(EventName.LateralMenuDisconnect)}
-          className="nav-link-slide-bar"
-          activeClassName="active"
-          to="/logout"
-        >
-          <ListItemText primary="Desconectarse" />
-        </NavLink>
-      </ListItem>
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Admin"]}
+        linkTo=""
+        text="Perfil Público"
+        onClick={() => {
+          window.open(
+            `${window.location.origin}/members/${user.userId}/profile`,
+            "_blank"
+          );
+        }}
+        icon={<FaceIcon />}
+      ></SideMenuOption>
+      <SideMenuOption
+        closeMenu={closeMenu}
+        roles={["Admin", "Organizer", "Member"]}
+        linkTo="/logout"
+        text="Desconectarse"
+        icon={<ExitToAppIcon />}
+      ></SideMenuOption>
     </List>
   );
 };
