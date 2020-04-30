@@ -58,8 +58,6 @@ const useStyles = makeStyles(() =>
     menuItem: {
       width: drawerWidth,
     },
-    menuItemIcon: {
-      color: "#97c05c",
-    },
+    menuItemIcon: {},
   })
 );

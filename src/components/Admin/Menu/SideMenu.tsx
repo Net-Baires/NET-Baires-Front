@@ -57,7 +57,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             alt="NET-Baires"
           />
         </ListItemAvatar>
-        <ListItemText primary="NET-Baires" />
+        <ListItemText className="top-side-menu" primary="NET-Baires" />
         <ListItemIcon className={`${classes.menuItemIcon} side-menu-close`}>
           <ChevronLeftIcon />
         </ListItemIcon>
@@ -136,7 +136,12 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
           <ListItemText primary="Eventos" />
           {openEvents ? <IconExpandLess /> : <IconExpandMore />}
         </ListItem>
-        <Collapse in={openEvents} timeout="auto" unmountOnExit>
+        <Collapse
+          className="Collapse-Menu"
+          in={openEvents}
+          timeout="auto"
+          unmountOnExit
+        >
           <Divider />
           <List onClick={closeMenu} component="div" disablePadding>
             <NavLink exact activeClassName="active" to="/app/events">
@@ -221,8 +226,6 @@ const useStyles = makeStyles(() =>
     menuItem: {
       width: drawerWidth,
     },
-    menuItemIcon: {
-      color: "#97c05c",
-    },
+    menuItemIcon: {},
   })
 );

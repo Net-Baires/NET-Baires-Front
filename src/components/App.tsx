@@ -107,11 +107,11 @@ export const App: React.SFC<AppProps> = () => {
               path="/login/meetup"
               component={MeetupCallBack}
             ></Route>
-            <Route exact path="/login/eventBrite">
-              <HomeWrapper>
-                <EventBriteCallBack></EventBriteCallBack>
-              </HomeWrapper>
-            </Route>
+            <Route
+              exact
+              path="/login/eventBrite"
+              component={EventBriteCallBack}
+            ></Route>
 
             <Route exact path="/organizers">
               <Organizers></Organizers>

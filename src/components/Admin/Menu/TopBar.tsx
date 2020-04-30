@@ -14,14 +14,15 @@ import { Member } from "../../../services/models/Member";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     menuButton: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
+      color: "black",
     },
     title: {
-      flexGrow: 1
-    }
+      flexGrow: 1,
+    },
   })
 );
 type TopBarStateProps = {
@@ -32,7 +33,7 @@ type TopBarProps = {
 };
 const TopBarComponent: React.SFC<TopBarProps & TopBarStateProps> = ({
   openMenu,
-  memberDetail
+  memberDetail,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -59,8 +60,8 @@ const TopBarComponent: React.SFC<TopBarProps & TopBarStateProps> = ({
             {memberDetail && memberDetail.picture ? (
               <Avatar alt="Remy Sharp" src={memberDetail.picture} />
             ) : (
-                <AccountCircle />
-              )}
+              <AccountCircle />
+            )}
           </Button>
         </Toolbar>
       </AppBar>
@@ -69,7 +70,7 @@ const TopBarComponent: React.SFC<TopBarProps & TopBarStateProps> = ({
 };
 
 const mapStateToProps = (state: AppState) => ({
-  memberDetail: state.memberDetail.memberDetail
+  memberDetail: state.memberDetail.memberDetail,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
 

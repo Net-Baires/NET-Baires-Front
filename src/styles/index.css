@@ -55,16 +55,14 @@
   box-shadow: none !important;
 }
 
-.MuiSvgIcon-root {
-  color: black !important;
-}
-
 .MuiInputBase-root {
   color: black !important;
 }
 
 .MuiDrawer-paperAnchorDockedLeft {
   box-shadow: 10px 0px 30px grey !important;
+  background: rgb(63, 77, 103) !important;
+  min-width: 270px;
 }
 
 .side-menu-logo {
@@ -80,7 +78,8 @@
 }
 
 .side-menu-container .active {
-  background-color: #ebebeb;
+  background-color: #333f54;
+  color: #fff !important;
 }
 
 .events-actions-button {
@@ -214,4 +213,26 @@
 
 td {
   overflow: hidden;
+}
+/* .MuiTypography-body1 {
+  color: #a9b7d0;
+} */
+.Collapse-Menu {
+  background: #39465e;
+}
+.MuiListItemIcon-root {
+  color: #a9b7d0 !important;
+}
+.MuiListItem-button:hover {
+  background-color: initial !important;
+  color: #1ec0e4 !important;
+}
+.MuiListItem-button:hover .MuiListItemIcon-root {
+  color: #1ec0e4 !important;
+}
+.MuiPaper-root a {
+  color: #a9b7d0 !important;
+}
+.top-side-menu {
+  color: #a9b7d0 !important;
 }
