@@ -21,6 +21,7 @@ import { SelectOneBadge } from "../admin/Badges/SelectOneBadge";
 import { Member } from "../../services/models/Member";
 import { MembersInGroupCode } from "./MembersInGroupCode";
 import { TitleHeader } from "../Common/TitleHeader";
+import { GetBadgeResponse } from "../../services/models/BadgeDetail";
 type AdminGroupCodesProps = {
   loading: () => void;
   ready: () => void;
@@ -73,15 +74,15 @@ const AdminGroupCodesComponent: React.SFC<AdminGroupCodesProps> = ({
     event.preventDefault();
     setRepeatMember(isChecked);
   };
-  const assignBadge = (badgeId: number, name: string) => {
+  const assignBadge = (badge: GetBadgeResponse) => {
     loading();
-    assignBadgeToAttendancesInGroupCode(+idGroupCode!, badgeId)
+    assignBadgeToAttendancesInGroupCode(+idGroupCode!, badge.id)
       .then(() => {
         groupCode.members.forEach((member) =>
           memberNotification(
             member.id,
-            `Acaba de recibir el badge ${name}`,
-            `/app/earned/badges/${badgeId}/detail`
+            `Acaba de recibir el badge ${badge.name}`,
+            `/app/earned/badges/${badge.id}/detail`
           )
         );
         ready();
