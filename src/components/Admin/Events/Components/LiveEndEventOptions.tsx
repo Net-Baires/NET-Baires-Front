@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useState, useEffect } from "react";
 import { loading, ready } from "../../../../store/loading/actions";
 import { connect } from "react-redux";
 import {
@@ -9,8 +9,11 @@ import { CardWrapper } from "../../../Common/CardWrapper";
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { DialogQuestion } from "../../../Common/DialogQuestion";
 import { CompleteEventRequest } from "../../../../services/models/Member";
+import { GetBadgeResponse } from "../../../../services/models/BadgeDetail";
+import { isEmpty } from "../../../../services/objectsservices";
 type LiveEndEventOptionsProps = {
   eventId: number;
+  badgeToGive: GetBadgeResponse;
   completeEvent?: () => void;
   loading: () => void;
   ready: () => void;
@@ -20,6 +23,7 @@ const LiveEndEventOptionsComponent: React.SFC<LiveEndEventOptionsProps> = ({
   loading,
   ready,
   eventId,
+  badgeToGive,
   completeEvent: completeEventCallback,
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -33,6 +37,12 @@ const LiveEndEventOptionsComponent: React.SFC<LiveEndEventOptionsProps> = ({
     event.preventDefault();
     setOpenDialog(true);
   };
+  useEffect(() => {
+    setOptions({
+      ...options,
+      badgeId: badgeToGive.id,
+    });
+  }, [badgeToGive]);
   const completeEventHandler = () => {
     loading();
     completeEvent(eventId, options).then(() => {
@@ -126,6 +136,27 @@ const LiveEndEventOptionsComponent: React.SFC<LiveEndEventOptionsProps> = ({
                         setOptions({
                           ...options,
                           sendMaterialToAttendees: !options.sendMaterialToAttendees,
+                        })
+                      }
+                    />
+                  }
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-md-6 col-form-label">
+                Entregar Badge a Presentes
+              </label>
+              <div className="col-md-6">
+                <FormControlLabel
+                  control={
+                    <Switch
+                      disabled={isEmpty(badgeToGive)}
+                      checked={options.giveBadgeToAttendees}
+                      onChange={() =>
+                        setOptions({
+                          ...options,
+                          giveBadgeToAttendees: !options.giveBadgeToAttendees,
                         })
                       }
                     />

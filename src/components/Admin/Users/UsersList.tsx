@@ -42,15 +42,15 @@ const UsersListComponent: React.SFC<UsersListProps> = ({ loading, ready }) => {
     setSelectedMember(member);
     getBadgesFromMeber(member.id).then((s) => setBadges(s));
   };
-  const assignBadge = (badgeId: number, name: string) => {
+  const assignBadge = (badge: GetBadgeResponse) => {
     if (selectedMember != null) {
       loading();
-      assignBadgeToMember(badgeId, selectedMember.id)
+      assignBadgeToMember(badge.id, selectedMember.id)
         .then(() => {
           memberNotification(
             selectedMember.id,
-            `Acaba de recibir el badge ${name}`,
-            `/app/earned/badges/${badgeId}/detail`
+            `Acaba de recibir el badge ${badge.name}`,
+            `/app/earned/badges/${badge.id}/detail`
           );
           getBadgesFromMeber(selectedMember.id).then((s) => setBadges(s));
           ready();

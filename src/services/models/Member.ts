@@ -39,4 +39,6 @@ export interface CompleteEventRequest {
   thanksSpeakers: boolean;
   thanksAttendees: boolean;
   sendMaterialToAttendees: boolean;
+  giveBadgeToAttendees: boolean;
+  badgeId: number;
 }

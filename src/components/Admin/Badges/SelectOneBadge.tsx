@@ -17,7 +17,7 @@ type SelectOneBadgeStateProps = {
   ready: () => void;
 };
 type SelectOneBadgeProps = {
-  assignBadge: (badgeId: number, name: string) => void;
+  assignBadge: (badge: GetBadgeResponse) => void;
   readyToAssign?: boolean;
 };
 const SelectOneBadgeComponent: React.SFC<
@@ -52,7 +52,7 @@ const SelectOneBadgeComponent: React.SFC<
     if (readyToAssign && !isEmpty(selectedBadge)) setOpenDialog(true);
   };
   const handleAccept = () => {
-    assignBadge(selectedBadge.id, selectedBadge.name);
+    assignBadge(selectedBadge);
   };
 
   return (

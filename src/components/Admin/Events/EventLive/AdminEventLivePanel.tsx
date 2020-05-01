@@ -34,6 +34,8 @@ import { SpeakersList } from "../../../EventLive/SpeakersList";
 import { EventInformationAdmin } from "../../components/EventInformationAdmin";
 import { SelectTemplates } from "../../Templates/components/SelectTemplates";
 import { Backdrop, CircularProgress } from "@material-ui/core";
+import { SelectOneBadge } from "../../Badges/SelectOneBadge";
+import { GetBadgeResponse } from "../../../../services/models/BadgeDetail";
 type AdminEventLivePanelProps = {
   loading: () => void;
   ready: () => void;
@@ -88,6 +90,10 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
         `/app/events/${eventDetail.id}/live/panel`
       );
     });
+  };
+  const [badgeToGive, setBadgeToGive] = useState({} as GetBadgeResponse);
+  const assignBadge = (badge: GetBadgeResponse) => {
+    setBadgeToGive(badge);
   };
   return (
     <>
@@ -193,8 +199,9 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
               <LiveEndEventOptions
                 eventId={eventDetail.id}
                 completeEvent={closeEvent}
+                badgeToGive={badgeToGive}
               ></LiveEndEventOptions>
-              <CardWrapper colSize={8} cardTitle="Templates de Email">
+              <CardWrapper colSize={5} cardTitle="Templates de Email">
                 <SelectTemplates
                   updateWithTemplate={(w) => {
                     setTemplatesLoading(true);
@@ -211,6 +218,7 @@ const AdminEventLivePanelComponent: React.SFC<AdminEventLivePanelProps> = ({
                   <CircularProgress color="inherit" />
                 </Backdrop>
               </CardWrapper>
+              <SelectOneBadge assignBadge={assignBadge}></SelectOneBadge>
             </>
           )}
         </div>
