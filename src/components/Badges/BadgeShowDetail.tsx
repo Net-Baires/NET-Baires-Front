@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
 import { loading, ready } from "../../store/loading/actions";
-import { Member } from "../../services/models/Member";
-import { getMembersInBadge } from "../../services/membersServices";
 import { useParams } from 'react-router-dom';
 import { BadgeShowDetailContainer } from './BadgeShowDetailContainer';
 
@@ -18,17 +16,17 @@ type BadgeDetailParams = {
 type BadgeDetailPropsAndRouter = BadgeDetailParams & BadgeDetailProps;
 export const BadgeShowDetailComponent: React.SFC<
   RouteComponentProps<BadgeDetailPropsAndRouter> & BadgeDetailProps
-> = ({ loading, ready }) => {
+> = () => {
   const { id } = useParams();
 
-  const [, setMembers] = useState(new Array<Member>());
-  useEffect(() => {
-    loading();
-    getMembersInBadge(+id!).then(x => {
-      setMembers(x);
-      ready();
-    });
-  }, []);
+  // const [, setMembers] = useState(new Array<Member>());
+  // useEffect(() => {
+  //   loading();
+  //   getMembersInBadge(+id!).then(x => {
+  //     setMembers(x);
+  //     ready();
+  //   });
+  // }, []);
 
   return (
     <>

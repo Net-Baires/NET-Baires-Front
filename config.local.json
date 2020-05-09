@@ -1,7 +1,7 @@
 {
   "api": {
     "base": "http://localhost:8080/",
-    "baseRemote": "http://localhost:5000"
+    "baseRemote": "http://localhost:5001/"
   },
   "pwa": {
     "showPopup": false
@@ -14,7 +14,9 @@
       "accessTokenUri": "https://secure.meetup.com/oauth2/access",
       "authorizationUri": "https://secure.meetup.com/oauth2/authorize",
       "redirectUri": "http://localhost:8080/login/meetup",
-      "scopes": ["basic"]
+      "scopes": [
+        "basic"
+      ]
     },
     "eventBrite": {
       "clientId": "NCIKDME6JQAYT7E74V",

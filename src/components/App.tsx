@@ -86,6 +86,7 @@ interface AppProps {
 export const App: React.SFC<AppProps> = () => {
   return (
     <>
+    
       <Router history={historyRouter}>
         <LastLocationProvider>
           {/* <Header></Header> */}
