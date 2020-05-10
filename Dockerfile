@@ -7,6 +7,6 @@ WORKDIR /src
 RUN ["mkdir","dist"]
 RUN ["ls"]
 copy . ./dist
-copy ./dist/app.js .
+copy ./app.js .
 EXPOSE 8080
 CMD nodemon app.js
