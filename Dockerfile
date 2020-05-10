@@ -6,7 +6,7 @@ RUN npm install node-fetch
 WORKDIR /src
 RUN ["mkdir","dist"]
 RUN ["ls"]
-copy ./dist ./dist
+copy . ./dist
 copy ./dist/app.js .
 EXPOSE 8080
 CMD nodemon app.js
