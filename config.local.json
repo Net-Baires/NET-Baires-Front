@@ -1,7 +1,7 @@
 {
   "api": {
     "base": "http://localhost:8080/",
-    "baseRemote": "http://localhost:5001/"
+    "baseRemote": "https://net-baires-api-dev.azurewebsites.net/"
   },
   "pwa": {
     "showPopup": false

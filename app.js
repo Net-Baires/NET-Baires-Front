@@ -10,12 +10,16 @@ app.get('/badges/:id', function (request, response) {
     if (err) {
       return console.log(err);
     }
-    fetch(`${NET - Baires.api.baseRemote}$/badges/${request.params.id}`)
+    fetch('${NET-Baires.api.baseRemote}$/badges/' + request.params.id)
       .then((res) => res.json())
       .then((x) => {
         data = data.replace(/\$TITLE/g, x.name);
         data = data.replace(/\$DESCRIPTION/g, x.name);
-        result = data.replace(/\$IMAGE/g, x.imageUrl);
+        result = data.replace(/\$IMAGE/g, x.linkedinImageUrl);
+        result = data.replace(
+          /\$URL/g,
+          '${NET-Baires.clientUrl}$/badges/' + request.params.id,
+        );
         response.send(result);
       })
       .catch((x) => {
@@ -31,14 +35,15 @@ app.get('/members/:memberId/badges/:id', function (request, response) {
       return console.log(err);
     }
     fetch(
-      `${NET - Baires.api.baseRemote}$/members/${
-        request.params.memberId
-      }/badges/${request.params.id}/`,
+      '${NET-Baires.api.baseRemote}$//members/' +
+        request.params.memberId +
+        '/badges/' +
+        request.params.id,
     )
       .then((res) => res.json())
       .then((badge) => {
         fetch(
-          `${NET - Baires.api.baseRemote}$/members/${request.params.memberId}`,
+          '${NET-Baires.api.baseRemote}$/members/' + request.params.memberId,
         )
           .then((res) => res.json())
           .then((memberDetail) => {
@@ -52,7 +57,14 @@ app.get('/members/:memberId/badges/:id', function (request, response) {
               /\$DESCRIPTION/g,
               `Desde NET-Baires reconocemos a ${memberDetail.firstName} ${memberDetail.lastName} mediante ${badge.badge.name}`,
             );
-            result = data.replace(/\$IMAGE/g, badge.badge.imageUrl);
+            result = data.replace(
+              /\$URL/g,
+              '${NET-Baires.clientUrl}$/members/' +
+                request.params.memberId +
+                '/badges/' +
+                request.params.id,
+            );
+            result = data.replace(/\$IMAGE/g, badge.badge.linkedinImageUrl);
             response.send(result);
           })
           .catch((x) => {
