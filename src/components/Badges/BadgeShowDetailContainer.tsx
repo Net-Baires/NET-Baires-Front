@@ -62,6 +62,8 @@ export const BadgeShowDetailContainerComponent: React.SFC<BadgeDetailProps> = ({
           <div className="services-section text-center">
             <div className="container">
               <div className="row  justify-content-md-center">
+                {badge.name &&
+                
                 <div className="col-md-8">
                   <div className="services-content">
                     <h1 className="wow fadeInUp" data-wow-delay="0s">
@@ -69,13 +71,16 @@ export const BadgeShowDetailContainerComponent: React.SFC<BadgeDetailProps> = ({
                     </h1>
                   </div>
                 </div>
+                }
                 <div className="col-md-12 text-center">
                   <div className="services">
                     <div className="row">
-                      <div className="col-md-12 badge-detail-img">
+                    <div className="col-md-2"></div>
+                      <div className="col-md-8 badge-detail-img">
                         <img src={badge.imageUrl} alt="New" />
                       </div>
-                      <div className="col-md-12">
+                    <div className="col-md-2"></div>
+                      <div style={{marginTop:50}} className="col-md-12">
                         <p>{ReactHtmlParser(badge.description)}</p>
                       </div>
                     </div>

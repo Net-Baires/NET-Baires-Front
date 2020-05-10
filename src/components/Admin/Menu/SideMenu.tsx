@@ -185,7 +185,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
       </SecureElement>
       <SideMenuOption
         closeMenu={closeMenu}
-        roles={["Admin"]}
+        roles={["Admin", "Organizer", "Member"]}
         linkTo=""
         text="Perfil Público"
         onClick={() => {
@@ -194,6 +194,7 @@ export const SideMenu: React.SFC<SideMenuProps> = ({ closeMenu }) => {
             "_blank"
           );
         }}
+        
         icon={<FaceIcon />}
       ></SideMenuOption>
       <SideMenuOption

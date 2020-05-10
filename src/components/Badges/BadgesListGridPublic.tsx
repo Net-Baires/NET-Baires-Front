@@ -23,7 +23,7 @@ export const BadgesListGridPublic: React.SFC<BadgesListPublicProps> = ({
     <>
       {!isEmpty(badges) && (
         badges.map(badge => (
-          <div className="card  card-badge-container  col-sm-3" style={{ width: "18rem;" }}>
+          <div className="card card-badge-container col-sm-3" style={{ width: "18rem;" }}>
             <div className="card-badge-img">
               <img src={badge.imageUrl} className="card-img-top" alt="..."></img>
             </div>
