@@ -10,7 +10,7 @@ app.get('/badges/:id', function (request, response) {
     if (err) {
       return console.log(err);
     }
-    fetch(`https://api.net-baires.com.ar/badges/${request.params.id}`)
+    fetch(`${NET - Baires.api.baseRemote}$/badges/${request.params.id}`)
       .then((res) => res.json())
       .then((x) => {
         data = data.replace(/\$TITLE/g, x.name);
@@ -31,12 +31,14 @@ app.get('/members/:memberId/badges/:id', function (request, response) {
       return console.log(err);
     }
     fetch(
-      `https://api.net-baires.com.ar//members/${request.params.memberId}/badges/${request.params.id}/`
+      `${NET - Baires.api.baseRemote}$/members/${
+        request.params.memberId
+      }/badges/${request.params.id}/`,
     )
       .then((res) => res.json())
       .then((badge) => {
         fetch(
-          `https://api.net-baires.com.ar/members/${request.params.memberId}`
+          `${NET - Baires.api.baseRemote}$/members/${request.params.memberId}`,
         )
           .then((res) => res.json())
           .then((memberDetail) => {
@@ -44,11 +46,11 @@ app.get('/members/:memberId/badges/:id', function (request, response) {
               /\$TITLE/g,
               `${badge.badge.name} entregado a ${memberDetail.firstName} ${
                 memberDetail.lastName
-              } el ${new Date(badge.assignmentDate).toLocaleDateString()}`
+              } el ${new Date(badge.assignmentDate).toLocaleDateString()}`,
             );
             data = data.replace(
               /\$DESCRIPTION/g,
-              `Desde NET-Baires reconocemos a ${memberDetail.firstName} ${memberDetail.lastName} mediante ${badge.badge.name}`
+              `Desde NET-Baires reconocemos a ${memberDetail.firstName} ${memberDetail.lastName} mediante ${badge.badge.name}`,
             );
             result = data.replace(/\$IMAGE/g, badge.badge.imageUrl);
             response.send(result);
@@ -75,11 +77,11 @@ app.get('/', function (request, response) {
     data = data.replace(/\$TITLE/g, '<title>NET-Baires</title> ');
     data = data.replace(
       /\$DESCRIPTION/g,
-      'NET-Baires somos la comunidad de .NET mas grande de la Argentina.'
+      'NET-Baires somos la comunidad de .NET mas grande de la Argentina.',
     );
     result = data.replace(
       /\$IMAGE/g,
-      'https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png'
+      'https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png',
     );
     response.send(result);
   });
@@ -94,11 +96,11 @@ app.all('*', function (request, response) {
     data = data.replace(/\$TITLE/g, 'NET-Baires');
     data = data.replace(
       /\$DESCRIPTION/g,
-      'NET-Baires somos la comunidad de .NET mas grande de la Argentina.'
+      'NET-Baires somos la comunidad de .NET mas grande de la Argentina.',
     );
     result = data.replace(
       /\$IMAGE/g,
-      'https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png'
+      'https://net-baires.azureedge.net/images/NET-Baires-Logo-Blanco.png',
     );
     response.send(result);
   });
