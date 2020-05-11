@@ -4,7 +4,7 @@ import { EditBadgeComponent } from "./components/EditBadgeComponent";
 import { isEmpty } from "../../../services/objectsservices";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
+import { GetBadgeResponse, NewBadgeRequest } from "../../../services/models/BadgeDetail";
 import { CardWrapper } from "../../Common/CardWrapper";
 import {
   getBadgeToEdit,
@@ -12,6 +12,9 @@ import {
   deleteBadge,
 } from "../../../services/badgesServices";
 import { DialogQuestion } from "../../Common/DialogQuestion";
+import { EditBadgeComponentHook } from './components/EditBadgeComponentHook';
+import { deleteTemplate } from '../../../services/templatesServices';
+import { FileToAdd } from '../../../services/requestServices';
 type EditBadgeParams = {
   id: string;
   loading: () => void;
@@ -33,15 +36,14 @@ const EditBadgeInternalComponent: React.SFC<
       ready();
     });
   }, []);
-  const savebadge = (badge: GetBadgeResponse, file: File) => {
+  const saveBadge = (badge: NewBadgeRequest, images: Array<FileToAdd>) => {
     loading();
-    updateBadge(badge.id, badge, file).then(() => {
+    updateBadge(badgeToEdit.id, badge, images).then(() => {
       ready();
       history.push("/app/badges");
     });
   };
-  const handleDeleteBadge = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleDeleteBadge = () => {
     setSureToDelete(true);
   };
   const handleAccept = () => {
@@ -52,20 +54,15 @@ const EditBadgeInternalComponent: React.SFC<
   };
   return (
     <>
-      <CardWrapper cardTitle="Editar Badge">
-        {!isEmpty(badgeToEdit) && (
-          <EditBadgeComponent
-            saveBadge={savebadge}
+      <CardWrapper cardTitle="Nuevo Badge">
+        {!isEmpty(badgeToEdit) &&
+          <EditBadgeComponentHook
+            saveBadge={saveBadge}
+            deleteBadge={handleDeleteBadge}
+            editMode={true}
             badge={badgeToEdit}
-          ></EditBadgeComponent>
-        )}
-        <button
-          type="button"
-          onClick={handleDeleteBadge}
-          className="btn btn-danger btn-full-width"
-        >
-          Eliminar
-        </button>
+          ></EditBadgeComponentHook>
+        }
       </CardWrapper>
       <DialogQuestion
         callbackClose={() => setSureToDelete(false)}

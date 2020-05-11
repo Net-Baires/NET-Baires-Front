@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
 import { loading, ready } from "../../../store/loading/actions";
-import { GetBadgeResponse } from "../../../services/models/BadgeDetail";
-import { EditBadgeComponent } from "./components/EditBadgeComponent";
+import { GetBadgeResponse, NewBadgeRequest } from "../../../services/models/BadgeDetail";
 import { newBadge } from "../../../services/badgesServices";
-import { PageFullWidthWrapper } from "../../Common/PageFullWidthWrapper";
-import { CardWrapper } from '../../Common/CardWrapper';
+import { CardWrapper } from "../../Common/CardWrapper";
+import { EditBadgeComponentHook } from "./components/EditBadgeComponentHook";
+import { FileToAdd } from "../../../services/requestServices";
 type NewBadgeProps = {
   loading: () => void;
   ready: () => void;
@@ -15,9 +15,9 @@ const NewBadgeComponent: React.SFC<NewBadgeProps> = ({ loading, ready }) => {
   const [badgeToEdit] = useState({} as GetBadgeResponse);
   const history = useHistory();
 
-  const saveBadge = (badge: GetBadgeResponse, image: File) => {
+  const saveBadge = (badge: NewBadgeRequest, images: Array<FileToAdd>) => {
     loading();
-    newBadge(badge, image).then(x => {
+    newBadge(badge, images).then(() => {
       ready();
       history.push("/app/badges");
     });
@@ -25,10 +25,10 @@ const NewBadgeComponent: React.SFC<NewBadgeProps> = ({ loading, ready }) => {
 
   return (
     <CardWrapper cardTitle="Nuevo Badge">
-      <EditBadgeComponent
+      <EditBadgeComponentHook
         saveBadge={saveBadge}
         badge={badgeToEdit}
-      ></EditBadgeComponent>
+      ></EditBadgeComponentHook>
     </CardWrapper>
   );
 };
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ready: () => {
     dispatch(ready());
-  }
+  },
 });
 
 export const NewBadge = connect(

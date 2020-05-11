@@ -65,6 +65,16 @@ export const postWithFileRequest = <TBody>(
   file: File,
   body: TBody
 ) => WithFileequest("POST", url, file, body);
+export const postWithFilesRequest = <TBody>(
+  url: string,
+  file: Array<FileToAdd>,
+  body: TBody,
+) => WithFilesRequest("POST", url, file, body);
+export const putWithFilesRequest = <TBody>(
+  url: string,
+  file: Array<FileToAdd>,
+  body: TBody,
+) => WithFilesRequest("PUT", url, file, body);
 
 export const putWithFileRequest = <TBody>(
   url: string,
@@ -100,3 +110,37 @@ const WithFileequest = <TBody>(
     }
   });
 };
+const WithFilesRequest = <TBody>(
+  action: string,
+  url: string,
+  files: Array<FileToAdd>,
+  body: TBody) => {
+  var formData = new FormData();
+  files.forEach((x) => {
+    formData.append(x.filePropName, x.file, x.fileName);
+  });
+  Object.keys(body).forEach((key: string) =>
+    formData.append(key, (body as any)[key])
+  );
+  const options: RequestInit = {
+    method: action,
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: formData,
+  };
+  return fetch(`${Config.api.baseRemote}${url}`, options).then((x: any) => {
+    var contentType = x.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+      return x.json();
+    } else {
+      console.log("Oops, we haven't got JSON!");
+    }
+  });
+}
+export interface FileToAdd {
+  file: File;
+  fileName: string;
+  filePropName: string;
+}

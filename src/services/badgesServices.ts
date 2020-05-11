@@ -4,10 +4,13 @@ import {
   deleteRequest,
   putRequest,
   postWithFileRequest,
-  putWithFileRequest
+  putWithFileRequest,
+  FileToAdd,
+  postWithFilesRequest,
+  putWithFilesRequest,
 } from "./requestServices";
 import { BadgeAssign } from "./models/BadgeAssign";
-import { GetBadgeResponse } from "./models/BadgeDetail";
+import { GetBadgeResponse, NewBadgeRequest } from "./models/BadgeDetail";
 
 export const syncBadges = (): Promise<boolean> => {
   return getRequest("/badges/sync");
@@ -29,10 +32,10 @@ export const deleteBadge = (id: number): Promise<GetBadgeResponse> => {
 };
 
 export const newBadge = (
-  badge: GetBadgeResponse,
-  formData: File
-): Promise<GetBadgeResponse> => {
-  return postWithFileRequest(`/badges/`, formData, badge);
+  badge: NewBadgeRequest,
+  formData: Array<FileToAdd>
+): Promise<NewBadgeRequest> => {
+  return postWithFilesRequest(`/badges/`, formData, badge);
 };
 
 export const getBadges = (): Promise<GetBadgeResponse[]> => {
@@ -50,10 +53,10 @@ export const assignBadgeToMember = (
 };
 export const updateBadge = (
   badgeId: number,
-  badge: GetBadgeResponse,
-  formData: File
+  badge: NewBadgeRequest,
+  formData: Array<FileToAdd>
 ): Promise<BadgeAssign[]> => {
-  return putWithFileRequest(`/badges/${badgeId}`, formData, badge);
+  return putWithFilesRequest(`/badges/${badgeId}`, formData, badge);
 };
 export const removeBadgeFromMember = (
   badgeId: number,

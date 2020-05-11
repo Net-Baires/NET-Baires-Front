@@ -5,6 +5,12 @@ export interface GetBadgeResponse {
   name: string;
   description: string;
   badgeUrl: string;
+  linkedinImageUrl: string;
+  simpleImageUrl: string;
+}
+export interface NewBadgeRequest {
+  name: string;
+  description: string;
 }
 export interface BadgeMemberViewModel {
   assignmentDate: string;

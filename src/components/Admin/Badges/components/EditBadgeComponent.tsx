@@ -5,8 +5,8 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { GetBadgeResponse } from "../../../../services/models/BadgeDetail";
 import Draft from "react-wysiwyg-typescript";
 import { EditorState, ContentState } from "draft-js";
-import { stateToHTML } from 'draft-js-export-html'
-import { stateFromHTML } from 'draft-js-import-html'
+import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from "draft-js-import-html";
 interface FormValues extends GetBadgeResponse {
   imageFiles?: File;
   imagePreview?: string;
@@ -50,7 +50,6 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
             ></img>
           </div>
           <div className="col-md-2"></div>
-
         </div>
       </div>
       <div className="input-group">
@@ -88,7 +87,7 @@ const EditBadgeComponentForm = (props: FormikProps<FormValues>) => {
           wrapperClassName="badge-description-wrapper"
           editorClassName="badge-description-editor"
           editorState={props.values.descriptionHtml}
-          onEditorStateChange={state => {
+          onEditorStateChange={(state) => {
             setFieldValue("descriptionHtml", state);
           }}
         />
@@ -117,19 +116,21 @@ interface MyFormProps extends GetBadgeResponse {
   imageFiles?: File;
 }
 const EditAllUserFormik = withFormik<MyFormProps, FormValues>({
-  mapPropsToValues: props => {
+  mapPropsToValues: (props) => {
     return {
-      ...props
+      ...props,
     };
   },
   validationSchema: yup.object<MyFormProps>().shape({
     name: yup.string().required("Campo Requerido"),
-    descriptionHtml: yup.string().required("Campo Requerido")
+    descriptionHtml: yup.string().required("Campo Requerido"),
   }),
   handleSubmit: (values: FormValues, { props }) => {
-    values.description = stateToHTML(values.descriptionHtml!.getCurrentContent());
+    values.description = stateToHTML(
+      values.descriptionHtml!.getCurrentContent()
+    );
     props.saveBadge(values, values.imageFiles!);
-  }
+  },
 })(EditBadgeComponentForm);
 
 type EditBadgeComponentProps = {
@@ -138,7 +139,7 @@ type EditBadgeComponentProps = {
 };
 export const EditBadgeComponent: React.SFC<EditBadgeComponentProps> = ({
   badge,
-  saveBadge
+  saveBadge,
 }) => {
   const [userBadgeToEdit] = useState(badge);
   return (
